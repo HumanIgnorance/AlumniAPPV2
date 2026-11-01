@@ -5,34 +5,7 @@
 
 /* ============ Design tokens scoped to drawer ============ */
 .preview-drawer {
- --ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
-  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
 
-  --accent:        #4f46e5;
-  --accent-2:      #0ea5e9;
-  --accent-3:      #7c3aed;
-  --accent-soft:   rgba(79, 70, 229, 0.10);
-  --accent-ring:   rgba(79, 70, 229, 0.26);
-
-  --bg:            #f4f7fb;
-  --surface:       #ffffff;
-  --surface-2:     #f1f5f9;
-  --border:        #e2e8f0;
-  --border-strong: #cbd5e1;
-
-  --text:         #0b1220;
-  --text-muted:   #5b6677;
-  --text-subtle:  #94a3b8;
-
-  --shadow-xs: 0 1px 2px  rgba(2, 6, 23, 0.05);
-  --shadow-sm: 0 4px 14px rgba(2, 6, 23, 0.06);
-  --shadow-md: 0 14px 34px rgba(2, 6, 23, 0.10);
-  --shadow-lg: 0 28px 60px rgba(2, 6, 23, 0.18);
-
-  --radius-sm: 10px;
-  --radius-md: 14px;
-  --radius-lg: 18px;
-  --radius-xl: 26px;
 /* 
   min-height: 100vh;
   width: 100%;
@@ -124,7 +97,7 @@
 
 /* Make the header readable on every theme */
 .preview-drawer .preview-header .ant-typography {
-    color: #ffffff !important;
+    color: var(--c-white) !important;
 }
 
 /* Smooth focus rings on chips */
@@ -133,25 +106,23 @@
     outline-offset: 2px;
 }
 
-
-
 /* ============ BLACK THEME (data-theme="black") ============ */
 [data-theme="black"] .preview-drawer .ant-drawer-body {
-    background: #0a0a0a !important;
+    background: var(--c-ink-0a) !important;
 }
 
 [data-theme="black"] .preview-drawer .ant-drawer-header {
     background: #111418 !important;
-    border-bottom: 1px solid #242a36 !important;
+    border-bottom: 1px solid var(--c-242a36) !important;
 }
 
 [data-theme="black"] .preview-drawer .ant-drawer-title,
 [data-theme="black"] .preview-drawer .ant-drawer-close {
-    color: #ffffff !important;
+    color: var(--c-white) !important;
 }
 
 [data-theme="black"] .preview-drawer .drawer-content {
-    background: #0a0a0a !important;
+    background: var(--c-ink-0a) !important;
 }
 
 /* Header card: deeper background, keep accents */
@@ -164,11 +135,11 @@
 }
 
 [data-theme="black"] .preview-drawer .preview-header * {
-    color: #ffffff !important;
+    color: var(--c-white) !important;
 }
 
 [data-theme="black"] .preview-drawer .preview-name {
-    color: #ffffff !important;
+    color: var(--c-white) !important;
 }
 
 [data-theme="black"] .preview-drawer .preview-title,
@@ -194,12 +165,12 @@
 [data-theme="black"] .preview-drawer .preview-card,
 [data-theme="black"] .preview-drawer .ant-card,
 [data-theme="black"] .preview-drawer .sidebar-card {
-    background: #121620 !important;
-    border-color: #242a36 !important;
+    background: var(--c-121620) !important;
+    border-color: var(--c-242a36) !important;
 }
 
 [data-theme="black"] .preview-drawer .ant-card-body {
-    background: #121620 !important;
+    background: var(--c-121620) !important;
 }
 
 [data-theme="black"] .preview-drawer .ant-typography,
@@ -214,7 +185,7 @@
 [data-theme="black"] .preview-drawer .preference-item span,
 [data-theme="black"] .preview-drawer .document-item span,
 [data-theme="black"] .preview-drawer .honor-item span {
-    color: #ffffff !important;
+    color: var(--c-white) !important;
 }
 
 [data-theme="black"] .preview-drawer h1,
@@ -224,25 +195,25 @@
 [data-theme="black"] .preview-drawer h5,
 [data-theme="black"] .preview-drawer h6,
 [data-theme="black"] .preview-drawer .ant-typography-secondary {
-    color: #ffffff !important;
+    color: var(--c-white) !important;
 }
 
 [data-theme="black"] .preview-body {
-    background: #0a0a0a !important;
+    background: var(--c-ink-0a) !important;
 }
 
 [data-theme="black"] .preview-drawer .subsection {
-    border-color: #242a36 !important;
+    border-color: var(--c-242a36) !important;
 }
 
 [data-theme="black"] .preview-drawer .subsection .preview-text {
-    background: #1a1f2b !important;
-    color: #ffffff !important;
-    border-color: #242a36 !important;
+    background: var(--c-1a1f2b) !important;
+    color: var(--c-white) !important;
+    border-color: var(--c-242a36) !important;
 }
 
 [data-theme="black"] .preview-drawer .sidebar-item:hover {
-    background: #1a1f2b !important;
+    background: var(--c-1a1f2b) !important;
 }
 
 [data-theme="black"] .preview-drawer .sidebar-icon {
@@ -254,54 +225,54 @@
 }
 
 [data-theme="black"] .preview-drawer .sidebar-icon.github {
-    color: #ffffff !important;
+    color: var(--c-white) !important;
 }
 
 [data-theme="black"] .preview-drawer .honor-item {
-    background: #1a1f2b !important;
-    border-color: #242a36 !important;
+    background: var(--c-1a1f2b) !important;
+    border-color: var(--c-242a36) !important;
 }
 
 [data-theme="black"] .preview-drawer .document-item.pending span {
-    color: #8c8c8c !important;
+    color: var(--c-antd-gray-7) !important;
 }
 
 [data-theme="black"] .preview-drawer .document-item.uploaded span {
-    color: #52c41a !important;
+    color: var(--c-antd-green) !important;
 }
 
 [data-theme="black"] .image-zoom-modal .ant-modal-content,
 [data-theme="black"] .image-zoom-modal .ant-modal-header {
-    background: #121620 !important;
+    background: var(--c-121620) !important;
 }
 
 [data-theme="black"] .image-zoom-modal .ant-modal-header {
-    border-bottom: 1px solid #242a36 !important;
+    border-bottom: 1px solid var(--c-242a36) !important;
 }
 
 [data-theme="black"] .image-zoom-modal .ant-modal-title,
 [data-theme="black"] .image-zoom-modal .ant-modal-close {
-    color: #ffffff !important;
+    color: var(--c-white) !important;
 }
 
 [data-theme="black"] .image-zoom-modal .zoom-container {
-    background: #121620 !important;
+    background: var(--c-121620) !important;
 }
 
 [data-theme="black"] .preview-drawer .ant-divider {
-    border-color: #242a36 !important;
+    border-color: var(--c-242a36) !important;
 }
 
 [data-theme="black"] .preview-drawer .ant-btn-default {
-    background: #1a1f2b !important;
-    border-color: #303746 !important;
-    color: #ffffff !important;
+    background: var(--c-1a1f2b) !important;
+    border-color: var(--c-303746) !important;
+    color: var(--c-white) !important;
 }
 
 [data-theme="black"] .preview-drawer .ant-btn-default:hover {
-    background: #242a36 !important;
+    background: var(--c-242a36) !important;
     border-color: #3a4252 !important;
-    color: #ffffff !important;
+    color: var(--c-white) !important;
 }
 
 [data-theme="black"] .preview-drawer .ant-row {
@@ -314,5 +285,5 @@
 }
 
 [data-theme="black"] .preview-drawer .preview-card[style*="border-color: red"] {
-    background: #121620 !important;
+    background: var(--c-121620) !important;
 }

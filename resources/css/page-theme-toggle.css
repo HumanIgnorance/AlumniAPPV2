@@ -1,0 +1,37 @@
+/* Floating light/dark toggle shared by Registration, Quizzes, FAQ, About… */
+.page-theme-toggle {
+    position: fixed;
+    top: 20px;
+    top: calc(20px + env(safe-area-inset-top, 0px));
+    right: 20px;
+    z-index: 1000;
+}
+.page-theme-toggle__btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: 1px solid var(--border-strong);
+    background: var(--surface);
+    color: var(--accent);
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.25s var(--ease-spring), box-shadow 0.25s ease, border-color 0.2s;
+}
+.page-theme-toggle__btn:hover {
+    transform: rotate(-8deg) scale(1.05);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 6px var(--accent-soft), var(--shadow-md);
+}
+.page-theme-toggle__btn:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+}
+.page-theme-toggle__btn .anticon {
+    font-size: 20px;
+}
+html[data-theme="black"] .page-theme-toggle__btn {
+    color: var(--c-blue-400);
+}

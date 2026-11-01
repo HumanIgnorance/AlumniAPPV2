@@ -1,6 +1,6 @@
 $primary-color: #667eea;
 $secondary-color: #687be533;
-$text-color: #535353;
+$text-color: var(--text-body);
 
 h1,
 h2,
@@ -18,7 +18,7 @@ td {
 }
 
 body {
-    font-family: "open sans", Helvetica, Arial, sans-serif !important;
+    font-family: var(--font-sans) !important;
     padding: 0px;
     margin: 0px;
 }
@@ -42,7 +42,7 @@ body {
 
 .ant-layout,
 body {
-    background: #f4f7fe !important;
+    background: var(--bg) !important;
 }
 
 .ant-btn-icon-only span {
@@ -70,8 +70,8 @@ ant-dropdown-menu-inline-collapsed-tooltip.ant-tooltip-arrow {
 }
 
 .ant-layout-sider {
-    background-color: #fff !important;
-    border-right: 1px solid rgba(0, 0, 0, 0.12) !important;
+    background-color: var(--surface) !important;
+    border-right: 1px solid var(--border) !important;
 }
 
 #main-layout .trigger {
@@ -101,7 +101,7 @@ ant-dropdown-menu-inline-collapsed-tooltip.ant-tooltip-arrow {
     -ms-flex-pack: center;
     justify-content: center;
     // margin-bottom: 60px;
-    border-bottom: 1px solid #dfdfdf;
+    border-bottom: 1px solid var(--border);
     height: 65px !important;
     // background: linear-gradient(127deg, rgb(195 0 195), rgb(0 188 188));
     img {
@@ -171,7 +171,7 @@ ant-dropdown-menu-inline-collapsed-tooltip.ant-tooltip-arrow {
 
 #header {
     padding: 0px;
-    background: rgb(255, 255, 255);
+    background: var(--surface);
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -367,7 +367,7 @@ ant-dropdown-menu-inline-collapsed-tooltip.ant-tooltip-arrow {
         display: flex;
         justify-content: center;
         align-items: center;
-        background: #ffffffb3;
+        background: var(--overlay);
     }
 }
 

@@ -38,8 +38,13 @@ class AlumniPolicy
         }
 
         if ($user->role === 'department_head') {
+            // Cast both sides: course_id can arrive as int on one model
+            // and string on the other depending on driver/serialisation,
+            // and a strict === silently turned that into a 403 (broken
+            // profile photos for department heads).
             return $user->course_id !== null
-                && $alumni->course_id === $user->course_id;
+                && $alumni->course_id !== null
+                && (int) $alumni->course_id === (int) $user->course_id;
         }
 
         // An alumnus may view only their own profile.

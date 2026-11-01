@@ -1,0 +1,599 @@
+/* Mobile / portrait / landscape overrides (<= 768px) (split from layout/index.css; keep import order: see styles/index.js) */
+/* ===== MOBILE RESPONSIVE STYLES ===== */
+
+/* ===== MAIN LAYOUT MOBILE ===== */
+@media (max-width: 768px) {
+  #main-layout {
+    min-height: 100vh;
+  }
+
+  /* Hide sidebar on mobile - use drawer instead */
+  #sidebar-wrapper {
+    display: none !important;
+  }
+
+  .ant-layout-sider {
+    display: none !important;
+  }
+
+  /* Site layout takes full width on mobile */
+  .site-layout {
+    margin-left: 0 !important;
+    width: 100% !important;
+  }
+}
+
+
+/* ===== HEADER MOBILE ===== */
+@media (max-width: 768px) {
+  #header {
+    padding: 0 8px !important;
+    height: auto !important;
+    min-height: 56px !important;
+    line-height: normal !important;
+  }
+
+  /* Fixed row-header layout - prevent title from overlapping burger menu */
+  .row-header {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    gap: 4px !important;
+    padding: 0 8px !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    width: 100% !important;
+  }
+
+  /* First column - burger + title side by side with proper spacing.
+     IMPORTANT: kept in normal flex flow (position: relative, not
+     absolute). An absolutely-positioned box here has no explicit
+     top/left, so the browser has to recompute its "static position"
+     on every reflow (scroll-driven toolbar resize, text re-wrap,
+     orientation change) - that recomputation is what made the
+     burger/title drift left-right. Flex flow is deterministic. */
+  .first {
+    flex: 1 1 auto !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    position: relative !important;
+    min-width: 0 !important;
+    justify-content: flex-start !important;
+    overflow: visible !important;
+  }
+
+  /* Title text - prevent truncation, show full text */
+  .first .ant-typography {
+    font-size: 13px !important;
+    white-space: nowrap !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    max-width: none !important;
+    flex-shrink: 1 !important;
+    min-width: 0 !important;
+  }
+
+  /* Second column - smaller, positioned to the right.
+     Forced back to normal flex flow (see .first above for why) -
+     margin-left: auto already pushes it flush right inside the
+     flex row, an absolute position isn't needed and was the other
+     half of the side-to-side drift. */
+  .second {
+    position: relative !important;
+    top: auto !important;
+    right: auto !important;
+    flex: 0 0 auto !important;
+    margin-left: auto !important;
+    gap: 2px !important;
+    padding-right: 0 !important;
+    max-width: 80px !important;
+  }
+
+ 
+}
+
+/* ===== HEADER ICONS MOBILE ===== */
+@media (max-width: 768px) {
+
+ 
+  /* Much smaller notification button */
+  .btn-notification {
+    width: 28px !important;
+    height: 28px !important;
+    min-width: 28px !important;
+    padding: 0 !important;
+    font-size: 14px !important;
+  }
+
+  .btn-notification .anticon {
+    font-size: 14px !important;
+  }
+
+  /* Smaller user dropdown button */
+  .second .ant-btn[type="text"] {
+    padding: 0 2px !important;
+    height: 28px !important;
+    border-radius: 14px !important;
+  }
+
+  /* Hide user name on mobile */
+  .second .ant-btn .ant-typography {
+    display: none !important;
+  }
+
+  /* Much smaller avatar on mobile */
+  .second .ant-avatar {
+    margin-right: 0 !important;
+    width: 24px !important;
+    height: 24px !important;
+    min-width: 24px !important;
+  }
+}
+
+/* Remove the 480-768px media query that was showing user name */
+/* Show user name on slightly larger mobile - REMOVED to save space */
+
+/* ===== CONTENT AREA MOBILE ===== */
+@media (max-width: 768px) {
+  #content {
+    padding: 12px !important;
+    margin: 0 !important;
+    min-height: calc(100vh - 56px) !important;
+  }
+}
+
+/* ===== DRAWER MOBILE ===== */
+@media (max-width: 768px) {
+  .ant-drawer-body {
+    padding: 0 !important;
+  }
+
+  .ant-drawer-header {
+    padding: 12px 16px !important;
+  }
+
+  /* Logo in drawer */
+  .ant-drawer .logo img {
+    width: 50px !important;
+    height: auto !important;
+  }
+
+  /* Menu items in drawer */
+  .ant-drawer .ant-menu {
+    border-right: none !important;
+  }
+
+  .ant-drawer .ant-menu-item {
+    height: 48px !important;
+    line-height: 48px !important;
+    margin: 4px 8px !important;
+    border-radius: 8px !important;
+  }
+
+  .ant-drawer .ant-menu-item-icon {
+    font-size: 18px !important;
+  }
+
+  .ant-drawer .ant-menu-title-content {
+    font-size: 14px !important;
+  }
+}
+
+/* ===== ACCOUNT DROPDOWN MOBILE ===== */
+@media (max-width: 768px) {
+  .ant-dropdown {
+    max-width: 95vw !important;
+  }
+
+  .ant-dropdown-menu {
+    max-width: 300px !important;
+    border-radius: 12px !important;
+  }
+
+  .ant-dropdown-menu-item {
+    padding: 10px 16px !important;
+  }
+}
+
+/* ===== BREADCRUMB MOBILE ===== */
+@media (max-width: 768px) {
+  .ant-breadcrumb {
+    font-size: 12px !important;
+    margin-bottom: 12px !important;
+  }
+
+  .ant-breadcrumb-separator {
+    margin: 0 4px !important;
+  }
+}
+
+/* ===== TABLES MOBILE ===== */
+@media (max-width: 768px) {
+  .ant-table-wrapper {
+    overflow-x: auto !important;
+  }
+
+  .ant-table {
+    min-width: 600px !important;
+  }
+
+  .ant-table-thead>tr>th,
+  .ant-table-tbody>tr>td {
+    padding: 8px !important;
+    font-size: 12px !important;
+  }
+}
+
+/* ===== CARDS MOBILE ===== */
+@media (max-width: 768px) {
+  .ant-card {
+    border-radius: 12px !important;
+  }
+
+  .ant-card-head {
+    padding: 0 12px !important;
+    min-height: 40px !important;
+  }
+
+  .ant-card-head-title {
+    font-size: 14px !important;
+    padding: 12px 0 !important;
+  }
+
+  .ant-card-body {
+    padding: 12px !important;
+  }
+}
+
+/* ===== FORMS MOBILE ===== */
+@media (max-width: 768px) {
+  .ant-form-item {
+    margin-bottom: 12px !important;
+  }
+
+  .ant-form-item-label {
+    padding-bottom: 4px !important;
+  }
+
+  .ant-form-item-label>label {
+    font-size: 13px !important;
+  }
+
+  .ant-input,
+  .ant-select-selector,
+  .ant-picker {
+    height: 40px !important;
+    font-size: 14px !important;
+  }
+
+  .ant-btn {
+    height: 40px !important;
+    font-size: 14px !important;
+  }
+}
+
+/* ===== MODALS MOBILE ===== */
+@media (max-width: 768px) {
+  .ant-modal {
+    max-width: calc(100vw - 24px) !important;
+    margin: 12px !important;
+    top: 12px !important;
+  }
+
+  .ant-modal-content {
+    border-radius: 12px !important;
+  }
+
+  .ant-modal-header {
+    padding: 12px 16px !important;
+  }
+
+  .ant-modal-body {
+    padding: 16px !important;
+    max-height: 70vh !important;
+    overflow-y: auto !important;
+  }
+
+  .ant-modal-footer {
+    padding: 12px 16px !important;
+  }
+}
+
+/* ===== ROW/COL GRID MOBILE ===== */
+@media (max-width: 768px) {
+  .ant-row {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  .ant-col {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  /* Stack columns on mobile */
+  .ant-col-xs-24,
+  .ant-col-sm-24,
+  .ant-col-md-12,
+  .ant-col-lg-8,
+  .ant-col-xl-6 {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+/* ===== STATISTICS CARDS MOBILE ===== */
+@media (max-width: 768px) {
+  .ant-statistic-title {
+    font-size: 12px !important;
+  }
+
+  .ant-statistic-content {
+    font-size: 20px !important;
+  }
+}
+
+/* ===== TABS MOBILE ===== */
+@media (max-width: 768px) {
+  .ant-tabs-nav {
+    margin-bottom: 12px !important;
+  }
+
+  .ant-tabs-tab {
+    padding: 8px 12px !important;
+    font-size: 13px !important;
+  }
+
+  .ant-tabs-content {
+    padding: 0 !important;
+  }
+}
+
+/* ===== SPACE COMPONENT MOBILE ===== */
+@media (max-width: 768px) {
+  .ant-space {
+    gap: 8px !important;
+  }
+
+  .ant-space-vertical {
+    width: 100% !important;
+  }
+}
+
+/* ===== EXTRA SMALL SCREENS (< 480px) ===== */
+@media (max-width: 480px) {
+
+  /* Better header layout for very small screens */
+  .row-header {
+    padding: 0 4px !important;
+    gap: 2px !important;
+  }
+
+  /* Smaller title font but still visible */
+  .first .ant-typography {
+    font-size: 11px !important;
+  }
+
+ 
+  /* Even smaller icons */
+  .second {
+    margin-left: auto !important;
+    max-width: 70px !important;
+  }
+
+  .second .ant-space {
+    gap: 8px !important;
+  }
+
+  .btn-notification {
+    width: 24px !important;
+    height: 24px !important;
+    min-width: 24px !important;
+  }
+
+  .btn-notification .anticon {
+    font-size: 12px !important;
+  }
+
+  .second .ant-avatar {
+    width: 22px !important;
+    height: 22px !important;
+    min-width: 22px !important;
+  }
+
+  /* Notification dropdown full width */
+  /* Notification dropdown - smaller and properly positioned */
+  .notification-dropdown {
+    position: fixed !important;
+    top: 56px !important;
+    left: 12px !important;
+    right: 12px !important;
+    width: calc(100vw - 24px) !important;
+    max-width: 300px !important;
+    max-height: calc(100vh - 70px) !important;
+    overflow-y: auto !important;
+    border-radius: 12px !important;
+  }
+}
+
+/* ===== PORTRAIT MOBILE: remove box around Theme Select (Light/Dark) ===== */
+@media (max-width: 768px) and (orientation: portrait) {
+  .account-dropdown-theme-row .ant-select .ant-select-selector {
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    padding: 0 !important;
+  }
+
+  .account-dropdown-theme-row .ant-select:hover .ant-select-selector,
+  .account-dropdown-theme-row .ant-select-focused .ant-select-selector {
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  /* Optional: tuck the arrow closer since the box is gone */
+  .account-dropdown-theme-row .ant-select-arrow {
+    right: 0 !important;
+  }
+}
+
+@media (max-width: 768px) and (orientation: portrait) {
+  .account-dropdown-theme-row .ant-select,
+  .account-dropdown-theme-row .ant-select .ant-select-selector {
+    height: auto !important;
+    line-height: inherit !important;
+    display: inline-flex !important;
+    align-items: center !important;
+  }
+
+  .account-dropdown-theme-row .ant-select .ant-select-selection-item {
+    line-height: inherit !important;
+    font-size: 14px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+  }
+}
+
+
+
+
+/* ===== LANDSCAPE MOBILE =====
+   max-height (not max-width) detects "phone in landscape" here too -
+   see the CAMERA/NOTCH SAFE AREA block near the end of this file for
+   why max-width never matches a rotated iPhone. */
+@media (orientation: landscape) and (max-height: 500px) {
+  #header {
+    min-height: 48px !important;
+  }
+
+  #content {
+    min-height: calc(100vh - 48px) !important;
+  }
+
+  .ant-modal-body {
+    max-height: 50vh !important;
+  }
+
+  /* Camera/notch safe area: on notched phones held sideways, the
+     cutout sits on the left or right edge of the screen. Reserve
+     space there the same way FormLogin.css does, so the burger
+     menu, title, icons, and footer text never sit under it.
+
+     Only the OUTER container (#header/#content/footer) gets this
+     padding. .row-header/.app-footer-inner are children living
+     INSIDE that already-padded box, so giving them their own copy
+     of the same safe-area padding doesn't override anything - it
+     stacks on top of the parent's padding and shows up as a big
+     empty gap ("dead space") between the sidebar and the header/
+     footer content on notched phones. One layer of padding is
+     enough; see the consolidated block at the end of this file
+     which is the single source of truth for this. */
+  #sidebar-wrapper .ant-layout-sider,
+  .ant-drawer-content {
+    padding-left: env(safe-area-inset-left) !important;
+  }
+}
+
+/* ===== TOUCH FRIENDLY ===== */
+@media (max-width: 768px) {
+
+  /* Larger touch targets */
+  .ant-menu-item,
+  .ant-btn,
+  .ant-input,
+  .ant-select-selector {
+    min-height: 44px !important;
+  }
+
+  /* Remove hover effects that don't work on touch */
+  .ant-btn:active {
+    transform: scale(0.98) !important;
+  }
+
+  /* Smooth scrolling */
+  * {
+    -webkit-overflow-scrolling: touch !important;
+  }
+}
+
+/* ===== DESKTOP HEADER FIX ===== */
+/* Added desktop styles to prevent dropdown cutoff */
+@media (min-width: 769px) {
+  .row-header {
+    padding: 0 24px !important;
+  }
+
+  .second {
+    padding-right: 10px !important;
+    min-width: fit-content !important;
+  }
+
+  /* Ensure dropdown doesn't get cut off */
+  .ant-dropdown {
+    max-width: calc(100vw - 32px) !important;
+  }
+}
+
+
+
+/* Added styles for highlighted registration row */
+.highlighted-row {
+  background-color: var(--c-e6f7ff) !important;
+}
+
+.highlighted-row:hover {
+  background-color: #bae7ff !important;
+}
+
+/* Added styles for event notification icons */
+.notification-event-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Event details modal image styles */
+.event-details-modal-image {
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* Bell animation keyframes */
+@keyframes bellShake {
+  0% {
+    transform: rotate(0);
+  }
+
+  15% {
+    transform: rotate(15deg);
+  }
+
+  30% {
+    transform: rotate(-15deg);
+  }
+
+  45% {
+    transform: rotate(10deg);
+  }
+
+  60% {
+    transform: rotate(-10deg);
+  }
+
+  75% {
+    transform: rotate(5deg);
+  }
+
+  90% {
+    transform: rotate(-5deg);
+  }
+
+  100% {
+    transform: rotate(0);
+  }
+}
+
+.bell-animate .anticon {
+  animation: bellShake 0.5s ease-in-out;
+}

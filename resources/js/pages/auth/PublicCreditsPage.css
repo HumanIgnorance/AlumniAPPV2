@@ -110,14 +110,14 @@
 }
 
 .ph-page.light .cred-card {
-  background: #ffffff;
-  border: 1px solid #edf0f5;
+  background: var(--c-white);
+  border: 1px solid var(--c-edf0f5);
   box-shadow: 0 10px 30px rgba(2, 6, 23, 0.05);
 }
 
 .ph-page.dark .cred-card {
   background: rgba(18, 22, 32, 0.75);
-  border: 1px solid #242a36;
+  border: 1px solid var(--c-242a36);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
@@ -169,7 +169,7 @@
 .cred-avatar-fallback {
   font-size: 30px;
   font-weight: 800;
-  color: #ffffff;
+  color: var(--c-white);
   letter-spacing: 0.02em;
 }
 
@@ -192,13 +192,13 @@
 }
 
 .ph-page.light .cred-role-tag {
-  background: #f5f7fb;
-  border: 1px solid #e6eaf1;
+  background: var(--c-f5f7fb);
+  border: 1px solid var(--c-e6eaf1);
 }
 
 .ph-page.dark .cred-role-tag {
   background: rgba(255, 255, 255, 0.05);
-  border: 1px solid #242a36;
+  border: 1px solid var(--c-242a36);
 }
 
 .cred-card-name {
@@ -246,12 +246,12 @@
 
 .ph-page.light .cred-thanks-card {
   background: #f8f9fc;
-  border: 1px solid #edf0f5;
+  border: 1px solid var(--c-edf0f5);
 }
 
 .ph-page.dark .cred-thanks-card {
   background: rgba(255, 255, 255, 0.03);
-  border: 1px solid #242a36;
+  border: 1px solid var(--c-242a36);
 }
 
 .cred-thanks-heading {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
     Drawer,
     Form,
@@ -24,6 +24,7 @@ import {
 } from "@ant-design/icons";
 import axiosConfig from "~/utils/axiosConfig";
 import "./ChangePasswordModal.css";
+import { COLORS } from "~/config/theme";
 
 const { Title, Text } = Typography;
 
@@ -98,10 +99,10 @@ const ChangePasswordModal = ({ visible, onCancel, userEmail }) => {
             ) : (
                 <CloseCircleOutlined
                     key="no"
-                    style={{ color: "#bfbfbf", fontSize: 15 }}
+                    style={{ color: COLORS.bfbfbf, fontSize: 15 }}
                 />
             )}
-            <Text style={{ color: ok ? "var(--success, #22c55e)" : "#8c8c8c", fontSize: 13 }}>
+            <Text style={{ color: ok ? "var(--success, #22c55e)" : COLORS.antdGray7, fontSize: 13 }}>
                 {text}
             </Text>
         </div>
@@ -143,7 +144,7 @@ const ChangePasswordModal = ({ visible, onCancel, userEmail }) => {
                     <KeyOutlined />
                 </div>
                 <div className="cp-header-text">
-                    <Title level={4} style={{ color: "#fff", margin: 0 }}>
+                    <Title level={4} style={{ color: COLORS.white, margin: 0 }}>
                         Change Password
                     </Title>
                     <Text style={{ color: "rgba(255,255,255,0.85)", fontSize: 13 }}>

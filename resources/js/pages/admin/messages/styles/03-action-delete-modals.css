@@ -1,0 +1,384 @@
+/* ============ Action / delete modals ============ */
+.modal-overlay,
+.message-action-modal-overlay,
+.delete-confirm-modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(2, 6, 23, 0.55);
+  backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 1000;
+  animation: fadeIn .15s var(--m-ease);
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.modal-content,
+.message-action-modal,
+.delete-confirm-modal {
+  background: var(--m-surface);
+  border-radius: var(--m-radius-lg);
+  box-shadow: var(--m-shadow-lg);
+  max-width: 440px;
+  width: calc(100% - 32px);
+  padding: 22px;
+  animation: popIn .18s var(--m-ease);
+}
+@keyframes popIn { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+.modal-header {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 12px;
+}
+.modal-icon { font-size: 1.4rem; }
+.modal-header h3 { margin: 0; font-size: 1.1rem; font-weight: 700; color: var(--m-text); }
+.modal-body p { margin: 0 0 8px; font-size: 0.92rem; color: var(--m-text); }
+.modal-warning { color: var(--c-red-600) !important; font-size: 0.85rem !important; }
+.modal-info { color: var(--m-text-muted) !important; font-size: 0.85rem !important; }
+
+.modal-actions {
+  display: flex; justify-content: flex-end; gap: 10px;
+  margin-top: 18px;
+}
+.modal-btn {
+  padding: 10px 18px;
+  border-radius: 10px;
+  border: 1px solid var(--m-border);
+  background: var(--m-surface);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.88rem;
+  transition: all .15s var(--m-ease);
+}
+.modal-btn.cancel { color: var(--m-text-muted); }
+.modal-btn.cancel:hover { background: var(--m-surface-2); }
+.modal-btn.danger { background: var(--c-red-500); color: var(--c-white); border-color: var(--c-red-500); }
+.modal-btn.danger:hover { background: var(--c-red-600); }
+.modal-btn.warning { background: var(--c-amber-500); color: var(--c-white); border-color: var(--c-amber-500); }
+.modal-btn.success { background: var(--c-green-500); color: var(--c-white); border-color: var(--c-green-500); }
+
+/* Reaction picker */
+.message-action-modal {
+  max-width: 360px;
+  padding: 16px;
+}
+.message-action-emoji-row {
+  display: flex;
+  gap: 6px;
+  padding: 6px;
+  background: var(--m-surface-2);
+  border-radius: 12px;
+  margin-bottom: 10px;
+  justify-content: space-between;
+}
+.message-action-emoji-btn {
+  background: transparent;
+  border: none;
+  font-size: 1.4rem;
+  padding: 8px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform .15s var(--m-ease), background .15s var(--m-ease);
+}
+.message-action-emoji-btn:hover { transform: scale(1.2); background: var(--m-surface); }
+
+.message-action-buttons {
+  display: flex; flex-direction: column; gap: 6px;
+  margin-bottom: 8px;
+}
+.message-action-btn {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 14px;
+  border: 1px solid var(--m-border);
+  background: var(--m-surface);
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--m-text);
+  transition: all .15s var(--m-ease);
+}
+.message-action-btn:hover { background: var(--m-accent-soft); }
+.message-action-btn.delete { color: var(--c-red-600); }
+.message-action-btn.delete:hover { background: #fee2e2; }
+
+.message-action-cancel {
+  width: 100%;
+  padding: 10px;
+  background: var(--m-surface-2);
+  border: none;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  color: var(--m-text);
+}
+
+/* Delete confirm modal (black-styled by user request) */
+.delete-confirm-modal {
+  text-align: center;
+  background: var(--c-0b1220);
+  color: var(--c-white);
+}
+.delete-confirm-icon {
+  display: flex; justify-content: center;
+  margin-bottom: 10px;
+}
+.delete-confirm-title {
+  margin: 0 0 6px;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--c-white);
+}
+.delete-confirm-text {
+  margin: 0 0 14px;
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.75);
+}
+.delete-confirm-preview {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 14px;
+}
+.delete-confirm-preview .preview-text {
+  margin: 0; font-size: 0.85rem; color: rgba(255,255,255,0.85);
+  font-style: italic;
+}
+.delete-confirm-actions { display: flex; gap: 10px; }
+.delete-confirm-btn {
+  flex: 1;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: none;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .15s var(--m-ease);
+}
+.delete-confirm-btn.cancel {
+  background: rgba(255,255,255,0.1);
+  color: var(--c-white);
+}
+.delete-confirm-btn.cancel:hover { background: rgba(255,255,255,0.18); }
+.delete-confirm-btn.delete {
+  background: var(--c-red-500);
+  color: var(--c-white);
+}
+.delete-confirm-btn.delete:hover { background: var(--c-red-600); }
+.delete-loading { display: inline-flex; gap: 4px; }
+.delete-loading .dot {
+  width: 6px; height: 6px;
+  background: var(--c-white);
+  border-radius: 50%;
+  animation: bounce 1.2s infinite ease-in-out;
+}
+.delete-loading .dot:nth-child(2) { animation-delay: .15s; }
+.delete-loading .dot:nth-child(3) { animation-delay: .3s; }
+@keyframes bounce { 0%,80%,100%{transform:scale(0.6);opacity:.5;} 40%{transform:scale(1);opacity:1;} }
+
+/* Inline edit (Messenger style) */
+.inline-edit-container {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 220px;
+}
+.inline-edit-input {
+  width: 100%;
+  background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.35);
+  color: var(--c-white);
+  border-radius: 10px;
+  padding: 8px 10px;
+  font-size: 0.9rem;
+  font-family: inherit;
+  resize: vertical;
+  outline: none;
+}
+.alumni-bubble .inline-edit-input {
+  background: var(--m-surface);
+  color: var(--m-text);
+  border-color: var(--m-border);
+}
+.inline-edit-actions { display: flex; gap: 6px; justify-content: flex-end; }
+.inline-edit-btn {
+  border: none; cursor: pointer;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+.inline-edit-btn.cancel { background: rgba(0,0,0,0.15); color: inherit; }
+.inline-edit-btn.save { background: var(--c-green-500); color: var(--c-white); }
+.inline-edit-hint { font-size: 0.7rem; opacity: 0.75; }
+
+/* Lightbox */
+.image-lightbox {
+  position: fixed; inset: 0;
+  background: rgba(2,6,23,0.85);
+  backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 999999;
+}
+.image-lightbox img {
+  max-width: 90vw;
+  max-height: 90vh;
+  border-radius: 14px;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+}
+.lightbox-actions {
+  position: absolute; top: 18px; right: 24px;
+  display: flex; gap: 8px;
+}
+.lightbox-close,
+.lightbox-download {
+  background: rgba(255,255,255,0.12);
+  color: var(--c-white);
+  border: 1px solid rgba(255,255,255,0.2);
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  font-size: 1.4rem;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .15s var(--m-ease);
+}
+.lightbox-close:hover, .lightbox-download:hover { background: rgba(255,255,255,0.25); }
+
+/* ============ Responsive ============ */
+@media (max-width: 900px) {
+  .messages-layout { flex-direction: column; height: auto; }
+  .conversations-sidebar { width: 100%; min-width: 0; max-height: 50vh; }
+  .chat-area { min-height: 60vh; }
+  .message-row { max-width: 90%; }
+}
+
+/* ============ BLACK THEME (white text everywhere) ============ */
+[data-theme="black"] .messages-container,
+[data-theme="black"] .alumni-messages-container {
+  --m-bg: var(--c-0a0c12);
+  --m-surface: var(--c-121620);
+  --m-surface-2: var(--c-1a1f2b);
+  --m-border: var(--c-242a36);
+  --m-border-strong: var(--c-303746);
+  --m-text: var(--c-white);
+  --m-text-muted: #c7cfdc;
+  --m-text-subtle: #8a93a3;
+  --m-shadow-xs: 0 1px 2px rgba(0,0,0,0.5);
+  --m-shadow-sm: 0 4px 14px rgba(0,0,0,0.45);
+  --m-shadow-md: 0 14px 34px rgba(0,0,0,0.55);
+  --m-shadow-lg: 0 28px 60px rgba(0,0,0,0.65);
+}
+
+/* Force white font in black theme */
+[data-theme="black"] .messages-container,
+[data-theme="black"] .messages-container *,
+[data-theme="black"] .alumni-messages-container,
+[data-theme="black"] .alumni-messages-container *,
+[data-theme="black"] .modal-content,
+[data-theme="black"] .modal-content *,
+[data-theme="black"] .message-action-modal,
+[data-theme="black"] .message-action-modal * {
+  color: var(--c-white);
+}
+
+/* Restore intentional accent colors in dark mode */
+[data-theme="black"] .dropdown-menu-item.danger,
+[data-theme="black"] .dropdown-menu-item.danger *,
+[data-theme="black"] .message-action-btn.delete,
+[data-theme="black"] .message-action-btn.delete *,
+[data-theme="black"] .modal-warning,
+[data-theme="black"] .restrict-btn { color: var(--c-red-300) !important; }
+
+[data-theme="black"] .restrict-btn.restricted { color: #86efac !important; }
+
+[data-theme="black"] .modal-btn.danger,
+[data-theme="black"] .modal-btn.danger *,
+[data-theme="black"] .delete-confirm-btn.delete,
+[data-theme="black"] .delete-confirm-btn.delete *,
+[data-theme="black"] .send-btn,
+[data-theme="black"] .send-btn *,
+[data-theme="black"] .unread-badge,
+[data-theme="black"] .total-unread-badge,
+[data-theme="black"] .alumni-unread-badge,
+[data-theme="black"] .course-pill,
+[data-theme="black"] .course-pill *,
+[data-theme="black"] .admin-status,
+[data-theme="black"] .conversations-header h2,
+[data-theme="black"] .conversations-header *,
+[data-theme="black"] .tab-btn.active,
+[data-theme="black"] .admin-bubble,
+[data-theme="black"] .alumni-header-info h2,
+[data-theme="black"] .chat-header-info h3,
+[data-theme="black"] .chat-header-info p,
+[data-theme="black"] .admin-bubble *,
+[data-theme="black"] .alumni-message.sent,
+[data-theme="black"] .alumni-message.sent *,
+[data-theme="black"] .alumni-messages-header,
+[data-theme="black"] .alumni-messages-header * { color: var(--c-white) !important; }
+
+[data-theme="black"] .course-pill.course-bsba { color: #1b1300 !important; }
+[data-theme="black"] .course-pill.course-bsba * { color: #1b1300 !important; }
+
+[data-theme="black"] .search-box input,
+[data-theme="black"] .alumni-message-input,
+[data-theme="black"] .inline-edit-input {
+  color: var(--c-white) !important;
+  background-color: var(--m-surface-2) !important;
+  border-color: var(--m-border) !important;
+}
+[data-theme="black"] .search-box input::placeholder,
+[data-theme="black"] .alumni-message-input::placeholder { color: #8a93a3 !important; }
+
+[data-theme="black"] .message-input-wrapper {
+  background: var(--m-surface-2);
+  border-color: var(--m-border);
+}
+[data-theme="black"] .alumni-bubble {
+  background: var(--m-surface-2);
+  border-color: var(--m-border);
+}
+[data-theme="black"] .reaction-badge {
+  background: var(--m-surface);
+  border-color: var(--m-border);
+}
+[data-theme="black"] .date-separator span {
+  background: var(--m-surface);
+  border-color: var(--m-border);
+  color: #c7cfdc;
+}
+
+[data-theme="black"] .restricted-notice,
+[data-theme="black"] .alumni-error-notice {
+  background: #2a1f0a;
+  border-bottom-color: #4a3a14;
+  color: var(--c-amber-200);
+}
+[data-theme="black"] .restricted-notice p,
+[data-theme="black"] .alumni-error-notice p { color: var(--c-amber-200) !important; }
+
+[data-theme="black"] .restricted-badge {
+  background: #3b1212; color: var(--c-red-300);
+}
+
+[data-theme="black"] .modal-content {
+  background: var(--m-surface);
+  border: 1px solid var(--m-border);
+}
+[data-theme="black"] .modal-btn.cancel {
+  background: var(--m-surface-2);
+  border-color: var(--m-border);
+}
+/* ==============================================
+   PATCH — Employment colors, white sidebar text
+   in dark theme, and FAQ-style modal polish.
+   ============================================== */
+
+/* ---------- Employment status colors ---------- */
+.alumni-employment {
+  font-weight: 700 !important;
+}
+.alumni-employment.employment-emp     { color: #16a34a !important; }   /* Employed = green */
+.alumni-employment.employment-under   { color: #ea580c !important; }   /* Underemployed = orange */
+.alumni-employment.employment-unemp   { color: var(--c-red-600) !important; }   /* Unemployed = red */
+
+[data-theme="black"] .alumni-employment.employment-emp   { color: #4ade80 !important; }
+[data-theme="black"] .alumni-employment.employment-under { color: #fb923c !important; }
+[data-theme="black"] .alumni-employment.employment-unemp { color: var(--c-red-400) !important; }

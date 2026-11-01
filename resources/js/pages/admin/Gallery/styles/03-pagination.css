@@ -1,0 +1,529 @@
+/* ============ Pagination ============ */
+.gal-pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 32px;
+  padding: 12px 0;
+  animation: galFadeUp 0.5s var(--ease-spring) 0.2s both;
+  flex-wrap: wrap;
+}
+
+.gal-pagination .ant-pagination-item,
+.gal-pagination .ant-pagination-prev .ant-pagination-item-link,
+.gal-pagination .ant-pagination-next .ant-pagination-item-link {
+  border-radius: 10px !important;
+  border: 1px solid var(--border) !important;
+  background: var(--surface) !important;
+  font-weight: 600;
+  transition: all 0.2s var(--ease-spring);
+}
+
+.gal-pagination .ant-pagination-item a {
+  color: var(--text) !important;
+}
+
+.gal-pagination .ant-pagination-item:hover {
+  transform: translateY(-1px);
+  border-color: var(--accent) !important;
+}
+
+.gal-pagination .ant-pagination-item-active {
+  background: linear-gradient(135deg, var(--accent), var(--accent-3)) !important;
+  border-color: transparent !important;
+  box-shadow: 0 6px 14px var(--accent-ring);
+}
+
+.gal-pagination .ant-pagination-item-active a {
+  color: var(--c-white) !important;
+}
+
+.gal-pagination .ant-pagination-total-text,
+.gal-pagination .ant-pagination-options {
+  color: var(--text-muted);
+}
+
+/* ============ Modals (Upload / Edit) — Modern Light ============ */
+.gal-modal .ant-modal {
+  padding-bottom: 0;
+}
+
+.gal-modal .ant-modal-content {
+  border-radius: 20px !important;
+  overflow: hidden;
+  background: var(--c-white) !important;
+  background-image: none !important;
+  box-shadow:
+    0 30px 80px -20px rgba(14, 165, 233, 0.25),
+    0 18px 50px -12px rgba(15, 23, 42, 0.18),
+    0 0 0 1px rgba(226, 232, 240, 0.9) !important;
+  border: none !important;
+  animation: galScaleIn 0.28s var(--ease-spring) both;
+  padding: 0 !important;
+  position: relative;
+}
+
+.gal-modal .ant-modal-header {
+  background:
+    linear-gradient(180deg, var(--c-white) 0%, var(--c-fafcff) 100%) !important;
+  background-image: linear-gradient(180deg, var(--c-white) 0%, var(--c-fafcff) 100%) !important;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.7) !important;
+  padding: 20px 24px !important;
+  margin: 0 !important;
+}
+
+.gal-modal .ant-modal-title {
+  color: var(--text) !important;
+  font-size: 17px !important;
+  font-weight: 700 !important;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  letter-spacing: -0.015em;
+}
+
+.gal-modal .ant-modal-title .anticon {
+  color: var(--accent);
+  background: linear-gradient(135deg, var(--accent-soft), rgba(99, 102, 241, 0.10));
+  padding: 9px;
+  border-radius: 12px;
+  font-size: 17px;
+  box-shadow: inset 0 0 0 1px var(--accent-ring);
+}
+
+.gal-modal .ant-modal-close {
+  top: 16px !important;
+  right: 16px !important;
+}
+
+.gal-modal .ant-modal-close-x {
+  color: var(--text-muted);
+  font-size: 13px;
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  transition: all 0.25s var(--ease-spring);
+}
+
+.gal-modal .ant-modal-close-x:hover {
+  color: var(--accent) !important;
+  background: var(--accent-soft) !important;
+  border-color: var(--accent-ring) !important;
+  transform: rotate(90deg);
+}
+
+.gal-modal .ant-modal-body {
+  background: var(--c-white) !important;
+  padding: 24px !important;
+  color: var(--text);
+}
+
+.gal-modal .ant-modal-footer {
+  background: var(--c-fafcff) !important;
+  border-top: 1px solid rgba(226, 232, 240, 0.7) !important;
+  padding: 16px 24px !important;
+  margin: 0 !important;
+}
+
+.gal-modal .ant-form-item-label>label {
+  color: var(--text) !important;
+  font-weight: 600;
+  font-size: 13.5px;
+}
+
+.gal-modal .ant-input,
+.gal-modal .ant-picker,
+.gal-modal .ant-input-affix-wrapper,
+.gal-modal .ant-input-number,
+.gal-modal textarea.ant-input,
+.gal-modal .ant-select:not(.ant-select-customize-input) .ant-select-selector {
+  background: var(--c-slate-50) !important;
+  border: 1.5px solid var(--border) !important;
+  color: var(--text) !important;
+  border-radius: 12px !important;
+  padding: 8px 14px !important;
+  transition: all 0.2s var(--ease-spring);
+  box-shadow: none !important;
+}
+
+.gal-modal .ant-input:hover,
+.gal-modal .ant-picker:hover,
+.gal-modal .ant-input-affix-wrapper:hover,
+.gal-modal .ant-select:not(.ant-select-disabled):hover .ant-select-selector {
+  border-color: var(--accent-ring) !important;
+  background: var(--c-white) !important;
+}
+
+.gal-modal .ant-input::placeholder,
+.gal-modal textarea.ant-input::placeholder,
+.gal-modal .ant-picker-input>input::placeholder {
+  color: var(--text-subtle) !important;
+}
+
+.gal-modal .ant-input:focus,
+.gal-modal .ant-picker-focused,
+.gal-modal .ant-input-affix-wrapper-focused,
+.gal-modal .ant-select-focused:not(.ant-select-disabled) .ant-select-selector {
+  border-color: var(--accent) !important;
+  background: var(--c-white) !important;
+  box-shadow: 0 0 0 4px var(--accent-soft) !important;
+}
+
+.gal-modal .ant-picker-suffix,
+.gal-modal .ant-select-arrow,
+.gal-modal .ant-input-prefix,
+.gal-modal .ant-input-suffix {
+  color: var(--text-muted) !important;
+}
+
+.gal-upload-dragger {
+  border-radius: var(--radius-md) !important;
+  border: 2px dashed var(--border-strong) !important;
+  background:
+    linear-gradient(180deg, var(--c-fafcff) 0%, var(--c-slate-100) 100%) !important;
+  transition: all 0.3s var(--ease-spring);
+  padding: 8px 0 !important;
+}
+
+.gal-upload-dragger:hover {
+  border-color: var(--accent) !important;
+  background:
+    linear-gradient(180deg, rgba(14, 165, 233, 0.04), rgba(99, 102, 241, 0.06)) !important;
+  transform: translateY(-1px);
+}
+
+.gal-upload-dragger .ant-upload-drag-icon {
+  color: var(--accent);
+  font-size: 46px;
+  margin-bottom: 14px;
+  animation: galFloat 3s ease-in-out infinite;
+}
+
+.gal-upload-dragger .ant-upload-text {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text) !important;
+}
+
+.gal-upload-dragger .ant-upload-hint {
+  font-size: 12.5px;
+  color: var(--text-muted) !important;
+}
+
+.gal-upload-dragger .ant-upload-list,
+.gal-upload-dragger .ant-upload-list-item-name {
+  color: var(--text) !important;
+}
+
+.gal-upload-dragger .ant-upload-list-item {
+  background: var(--c-white) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 10px !important;
+  padding: 8px 12px !important;
+  margin-top: 6px !important;
+}
+
+.gal-modal-actions {
+  margin-bottom: 0 !important;
+  margin-top: 24px !important;
+  text-align: right;
+  padding-top: 18px;
+  border-top: 1px solid rgba(226, 232, 240, 0.6);
+}
+
+.gal-modal-actions .ant-btn {
+  border-radius: 12px !important;
+  height: 42px;
+  padding: 0 20px !important;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.25s var(--ease-spring);
+}
+
+.gal-modal-actions .ant-btn-default {
+  background: var(--surface) !important;
+  border: 1.5px solid var(--border-strong) !important;
+  color: var(--text) !important;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+
+.gal-modal-actions .ant-btn-default:hover {
+  background: var(--surface-2) !important;
+  border-color: var(--accent) !important;
+  color: var(--accent) !important;
+  transform: translateY(-1px);
+}
+
+.gal-modal-actions .ant-btn-primary {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-3) 100%) !important;
+  border: none !important;
+  color: var(--c-white) !important;
+  box-shadow:
+    0 8px 20px rgba(14, 165, 233, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.gal-modal-actions .ant-btn-primary::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.28), transparent);
+  animation: galShine 2.8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.gal-modal-actions .ant-btn-primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow:
+    0 12px 28px rgba(14, 165, 233, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
+  filter: brightness(1.05);
+}
+
+/* Fix: disabled primary button — keep it visible, not invisible gray-on-white */
+.gal-modal-actions .ant-btn-primary:disabled,
+.gal-modal-actions .ant-btn-primary[disabled],
+.gal-modal-actions .ant-btn-primary.ant-btn-disabled {
+  background: linear-gradient(135deg, var(--c-slate-400) 0%, var(--c-slate-300) 100%) !important;
+  color: var(--c-white) !important;
+  border: none !important;
+  opacity: 0.85 !important;
+  box-shadow: 0 4px 12px rgba(148, 163, 184, 0.30) !important;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.gal-modal-actions .ant-btn-primary:disabled::after,
+.gal-modal-actions .ant-btn-primary[disabled]::after {
+  display: none;
+}
+
+.gal-modal-actions .ant-btn-primary:disabled .anticon,
+.gal-modal-actions .ant-btn-primary[disabled] .anticon {
+  color: var(--c-white) !important;
+}
+
+/* Edit modal preview */
+.gal-current-image-preview {
+  margin-bottom: 18px;
+  padding: 16px;
+  background:
+    linear-gradient(180deg, var(--c-fafcff) 0%, var(--c-slate-100) 100%);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  animation: galFadeUp 0.3s var(--ease-spring) both;
+}
+
+.gal-current-image-preview .ant-typography {
+  color: var(--text-muted) !important;
+  font-weight: 600;
+}
+
+.gal-preview-grid {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.gal-preview-thumb {
+  width: 66px;
+  height: 66px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-xs);
+  transition: transform 0.25s var(--ease-spring);
+}
+
+.gal-preview-thumb:hover {
+  transform: scale(1.08);
+  border-color: var(--accent);
+}
+
+.gal-preview-more {
+  width: 66px;
+  height: 66px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--accent), var(--accent-3));
+  color: var(--c-white);
+  font-weight: 700;
+  font-size: 14px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px var(--accent-ring);
+}
+
+/* ============ Delete Modal — Modern Light ============ */
+.gal-delete-modal .ant-modal-content {
+  border-radius: 20px !important;
+  background: var(--c-white) !important;
+  background-image: none !important;
+  border: none !important;
+  overflow: hidden;
+  box-shadow:
+    0 30px 80px -20px rgba(239, 68, 68, 0.25),
+    0 18px 50px -12px rgba(15, 23, 42, 0.18),
+    0 0 0 1px rgba(226, 232, 240, 0.9) !important;
+  animation: galScaleIn 0.28s var(--ease-spring) both;
+  position: relative;
+}
+
+.gal-delete-modal .ant-modal-header {
+  background: linear-gradient(180deg, var(--c-white), #fff5f5) !important;
+  background-image: linear-gradient(180deg, var(--c-white), #fff5f5) !important;
+  border-bottom: 1px solid rgba(254, 202, 202, 0.5) !important;
+  padding: 20px 24px !important;
+}
+
+.gal-delete-modal .ant-modal-body {
+  background: var(--c-white) !important;
+  color: var(--text);
+  padding: 24px !important;
+}
+
+.gal-delete-modal .ant-modal-footer {
+  background: var(--c-fafcff) !important;
+  border-top: 1px solid rgba(226, 232, 240, 0.7) !important;
+  padding: 16px 24px !important;
+}
+
+.gal-delete-modal .ant-modal-title {
+  color: var(--text) !important;
+  font-weight: 700 !important;
+  font-size: 17px !important;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  letter-spacing: -0.015em;
+}
+
+.gal-delete-modal .ant-modal-title .anticon {
+  color: var(--c-red-500);
+  background: rgba(239, 68, 68, 0.10);
+  padding: 9px;
+  border-radius: 12px;
+  box-shadow: inset 0 0 0 1px rgba(239, 68, 68, 0.22);
+}
+
+.gal-delete-modal .ant-modal-close-x {
+  color: var(--text-muted);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s var(--ease-spring);
+}
+
+.gal-delete-modal .ant-modal-close-x:hover {
+  color: var(--c-red-500) !important;
+  background: rgba(239, 68, 68, 0.10) !important;
+  border-color: rgba(239, 68, 68, 0.25) !important;
+  transform: rotate(90deg);
+}
+
+.gal-delete-modal .ant-btn {
+  border-radius: 12px !important;
+  font-weight: 600;
+  height: 42px;
+  padding: 0 20px !important;
+  font-size: 14px;
+  transition: all 0.25s var(--ease-spring);
+}
+
+.gal-delete-modal .ant-btn-default {
+  background: var(--surface) !important;
+  border: 1.5px solid var(--border-strong) !important;
+  color: var(--text) !important;
+}
+
+.gal-delete-modal .ant-btn-default:hover {
+  background: var(--surface-2) !important;
+  border-color: var(--text-muted) !important;
+  color: var(--text) !important;
+  transform: translateY(-1px);
+}
+
+.gal-delete-modal .ant-btn-dangerous,
+.gal-delete-modal .ant-btn-primary.ant-btn-dangerous {
+  background: linear-gradient(135deg, var(--c-red-500) 0%, var(--c-red-700) 100%) !important;
+  border: none !important;
+  color: var(--c-white) !important;
+  box-shadow:
+    0 8px 20px rgba(239, 68, 68, 0.40),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+}
+
+.gal-delete-modal .ant-btn-dangerous:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 12px 28px rgba(239, 68, 68, 0.50),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
+  filter: brightness(1.05);
+}
+
+.gal-delete-preview {
+  text-align: center;
+  margin: 18px 0;
+  padding: 20px;
+  background:
+    linear-gradient(180deg, var(--c-fafcff) 0%, var(--c-slate-100) 100%);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+}
+
+.gal-delete-preview .ant-typography {
+  color: var(--text) !important;
+}
+
+.gal-delete-images {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.gal-delete-images img {
+  width: 72px;
+  height: 72px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: var(--shadow-xs);
+  border: 1px solid var(--border);
+}
+
+.gal-delete-more {
+  width: 72px;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--accent), var(--accent-3));
+  color: var(--c-white);
+  font-weight: 700;
+  font-size: 16px;
+  border-radius: 10px;
+}
+
+.gal-delete-warning {
+  color: var(--c-red-500);
+  font-size: 12.5px;
+  margin-top: 16px;
+  font-style: italic;
+  font-weight: 500;
+}

@@ -1,8 +1,3 @@
-// import Api from "../utils/api"
-// import { delay } from "../utils/helper"
-// import secureLocalStorage from "react-secure-storage"
-// import axiosConfig from "~/utils/axiosConfig"
-// import { BASE_URL } from "~/utils/constant"
 
 // const checkLogin = async ({ params, set, get }) => {
 //   const setSubmit = get().setSubmit
@@ -78,6 +73,8 @@ import { delay } from "../utils/helper"
 import secureLocalStorage from "react-secure-storage"
 import axiosConfig from "~/utils/axiosConfig"
 import { BASE_URL } from "~/utils/constant"
+import { ROLES } from "~/config/roles";
+import { STORAGE_KEYS } from "~/config/storageKeys";
 
 // Reads ?redirect=/some-path from the current URL (e.g. when a user lands on
 // /login?redirect=/messages from an email button) and returns it only if it
@@ -117,19 +114,19 @@ const checkLogin = async ({ params, set, get }) => {
       // in JS-readable form at all, so there is nothing to store here.
       // The other values below are just cached, non-secret profile
       // display data (not credentials), kept for UI convenience.
-      secureLocalStorage.setItem("faculty_id", result?.data?.faculty_id)
-      secureLocalStorage.setItem("userID", result?.data?.user?.id)
-      secureLocalStorage.setItem("userRole", result?.data?.user?.role)
-      secureLocalStorage.setItem("email", result?.data?.user?.email)
-      secureLocalStorage.setItem("name", result?.data?.user?.name)
+      secureLocalStorage.setItem(STORAGE_KEYS.FACULTY_ID, result?.data?.faculty_id)
+      secureLocalStorage.setItem(STORAGE_KEYS.USER_ID, result?.data?.user?.id)
+      secureLocalStorage.setItem(STORAGE_KEYS.USER_ROLE, result?.data?.user?.role)
+      secureLocalStorage.setItem(STORAGE_KEYS.EMAIL, result?.data?.user?.email)
+      secureLocalStorage.setItem(STORAGE_KEYS.NAME, result?.data?.user?.name)
 
       // Store alumni_id if the logged-in user is an alumni
       if (result?.data?.alumni_id) {
-        secureLocalStorage.setItem("alumniId", result.data.alumni_id)
+        secureLocalStorage.setItem(STORAGE_KEYS.ALUMNI_ID, result.data.alumni_id)
       }
 
-      if (result?.data?.user?.role === "department_head" && result?.data?.course_id) {
-        secureLocalStorage.setItem("courseId", result.data.course_id)
+      if (result?.data?.user?.role === ROLES.DEPARTMENT_HEAD && result?.data?.course_id) {
+        secureLocalStorage.setItem(STORAGE_KEYS.COURSE_ID, result.data.course_id)
       }
 
       const userRole = result?.data?.user?.role
@@ -143,7 +140,7 @@ const checkLogin = async ({ params, set, get }) => {
         return
       }
 
-      if (userRole === "department_head") {
+      if (userRole === ROLES.DEPARTMENT_HEAD) {
         window.location = "/department-dashboard"
         return
       }
@@ -171,13 +168,13 @@ const logout = async () => {
     // Clear all local storage items (Phase 6: access_token is no longer
     // stored here at all — it's an HttpOnly cookie the browser controls;
     // logout revokes it and clears the cookie server-side instead).
-    secureLocalStorage.removeItem("faculty_id")
-    secureLocalStorage.removeItem("userID")
-    secureLocalStorage.removeItem("userRole")
-    secureLocalStorage.removeItem("email")
-    secureLocalStorage.removeItem("name")
-    secureLocalStorage.removeItem("courseId")
-    secureLocalStorage.removeItem("alumniId")
+    secureLocalStorage.removeItem(STORAGE_KEYS.FACULTY_ID)
+    secureLocalStorage.removeItem(STORAGE_KEYS.USER_ID)
+    secureLocalStorage.removeItem(STORAGE_KEYS.USER_ROLE)
+    secureLocalStorage.removeItem(STORAGE_KEYS.EMAIL)
+    secureLocalStorage.removeItem(STORAGE_KEYS.NAME)
+    secureLocalStorage.removeItem(STORAGE_KEYS.COURSE_ID)
+    secureLocalStorage.removeItem(STORAGE_KEYS.ALUMNI_ID)
 
     // Redirect to login page
     window.location = "/login"

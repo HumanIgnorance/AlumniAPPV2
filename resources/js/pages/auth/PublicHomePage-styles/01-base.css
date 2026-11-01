@@ -1,0 +1,508 @@
+/* ==========================================================================
+   PublicHomePage.css
+   OCC Alumni — Public Landing Page
+   Design tokens shared with MainPage.js / AboutPage.css (indigo / cyan / purple)
+   ========================================================================== */
+
+:root {
+  --ph-accent: var(--c-indigo-600);
+  --ph-accent-2: var(--c-sky-500);
+  --ph-accent-3: var(--c-violet-600);
+  --ph-warm: var(--c-amber-500);
+  --ph-radius-lg: 26px;
+  --ph-radius-md: 18px;
+  --ph-radius-sm: 12px;
+  /* Real header height, measured live in JS (ResizeObserver) and written
+     onto :root as --ph-header-h. The value below is only a fallback for
+     the very first paint before JS measures it. Everything that needs to
+     sit exactly under the floating header (page content, mobile panel)
+     reads this single variable, so there is never a guessed pixel value
+     to fall out of sync with the real header. */
+  --ph-header-h: 72px;
+}
+
+.ph-page {
+  min-height: 100vh;
+  width: 100%;
+  max-width: 100vw;
+  font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  transition: background 0.4s ease, color 0.4s ease;
+  /* IMPORTANT: no overflow-x (or any overflow) rule here. .ph-header is
+     position: fixed, and on iOS Safari a fixed-position descendant of an
+     ancestor with any `overflow` set (even just overflow-x: hidden) can
+     make the browser miscalculate the page's total scrollable height,
+     silently cutting scrolling short right before the real bottom of the
+     document — the footer would be the first casualty since it's last.
+     Desktop/Chrome don't have this bug, which is why it only shows up on
+     phones. Horizontal bleed is instead clipped per-section below
+     (.ph-hero, .ph-cta-banner, .ph-gallery-item already do this), and
+     max-width: 100vw above stops the page itself from ever being wider
+     than the viewport. Do not re-add overflow-x: hidden here. */
+  /* The header is now position: fixed (see .ph-header) so it no longer
+     takes up space in normal document flow. This padding pushes all page
+     content down by exactly the header's real height so nothing sits
+     underneath it, on desktop, laptop, and every mobile orientation. */
+  padding-top: var(--ph-header-h);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
+
+.ph-page.light {
+  color: var(--c-0b1220);
+  background: var(--c-f4f7fb);
+}
+
+.ph-page.dark {
+  color: var(--c-e7ecf3);
+  background: var(--c-0a0c12);
+}
+
+.ph-page * {
+  box-sizing: border-box;
+}
+
+.ph-container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+/* ============ HEADER ============ */
+/* position: fixed (not sticky) — sticky breaks whenever an ancestor has
+   any overflow rule (here .ph-page has overflow-x: hidden), which was
+   why the header could scroll away instead of staying visible. Fixed is
+   immune to that and truly floats on top of the page at all times, on
+   desktop, laptop, and every mobile size/orientation. */
+.ph-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 32px;
+  /* iOS notch safe area: in portrait this just adds a few px of top
+     padding (notch sits top-center); in landscape safe-area-inset-top
+     is 0 but left/right become real values since the notch shifts to
+     whichever side it lands on. Since this header's real height is
+     measured live via ResizeObserver into --ph-header-h, growing the
+     header here automatically pushes .ph-page's content down to
+     match — no separate fix needed anywhere else for this part.
+     env() is 0 on Android/non-notched devices, so this is a no-op
+     there. */
+  padding-top: calc(14px + env(safe-area-inset-top));
+  padding-left: calc(32px + env(safe-area-inset-left));
+  padding-right: calc(32px + env(safe-area-inset-right));
+  box-sizing: border-box;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid transparent;
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.ph-page.light .ph-header {
+  background: rgba(255, 255, 255, 0.82);
+  border-bottom-color: var(--c-e6eaf1);
+}
+
+.ph-page.dark .ph-header {
+  background: rgba(10, 12, 18, 0.82);
+  border-bottom-color: var(--c-1d2230);
+}
+
+.ph-header.scrolled.light {
+  box-shadow: 0 8px 24px rgba(2, 6, 23, 0.06);
+}
+
+.ph-header.scrolled.dark {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.ph-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.ph-brand img {
+  height: 34px;
+  width: 34px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.ph-brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.ph-brand-title {
+  font-weight: 800;
+  font-size: 16px;
+  letter-spacing: -0.01em;
+  color: inherit;
+}
+
+.ph-brand-title .grad {
+  background: linear-gradient(135deg, var(--ph-accent), var(--ph-accent-3) 55%, var(--ph-accent-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.ph-brand-sub {
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.55;
+  font-weight: 600;
+}
+
+.ph-nav {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.ph-nav-link {
+  font-size: 14.5px;
+  font-weight: 600;
+  opacity: 0.8;
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: inherit;
+  padding: 6px 2px;
+  position: relative;
+  transition: opacity 0.2s ease, color 0.2s ease;
+  font-family: inherit;
+}
+
+.ph-nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 0%;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--ph-accent), var(--ph-accent-2));
+  transition: width 0.25s ease;
+}
+
+.ph-nav-link:hover {
+  opacity: 1;
+}
+
+.ph-nav-link:hover::after {
+  width: 100%;
+}
+
+/* "Events" nav dropdown trigger — same look as the plain nav links,
+   plus a small caret so it reads as a dropdown, not a scroll link. */
+.ph-nav-link-dropdown {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.ph-nav-link-caret {
+  font-size: 10px;
+  opacity: 0.7;
+  transition: transform 0.2s ease;
+}
+
+.ph-nav-link-dropdown:hover .ph-nav-link-caret {
+  transform: translateY(1px);
+}
+
+/* Dropdown menu overlay — matches the site's card surface so it
+   doesn't look like a generic default AntD popup. */
+.ph-events-dropdown-overlay .ant-dropdown-menu {
+  border-radius: var(--ph-radius-sm);
+  padding: 6px;
+  min-width: 170px;
+}
+
+.ph-events-dropdown-overlay .ant-dropdown-menu-item {
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 13.5px;
+  padding: 9px 12px;
+}
+
+.ph-events-dropdown-overlay .ant-dropdown-menu-item .anticon {
+  color: var(--ph-accent);
+  margin-right: 4px;
+}
+
+.ph-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.ph-theme-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: 1px solid var(--c-slate-300);
+  background: var(--c-white);
+  color: var(--ph-accent);
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease, border-color 0.2s;
+  flex-shrink: 0;
+}
+
+.ph-theme-btn:hover {
+  transform: rotate(-10deg) scale(1.06);
+  box-shadow: 0 0 0 6px rgba(79, 70, 229, 0.1);
+}
+
+.ph-page.dark .ph-theme-btn {
+  background: var(--c-121620);
+  border-color: var(--c-303746);
+  color: var(--c-blue-400);
+}
+
+.ph-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 9px 20px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  border: 1.5px solid transparent;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  white-space: nowrap;
+  font-family: inherit;
+}
+
+.ph-btn:active {
+  transform: scale(0.97);
+}
+
+.ph-btn-ghost {
+  background: transparent;
+  border-color: var(--ph-accent);
+  color: var(--ph-accent);
+}
+
+.ph-page.dark .ph-btn-ghost {
+  border-color: #6d68f2;
+  color: var(--c-a5a1f7);
+}
+
+.ph-btn-ghost:hover {
+  background: rgba(79, 70, 229, 0.08);
+}
+
+.ph-btn-solid {
+  background: linear-gradient(135deg, var(--ph-accent), var(--ph-accent-3));
+  color: var(--c-white);
+  box-shadow: 0 10px 24px rgba(79, 70, 229, 0.28);
+}
+
+.ph-btn-solid:hover {
+  box-shadow: 0 14px 30px rgba(79, 70, 229, 0.38);
+  transform: translateY(-1px);
+}
+
+.ph-btn-warm {
+  background: linear-gradient(135deg, var(--ph-warm), #fb923c);
+  color: var(--c-white);
+  box-shadow: 0 10px 24px rgba(245, 158, 11, 0.28);
+}
+
+.ph-btn-warm:hover {
+  box-shadow: 0 14px 30px rgba(245, 158, 11, 0.38);
+  transform: translateY(-1px);
+}
+
+.ph-btn-lg {
+  padding: 13px 26px;
+  font-size: 15px;
+}
+
+.ph-burger {
+  display: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  border: 1px solid var(--c-slate-300);
+  background: transparent;
+  color: inherit;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 18px;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.ph-page.dark .ph-burger {
+  border-color: var(--c-303746);
+}
+
+.ph-burger.open {
+  background: var(--ph-accent);
+  border-color: var(--ph-accent);
+  color: var(--c-white);
+  transform: rotate(90deg);
+}
+
+/* ============ MOBILE NAV PANEL (floats fixed under the header) ============ */
+/* Replaces the old full-screen slide-in drawer. This panel floats
+   (position: fixed) directly under the header, like a dropdown, so it
+   never pushes the rest of the page (hero, sections, footer) down and
+   adds no dead space — the page underneath stays reachable by
+   scrolling while the panel is open, in both portrait and landscape. */
+.ph-mobile-panel {
+  /* fixed + var(--ph-header-h), same fix as the header above: sits
+     exactly flush under the real header on every screen, in both
+     portrait and landscape, with no hardcoded/guessed offset and no
+     gap or overlap. Because it's fixed (not in normal flow) it overlays
+     the hero instead of pushing the page content down, so opening it
+     never adds dead space. */
+  position: fixed;
+  top: var(--ph-header-h);
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 480;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  /* iOS notch safe area: the header (above) already reserves this
+     space via padding-left/right, but this panel is a separate fixed
+     element and never inherited it — so in landscape its links sat
+     flush against the edge, right under the camera/notch cutout.
+     env() is 0 on Android/non-notched devices, so this is a no-op
+     there. */
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+  box-sizing: border-box;
+}
+
+.ph-mobile-panel.open {
+  /* Capped to whichever is smaller: the space left under the header, or
+     60% of the viewport. With the links now wrapped horizontally the
+     panel is short enough that this cap is rarely hit, but on very
+     short landscape phones it stops the open panel from ever filling
+     the whole screen and blocking the hero/footer beneath it. Scrolls
+     internally if its content is taller than the cap. */
+  max-height: min(calc(100vh - var(--ph-header-h)), 60vh);
+  overflow-y: auto;
+}
+
+.ph-page.light .ph-mobile-panel {
+  background: var(--c-white);
+  border-bottom: 1px solid var(--c-e6eaf1);
+  box-shadow: 0 14px 28px rgba(2, 6, 23, 0.08);
+}
+
+.ph-page.dark .ph-mobile-panel {
+  background: #10131c;
+  border-bottom: 1px solid var(--c-1d2230);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.4);
+}
+
+.ph-mobile-panel-inner {
+  padding: 16px 20px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Horizontal, wrapping row of chips — same idea as the desktop .ph-nav
+   row, just allowed to wrap onto a 2nd/3rd line instead of a single
+   line. This is what actually removes the dead space: 6 links stacked
+   one-per-row (the old layout) run ~330px tall; wrapped into rows of
+   2-3 they run ~90-110px tall, so the whole panel — and the gap before
+   the footer becomes reachable — shrinks dramatically, in both
+   portrait and landscape. */
+.ph-mobile-panel-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.ph-mobile-panel-link {
+  flex: 0 0 auto;
+  padding: 9px 16px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 700;
+  border: 1.5px solid transparent;
+  background: none;
+  color: inherit;
+  text-align: center;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.ph-page.light .ph-mobile-panel-link {
+  background: #f4f6fb;
+  border-color: var(--c-e6eaf1);
+}
+
+.ph-page.dark .ph-mobile-panel-link {
+  background: #171b26;
+  border-color: var(--c-242a36);
+}
+
+.ph-mobile-panel-link:active,
+.ph-mobile-panel-link:hover {
+  border-color: var(--ph-accent);
+  color: var(--ph-accent);
+}
+
+.ph-page.dark .ph-mobile-panel-link:active,
+.ph-page.dark .ph-mobile-panel-link:hover {
+  color: var(--c-a5a1f7);
+}
+
+/* Events sub-group inside the mobile panel — the label and the row of
+   4 section buttons each force a full-width flex line (flex-basis:
+   100%) so they break onto their own rows inside the wrapping
+   .ph-mobile-panel-links row, instead of getting squeezed in beside
+   the other pill buttons. */
+.ph-mobile-panel-group-label {
+  flex: 1 0 100%;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.5;
+  margin-top: 10px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(148, 163, 184, 0.25);
+}
+
+.ph-mobile-panel-events-group {
+  flex: 1 0 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.ph-mobile-panel-event-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}

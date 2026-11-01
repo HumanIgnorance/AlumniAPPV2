@@ -25,7 +25,6 @@
  * ─────────────────────────────────────────────────────────────
  */
 
-import React from "react";
 import { Modal, Button, Space, Typography, Divider, Alert } from "antd";
 import {
     SafetyCertificateOutlined,
@@ -39,6 +38,7 @@ import {
     CheckCircleOutlined,
     BookOutlined,
 } from "@ant-design/icons";
+import { COLORS } from "~/config/theme";
 
 const { Title, Paragraph } = Typography;
 
@@ -398,7 +398,7 @@ const LegalModals = ({
                         }}
                     >
                         <SafetyCertificateOutlined
-                            style={{ fontSize: "20px", color: "#1890ff" }}
+                            style={{ fontSize: "20px", color: COLORS.antdBlue }}
                         />
                         <span>Privacy Policy</span>
                     </div>
@@ -445,7 +445,7 @@ const LegalModals = ({
                         }}
                     >
                         <IdcardOutlined
-                            style={{ fontSize: "20px", color: "#1890ff" }}
+                            style={{ fontSize: "20px", color: COLORS.antdBlue }}
                         />
                         <span>Terms of Service</span>
                     </div>

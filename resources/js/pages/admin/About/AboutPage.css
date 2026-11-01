@@ -1,28 +1,5 @@
 /* ============ Design Tokens ============ */
 .about-page {
-  --ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
-  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
-  --accent: #4f46e5;
-  --accent-2: #7c3aed;
-  --accent-3: #0ea5e9;
-  --accent-soft: rgba(79, 70, 229, 0.08);
-  --accent-ring: rgba(79, 70, 229, 0.22);
-  --bg: #f6f7fb;
-  --surface: #ffffff;
-  --surface-2: #f3f4f6;
-  --border: #e5e7eb;
-  --border-strong: #d1d5db;
-  --text: #0f172a;
-  --text-muted: #64748b;
-  --text-subtle: #94a3b8;
-  --shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.04);
-  --shadow-sm: 0 2px 10px rgba(15, 23, 42, 0.06);
-  --shadow-md: 0 10px 28px rgba(15, 23, 42, 0.08);
-  --shadow-lg: 0 22px 48px rgba(15, 23, 42, 0.14);
-  --radius-sm: 10px;
-  --radius-md: 14px;
-  --radius-lg: 18px;
-  --radius-xl: 24px;
 
 
      padding: 24px;
@@ -30,8 +7,6 @@
   min-height: 100vh;
   position: relative;
   z-index: 1;
-
-
 
   color: var(--text);
   font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI",
@@ -60,23 +35,6 @@
 .back-to-login-btn:focus {
   color: var(--accent) !important;
   background: var(--accent-soft) !important;
-}
-
-/* Dark theme support */
-[data-theme="black"] .about-page {
-  --bg: #0b0c10;
-  --surface: #14161d;
-  --surface-2: #1b1e27;
-  --border: #262a33;
-  --border-strong: #2f3440;
-  --text: #e7e9ee;
-  --text-muted: #9ba3af;
-  --text-subtle: #6b7280;
-  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.4);
-  --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.35);
-  --shadow-md: 0 10px 28px rgba(0, 0, 0, 0.45);
-  --shadow-lg: 0 22px 48px rgba(0, 0, 0, 0.55);
-  --accent-soft: rgba(99, 102, 241, 0.14);
 }
 
 /* ============ Keyframes ============ */
@@ -171,7 +129,7 @@
 .orb-1 {
   width: 260px;
   height: 260px;
-  background: #6366f1;
+  background: var(--c-indigo-500);
   top: -60px;
   left: -40px;
 }
@@ -179,7 +137,7 @@
 .orb-2 {
   width: 320px;
   height: 320px;
-  background: #06b6d4;
+  background: var(--c-cyan-500);
   bottom: -120px;
   right: -60px;
   animation-duration: 18s;
@@ -188,7 +146,7 @@
 .orb-3 {
   width: 200px;
   height: 200px;
-  background: #a855f7;
+  background: var(--c-purple-500);
   top: 40%;
   left: 50%;
   animation-duration: 22s;
@@ -503,7 +461,7 @@
   justify-content: center;
   border-radius: 10px;
   background: linear-gradient(135deg, var(--accent), var(--accent-2));
-  color: #fff;
+  color: var(--c-white);
   font-size: 16px;
   flex-shrink: 0;
 }
@@ -600,7 +558,7 @@
   justify-content: center;
   border-radius: 10px;
   background: linear-gradient(135deg, var(--accent), var(--accent-2));
-  color: #fff;
+  color: var(--c-white);
   font-weight: 700;
   font-size: 13px;
   letter-spacing: 0.02em;

@@ -1,0 +1,172 @@
+/* === DARK THEME: Resume Viewer + Application Info Cards ===== */
+/* ============================================================ */
+
+/* Resume viewer card wrapper */
+.resume-viewer-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #f0f4ff, #e8eeff);
+  border: 1.5px solid var(--c-indigo-200);
+  margin-top: 6px;
+}
+
+[data-theme="black"] .resume-viewer-card {
+  background: linear-gradient(135deg, #1e2235, #1a1d2e) !important;
+  border-color: #3a3f6e !important;
+}
+
+/* Icon bg inside resume card */
+.resume-viewer-icon-bg {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.resume-viewer-icon-bg--pdf {
+  background: #fff1f0;
+}
+.resume-viewer-icon-bg--doc {
+  background: var(--c-e6f4ff);
+}
+.resume-viewer-icon-bg--image {
+  background: var(--c-f6ffed);
+}
+.resume-viewer-icon-bg--default {
+  background: var(--c-neutral-100);
+}
+
+[data-theme="black"] .resume-viewer-icon-bg--pdf {
+  background: #2d1a1a !important;
+}
+[data-theme="black"] .resume-viewer-icon-bg--doc {
+  background: #1a2030 !important;
+}
+[data-theme="black"] .resume-viewer-icon-bg--image {
+  background: #1a2a1a !important;
+}
+[data-theme="black"] .resume-viewer-icon-bg--default {
+  background: var(--c-252525) !important;
+}
+
+/* Resume viewer text */
+[data-theme="black"] .resume-viewer-card .ant-typography {
+  color: var(--c-e0e0e0) !important;
+}
+[data-theme="black"] .resume-viewer-card .ant-typography.ant-typography-secondary {
+  color: var(--c-888888) !important;
+}
+
+/* Contact info card (green tint) inside application drawer */
+.applicant-contact-card {
+  background: var(--c-f6ffed) !important;
+  border-color: #b7eb8f !important;
+}
+
+[data-theme="black"] .applicant-contact-card {
+  background: #141f14 !important;
+  border-color: #2a4a2a !important;
+}
+
+[data-theme="black"] .applicant-contact-card .ant-card-head {
+  background: #141f14 !important;
+  border-bottom-color: #2a4a2a !important;
+  color: #9fe89f !important;
+}
+
+[data-theme="black"] .applicant-contact-card .ant-card-head-title,
+[data-theme="black"] .applicant-contact-card .ant-card-head .anticon {
+  color: #9fe89f !important;
+}
+
+[data-theme="black"] .applicant-contact-card .ant-typography {
+  color: #c8e6c8 !important;
+}
+
+[data-theme="black"] .applicant-contact-card .ant-typography.ant-typography-secondary {
+  color: #6a986a !important;
+}
+
+/* Career info card (blue tint) inside application drawer */
+.applicant-career-card {
+  background: var(--c-e6f7ff) !important;
+  border-color: #91d5ff !important;
+}
+
+[data-theme="black"] .applicant-career-card {
+  background: #111e2d !important;
+  border-color: #1a3d5c !important;
+}
+
+[data-theme="black"] .applicant-career-card .ant-card-head {
+  background: #111e2d !important;
+  border-bottom-color: #1a3d5c !important;
+  color: #69b8ff !important;
+}
+
+[data-theme="black"] .applicant-career-card .ant-card-head-title,
+[data-theme="black"] .applicant-career-card .ant-card-head .anticon {
+  color: #69b8ff !important;
+}
+
+[data-theme="black"] .applicant-career-card .ant-typography {
+  color: #b0d4f0 !important;
+}
+
+[data-theme="black"] .applicant-career-card .ant-typography.ant-typography-secondary {
+  color: #4a7a9e !important;
+}
+
+/* ID document card */
+[data-theme="black"] .ant-card.id-doc-card {
+  background: var(--c-ink-1a) !important;
+  border-color: var(--c-gray-333) !important;
+}
+
+[data-theme="black"] .ant-card.id-doc-card .ant-card-body {
+  background: var(--c-ink-1a) !important;
+}
+
+/* Application card inner cards (general small cards inside applications-drawer) */
+[data-theme="black"] .applications-drawer .ant-card-small {
+  background: #1e1e1e;
+  border-color: var(--c-gray-333);
+  color: var(--c-e0e0e0);
+}
+
+[data-theme="black"] .applications-drawer .ant-card-small .ant-card-head {
+  background: var(--c-252525);
+  border-bottom-color: var(--c-gray-333);
+  color: var(--c-e0e0e0);
+}
+
+[data-theme="black"] .applications-drawer .ant-card-small .ant-card-body {
+  background: #1e1e1e;
+}
+
+/* Document viewer modal dark */
+[data-theme="black"] .ant-modal-content {
+  background: var(--c-ink-1a);
+  color: var(--c-e0e0e0);
+}
+[data-theme="black"] .ant-modal-header {
+  background: var(--c-1f1f1f);
+  border-bottom-color: var(--c-gray-333);
+}
+[data-theme="black"] .ant-modal-title {
+  color: var(--c-white);
+}
+[data-theme="black"] .ant-modal-body {
+  background: var(--c-ink-1a);
+}
+[data-theme="black"] .ant-modal-footer {
+  background: var(--c-1f1f1f);
+  border-top-color: var(--c-gray-333);
+}

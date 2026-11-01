@@ -55,11 +55,11 @@
 }
 
 .ph-page.light .pjp-section + .pjp-section {
-  border-top-color: #edf0f5;
+  border-top-color: var(--c-edf0f5);
 }
 
 .ph-page.dark .pjp-section + .pjp-section {
-  border-top-color: #1d2230;
+  border-top-color: var(--c-1d2230);
 }
 
 /* ============ JOB CARD ============ */
@@ -133,7 +133,7 @@
 
 .pjp-badge.is-fulltime {
   background: rgba(16, 185, 129, 0.14);
-  color: #0ea973;
+  color: var(--c-0ea973);
 }
 
 .pjp-badge.is-parttime {
@@ -153,7 +153,7 @@
 
 .pjp-badge.is-closed {
   background: rgba(107, 114, 128, 0.16);
-  color: #6b7280;
+  color: var(--c-gray-500);
 }
 
 .pjp-card-title {
@@ -195,11 +195,11 @@
 }
 
 .ph-page.light .pjp-card-facts {
-  border-top: 1px dashed #e6eaf1;
+  border-top: 1px dashed var(--c-e6eaf1);
 }
 
 .ph-page.dark .pjp-card-facts {
-  border-top: 1px dashed #242a36;
+  border-top: 1px dashed var(--c-242a36);
 }
 
 .pjp-fact {

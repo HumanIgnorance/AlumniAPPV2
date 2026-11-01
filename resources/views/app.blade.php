@@ -1,240 +1,16 @@
-{{-- <!DOCTYPE html>
-<html lang="{{ app()->getLocale() }}">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-  <title>@yield('title', 'ATMS - Opol Community College')</title>
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link rel="icon" href="{{ asset('images/site-logo.png') }}" type="image/png">
-</head>
-<body>
-    <div id="app"></div>
-
-    <script src="{{ asset('js/app.js') }}"></script>
-</body>
-</html> --}}
-
-
-{{-- <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- CSRF -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <!-- TITLE -->
-    <title>@yield('title', 'ATMS - Opol Community College')</title>
-
-    <!-- FAVICON -->
-    <link rel="icon" href="{{ asset('images/site-logo.png') }}" type="image/png">
-
-    <!-- CSS -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
-</head>
-
-<body>
-
-    <!-- APP ROOT -->
-    <div id="app"></div>
-
-    <!-- JS -->
-    <script src="{{ asset('js/app.js') }}"></script>
-
-</body>
-
-</html> --}}
-
-
-{{-- 
-
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- CSRF -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <!-- Title -->
-    <title>@yield('title', 'ATMS - Opol Community College')</title>
-
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/site-logo.png') }}">
-    <link rel="shortcut icon" href="{{ asset('images/site-logo.png') }}">
-
-    <!-- Apple Touch Icon -->
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/site-logo.png') }}">
-
-    <!-- Mobile Web App -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-title" content="ATMS">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-
-    <!-- Theme Color -->
-    <meta name="theme-color" content="#ffffff">
-
-    <!-- CSS -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
-</head>
-
-<body>
-
-    <div id="app"></div>
-
-    <script src="{{ asset('js/app.js') }}"></script>
-
-</body>
-
-</html> --}}
-
-
-
-
-
-{{-- <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <!-- TITLE (FIXED) -->
-    <title>@yield('title', 'ATMS - Opol Community College')</title>
-
-    <!-- Favicon -->
-    <link rel="icon" href="{{ asset('images/site-logo.png') }}" type="image/png">
-
-    <!-- CSS -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
-    @stack('styles')
-</head>
-
-<body>
-
-    <!-- Your frontend app (Vue/React/etc.) -->
-    <div id="app"></div>
-
-    <!-- JS -->
-    <script src="{{ asset('js/app.js') }}"></script>
-
-    @stack('scripts')
-
-</body>
-</html> --}}
-
-{{-- 
-
-
-<!DOCTYPE html>
-<html lang="{{ app()->getLocale() }}">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <!-- TITLE -->
-  
-   <title>@yield('title', 'ATMS - Opol Community College')</title>
-  
-    <!-- SEO META -->
-    <meta name="title" content="ATMS - Opol Community College">
-    <meta name="description" content="Opol Community College Alumni Tracing Management System. Manage alumni records, events, announcements, and stay connected with OCC.">
-
-    <!-- KEYWORDS -->
-    <meta name="keywords" content="OCC, Opol Community College, Alumni, ATMS, Alumni Tracing System, Opol Community College Alumni Association">
-
-    <!-- AUTHOR -->
-    <meta name="author" content="Opol Community College Alumni Association">
-
-    <!-- GOOGLE -->
-    <meta name="robots" content="index, follow">
-
-    <!-- OPEN GRAPH (Facebook/Discord Preview) -->
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="ATMS - Opol Community College">
-    <meta property="og:description" content="Official Alumni Tracing Management System of Opol Community College.">
-    <meta property="og:image" content="{{ asset('images/site-logo.png') }}">
-    <meta property="og:url" content="{{ url('/') }}">
-
-    <!-- TWITTER -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="ATMS - Opol Community College">
-    <meta name="twitter:description" content="Official Alumni Tracing Management System of Opol Community College.">
-    <meta property="og:image" content="{{ url('/images/site-logo.png') }}">
-<meta name="twitter:image" content="{{ url('/images/site-logo.png') }}">
-
-      <!-- Favicon -->
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/site-logo.png') }}">
-    <link rel="shortcut icon" href="{{ asset('images/site-logo.png') }}">
-
-    <!-- Apple Touch Icon -->
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/site-logo.png') }}">
-
-    <!-- Mobile Web App -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-title" content="ATMS">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-
-    <!-- CSS -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-</head>
-
-<body>
-    <div id="app"></div>
-
-    <script src="{{ asset('js/app.js') }}"></script>
-</body>
-    </html>  --}}
-
-{{--     
-
-{{-- <!DOCTYPE html>
-<html lang="{{ app()->getLocale() }}">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-  <title>@yield('title', 'ATMS - Opol Community College')</title>
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link rel="icon" href="{{ asset('images/site-logo.png') }}" type="image/png">
-</head>
-<body>
-    <div id="app"></div>
-
-    <script src="{{ asset('js/app.js') }}"></script>
-</body>
-</html> --}}
-
 @php
 
     $atmsTheme = request()->cookie('atms-theme', 'white');
     $atmsTheme = in_array($atmsTheme, ['black', 'white']) ? $atmsTheme : 'white';
+    $atmsHasThemeCookie = in_array(request()->cookie('atms-theme'), ['black', 'white'], true);
     $atmsThemeColor = $atmsTheme === 'black' ? '#0a0c12' : '#ffffff';
+    $atmsBootBg = $atmsTheme === 'black' ? '#0a0c12' : '#f4f7fb';
     $atmsStatusBarStyle = $atmsTheme === 'black' ? 'black' : 'default';
+    // cache-buster so browsers re-fetch the tab icon when site-logo.png changes
+    $faviconV = @filemtime(public_path('images/site-logo.png')) ?: 1;
 @endphp
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-theme="{{ $atmsTheme === 'black' ? 'black' : '' }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-theme="{{ $atmsTheme === 'black' ? 'black' : '' }}"@unless($atmsHasThemeCookie) data-theme-source="system"@endunless style="background:{{ $atmsBootBg }}">
 
 <head>
     <meta charset="utf-8">
@@ -247,9 +23,7 @@
     <!-- CSRF -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <!-- =======================================================
-            PRIMARY SEO
-    ======================================================== -->
+    <!-- Primary Seo -->
 
     <title>{{ $seoTitle }}</title>
 
@@ -263,9 +37,7 @@
 
     <meta name="application-name" content="{{ $appName }} - {{ $siteName }}">
 
-    <!-- =======================================================
-            SEARCH ENGINE
-    ======================================================== -->
+    <!-- Search Engine -->
 
     <meta name="robots" content="index, follow, max-image-preview:large">
 
@@ -273,21 +45,19 @@
 
     <link rel="canonical" href="{{ $seoCanonical }}">
 
-    <!-- =======================================================
-            FAVICON
-    ======================================================== -->
+    <!-- Favicon -->
 
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ $logo }}">
+    <link rel="icon" href="{{ asset('favicon.ico') }}?v={{ $faviconV }}" sizes="any">
 
-    <link rel="icon" type="image/png" sizes="192x192" href="{{ $logo }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ $logo }}?v={{ $faviconV }}">
 
-    <link rel="shortcut icon" href="{{ $logo }}">
+    <link rel="icon" type="image/png" sizes="192x192" href="{{ $logo }}?v={{ $faviconV }}">
 
-    <link rel="apple-touch-icon" href="{{ $logo }}">
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}?v={{ $faviconV }}">
 
-    <!-- =======================================================
-            OPEN GRAPH
-    ======================================================== -->
+    <link rel="apple-touch-icon" href="{{ $logo }}?v={{ $faviconV }}">
+
+    <!-- Open Graph -->
 
     <meta property="og:type" content="website">
 
@@ -309,9 +79,7 @@
 
     <meta property="og:image:height" content="512">
 
-    <!-- =======================================================
-            TWITTER
-    ======================================================== -->
+    <!-- Twitter -->
 
     <meta name="twitter:card" content="summary_large_image">
 
@@ -323,9 +91,7 @@
 
     <meta name="twitter:image:alt" content="{{ $siteName }} {{ $appName }} Logo">
 
-    <!-- =======================================================
-            MOBILE / PWA
-    ======================================================== -->
+    <!-- Mobile / Pwa -->
 
     <meta name="theme-color" content="{{ $atmsThemeColor }}">
 
@@ -339,25 +105,7 @@
 
     <link rel="manifest" href="{{ route('pwa.manifest') }}">
 
-    {{-- <script>
-        (function() {
-            function hideToolbar() {
-                window.scrollTo(0, 1);
-            }
-
-            window.addEventListener("load", function() {
-                setTimeout(hideToolbar, 0);
-                setTimeout(hideToolbar, 300);
-            });
-
-            window.addEventListener("orientationchange", function() {
-                setTimeout(hideToolbar, 300);
-            });
-        })();
-    </script> --}}
-    <!-- =======================================================
-            STRUCTURED DATA
-    ======================================================== -->
+    <!-- Structured Data -->
 
     <script type="application/ld+json">
     {
@@ -400,11 +148,17 @@
     </script>
 
     @stack('schema')
-    <!-- =======================================================
-            CSS
-    ======================================================== -->
+    <!-- Css -->
 
     {{-- CSS is injected by Vite (imported from resources/js/app.js) --}}
+
+    <!-- Pre-JS paint: matches the saved theme so there is no white flash -->
+    <style>
+        html,body{margin:0;background:{{ $atmsBootBg }}}
+        @if (! $atmsHasThemeCookie)
+        @media (prefers-color-scheme:dark){html[data-theme-source="system"],html[data-theme-source="system"] body{background:#0a0c12}}
+        @endif
+    </style>
 
     <!-- Fonts -->
 
@@ -414,7 +168,7 @@
 
 <body>
 
-    <div id="app"></div>
+    <div id="app"><div class="app-boot" role="status" aria-label="Loading"><span class="app-boot__spinner"></span></div></div>
 
     <!-- React (Vite) -->
 

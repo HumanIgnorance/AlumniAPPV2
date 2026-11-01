@@ -47,6 +47,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { Modal } from "antd";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
+import { COLORS } from "~/config/theme";
 
 export const INSPECT_PROTECTION_ENABLED =
     import.meta.env.VITE_ENABLE_INSPECT_PROTECTION === "false"
@@ -213,11 +214,11 @@ export function ZoomWarningModal({ open, onClose }) {
                         display: "inline-flex",
                         alignItems: "center",
                         gap: 8,
-                        color: "#f59e0b",
+                        color: COLORS.amber500,
                         fontWeight: 700,
                     }}
                 >
-                    <ExclamationCircleOutlined style={{ color: "#f59e0b" }} />
+                    <ExclamationCircleOutlined style={{ color: COLORS.amber500 }} />
                     Browser Zoom Detected
                 </span>
             }

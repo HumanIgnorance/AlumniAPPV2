@@ -1,0 +1,404 @@
+/* Table Styles - Dark Theme */
+[data-theme="black"] .job-table {
+  background: var(--c-ink-1a);
+}
+
+[data-theme="black"] .job-table .ant-table {
+  background: var(--c-ink-1a);
+  color: var(--c-white);
+}
+
+[data-theme="black"] .job-table .ant-table-thead > tr > th {
+  background: linear-gradient(135deg, var(--c-252525) 0%, #202020 100%);
+  color: var(--c-white);
+  border-bottom-color: var(--c-gray-333);
+}
+
+[data-theme="black"] .job-table .ant-table-tbody > tr > td {
+  background: var(--c-ink-1a);
+  color: var(--c-e0e0e0);
+  border-bottom-color: var(--c-2d2d2d);
+}
+
+[data-theme="black"] .job-table .ant-table-tbody > tr:hover > td {
+  background: linear-gradient(135deg, var(--c-252525) 0%, #222 100%);
+}
+
+[data-theme="black"] .job-table .ant-pagination {
+  background: var(--c-ink-1a);
+}
+
+[data-theme="black"] .job-table .ant-pagination-item {
+  background: var(--c-252525);
+  border-color: var(--c-gray-333);
+}
+
+[data-theme="black"] .job-table .ant-pagination-item a {
+  color: var(--c-white);
+}
+
+[data-theme="black"] .job-table .ant-pagination-item-active {
+  background: var(--c-brand);
+  border-color: var(--c-brand);
+}
+
+/* Modal Styles - Dark Theme */
+[data-theme="black"] .job-form-modal .ant-modal-content,
+[data-theme="black"] .application-modal .ant-modal-content {
+  background: var(--c-ink-1a);
+}
+
+[data-theme="black"] .job-form-modal .ant-modal-header,
+[data-theme="black"] .application-modal .ant-modal-header {
+  background: linear-gradient(135deg, var(--c-1f1f1f) 0%, var(--c-ink-1a) 100%);
+  border-bottom-color: var(--c-gray-333);
+}
+
+[data-theme="black"] .job-form-modal .ant-modal-title,
+[data-theme="black"] .application-modal .ant-modal-title {
+  color: var(--c-white);
+}
+
+[data-theme="black"] .job-form-modal .ant-modal-body,
+[data-theme="black"] .application-modal .ant-modal-body {
+  background: var(--c-ink-1a);
+}
+
+[data-theme="black"] .job-form-modal .ant-form-item-label > label,
+[data-theme="black"] .application-modal .ant-form-item-label > label {
+  color: var(--c-e0e0e0);
+}
+
+/* Form.Item "tooltip" question-mark icon was inheriting AntD's default
+   near-black color (rgba(0,0,0,.45)), making it invisible against the
+   dark modal background. Force it white/light in black theme. */
+[data-theme="black"] .job-form-modal .ant-form-item-tooltip,
+[data-theme="black"] .application-modal .ant-form-item-tooltip,
+[data-theme="black"] .job-form-modal .ant-form-item-label .anticon-question-circle,
+[data-theme="black"] .application-modal .ant-form-item-label .anticon-question-circle {
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+[data-theme="black"] .job-form-modal .ant-input,
+[data-theme="black"] .job-form-modal .ant-input-textarea textarea,
+[data-theme="black"] .application-modal .ant-input,
+[data-theme="black"] .application-modal .ant-input-textarea textarea {
+  background: var(--c-252525);
+  border-color: var(--c-gray-333);
+  color: var(--c-white);
+}
+
+[data-theme="black"] .job-form-modal .ant-input::placeholder,
+[data-theme="black"] .application-modal .ant-input::placeholder {
+  color: var(--c-gray-666);
+}
+
+[data-theme="black"] .job-form-modal .ant-input:hover,
+[data-theme="black"] .job-form-modal .ant-input:focus,
+[data-theme="black"] .application-modal .ant-input:hover,
+[data-theme="black"] .application-modal .ant-input:focus {
+  border-color: var(--c-brand);
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.25);
+}
+
+[data-theme="black"] .job-form-modal .ant-select-selector,
+[data-theme="black"] .application-modal .ant-select-selector {
+  background: var(--c-252525) !important;
+  border-color: var(--c-gray-333) !important;
+  color: var(--c-white) !important;
+}
+
+[data-theme="black"] .job-form-modal .ant-modal-footer,
+[data-theme="black"] .application-modal .ant-modal-footer {
+  background: linear-gradient(135deg, var(--c-1f1f1f) 0%, var(--c-ink-1a) 100%);
+  border-top-color: var(--c-gray-333);
+}
+
+[data-theme="black"] .job-form-modal .ant-btn-default,
+[data-theme="black"] .application-modal .ant-btn-default {
+  background: var(--c-252525);
+  border-color: var(--c-gray-333);
+  color: var(--c-white);
+}
+
+/* Drawer Styles - Dark Theme */
+[data-theme="black"] .job-details-drawer .ant-drawer-content,
+[data-theme="black"] .applications-drawer .ant-drawer-content {
+  background: var(--c-ink-1a);
+}
+
+[data-theme="black"] .job-details-drawer .ant-drawer-header,
+[data-theme="black"] .applications-drawer .ant-drawer-header {
+  background: var(--c-ink-1a);
+  border-bottom-color: var(--c-gray-333);
+}
+
+[data-theme="black"] .job-details-drawer .ant-drawer-title,
+[data-theme="black"] .applications-drawer .ant-drawer-title {
+  color: var(--c-white);
+}
+
+[data-theme="black"] .job-details-drawer .ant-drawer-close,
+[data-theme="black"] .applications-drawer .ant-drawer-close {
+  color: var(--c-white);
+}
+
+[data-theme="black"] .job-details-drawer .ant-drawer-body,
+[data-theme="black"] .applications-drawer .ant-drawer-body {
+  background: var(--c-ink-1a);
+}
+
+[data-theme="black"] .applications-drawer .ant-drawer-body {
+  background: linear-gradient(135deg, var(--c-ink-0a) 0%, var(--c-111111) 100%);
+}
+
+[data-theme="black"] .job-details-header h3 {
+  color: var(--c-white) !important;
+}
+
+[data-theme="black"] .job-details-creator-card {
+  background: var(--c-252525);
+  border-color: var(--c-gray-333);
+}
+
+[data-theme="black"] .job-details-info .info-value {
+  color: var(--c-white) !important;
+}
+
+[data-theme="black"] .job-details-section h5 {
+  color: var(--c-white) !important;
+}
+
+[data-theme="black"] .job-details-section p {
+  color: #b0b0b0;
+}
+
+[data-theme="black"] .ant-divider {
+  border-color: var(--c-gray-333);
+}
+
+/* Controls Styles - Dark Theme */
+[data-theme="black"] .controls-card .ant-input {
+  background: var(--c-252525);
+  border-color: var(--c-gray-333);
+  color: var(--c-white);
+}
+
+[data-theme="black"] .controls-card .ant-input::placeholder {
+  color: var(--c-gray-666);
+}
+
+[data-theme="black"] .controls-card .ant-select-selector {
+  background: var(--c-252525) !important;
+  border-color: var(--c-gray-333) !important;
+  color: var(--c-white) !important;
+}
+
+[data-theme="black"] .controls-card .ant-select-arrow {
+  color: var(--c-888888);
+}
+
+/* Typography - Dark Theme */
+[data-theme="black"] .ant-typography {
+  color: var(--c-e0e0e0);
+}
+
+[data-theme="black"] .ant-typography.ant-typography-secondary {
+  color: var(--c-888888) !important;
+}
+
+[data-theme="black"] .ant-typography strong {
+  color: var(--c-white);
+}
+
+/* Upload - Dark Theme */
+[data-theme="black"] .ant-upload.ant-upload-select-picture-card {
+  background: var(--c-252525);
+  border-color: var(--c-gray-333);
+}
+
+[data-theme="black"] .ant-upload.ant-upload-select-picture-card:hover {
+  border-color: var(--c-brand);
+}
+
+/* Dropdown - Dark Theme */
+[data-theme="black"] .ant-select-dropdown {
+  background: var(--c-252525);
+  border: 1px solid var(--c-gray-333);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="black"] .ant-select-item {
+  color: var(--c-white);
+}
+
+[data-theme="black"] .ant-select-item-option-active {
+  background: var(--c-gray-333);
+}
+
+[data-theme="black"] .ant-select-item-option-selected {
+  background: var(--c-brand);
+}
+
+[data-theme="black"] .ant-select-item-option-selected:hover {
+  background: #5a6fd6;
+}
+
+/* ============ Tabs Dropdown (3 dots responsive menu) - Dark Theme ============ */
+[data-theme="black"] .ant-tabs-dropdown {
+  background: var(--c-ink-1a) !important;
+}
+
+[data-theme="black"] .ant-tabs-dropdown .ant-tabs-dropdown-menu {
+  background: var(--c-ink-1a) !important;
+  border: 1px solid var(--c-gray-333);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+  border-radius: 8px;
+  padding: 4px;
+}
+
+[data-theme="black"] .ant-tabs-dropdown .ant-tabs-dropdown-menu-item {
+  color: var(--c-white) !important;
+  background: transparent;
+  border-radius: 6px;
+  padding: 8px 12px;
+  transition: all 0.2s ease;
+}
+
+[data-theme="black"] .ant-tabs-dropdown .ant-tabs-dropdown-menu-item:hover {
+  background: var(--c-gray-333) !important;
+  color: var(--c-brand) !important;
+}
+
+[data-theme="black"] .ant-tabs-dropdown .ant-tabs-dropdown-menu-item-active {
+  background: rgba(102, 126, 234, 0.2) !important;
+  color: var(--c-brand) !important;
+}
+
+[data-theme="black"] .ant-tabs-dropdown .ant-tabs-dropdown-menu-item-selected {
+  background: rgba(102, 126, 234, 0.3) !important;
+  color: var(--c-white) !important;
+}
+
+/* Tabs more button (3 dots) - Dark Theme */
+[data-theme="black"] .ant-tabs-nav-more {
+  color: var(--c-white) !important;
+  background: transparent;
+}
+
+[data-theme="black"] .ant-tabs-nav-more:hover {
+  color: var(--c-brand) !important;
+  background: rgba(102, 126, 234, 0.1);
+}
+
+[data-theme="black"] .job-post-edit-btn,
+[data-theme="black"] .job-post-edit-btn .anticon {
+    color: var(--c-white) !important;
+}
+/* Fix for dropdown icon in dark theme */
+[data-theme="black"] .ant-tabs .ant-tabs-nav-more .anticon {
+  color: var(--c-white) !important;
+}
+
+[data-theme="black"] .ant-tabs .ant-tabs-nav-more:hover .anticon {
+  color: var(--c-brand) !important;
+}
+
+/* Dropdown menu container dark theme */
+[data-theme="black"] .ant-dropdown,
+[data-theme="black"] .ant-dropdown-menu {
+  background: var(--c-ink-1a) !important;
+  border: 1px solid var(--c-gray-333);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+}
+
+[data-theme="black"] .ant-dropdown-menu-item {
+  color: var(--c-white) !important;
+}
+
+[data-theme="black"] .ant-dropdown-menu-item:hover {
+  background: var(--c-gray-333) !important;
+  color: var(--c-brand) !important;
+}
+
+[data-theme="black"] .ant-dropdown-menu-item-selected {
+  background: rgba(102, 126, 234, 0.2) !important;
+  color: var(--c-white) !important;
+}
+
+/* Alert - Dark Theme */
+[data-theme="black"] .ant-alert {
+  background: var(--c-252525);
+  border-color: var(--c-gray-333);
+}
+
+[data-theme="black"] .ant-alert-message,
+[data-theme="black"] .ant-alert-description {
+  color: var(--c-e0e0e0);
+}
+
+/* Progress - Dark Theme */
+[data-theme="black"] .ant-progress-text {
+  color: var(--c-white) !important;
+}
+
+/* Scrollbar - Dark Theme */
+[data-theme="black"] ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+[data-theme="black"] ::-webkit-scrollbar-track {
+  background: var(--c-ink-0a);
+}
+
+[data-theme="black"] ::-webkit-scrollbar-thumb {
+  background: var(--c-gray-333);
+  border-radius: 4px;
+}
+
+[data-theme="black"] ::-webkit-scrollbar-thumb:hover {
+  background: var(--c-444444);
+}
+
+/* Inactive Job Card */
+.job-post-card-inactive {
+  opacity: 0.85;
+}
+
+.job-post-card-inactive .job-card-cover {
+  filter: grayscale(30%);
+}
+
+[data-theme="black"] .job-post-card-inactive {
+  opacity: 0.75;
+}
+
+/* ============ Print Styles ============ */
+@media print {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+    box-shadow: none !important;
+  }
+
+  .job-post-page-container {
+    background: var(--c-white) !important;
+    padding: 0 !important;
+  }
+
+  .ant-btn {
+    display: none !important;
+  }
+
+  .job-post-card,
+  .ant-card {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    border: 1px solid var(--c-antd-gray-5) !important;
+    box-shadow: none !important;
+  }
+}

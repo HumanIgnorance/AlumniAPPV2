@@ -1,0 +1,258 @@
+/* Notification categories, dropdown positioning, bell, drawer active state (split from layout/index.css; keep import order: see styles/index.js) */
+/* ===== NOTIFICATION CATEGORY STYLES ===== */
+
+/* Added styles for notification category tags */
+.notification-category-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  padding: 0 6px;
+  border-radius: 10px;
+  line-height: 18px;
+}
+
+/* Category filter buttons styling */
+.notification-category-filters {
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  padding: 8px 0;
+  scrollbar-width: thin;
+}
+
+.notification-category-filters::-webkit-scrollbar {
+  height: 4px;
+}
+
+.notification-category-filters::-webkit-scrollbar-thumb {
+  background: var(--c-antd-gray-5);
+  border-radius: 2px;
+}
+
+/* Category button hover effects */
+.notification-category-btn {
+  transition: all 0.2s ease;
+}
+
+.notification-category-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Category color indicators */
+.category-event-registration {
+  background-color: var(--c-f6ffed);
+  border-color: var(--c-antd-green);
+}
+
+.category-profile-update {
+  background-color: #f9f0ff;
+  border-color: var(--c-antd-purple);
+}
+
+.category-account-login {
+  background-color: #e6fffb;
+  border-color: var(--c-antd-cyan);
+}
+
+.category-account-approved {
+  background-color: var(--c-fffbe6);
+  border-color: var(--c-antd-gold);
+}
+
+.category-quiz-submission {
+  background-color: #fff0f6;
+  border-color: var(--c-antd-magenta);
+}
+
+.category-login-attempt {
+  background-color: #fff2f0;
+  border-color: var(--c-antd-red);
+}
+
+/* Mobile responsive for category filters */
+@media (max-width: 768px) {
+  .notification-category-filters {
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .notification-category-tag {
+    font-size: 9px;
+    padding: 0 4px;
+  }
+}
+
+/* Notification dropdown wider for categories */
+@media (min-width: 769px) {
+  .notification-dropdown {
+    width: 450px !important;
+  }
+}
+
+/* Category badge in notification list */
+.notification-item-category {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Smooth transitions for category filters */
+.ant-tag {
+  transition: all 0.2s ease;
+}
+
+.ant-tag:hover {
+  opacity: 0.85;
+}
+
+/* Active category highlight */
+.category-filter-active {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  font-weight: 600;
+}
+
+
+/* ===== NOTIFICATION DROPDOWN POSITIONING FIX ===== */
+/* Added proper dropdown positioning to prevent overlap */
+.header-right>.ant-dropdown-trigger {
+  position: relative;
+}
+
+/* Ensure notification dropdown doesn't overlap header */
+.ant-dropdown-placement-bottomRight {
+  margin-top: 8px !important;
+}
+
+/* Mobile: hide user info text */
+@media (max-width: 768px) {
+  .user-info {
+    display: none;
+  }
+
+  .header-right {
+    gap: 8px;
+  }
+
+  .user-profile {
+    padding: 4px;
+  }
+}
+
+/* ===== FIX NOTIFICATION BELL CIRCULAR SHAPE ===== */
+/* Ensure notification bell is perfectly circular */
+.btn-notification {
+  width: 40px !important;
+  height: 40px !important;
+  min-width: 40px !important;
+  min-height: 40px !important;
+  border-radius: 50% !important;
+  padding: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.btn-notification .anticon {
+  font-size: 18px !important;
+}
+
+/* ===== FIX HEADER TITLE MOBILE RESPONSIVE ===== */
+/* Better header layout for mobile */
+@media (max-width: 768px) {
+  .first .ant-typography {
+    font-size: 14px !important;
+    max-width: calc(100vw - 150px) !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  .second {
+    flex: 0 0 auto !important;
+    width: auto !important;
+  }
+
+  /* Smaller notification button on mobile */
+  .btn-notification {
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
+  }
+}
+
+/* ===== FIX NOTIFICATION DROPDOWN OVERLAP ===== */
+/* Proper notification dropdown positioning and sizing */
+.notification-dropdown,
+.ant-dropdown {
+  z-index: 1050 !important;
+}
+
+@media (max-width: 768px) {
+  .notification-dropdown {
+    width: calc(100vw - 32px) !important;
+    max-width: 340px !important;
+    right: 16px !important;
+    left: auto !important;
+  }
+
+  /* Ensure dropdown doesn't overlap header */
+  .ant-dropdown-placement-bottomRight {
+    margin-top: 4px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .first .ant-typography {
+    font-size: 12px !important;
+    max-width: calc(100vw - 130px) !important;
+  }
+
+  .btn-notification {
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    min-height: 32px !important;
+  }
+
+  .btn-notification .anticon {
+    font-size: 14px !important;
+  }
+}
+
+/* ===== DRAWER MENU ACTIVE STATE ===== */
+.ant-drawer .ant-menu-item-selected {
+  background-color: var(--c-antd-gray-3) !important;
+  color: var(--c-ink-1a) !important;
+}
+
+.ant-drawer .ant-menu-item-selected::after {
+  display: none !important;
+}
+
+.ant-drawer .ant-menu-item:hover {
+  background-color: var(--c-neutral-100) !important;
+}
+
+.ant-drawer .ant-menu-item {
+  color: var(--c-gray-333) !important;
+  border-radius: 8px !important;
+  margin: 4px 12px !important;
+}
+
+.ant-drawer .ant-menu-item .anticon {
+  color: var(--c-gray-666) !important;
+}
+
+.ant-drawer .ant-menu-item-selected .anticon {
+  color: var(--c-ink-1a) !important;
+}
+
+[data-theme="black"] .burger-menu {
+  color: var(--accent) !important;
+}
+
+[data-theme="black"] .burger-menu {
+  color: var(--c-gray-300) !important;
+}

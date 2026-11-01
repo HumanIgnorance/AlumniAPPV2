@@ -1,0 +1,27 @@
+/* Registration modals (Agreement / Privacy Policy / Terms) render in a portal,
+   outside .alumni-registration, so they never got its dark variables:
+   white card + black text in dark mode. They use the shared --app-* tokens. */
+.reg-modal .ant-modal-content { background: var(--app-surface); color: var(--app-text); border: 1px solid var(--app-border); }
+.reg-modal .ant-modal-header { background: transparent; border-bottom: 1px solid var(--app-border); }
+.reg-modal .ant-modal-title,
+.reg-modal .ant-modal-close { color: var(--app-text); }
+.reg-modal .ant-modal-body,
+.reg-modal .ant-modal-body p,
+.reg-modal .ant-modal-body li,
+.reg-modal .ant-typography,
+.reg-modal .ant-typography h1,
+.reg-modal .ant-typography h2,
+.reg-modal .ant-typography h3,
+.reg-modal .ant-typography h4,
+.reg-modal .ant-typography h5 { color: var(--app-text); }
+.reg-modal .ant-typography-secondary { color: var(--app-text-muted); }
+.reg-modal .ant-modal-footer { border-top: 1px solid var(--app-border); }
+.reg-modal .ant-divider { border-color: var(--app-border); }
+html[data-theme="black"] .reg-modal .ant-alert {
+    background: var(--app-surface-2);
+    border-color: var(--app-border-strong);
+}
+html[data-theme="black"] .reg-modal .ant-alert-message,
+html[data-theme="black"] .reg-modal .ant-alert-description,
+html[data-theme="black"] .reg-modal .ant-alert-description p { color: var(--app-text); }
+html[data-theme="black"] .reg-modal .ant-btn-default { background: var(--app-surface-2); border-color: var(--app-border-strong); color: var(--app-text); }

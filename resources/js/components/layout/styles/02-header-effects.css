@@ -1,0 +1,136 @@
+/* Header light bar, profile button, dropdown z-index (split from layout/index.css; keep import order: see styles/index.js) */
+/* ===============================
+   HEADER RAINBOW LIGHT EFFECT
+   =============================== */
+
+/* Rainbow shimmer animation */
+/* @keyframes headerRainbow {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+} */
+
+/* Soft glow pulse */
+ /* @keyframes headerGlow {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(24, 144, 255, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(24, 144, 255, 0.4);
+  }
+}  */
+
+/* Ensure header can hold pseudo elements */
+#header {
+  position: relative !important;
+  background: var(--c-white) !important;
+  /* keep header clean */
+  z-index: 1000 !important;
+  animation: headerGlow 4s ease-in-out infinite;
+}
+
+/* 🌈 Animated light bar */
+/* #header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+
+  background: linear-gradient(
+    90deg,
+    #1890ff,
+    #13c2c2,
+    #52c41a,
+    #fadb14,
+    #fa8c16,
+    #f5222d,
+    #eb2f96,
+    #722ed1,
+    #1890ff
+  );
+
+  background-size: 200% 100%;
+  animation: headerRainbow 3s linear infinite;
+
+  z-index: 9999;
+  pointer-events: none;
+} */
+
+/* Ensure dropdowns inside header-right are positioned relative to it */
+.header-right .ant-dropdown {
+  position: absolute !important;
+  top: 100% !important;
+}
+
+/* User profile button styling */
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+
+.user-profile:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.user-info .ant-typography:last-child {
+  font-size: 12px;
+}
+
+.trigger {
+  font-size: 18px;
+  cursor: pointer;
+  padding: 8px;
+  transition: color 0.3s;
+}
+
+.trigger:hover {
+  color: var(--c-antd-blue);
+}
+
+/* ===== FIX NOTIFICATION DROPDOWN WIDTH ===== */
+.notification-dropdown {
+  width: 380px !important;
+  max-width: 95vw !important;
+}
+
+/* Improved notification dropdown for mobile - smaller width, proper positioning */
+@media (max-width: 768px) {
+  .notification-dropdown {
+    width: calc(100vw - 24px) !important;
+    max-width: 320px !important;
+    left: auto !important;
+    right: 12px !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+  }
+
+  /* Fix notification dropdown header text cutoff */
+  .notification-dropdown .ant-card-head-title,
+  .notification-dropdown h4,
+  .notification-dropdown .ant-typography {
+    padding-left: 12px !important;
+    text-align: left !important;
+  }
+}
+
+/* Notification button stays above everything */
+/* Lowered btn-notification z-index to match dropdown behavior */
+.btn-notification {
+  z-index: 999;
+}

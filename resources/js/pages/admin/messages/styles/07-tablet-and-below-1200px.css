@@ -1,0 +1,398 @@
+/* ---- Tablet and below: 1200px ---- */
+@media (max-width: 1200px) {
+  .messages-container { padding: 16px; }
+  .messages-layout { height: calc(100vh - 120px); }
+  .conversations-sidebar { width: 320px; min-width: 280px; }
+  .message-bubble,
+  .alumni-message-bubble { max-width: 80% !important; }
+  .message-image,
+  .alumni-message-image { max-width: 240px !important; }
+}
+
+/* ---- Mobile breakpoint: 992px - switch to single panel ---- */
+@media (max-width: 992px) {
+  .messages-container {
+    padding: 0;
+    min-height: 100dvh;
+    min-height: calc(100vh - 60px);
+  }
+  .messages-layout {
+    height: 100dvh;
+    height: calc(100vh - 60px);
+    border-radius: 0;
+    border: none;
+    box-shadow: none;
+    position: relative;
+  }
+
+  /* Sidebar takes full width by default (list view) */
+  .conversations-sidebar {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    border-right: none;
+  }
+
+  /* Chat area hidden by default, becomes full-screen overlay when open */
+  .chat-area {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--m-surface);
+    transform: translateX(100%);
+    transition: transform 0.28s var(--m-ease);
+    z-index: 30;
+    display: flex;
+    flex-direction: column;
+    will-change: transform;
+  }
+
+  /* When a conversation is selected: show chat, hide list */
+  .messages-layout.chat-open .conversations-sidebar {
+    display: none !important;
+  }
+  .messages-layout.chat-open .chat-area {
+    transform: translateX(0);
+  }
+
+  /* Sticky chat header */
+  .chat-header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    padding: 10px 12px !important;
+    gap: 10px;
+    min-height: 60px;
+  }
+
+  /* Show the back button on mobile */
+  .chat-back-btn {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 8px 12px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.12);
+    color: var(--c-white);
+    border: 1px solid rgba(255,255,255,0.18);
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+  }
+
+  .chat-header-info h3 { font-size: 1rem; line-height: 1.2; }
+  .chat-header-info .alumni-email,
+  .chat-header-info p { font-size: 0.78rem; }
+  .chat-avatar,
+  .chat-avatar-img { width: 38px !important; height: 38px !important; }
+
+  .chat-header-actions { gap: 6px; }
+  .chat-header-actions button,
+  .chat-search-toggle,
+  .restrict-btn {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  /* Messages area scroll fills space; safe-area bottom for input */
+  .messages-area,
+  .alumni-messages-area {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    padding: 12px !important;
+  }
+
+  /* Sticky composer with safe-area inset */
+  .message-input-form,
+  .alumni-message-input-form {
+    position: sticky;
+    bottom: 0;
+    background: var(--m-surface);
+    border-top: 1px solid var(--m-border);
+    padding: 8px 10px calc(8px + env(safe-area-inset-bottom)) !important;
+    z-index: 10;
+  }
+  .message-input-wrapper { gap: 6px; }
+  .alumni-message-input,
+  .message-input-wrapper textarea,
+  .message-input-wrapper input[type="text"] {
+    font-size: 16px !important; /* prevent iOS zoom */
+    min-height: 44px;
+    max-height: 120px;
+    line-height: 1.35;
+  }
+  .message-input-form button,
+  .alumni-message-input-form button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  /* Bubbles */
+  .message-bubble,
+  .alumni-message-bubble {
+    max-width: 90% !important;
+    word-wrap: break-word;
+    overflow-wrap: anywhere;
+  }
+  .message-image,
+  .alumni-message-image {
+    max-width: 200px !important;
+    width: 100%;
+    height: auto;
+  }
+
+  /* Conversations list: bigger touch targets */
+  .conversation-item,
+  .alumni-card {
+    min-height: 72px;
+    padding: 12px 14px !important;
+  }
+  .conversation-avatar,
+  .conversation-avatar-img,
+  .alumni-card__avatar {
+    width: 48px !important;
+    height: 48px !important;
+    font-size: 1.05rem;
+  }
+  .conversation-info h4,
+  .alumni-card__name { font-size: 1rem; }
+  .unread-badge,
+  .total-unread-badge { min-width: 22px; height: 22px; font-size: 0.78rem; }
+
+  /* Sticky list header + search */
+  .conversations-header {
+    position: sticky; top: 0; z-index: 15;
+    padding: 14px 16px 12px !important;
+  }
+  .search-box { padding: 10px 12px; }
+  .search-box input {
+    min-height: 44px;
+    font-size: 16px;
+    border-radius: 14px;
+  }
+  .admin-tabs { padding: 8px 10px; gap: 6px; }
+  .admin-tabs .tab-btn {
+    min-height: 40px;
+    font-size: 0.82rem;
+    padding: 8px 10px;
+    flex: 1 1 0;
+    white-space: nowrap;
+  }
+
+  /* Bulk toolbar: sticky, wrap */
+  .bulk-toolbar {
+    position: sticky;
+    top: 56px;
+    z-index: 14;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 8px 10px !important;
+  }
+  .bulk-toolbar__actions { flex-wrap: wrap; gap: 6px; }
+  .bulk-toolbar .bulk-btn { min-height: 40px; padding: 8px 12px; font-size: 0.85rem; }
+  .select-toggle { min-height: 40px; }
+
+  /* Search panel inside chat */
+  .message-search-panel {
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 8px 10px !important;
+  }
+  .message-search-panel input {
+    flex: 1 1 100%;
+    min-height: 40px;
+    font-size: 16px;
+  }
+  .message-search-panel button { min-width: 40px; min-height: 40px; }
+
+  /* Generic modal responsiveness */
+  .message-action-modal,
+  .message-action-modal-overlay > div,
+  .modal-content,
+  .alumni-details-modal,
+  .restrict-modal,
+  .delete-modal,
+  .search-modal,
+  .confirm-modal,
+  .modal {
+    width: calc(100vw - 24px) !important;
+    max-width: 100% !important;
+    max-height: 90vh !important;
+    overflow-y: auto;
+    border-radius: 18px;
+    margin: 12px;
+    box-sizing: border-box;
+  }
+  .message-action-modal-overlay,
+  .modal-overlay {
+    padding: 12px;
+    align-items: center;
+  }
+
+  /* AlumniDetails responsive — stack sections, no horizontal scroll */
+  .alumni-details-modal *,
+  .alumni-details-modal table,
+  .alumni-details-modal img { max-width: 100%; }
+  .alumni-details-modal table { display: block; overflow-x: auto; }
+  .alumni-details-modal .details-grid,
+  .alumni-details-modal .details-row,
+  .alumni-details-modal .row,
+  .alumni-details-modal [class*="grid"],
+  .alumni-details-modal [class*="row"] {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px;
+  }
+  .alumni-details-modal img { height: auto; }
+
+  /* Lightbox image fits screen */
+  .lightbox-image,
+  .lightbox img { max-width: 100vw !important; max-height: 100vh !important; }
+}
+
+/* ---- 768px ---- */
+@media (max-width: 768px) {
+  .admin-tabs .tab-btn { font-size: 0.78rem; padding: 8px 6px; }
+  .conversations-header h2 { font-size: 1.15rem; }
+  .message-bubble,
+  .alumni-message-bubble { font-size: 0.95rem; }
+}
+
+/* ---- 576px ---- */
+@media (max-width: 576px) {
+  .chat-header { padding: 8px 10px !important; }
+  .chat-header-info h3 { font-size: 0.98rem; }
+  .message-image,
+  .alumni-message-image { max-width: 200px !important; }
+  .conversation-item,
+  .alumni-card { padding: 10px 12px !important; }
+}
+
+/* ---- 480px / 430px ---- */
+@media (max-width: 480px) {
+  .messages-layout { height: 100dvh; }
+  .conversations-header { padding: 12px 14px !important; }
+  .conversations-header h2 { font-size: 1.05rem; }
+  .admin-tabs { padding: 6px 8px; gap: 4px; }
+  .admin-tabs .tab-btn { font-size: 0.72rem; padding: 8px 4px; }
+  .chat-back-btn { padding: 6px 10px; font-size: 0.85rem; min-width: 44px; }
+  .chat-avatar,
+  .chat-avatar-img { width: 34px !important; height: 34px !important; }
+  .chat-header-info h3 { font-size: 0.92rem; }
+  .chat-header-info .alumni-email { font-size: 0.72rem; }
+  .message-bubble,
+  .alumni-message-bubble { max-width: 92% !important; font-size: 0.92rem; }
+  .message-image,
+  .alumni-message-image { max-width: 180px !important; }
+  .conversation-avatar,
+  .conversation-avatar-img,
+  .alumni-card__avatar { width: 44px !important; height: 44px !important; }
+}
+
+/* ---- 390px / 375px ---- */
+@media (max-width: 414px) {
+  .message-bubble,
+  .alumni-message-bubble { max-width: 94% !important; }
+  .message-image,
+  .alumni-message-image { max-width: 170px !important; }
+  .admin-tabs .tab-btn { font-size: 0.68rem; }
+}
+
+/* ---- 360px ---- */
+@media (max-width: 360px) {
+  .message-bubble,
+  .alumni-message-bubble { max-width: 95% !important; font-size: 0.88rem; }
+  .message-image,
+  .alumni-message-image { max-width: 160px !important; }
+  .chat-header-actions button,
+  .chat-search-toggle,
+  .restrict-btn {
+    min-width: 40px;
+    min-height: 40px;
+    padding: 6px 8px;
+    font-size: 0.78rem;
+  }
+}
+
+/* ---- 320px (iPhone SE 1st gen) ---- */
+@media (max-width: 320px) {
+  .conversations-header h2 { font-size: 0.98rem; }
+  .admin-tabs .tab-btn { font-size: 0.65rem; padding: 6px 3px; }
+  .message-bubble,
+  .alumni-message-bubble { max-width: 96% !important; font-size: 0.85rem; }
+  .message-image,
+  .alumni-message-image { max-width: 150px !important; }
+  .conversation-avatar,
+  .conversation-avatar-img,
+  .alumni-card__avatar { width: 40px !important; height: 40px !important; }
+  .conversation-info h4,
+  .alumni-card__name { font-size: 0.92rem; }
+}
+
+/* ---- Accessibility: focus rings on interactive touch targets ---- */
+@media (max-width: 992px) {
+  .chat-back-btn:focus-visible,
+  .conversation-item:focus-visible,
+  .alumni-card:focus-visible,
+  .tab-btn:focus-visible,
+  .bulk-btn:focus-visible,
+  .message-input-form button:focus-visible,
+  .alumni-message-input-form button:focus-visible {
+    outline: 2px solid var(--m-accent);
+    outline-offset: 2px;
+  }
+}
+
+/* ---- Dark-theme polish for the mobile chat panel ---- */
+@media (max-width: 992px) {
+  [data-theme="black"] .chat-area,
+  [data-theme="black"] .message-input-form,
+  [data-theme="black"] .alumni-message-input-form {
+    background: #0b0f17;
+  }
+  [data-theme="black"] .chat-back-btn {
+    background: rgba(255,255,255,0.06);
+    border-color: rgba(255,255,255,0.12);
+    color: var(--c-white);
+  }
+}
+
+/* ---- Large screens (1400px+) keep desktop unchanged ---- */
+@media (min-width: 1400px) {
+  .conversations-sidebar { width: 380px; }
+}
+/* =====================================================================
+   ADMIN CHAT — Messenger/WhatsApp-style polish (additive, mobile-first)
+   Targets ONLY the admin render. Keeps all existing classes/behavior.
+   ===================================================================== */
+
+/* --- Chat header: back btn glued to avatar -------------------------- */
+.chat-header .chat-header-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+.chat-header .chat-header-text { min-width: 0; }
+.chat-header .chat-header-text h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.chat-header .chat-header-text .alumni-email {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--m-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

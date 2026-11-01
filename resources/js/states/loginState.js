@@ -1,4 +1,4 @@
-import create from "zustand";
+import { create } from "zustand";
 import { checkLogin } from "~/actions/loginActions";
 
 export const useLoginStore = create((set, get) => ({

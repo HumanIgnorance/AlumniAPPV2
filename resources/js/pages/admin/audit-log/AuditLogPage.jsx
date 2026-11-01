@@ -39,6 +39,8 @@ import avatarBSED from "~/assets/images/educ-logo.png";
 import avatarBEED from "~/assets/images/beed-logo.png";
 import avatarBSBA from "~/assets/images/bsba-logo.png";
 import "./AuditLogPage.css";
+import { COLORS } from "~/config/theme";
+import { ROLES } from "~/config/roles";
 
 const { Title, Text, Paragraph } = Typography;
 const { RangePicker } = DatePicker;
@@ -51,7 +53,7 @@ const ROLE_META = {
 
 const ROLE_AVATAR_BG = {
     admin: "#b8860b",
-    alumni: "#1a1a2e",
+    alumni: COLORS.c1a1a2e,
     department_head: "#6b21a8",
 };
 
@@ -68,13 +70,13 @@ const DEPARTMENT_LOGO_BY_COURSE_CODE = {
 };
 
 const getRoleAvatarSrc = (record) => {
-    if (record.role === "alumni") {
+    if (record.role === ROLES.ALUMNI) {
         return record.profile_image_url || undefined;
     }
-    if (record.role === "admin") {
+    if (record.role === ROLES.ADMIN) {
         return avatarGuidance;
     }
-    if (record.role === "department_head") {
+    if (record.role === ROLES.DEPARTMENT_HEAD) {
         return (
             DEPARTMENT_LOGO_BY_COURSE_CODE[record.course_code] || avatarGuidance
         );
@@ -132,7 +134,7 @@ const AuditLogPage = () => {
                             icon={!avatarSrc ? (meta.icon || <UserOutlined />) : undefined}
                             style={
                                 !avatarSrc
-                                    ? { backgroundColor: ROLE_AVATAR_BG[record.role] || "#8c8c8c" }
+                                    ? { backgroundColor: ROLE_AVATAR_BG[record.role] || COLORS.antdGray7 }
                                     : undefined
                             }
                             className="audit-avatar"

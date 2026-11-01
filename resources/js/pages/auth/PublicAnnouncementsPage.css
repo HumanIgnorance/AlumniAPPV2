@@ -53,14 +53,14 @@
 }
 
 .ph-page.light .pan-jump {
-  background: #ffffff;
-  border: 1px solid #e6eaf1;
+  background: var(--c-white);
+  border: 1px solid var(--c-e6eaf1);
   box-shadow: 0 8px 22px rgba(2, 6, 23, 0.06);
 }
 
 .ph-page.dark .pan-jump {
   background: rgba(18, 22, 32, 0.75);
-  border: 1px solid #242a36;
+  border: 1px solid var(--c-242a36);
 }
 
 .pan-jump-label {
@@ -88,11 +88,11 @@
 }
 
 .ph-page.light .pan-section + .pan-section {
-  border-top-color: #edf0f5;
+  border-top-color: var(--c-edf0f5);
 }
 
 .ph-page.dark .pan-section + .pan-section {
-  border-top-color: #1d2230;
+  border-top-color: var(--c-1d2230);
 }
 
 .pan-section-count {
@@ -178,7 +178,7 @@
   padding: 4px 10px;
   border-radius: 999px;
   background: rgba(0, 0, 0, 0.6);
-  color: #ffd700;
+  color: var(--c-ffd700);
 }
 
 /* ---- Body ---- */
@@ -215,7 +215,7 @@
 
 .pan-badge.is-published {
   background: rgba(16, 185, 129, 0.14);
-  color: #0ea973;
+  color: var(--c-0ea973);
 }
 
 .pan-card-title {
@@ -246,11 +246,11 @@
 }
 
 .ph-page.light .pan-card-footer {
-  border-top: 1px dashed #e6eaf1;
+  border-top: 1px dashed var(--c-e6eaf1);
 }
 
 .ph-page.dark .pan-card-footer {
-  border-top: 1px dashed #242a36;
+  border-top: 1px dashed var(--c-242a36);
 }
 
 .pan-card-date {

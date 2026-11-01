@@ -1,0 +1,585 @@
+/* Late overrides (part 1) (split from layout/index.css; keep import order: see styles/index.js) */
+/* =========================================================
+   DARK MODE — ANT DESIGN PORTAL COMPONENTS
+   ========================================================= */
+
+/* ----- Dropdown ----- */
+html[data-theme="black"] .ant-dropdown,
+html[data-theme="black"] .ant-dropdown-menu,
+html[data-theme="black"] .ant-dropdown-menu-submenu-popup .ant-dropdown-menu {
+  background: var(--surface) !important;
+  border: 1px solid var(--border) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5) !important;
+  border-radius: 8px !important;
+}
+html[data-theme="black"] .ant-dropdown-menu-item,
+html[data-theme="black"] .ant-dropdown-menu-submenu-title {
+  color: var(--text) !important;
+  background: transparent !important;
+}
+html[data-theme="black"] .ant-dropdown-menu-item:hover,
+html[data-theme="black"] .ant-dropdown-menu-submenu-title:hover,
+html[data-theme="black"] .ant-dropdown-menu-item-active,
+html[data-theme="black"] .ant-dropdown-menu-submenu-active > .ant-dropdown-menu-submenu-title {
+  background: var(--surface-2) !important;
+  color: var(--text) !important;
+}
+html[data-theme="black"] .ant-dropdown-menu-item-selected {
+  background: rgba(59, 130, 246, 0.15) !important;
+  color: var(--accent) !important;
+}
+html[data-theme="black"] .ant-dropdown-menu-item-divider,
+html[data-theme="black"] .ant-dropdown-menu-item-group-title {
+  background: var(--border) !important;
+  color: var(--text-muted) !important;
+}
+html[data-theme="black"] .ant-dropdown-arrow::before,
+html[data-theme="black"] .ant-dropdown-arrow::after {
+  background: var(--surface) !important;
+}
+
+/* ----- Select ----- */
+html[data-theme="black"] .ant-select-dropdown {
+  background: var(--surface) !important;
+  border: 1px solid var(--border) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5) !important;
+}
+html[data-theme="black"] .ant-select-item,
+html[data-theme="black"] .ant-select-item-option {
+  color: var(--text) !important;
+  background: transparent !important;
+}
+html[data-theme="black"] .ant-select-item-option-active:not(.ant-select-item-option-disabled) {
+  background: var(--surface-2) !important;
+  color: var(--text) !important;
+}
+html[data-theme="black"] .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+  background: rgba(59, 130, 246, 0.15) !important;
+  color: var(--accent) !important;
+  font-weight: 600;
+}
+html[data-theme="black"] .ant-select-item-empty,
+html[data-theme="black"] .ant-empty-description {
+  color: var(--text-muted) !important;
+}
+html[data-theme="black"] .ant-select:not(.ant-select-customize-input) .ant-select-selector {
+  background: var(--surface) !important;
+  border-color: var(--border) !important;
+  color: var(--text) !important;
+}
+html[data-theme="black"] .ant-select-selection-placeholder,
+html[data-theme="black"] .ant-select-arrow {
+  color: var(--text-muted) !important;
+}
+
+/* ----- Popover ----- */
+html[data-theme="black"] .ant-popover-inner,
+html[data-theme="black"] .ant-popover-content > .ant-popover-inner {
+  background: var(--surface) !important;
+  border: 1px solid var(--border) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5) !important;
+}
+html[data-theme="black"] .ant-popover-title,
+html[data-theme="black"] .ant-popover-inner-content {
+  color: var(--text) !important;
+  border-color: var(--border) !important;
+}
+html[data-theme="black"] .ant-popover-arrow::before,
+html[data-theme="black"] .ant-popover-arrow::after {
+  background: var(--surface) !important;
+}
+
+/* ----- Tooltip ----- */
+html[data-theme="black"] .ant-tooltip-arrow::before,
+html[data-theme="black"] .ant-tooltip-arrow::after {
+  background: var(--surface-2) !important;
+}
+
+/* ----- DatePicker / Picker ----- */
+html[data-theme="black"] .ant-picker-dropdown,
+html[data-theme="black"] .ant-picker-panel-container,
+html[data-theme="black"] .ant-picker-panel {
+  background: var(--surface) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text) !important;
+}
+html[data-theme="black"] .ant-picker-cell,
+html[data-theme="black"] .ant-picker-header,
+html[data-theme="black"] .ant-picker-header button,
+html[data-theme="black"] .ant-picker-content th {
+  color: var(--text) !important;
+}
+html[data-theme="black"] .ant-picker-cell-in-view {
+  color: var(--text) !important;
+}
+html[data-theme="black"] .ant-picker-cell:hover .ant-picker-cell-inner {
+  background: var(--surface-2) !important;
+}
+html[data-theme="black"] .ant-picker-cell-selected .ant-picker-cell-inner {
+  background: var(--accent) !important;
+  color: var(--c-white) !important;
+}
+
+/* ----- Cascader / TreeSelect ----- */
+html[data-theme="black"] .ant-cascader-menus,
+html[data-theme="black"] .ant-cascader-menu,
+html[data-theme="black"] .ant-tree-select-dropdown {
+  background: var(--surface) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text) !important;
+}
+html[data-theme="black"] .ant-cascader-menu-item:hover,
+html[data-theme="black"] .ant-select-tree-node-content-wrapper:hover {
+  background: var(--surface-2) !important;
+}
+
+/* ----- Menu submenu popup ----- */
+html[data-theme="black"] .ant-menu-submenu-popup > .ant-menu,
+html[data-theme="black"] .ant-menu-submenu-popup .ant-menu-sub {
+  background: var(--surface) !important;
+  border: 1px solid var(--border) !important;
+}
+html[data-theme="black"] .ant-menu-submenu-popup .ant-menu-item {
+  color: var(--text) !important;
+}
+html[data-theme="black"] .ant-menu-submenu-popup .ant-menu-item:hover {
+  background: var(--surface-2) !important;
+}
+html[data-theme="black"] .ant-menu-submenu-popup .ant-menu-item-selected {
+  background: rgba(59, 130, 246, 0.15) !important;
+  color: var(--accent) !important;
+}
+
+/* ----- Modal ----- */
+html[data-theme="black"] .ant-modal-content,
+html[data-theme="black"] .ant-modal-header,
+html[data-theme="black"] .ant-modal-footer {
+  background: var(--surface) !important;
+  border-color: var(--border) !important;
+  color: var(--text) !important;
+}
+html[data-theme="black"] .ant-modal-title,
+html[data-theme="black"] .ant-modal-body,
+html[data-theme="black"] .ant-modal-close-x {
+  color: var(--text) !important;
+}
+html[data-theme="black"] .ant-modal-mask {
+  background: rgba(0, 0, 0, 0.75) !important;
+}
+
+/* ----- Drawer ----- */
+html[data-theme="black"] .ant-drawer-content,
+html[data-theme="black"] .ant-drawer-header,
+html[data-theme="black"] .ant-drawer-body,
+html[data-theme="black"] .ant-drawer-footer {
+  background: var(--surface) !important;
+  border-color: var(--border) !important;
+  color: var(--text) !important;
+}
+html[data-theme="black"] .ant-drawer-title,
+html[data-theme="black"] .ant-drawer-close {
+  color: var(--text) !important;
+}
+
+/* ----- Notification / Message / Popconfirm ----- */
+html[data-theme="black"] .ant-notification-notice,
+html[data-theme="black"] .ant-message-notice-content,
+html[data-theme="black"] .ant-popconfirm .ant-popover-inner {
+  background: var(--surface) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text) !important;
+}
+
+/* ---------- Textarea Character Count (0 / 500) ---------- */
+html[data-theme="black"] .ant-input-textarea-show-count::after,
+html[data-theme="black"] .ant-input-data-count {
+  color: var(--c-white) !important;
+}
+
+/* ---------- Input Placeholder ---------- */
+html[data-theme="black"] .ant-input::placeholder,
+html[data-theme="black"] .ant-input-affix-wrapper input::placeholder,
+html[data-theme="black"] textarea::placeholder {
+  color: var(--text-muted) !important;
+}
+
+/* ---------- Password Eye ---------- */
+html[data-theme="black"] .ant-input-password-icon {
+  color: var(--text-muted) !important;
+}
+
+html[data-theme="black"] .ant-input-password-icon:hover {
+  color: var(--c-white) !important;
+}
+
+/* ---------- Input Number ---------- */
+html[data-theme="black"] .ant-input-number-handler-wrap {
+  background: var(--surface-2) !important;
+}
+
+html[data-theme="black"] .ant-input-number-handler {
+  border-color: var(--border) !important;
+}
+
+html[data-theme="black"] .ant-input-number-handler-up-inner,
+html[data-theme="black"] .ant-input-number-handler-down-inner {
+  color: var(--c-white) !important;
+}
+
+/* ---------- Radio ---------- */
+html[data-theme="black"] .ant-radio-wrapper {
+  color: var(--text) !important;
+}
+
+html[data-theme="black"] .ant-radio-inner {
+  background: var(--surface-2) !important;
+  border-color: var(--border) !important;
+}
+
+html[data-theme="black"] .ant-radio-checked .ant-radio-inner {
+  border-color: var(--accent) !important;
+}
+
+/* ---------- Checkbox ---------- */
+html[data-theme="black"] .ant-checkbox-wrapper {
+  color: var(--text) !important;
+}
+
+html[data-theme="black"] .ant-checkbox-inner {
+  background: var(--surface-2) !important;
+  border-color: var(--border) !important;
+}
+
+/* ---------- Switch ---------- */
+html[data-theme="black"] .ant-switch {
+  background: #374151 !important;
+}
+
+html[data-theme="black"] .ant-switch-checked {
+  background: linear-gradient(
+    135deg,
+    var(--accent),
+    var(--accent-2)
+  ) !important;
+}
+
+/* ---------- Divider ---------- */
+html[data-theme="black"] .ant-divider {
+  border-color: var(--border) !important;
+}
+
+html[data-theme="black"] .ant-divider-inner-text {
+  color: var(--text) !important;
+}
+
+/* ---------- Tag ---------- */
+html[data-theme="black"] .ant-tag {
+  background: var(--surface-2) !important;
+  border-color: var(--border) !important;
+  color: var(--text) !important;
+}
+
+/* ---------- Upload ---------- */
+html[data-theme="black"] .ant-upload-text,
+html[data-theme="black"] .ant-upload-hint {
+  color: var(--text) !important;
+}
+
+/* html[data-theme="black"] .ant-upload {
+  background: var(--surface-2) !important;
+  border-color: var(--border) !important;
+} */
+
+/* ---------- Progress ---------- */
+html[data-theme="black"] .ant-progress-text,
+html[data-theme="black"] .ant-progress-outer {
+  color: var(--text) !important;
+}
+
+/* ---------- Steps ---------- */
+html[data-theme="black"] .ant-steps-item-title {
+  color: var(--text) !important;
+}
+
+html[data-theme="black"] .ant-steps-item-description {
+  color: var(--text-muted) !important;
+}
+
+html[data-theme="black"] .ant-steps-item-icon .ant-steps-icon {
+  color: var(--c-white) !important;
+}
+
+/* ---------- Alert ---------- */
+html[data-theme="black"] .ant-alert {
+  background: var(--surface) !important;
+  border-color: var(--border) !important;
+}
+
+html[data-theme="black"] .ant-alert-message,
+html[data-theme="black"] .ant-alert-description {
+  color: var(--text) !important;
+}
+
+/* ---------- Card ---------- */
+html[data-theme="black"] .ant-card {
+  background: var(--surface) !important;
+  border-color: var(--border) !important;
+}
+
+html[data-theme="black"] .ant-card-head {
+  background: var(--surface) !important;
+  border-color: var(--border) !important;
+}
+
+html[data-theme="black"] .ant-card-head-title {
+  color: var(--text) !important;
+}
+
+/* ---------- Collapse ---------- */
+html[data-theme="black"] .ant-collapse {
+  background: var(--surface) !important;
+  border-color: var(--border) !important;
+}
+
+html[data-theme="black"] .ant-collapse-item {
+  border-color: var(--border) !important;
+}
+
+html[data-theme="black"] .ant-collapse-header,
+html[data-theme="black"] .ant-collapse-content-box {
+  color: var(--text) !important;
+  background: var(--surface) !important;
+}
+
+html[data-theme="black"] .ant-collapse-content {
+  background: var(--surface) !important;
+  border-top-color: var(--border) !important;
+}
+
+/* ---------- Tabs ---------- */
+html[data-theme="black"] .ant-tabs-tab {
+  color: var(--text-muted) !important;
+}
+
+html[data-theme="black"] .ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: var(--accent) !important;
+}
+
+html[data-theme="black"] .ant-tabs-content {
+  color: var(--text) !important;
+}
+
+/* ---------- List ---------- */
+html[data-theme="black"] .ant-list-item {
+  border-color: var(--border) !important;
+}
+
+html[data-theme="black"] .ant-list-item,
+html[data-theme="black"] .ant-list-item-meta-title,
+html[data-theme="black"] .ant-list-item-meta-description {
+  color: var(--text) !important;
+}
+
+/* ---------- Empty ---------- */
+html[data-theme="black"] .ant-empty-description {
+  color: var(--text-muted) !important;
+}
+
+/* ---------- Spin ---------- */
+html[data-theme="black"] .ant-spin-text {
+  color: var(--text) !important;
+}
+
+/* ---------- Pagination ---------- */
+html[data-theme="black"] .ant-pagination-item {
+  background: var(--surface) !important;
+  border-color: var(--border) !important;
+}
+
+html[data-theme="black"] .ant-pagination-item a {
+  color: var(--text) !important;
+}
+
+html[data-theme="black"] .ant-pagination-item-active {
+  border-color: var(--accent) !important;
+}
+
+html[data-theme="black"] .ant-pagination-item-active a {
+  color: var(--accent) !important;
+}
+
+html[data-theme="black"] .ant-pagination-prev button,
+html[data-theme="black"] .ant-pagination-next button {
+  color: var(--text) !important;
+}
+
+/* ---------- Timeline ---------- */
+html[data-theme="black"] .ant-timeline-item-content {
+  color: var(--text) !important;
+}
+
+/* ---------- Statistic ---------- */
+html[data-theme="black"] .ant-statistic-content,
+html[data-theme="black"] .ant-statistic-title {
+  color: var(--text) !important;
+}
+
+/* ---------- Table ---------- */
+html[data-theme="black"] .ant-table {
+  background: var(--surface) !important;
+  color: var(--text) !important;
+}
+
+html[data-theme="black"] .ant-table-thead > tr > th {
+  background: var(--surface-2) !important;
+  color: var(--text) !important;
+  border-color: var(--border) !important;
+}
+
+html[data-theme="black"] .ant-table-tbody > tr > td {
+  background: var(--surface) !important;
+  color: var(--text) !important;
+  border-color: var(--border) !important;
+}
+
+html[data-theme="black"] .ant-table-tbody > tr:hover > td {
+  background: var(--surface-2) !important;
+}
+
+/* ---------- Message ---------- */
+html[data-theme="black"] .ant-message-notice-content {
+  background: var(--surface) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text) !important;
+}
+
+/* ---------- Notification ---------- */
+html[data-theme="black"] .ant-notification-notice {
+  background: var(--surface) !important;
+  border-color: var(--border) !important;
+}
+
+html[data-theme="black"] .ant-notification-notice-message,
+html[data-theme="black"] .ant-notification-notice-description {
+  color: var(--text) !important;
+}
+
+/* ---------- Image Preview ---------- */
+html[data-theme="black"] .ant-image-preview-wrap {
+  background: rgba(0,0,0,.85) !important;
+}
+
+/* ---------- Modal Confirm ---------- */
+html[data-theme="black"] .ant-modal-confirm-content,
+html[data-theme="black"] .ant-modal-confirm-title {
+  color: var(--text) !important;
+}
+
+/* ---------- Form Validation ---------- */
+html[data-theme="black"] .ant-form-item-explain-error {
+  color: #ff7875 !important;
+}
+
+/* ---------- Tooltip ---------- */
+html[data-theme="black"] .ant-tooltip-inner {
+  background: var(--surface-2) !important;
+  color: var(--text) !important;
+  border: 1px solid var(--border) !important;
+}
+
+/* ---------- Links ---------- */
+html[data-theme="black"] a {
+  color: var(--c-blue-400);
+}
+
+html[data-theme="black"] a:hover {
+  color: var(--c-blue-300);
+}
+
+/* InputNumber */
+html[data-theme="black"] .ant-input-number {
+  background: var(--surface-2) !important;
+  border-color: var(--border) !important;
+}
+
+html[data-theme="black"] .ant-input-number-input {
+  background: transparent !important;
+  color: var(--text) !important;
+}
+
+html[data-theme="black"] .ant-input-number-input::placeholder {
+  color: var(--text-secondary) !important;
+}
+
+/* InputNumber controls */
+html[data-theme="black"] .ant-input-number-handler-wrap {
+  background: var(--surface-2) !important;
+  border-left: 1px solid var(--border) !important;
+}
+
+html[data-theme="black"] .ant-input-number-handler {
+  color: var(--text) !important;
+  border-color: var(--border) !important;
+}
+
+html, body {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE & Edge */
+    scroll-behavior: smooth;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
+/* Quiz Modal Dark Theme */
+[data-theme="black"] .quiz-modal .ant-modal-content {
+  background: var(--surface) !important;
+  border: 1px solid var(--border) !important;
+}
+
+[data-theme="black"] .quiz-modal .ant-modal-header {
+  background: var(--surface) !important;
+  border-bottom: 1px solid var(--border) !important;
+}
+
+[data-theme="black"] .quiz-modal .ant-modal-title {
+  color: var(--c-white) !important;
+}
+
+[data-theme="black"] .quiz-modal .ant-modal-body {
+  background: var(--surface) !important;
+  color: var(--c-white) !important;
+}
+
+/* Warning Box */
+[data-theme="black"] .quiz-modal .theme-warning-box {
+  background: var(--surface-2) !important;
+  border-color: var(--c-antd-orange) !important;
+}
+
+/* Quiz Buttons */
+[data-theme="black"] .quiz-modal .ant-btn-dashed {
+  background: var(--surface-2) !important;
+  border-color: var(--border) !important;
+  color: var(--c-white) !important;
+}
+
+[data-theme="black"] .quiz-modal .ant-btn-dashed:hover {
+  border-color: var(--accent) !important;
+  color: var(--accent) !important;
+}
+
+/* Logout Button */
+[data-theme="black"] .quiz-modal .ant-btn {
+  transition: all 0.3s ease;
+}
+
+
+
+@media (hover: none), (pointer: coarse) {
+  .notification-category-bar .ant-tooltip {
+    display: none !important;
+  }
+}

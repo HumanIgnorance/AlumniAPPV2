@@ -1,0 +1,418 @@
+/* Custom scrollbar for modal */
+.create-event-modal .ant-modal-body::-webkit-scrollbar {
+    width: 6px;
+}
+
+.create-event-modal .ant-modal-body::-webkit-scrollbar-track {
+    background: var(--c-f1f1f1);
+    border-radius: 3px;
+}
+
+.create-event-modal .ant-modal-body::-webkit-scrollbar-thumb {
+    background: var(--c-c1c1c1);
+    border-radius: 3px;
+}
+
+.create-event-modal .ant-modal-body::-webkit-scrollbar-thumb:hover {
+    background: var(--c-a8a8a8);
+}
+
+/* Event Details Modal Styles */
+.event-details-modal .ant-modal-body {
+    padding: 0;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.event-detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-right: 8px;
+}
+
+.event-header-actions {
+    display: flex;
+    gap: 4px;
+}
+
+.event-details-content {
+    padding: 0;
+}
+/* Image Gallery */
+.event-gallery-section {
+    position: relative;
+    height: 400px;
+    background: var(--c-1f1f1f);
+    overflow: hidden;
+}
+
+.event-carousel,
+.event-carousel .slick-list,
+.event-carousel .slick-track {
+    height: 100%;
+}
+
+.event-carousel .slick-slide > div {
+    width: 100%;
+    height: 100%;
+}
+
+/* FIX: "black slide" on Next/Prev in mobile portrait.
+   react-slick's fade effect positions each .slick-slide independently via
+   its own absolute inline offset, but the parent .slick-track ALSO keeps
+   receiving a transform/left positioning update on every slide change.
+   On narrow viewports — where our breakpoints below force fixed pixel
+   widths/heights — that extra track-level offset stacks with the slide's
+   own offset and pushes the incoming slide outside the visible .slick-list
+   clipping area. The image is still there and still clickable (which is
+   why tapping the blank area opened the preview correctly); it just isn't
+   painted in the visible viewport. Pinning the track removes the double
+   offset — fade doesn't need the track to move, only each slide's opacity. */
+.event-carousel .slick-track,
+.event-card-carousel .slick-track {
+    transform: none !important;
+    -webkit-transform: none !important;
+    left: 0 !important;
+}
+
+/* Give each slide its own compositing layer. Mobile Safari/Chrome can
+   occasionally finish an opacity transition without actually painting the
+   <img> underneath it, leaving a blank frame until something else forces a
+   repaint. Forcing a layer here (paired with the JS nudge in afterChange)
+   prevents that stuck blank paint. */
+.event-carousel .slick-slide,
+.event-card-carousel .slick-slide {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+}
+
+.carousel-slide {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    display: block;
+    background: var(--c-1f1f1f);
+    overflow: hidden;
+    cursor: zoom-in;
+}
+
+/* Plain <img> inside the slide — fills the slide on every viewport,
+   including mobile portrait where Antd <Image> wrapper used to collapse. */
+.carousel-slide .event-detail-image {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* Hover overlay (desktop) / tap target (mobile) for opening preview */
+.event-detail-image-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: var(--c-white);
+    font-weight: 600;
+    background: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0) 40%,
+        rgba(0, 0, 0, 0.45) 100%
+    );
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    pointer-events: none;
+}
+.carousel-slide:hover .event-detail-image-overlay {
+    opacity: 1;
+}
+.event-detail-image-overlay .anticon {
+    font-size: 22px;
+}
+
+.image-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 400px;
+    color: var(--c-999999);
+    font-size: 16px;
+    background: var(--c-1f1f1f);
+}
+
+.image-placeholder--empty .anticon {
+    font-size: 48px;
+    margin-bottom: 8px;
+    opacity: 0.6;
+}
+
+.custom-dots {
+    position: absolute;
+    bottom: 16px;
+    z-index: 2;
+}
+
+/* Event Details Body */
+.event-details-body {
+    padding: 24px;
+}
+
+.event-status-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.event-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.event-description-detailed {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--c-gray-333);
+    margin-bottom: 0;
+}
+
+/* Details Grid */
+.event-details-grid {
+    margin: 20px 0;
+}
+
+.detail-item-large {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 0;
+}
+
+.detail-icon {
+    font-size: 20px;
+    color: var(--c-antd-blue);
+    margin-top: 2px;
+}
+
+.detail-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+/* Registration Progress */
+.registration-progress {
+    margin-top: 20px;
+    padding: 16px;
+    background: var(--c-zinc-50);
+    border-radius: 8px;
+}
+
+.registration-progress .ant-progress {
+    margin: 8px 0;
+}
+
+.registration-progress .ant-progress-text {
+    font-size: 12px;
+}
+
+/* Agenda */
+.agenda-item {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--c-antd-gray-3);
+}
+
+.agenda-item:last-child {
+    border-bottom: none;
+}
+
+.agenda-time {
+    min-width: 100px;
+}
+
+.agenda-content {
+    flex: 1;
+}
+
+/* Speakers */
+.speaker-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 16px;
+    border: 1px solid var(--c-antd-gray-3);
+    border-radius: 8px;
+    transition: all 0.3s;
+}
+
+.speaker-card:hover {
+    border-color: var(--c-antd-blue);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.speaker-info {
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+/* Pricing Card */
+.pricing-card {
+    position: sticky;
+    top: 24px;
+}
+
+.pricing-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.early-bird-pricing {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+/* Register button styles */
+.register-btn {
+    margin-top: 16px;
+    border-radius: 8px;
+    height: 48px;
+    font-weight: 600;
+    font-size: 16px;
+    background: linear-gradient(135deg, var(--c-brand) 0%, var(--c-brand-2) 100%);
+    border: none;
+}
+
+.register-btn:hover {
+    background: linear-gradient(135deg, #5a6fd6 0%, #6a4190 100%);
+}
+
+.register-btn:disabled {
+    background: var(--c-antd-gray-5);
+}
+
+/* Organizer */
+.event-organizer-detailed {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.organizer-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.organizer-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.organizer-actions {
+    display: flex;
+    gap: 4px;
+}
+
+/* Tags */
+.event-tags-detailed {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.event-tag-detailed {
+    margin: 0;
+    padding: 4px 8px;
+    border-radius: 6px;
+}
+/* Responsive Design */
+@media (max-width: 768px) {
+
+    /* FIX: Featured tags wrap on mobile instead of getting cut off */
+    .event-meta {
+        flex-wrap: wrap;
+        gap: 6px;
+        max-width: 100%;
+        overflow-x: auto;
+    }
+}
+
+/* Custom scrollbar for modal */
+.event-details-modal .ant-modal-body::-webkit-scrollbar {
+    width: 6px;
+}
+
+.event-details-modal .ant-modal-body::-webkit-scrollbar-track {
+    background: var(--c-f1f1f1);
+    border-radius: 3px;
+}
+
+.event-details-modal .ant-modal-body::-webkit-scrollbar-thumb {
+    background: var(--c-c1c1c1);
+    border-radius: 3px;
+}
+
+.event-details-modal .ant-modal-body::-webkit-scrollbar-thumb:hover {
+    background: var(--c-a8a8a8);
+}
+
+/* Enhanced Safety & Guidelines Styles */
+.safety-card,
+.tags-card,
+.agenda-card {
+    margin-top: 16px;
+}
+
+.guideline-category {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--c-antd-gray-3);
+}
+
+.guideline-category:last-child {
+    border-bottom: none;
+}
+
+.category-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--c-antd-gray-3);
+}
+
+.category-header .ant-typography {
+    font-size: 14px;
+    margin: 0;
+}
+
+.guideline-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 6px 0;
+    margin-left: 8px;
+}
+
+.guideline-item .ant-typography {
+    font-size: 13px;
+    line-height: 1.4;
+    margin: 0;
+}

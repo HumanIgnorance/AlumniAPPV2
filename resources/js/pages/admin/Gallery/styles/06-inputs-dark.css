@@ -1,0 +1,461 @@
+/* Inputs — Dark */
+[data-theme="black"] .gal-modal .ant-input,
+[data-theme="black"] .gal-modal .ant-picker,
+[data-theme="black"] .gal-modal .ant-input-affix-wrapper,
+[data-theme="black"] .gal-modal .ant-input-number,
+[data-theme="black"] .gal-modal textarea.ant-input,
+[data-theme="black"] .gal-modal .ant-select:not(.ant-select-customize-input) .ant-select-selector {
+  background: var(--surface-2) !important;
+  border: 1.5px solid var(--border) !important;
+  color: var(--text) !important;
+}
+
+[data-theme="black"] .gal-modal .ant-input::placeholder,
+[data-theme="black"] .gal-modal textarea.ant-input::placeholder,
+[data-theme="black"] .gal-modal .ant-picker-input>input::placeholder,
+[data-theme="black"] .gal-modal .ant-select-selection-placeholder {
+  color: var(--text-subtle) !important;
+}
+
+[data-theme="black"] .gal-modal .ant-input:hover,
+[data-theme="black"] .gal-modal .ant-picker:hover,
+[data-theme="black"] .gal-modal .ant-input-affix-wrapper:hover,
+[data-theme="black"] .gal-modal .ant-select:not(.ant-select-disabled):hover .ant-select-selector {
+  background: var(--surface) !important;
+  border-color: var(--accent-ring) !important;
+}
+
+[data-theme="black"] .gal-modal .ant-input:focus,
+[data-theme="black"] .gal-modal .ant-input-affix-wrapper-focused,
+[data-theme="black"] .gal-modal .ant-picker-focused,
+[data-theme="black"] .gal-modal .ant-select-focused:not(.ant-select-disabled) .ant-select-selector {
+  background: var(--surface) !important;
+  border-color: var(--c-indigo-400) !important;
+  box-shadow: 0 0 0 4px var(--accent-soft) !important;
+}
+
+[data-theme="black"] .gal-modal .ant-picker-suffix,
+[data-theme="black"] .gal-modal .ant-select-arrow,
+[data-theme="black"] .gal-modal .ant-input-prefix,
+[data-theme="black"] .gal-modal .ant-input-suffix,
+[data-theme="black"] .gal-modal .ant-select-selection-item {
+  color: var(--text) !important;
+}
+
+/* Select dropdown — Dark */
+[data-theme="black"] .ant-select-dropdown {
+  background: var(--surface) !important;
+  border: 1px solid var(--border) !important;
+  box-shadow: var(--shadow-lg) !important;
+}
+
+[data-theme="black"] .ant-select-dropdown .ant-select-item {
+  color: var(--text) !important;
+}
+
+[data-theme="black"] .ant-select-dropdown .ant-select-item-option-active:not(.ant-select-item-option-disabled),
+[data-theme="black"] .ant-select-dropdown .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+  background: var(--accent-soft) !important;
+  color: var(--c-indigo-200) !important;
+}
+
+[data-theme="black"] .ant-picker-dropdown .ant-picker-panel-container {
+  background: var(--surface) !important;
+  border: 1px solid var(--border) !important;
+  box-shadow: var(--shadow-lg) !important;
+}
+
+[data-theme="black"] .ant-picker-dropdown .ant-picker-content th,
+[data-theme="black"] .ant-picker-dropdown .ant-picker-header,
+[data-theme="black"] .ant-picker-dropdown .ant-picker-header button,
+[data-theme="black"] .ant-picker-dropdown .ant-picker-cell-in-view {
+  color: var(--text) !important;
+}
+
+[data-theme="black"] .ant-picker-dropdown .ant-picker-cell {
+  color: var(--text-subtle) !important;
+}
+
+[data-theme="black"] .ant-picker-dropdown .ant-picker-cell-in-view.ant-picker-cell-selected .ant-picker-cell-inner {
+  background: var(--c-indigo-500) !important;
+  color: var(--c-white) !important;
+}
+
+/* ---------- Upload dragger — Dark ---------- */
+[data-theme="black"] .gal-upload-dragger {
+  background:
+    linear-gradient(180deg, var(--surface-2) 0%, var(--surface) 100%) !important;
+  border: 2px dashed var(--border-strong) !important;
+}
+
+[data-theme="black"] .gal-upload-dragger:hover {
+  border-color: var(--c-indigo-400) !important;
+  background:
+    linear-gradient(180deg, rgba(99, 102, 241, 0.10), rgba(124, 58, 237, 0.08)) !important;
+}
+
+[data-theme="black"] .gal-upload-dragger .ant-upload-drag-icon {
+  color: var(--c-indigo-300) !important;
+}
+
+[data-theme="black"] .gal-upload-dragger .ant-upload-text {
+  color: var(--text) !important;
+}
+
+[data-theme="black"] .gal-upload-dragger .ant-upload-hint {
+  color: var(--text-muted) !important;
+}
+
+[data-theme="black"] .gal-upload-dragger .ant-upload-list-item {
+  background: var(--surface-2) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text) !important;
+}
+
+[data-theme="black"] .gal-upload-dragger .ant-upload-list-item-name,
+[data-theme="black"] .gal-upload-dragger .ant-upload-list-item .anticon {
+  color: var(--text) !important;
+}
+
+[data-theme="black"] .gal-upload-dragger .ant-upload-list-item:hover {
+  background: var(--surface) !important;
+}
+
+/* Helper note above upload */
+.gal-upload-helper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  color: var(--text-muted);
+  margin-top: 10px;
+  padding: 8px 12px;
+  background: var(--surface-2);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-sm);
+}
+
+[data-theme="black"] .gal-upload-helper {
+  background: var(--surface-2);
+  border-color: var(--border);
+}
+
+/* ---------- Edit modal preview — Dark ---------- */
+[data-theme="black"] .gal-current-image-preview {
+  background:
+    linear-gradient(180deg, var(--surface-2) 0%, var(--surface) 100%) !important;
+  border: 1px solid var(--border) !important;
+}
+
+[data-theme="black"] .gal-current-image-preview .ant-typography {
+  color: var(--text-muted) !important;
+}
+
+[data-theme="black"] .gal-preview-thumb {
+  border: 1px solid var(--border) !important;
+  box-shadow: var(--shadow-xs);
+}
+
+[data-theme="black"] .gal-preview-thumb:hover {
+  border-color: var(--c-indigo-400) !important;
+}
+
+/* ---------- Footer buttons — Dark ---------- */
+[data-theme="black"] .gal-modal-actions {
+  border-top-color: var(--border) !important;
+}
+
+[data-theme="black"] .gal-modal-actions .ant-btn-default,
+[data-theme="black"] .gal-delete-modal .ant-btn-default {
+  background: var(--surface-2) !important;
+  border: 1.5px solid var(--border-strong) !important;
+  color: var(--text) !important;
+}
+
+[data-theme="black"] .gal-modal-actions .ant-btn-default:hover {
+  background: var(--surface) !important;
+  border-color: var(--c-indigo-400) !important;
+  color: var(--c-indigo-200) !important;
+}
+
+[data-theme="black"] .gal-delete-modal .ant-btn-default:hover {
+  background: var(--surface) !important;
+  border-color: rgba(239, 68, 68, 0.45) !important;
+  color: var(--c-red-300) !important;
+}
+
+/* Primary CTA — dark */
+[data-theme="black"] .gal-modal-actions .ant-btn-primary {
+  background: linear-gradient(135deg, var(--c-indigo-500) 0%, var(--c-violet-600) 100%) !important;
+  color: var(--c-white) !important;
+  box-shadow:
+    0 8px 24px rgba(99, 102, 241, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18) !important;
+}
+
+[data-theme="black"] .gal-modal-actions .ant-btn-primary:hover:not(:disabled) {
+  box-shadow:
+    0 14px 32px rgba(99, 102, 241, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22) !important;
+  filter: brightness(1.08);
+}
+
+[data-theme="black"] .gal-modal-actions .ant-btn-primary:disabled,
+[data-theme="black"] .gal-modal-actions .ant-btn-primary[disabled] {
+  background: linear-gradient(135deg, #2a2f3d 0%, #3a4254 100%) !important;
+  color: var(--c-9aa4b2) !important;
+  box-shadow: none !important;
+}
+
+/* Danger CTA — dark */
+.gal-delete-modal .ant-btn-dangerous,
+.gal-delete-modal .ant-btn-primary.ant-btn-dangerous {
+  background: linear-gradient(135deg, var(--c-red-500) 0%, var(--c-red-700) 100%) !important;
+  border: none !important;
+  color: var(--c-white) !important;
+  border-radius: 12px !important;
+  height: 42px;
+  padding: 0 20px !important;
+  font-weight: 600;
+  box-shadow: 0 8px 20px rgba(239, 68, 68, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.18) !important;
+  transition: all 0.25s var(--ease-spring);
+}
+
+.gal-delete-modal .ant-btn-dangerous:hover:not(:disabled) {
+  transform: translateY(-2px);
+  filter: brightness(1.08);
+  box-shadow: 0 14px 32px rgba(239, 68, 68, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.22) !important;
+}
+
+[data-theme="black"] .gal-delete-modal .ant-btn-dangerous {
+  box-shadow: 0 8px 24px rgba(239, 68, 68, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.18) !important;
+}
+
+/* ---------- Delete preview thumbs — Dark ---------- */
+[data-theme="black"] .gal-delete-preview {
+  background: var(--surface-2) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius-md);
+  padding: 14px;
+}
+
+[data-theme="black"] .gal-delete-warning {
+  color: var(--c-red-300) !important;
+  background: rgba(239, 68, 68, 0.10);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  margin-top: 14px;
+}
+
+.gal-delete-warning {
+  margin-top: 14px;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  background: #fff5f5;
+  border: 1px solid #fecaca;
+  color: var(--c-red-700);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* ---------- Typography inside modals — Dark ---------- */
+[data-theme="black"] .gal-modal .ant-modal-body .ant-typography,
+[data-theme="black"] .gal-modal .ant-modal-body .ant-typography p,
+[data-theme="black"] .gal-modal .ant-modal-body label,
+[data-theme="black"] .gal-delete-modal .ant-modal-body,
+[data-theme="black"] .gal-delete-modal .ant-modal-body .ant-typography {
+  color: var(--text) !important;
+}
+
+[data-theme="black"] .gal-modal .ant-divider {
+  border-color: var(--border) !important;
+}
+
+[data-theme="black"] .gal-modal .ant-divider-inner-text {
+  color: var(--text-muted) !important;
+}
+
+/* ---------- Checkbox / Radio — Dark ---------- */
+[data-theme="black"] .gal-modal .ant-checkbox-inner,
+[data-theme="black"] .gal-modal .ant-radio-inner {
+  background: var(--surface-2) !important;
+  border-color: var(--border-strong) !important;
+}
+
+[data-theme="black"] .gal-modal .ant-checkbox-checked .ant-checkbox-inner,
+[data-theme="black"] .gal-modal .ant-radio-checked .ant-radio-inner {
+  background: var(--c-indigo-500) !important;
+  border-color: var(--c-indigo-500) !important;
+}
+
+[data-theme="black"] .gal-modal .ant-checkbox-wrapper,
+[data-theme="black"] .gal-modal .ant-radio-wrapper {
+  color: var(--text) !important;
+}
+
+/* ---------- Responsive polish ---------- */
+@media (max-width: 768px) {
+
+  .gal-modal .ant-modal,
+  .gal-delete-modal .ant-modal {
+    max-width: 96vw !important;
+    margin: 12px auto !important;
+  }
+
+  .gal-modal .ant-modal-content,
+  .gal-delete-modal .ant-modal-content {
+    border-radius: var(--radius-lg) !important;
+  }
+
+  .gal-modal .ant-modal-header,
+  .gal-delete-modal .ant-modal-header {
+    padding: 16px 18px !important;
+  }
+
+  .gal-modal .ant-modal-body,
+  .gal-delete-modal .ant-modal-body {
+    padding: 18px !important;
+  }
+
+  .gal-modal .ant-modal-footer,
+  .gal-delete-modal .ant-modal-footer {
+    padding: 14px 18px !important;
+    flex-direction: column-reverse;
+  }
+
+  .gal-modal .ant-modal-footer .ant-btn,
+  .gal-delete-modal .ant-modal-footer .ant-btn {
+    width: 100%;
+  }
+
+  .gal-modal-actions {
+    text-align: stretch !important;
+  }
+
+  .gal-modal-actions .ant-btn {
+    width: 100%;
+    margin: 4px 0 !important;
+  }
+
+  .gal-preview-thumb,
+  .gal-preview-more {
+    width: 56px;
+    height: 56px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .gal-modal .ant-modal {
+    max-width: 640px !important;
+  }
+
+  .gal-delete-modal .ant-modal {
+    max-width: 520px !important;
+  }
+}
+
+/* ---------- Accessibility focus rings ---------- */
+.gal-modal .ant-btn:focus-visible,
+.gal-delete-modal .ant-btn:focus-visible {
+  outline: 2px solid var(--c-indigo-400) !important;
+  outline-offset: 2px !important;
+}
+
+[data-theme="black"] .gal-modal .ant-btn:focus-visible,
+[data-theme="black"] .gal-delete-modal .ant-btn:focus-visible {
+  outline-color: var(--c-indigo-300) !important;
+}
+
+/* ---------- Smooth scroll inside long modal bodies ---------- */
+.gal-modal .ant-modal-body,
+.gal-delete-modal .ant-modal-body {
+  max-height: 70vh;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
+}
+
+.gal-modal .ant-modal-body::-webkit-scrollbar,
+.gal-delete-modal .ant-modal-body::-webkit-scrollbar {
+  width: 8px;
+}
+
+.gal-modal .ant-modal-body::-webkit-scrollbar-thumb,
+.gal-delete-modal .ant-modal-body::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 8px;
+}
+
+/* ============================================================
+   MODALS v2.1 — Compact uploader + dark counter fix
+   ============================================================ */
+
+/* --- Shrink the Upload Dragger so there's room for thumbnails below --- */
+[data-theme="black"] .gal-modal .ant-upload.ant-upload-drag,
+.gal-modal .ant-upload.ant-upload-drag {
+  min-height: 140px !important;
+  padding: 14px 16px !important;
+}
+
+.gal-modal .ant-upload.ant-upload-drag .ant-upload-btn {
+  padding: 14px 16px !important;
+}
+
+.gal-modal .ant-upload-drag-icon {
+  margin-bottom: 6px !important;
+}
+
+.gal-modal .ant-upload-drag-icon .anticon,
+.gal-modal .ant-upload-drag-icon svg,
+.gal-modal .ant-upload-drag-icon img {
+  width: 38px !important;
+  height: 38px !important;
+  font-size: 38px !important;
+}
+
+.gal-modal .ant-upload-text {
+  font-size: 14px !important;
+  line-height: 1.25 !important;
+  margin: 4px 0 2px !important;
+}
+
+.gal-modal .ant-upload-hint,
+.gal-modal .gal-upload-helper {
+  font-size: 12px !important;
+  line-height: 1.3 !important;
+  margin: 0 !important;
+}
+
+/* Make the file list below the dragger scroll instead of pushing the dragger taller */
+.gal-modal .ant-upload-list.ant-upload-list-picture-card,
+.gal-modal .ant-upload-list.ant-upload-list-text,
+.gal-modal .ant-upload-list {
+  max-height: 260px;
+  overflow-y: auto;
+  margin-top: 10px;
+  padding-right: 4px;
+}
+
+
+/* --- Character counter: white in Dark theme --- */
+/* Ant Design's Input.showCount renders a suffix like ".ant-input-show-count-suffix" */
+[data-theme="black"] .gal-modal .ant-input-show-count-suffix,
+[data-theme="black"] .gal-modal .ant-input-data-count,
+[data-theme="black"] .gal-modal .ant-form-item .ant-input-suffix,
+[data-theme="black"] .gal-modal .ant-input-affix-wrapper .ant-input-show-count-suffix,
+[data-theme="black"] .gal-modal .ant-input-textarea-show-count::after,
+[data-theme="black"] .gal-modal .ant-input-textarea .ant-input-data-count {
+  color: var(--c-white) !important;
+  opacity: 0.9;
+}
+
+/* Textarea uses ::after for the counter — force white via the wrapper */
+[data-theme="black"] .gal-modal .ant-input-textarea-show-count {
+  color: var(--c-white) !important;
+}
+
+[data-theme="black"] .gal-modal .ant-input-textarea-show-count::after {
+  color: var(--c-white) !important;
+}

@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import secureLocalStorage from "react-secure-storage";
+import { COLORS } from "~/config/theme";
 
 
 
@@ -11,8 +12,8 @@ const COOKIE_MAX_AGE_DAYS = 365;
 
 // Keep these in sync with the --bg values in FormLogin.css
 const THEME_COLORS = {
-    white: "#ffffff",
-    black: "#0a0c12",
+    white: COLORS.white,
+    black: COLORS.c0a0c12,
 };
 
 function readCookie(name) {
@@ -145,4 +146,3 @@ export function useAppTheme() {
     return { theme, setTheme, toggleTheme };
 }
 
-export default useAppTheme;

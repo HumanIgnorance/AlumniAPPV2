@@ -2,7 +2,6 @@
 
 namespace App\Mail;
 
-use App\Models\JobApplication;
 use App\Models\JobPost;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;

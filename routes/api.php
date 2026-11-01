@@ -1,9 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\AlumniRegistrationController;
 use App\Http\Controllers\GlobalAluminiController;
 use App\Http\Controllers\EventController;

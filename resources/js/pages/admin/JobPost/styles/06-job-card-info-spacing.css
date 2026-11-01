@@ -1,0 +1,384 @@
+/* ============ Job Card Info Spacing ============ */
+.job-card-info-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.job-card-info-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.job-card-company {
+  margin-bottom: 8px;
+}
+
+.job-card-creator {
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
+.job-card-meta {
+  margin-top: 12px;
+}
+
+/* Job details info styling for dark theme */
+[data-theme="black"] .job-details-info .info-item {
+  padding: 12px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+[data-theme="black"] .job-details-info .info-item:hover {
+  background: rgba(102, 126, 234, 0.1);
+}
+
+/* ============================================
+   MOBILE RESPONSIVE FIX FOR MODALS & DRAWERS
+   Ensures modals/drawers fit all phone sizes
+   ============================================ */
+@media (max-width: 768px) {
+  .ant-modal {
+    max-width: 95vw !important;
+    width: 95vw !important;
+    margin: 8px auto !important;
+    top: 8px !important;
+    padding-bottom: 0 !important;
+  }
+  .ant-modal-content {
+    border-radius: 12px !important;
+    overflow: hidden;
+  }
+  .ant-modal-body {
+    padding: 16px !important;
+    max-height: calc(100vh - 160px) !important;
+    overflow-y: auto !important;
+  }
+  .ant-modal-header {
+    padding: 12px 16px !important;
+  }
+  .ant-modal-footer {
+    padding: 12px 16px !important;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .ant-modal-title {
+    font-size: 16px !important;
+    flex-wrap: wrap;
+  }
+  .ant-drawer-content-wrapper {
+    width: 100vw !important;
+    max-width: 100vw !important;
+  }
+  .ant-drawer-body {
+    padding: 16px !important;
+  }
+  .ant-drawer-header {
+    padding: 12px 16px !important;
+  }
+  .ant-drawer-title {
+    font-size: 16px !important;
+  }
+  .job-form-modal .ant-modal-body,
+  .application-modal .ant-modal-body {
+    padding: 16px !important;
+  }
+
+  .job-form-modal .ant-form-item,
+  .application-modal .ant-form-item {
+    margin-bottom: 18px !important;
+  }
+
+  .job-form-modal .ant-input-textarea-show-count::after,
+  .job-form-modal .ant-input-show-count::after,
+  .application-modal .ant-input-textarea-show-count::after,
+  .application-modal .ant-input-show-count::after {
+    font-size: 11px !important;
+  }
+
+  .job-form-modal .ant-form-item-extra,
+  .application-modal .ant-form-item-extra {
+    font-size: 11px !important;
+  }
+
+  .job-form-modal .ant-upload.ant-upload-select-picture-card {
+    width: 96px !important;
+    height: 96px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .ant-modal {
+    max-width: 98vw !important;
+    width: 98vw !important;
+    margin: 4px auto !important;
+    top: 4px !important;
+  }
+  .ant-modal-body {
+    padding: 12px !important;
+    max-height: calc(100vh - 140px) !important;
+  }
+  .ant-modal-header,
+  .ant-modal-footer {
+    padding: 10px 12px !important;
+  }
+  .ant-modal-title {
+    font-size: 15px !important;
+  }
+  .ant-drawer-body {
+    padding: 12px !important;
+  }
+  .ant-modal-footer .ant-btn {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+}
+
+@media (max-width: 380px) {
+  .ant-modal-title {
+    font-size: 14px !important;
+  }
+  .ant-modal-body,
+  .ant-drawer-body {
+    font-size: 13px !important;
+  }
+}
+
+/* ===== MOBILE READABILITY & NON-OVERLAP FIX ===== */
+@media (max-width: 768px) {
+  /* Prevent any horizontal overflow inside modals/drawers */
+  .ant-modal-body,
+  .ant-drawer-body {
+    word-wrap: break-word !important;
+    overflow-wrap: anywhere !important;
+    word-break: break-word !important;
+  }
+  .ant-modal-body *,
+  .ant-drawer-body * {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  /* Form inputs full width, readable */
+  .ant-modal .ant-form-item,
+  .ant-drawer .ant-form-item {
+    margin-bottom: 14px !important;
+  }
+  .ant-modal .ant-form-item-label,
+  .ant-drawer .ant-form-item-label {
+    padding-bottom: 4px !important;
+    white-space: normal !important;
+  }
+  .ant-modal .ant-form-item-label > label,
+  .ant-drawer .ant-form-item-label > label {
+    font-size: 13px !important;
+    height: auto !important;
+    line-height: 1.4 !important;
+  }
+  .ant-modal .ant-input,
+  .ant-modal .ant-input-affix-wrapper,
+  .ant-modal .ant-select,
+  .ant-modal .ant-select-selector,
+  .ant-modal .ant-picker,
+  .ant-modal textarea.ant-input,
+  .ant-drawer .ant-input,
+  .ant-drawer .ant-input-affix-wrapper,
+  .ant-drawer .ant-select,
+  .ant-drawer .ant-select-selector,
+  .ant-drawer .ant-picker,
+  .ant-drawer textarea.ant-input {
+    width: 100% !important;
+    font-size: 14px !important;
+  }
+  /* Buttons stack and stay tappable, no overlap */
+  .ant-modal-footer {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    justify-content: flex-end !important;
+    gap: 8px !important;
+  }
+  .ant-modal-footer .ant-btn {
+    flex: 1 1 calc(50% - 8px) !important;
+    min-height: 38px !important;
+    margin: 0 !important;
+    white-space: normal !important;
+    font-size: 13px !important;
+    padding: 6px 10px !important;
+  }
+  .ant-drawer-footer {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+  }
+  .ant-drawer-footer .ant-btn {
+    flex: 1 1 calc(50% - 8px) !important;
+    min-height: 38px !important;
+    white-space: normal !important;
+    font-size: 13px !important;
+  }
+  /* Modal title row - close button shouldn't overlap title */
+  .ant-modal-header {
+    padding-right: 44px !important;
+  }
+  .ant-modal-close {
+    top: 6px !important;
+    right: 6px !important;
+  }
+  .ant-modal-title {
+    line-height: 1.4 !important;
+    word-break: break-word !important;
+  }
+  /* Drawer title */
+  .ant-drawer-header {
+    padding-right: 44px !important;
+  }
+  .ant-drawer-close {
+    padding: 10px !important;
+  }
+  /* Tables/lists inside modals scroll horizontally instead of overlapping */
+  .ant-modal-body .ant-table-wrapper,
+  .ant-drawer-body .ant-table-wrapper {
+    overflow-x: auto !important;
+  }
+  .ant-modal-body .ant-table,
+  .ant-drawer-body .ant-table {
+    min-width: 0 !important;
+  }
+  /* Descriptions / tags should wrap */
+  .ant-modal-body .ant-descriptions-item-label,
+  .ant-modal-body .ant-descriptions-item-content,
+  .ant-drawer-body .ant-descriptions-item-label,
+  .ant-drawer-body .ant-descriptions-item-content {
+    display: block !important;
+    width: 100% !important;
+    padding: 6px 8px !important;
+    font-size: 13px !important;
+  }
+  /* "Applications" / "Time Remaining" stats in the job details
+     drawer were fixed at 50/50 (Col span=12) with no mobile
+     breakpoint, so the "Expires: ..." text and the progress bar
+     had no room and overlapped each other. Stack them full width
+     on phones instead. */
+  .job-details-drawer .ant-col-12 {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+    margin-bottom: 16px;
+  }
+  .job-details-drawer .ant-col-12:last-child {
+    margin-bottom: 0;
+  }
+  .job-details-drawer .ant-statistic-content {
+    white-space: normal !important;
+    word-break: break-word !important;
+  }
+  .ant-tag {
+    margin-bottom: 4px !important;
+    white-space: normal !important;
+    word-break: break-word !important;
+  }
+  /* Headings inside modals shrink */
+  .ant-modal-body h1,
+  .ant-drawer-body h1 { font-size: 18px !important; }
+  .ant-modal-body h2,
+  .ant-drawer-body h2 { font-size: 16px !important; }
+  .ant-modal-body h3,
+  .ant-drawer-body h3 { font-size: 15px !important; }
+  .ant-modal-body p,
+  .ant-drawer-body p { font-size: 13px !important; line-height: 1.5 !important; }
+}
+
+@media (max-width: 480px) {
+  .ant-modal-footer .ant-btn,
+  .ant-drawer-footer .ant-btn {
+    flex: 1 1 100% !important;
+    font-size: 13px !important;
+  }
+  .ant-modal-title,
+  .ant-drawer-title {
+    font-size: 14px !important;
+    padding-right: 8px !important;
+  }
+  .ant-modal .ant-form-item-label > label,
+  .ant-drawer .ant-form-item-label > label {
+    font-size: 12px !important;
+  }
+}
+[data-theme="black"] .ant-modal-confirm-title,
+[data-theme="black"] .ant-modal-confirm-content,
+[data-theme="black"] .ant-popconfirm-title,
+[data-theme="black"] .ant-popconfirm-description {
+    color: var(--c-white) !important;
+}
+
+/* ==============================================
+   ENHANCEMENT: Application Draft / Discard Modals
+   Matches the existing reject / warning / success modal
+   design language and inherits the current theme tokens.
+   ============================================== */
+
+.application-discard-modal .ant-modal-content,
+.application-draft-restore-modal .ant-modal-content {
+  border-radius: 14px;
+  overflow: hidden;
+  animation: scaleIn 0.25s ease-out;
+}
+
+.application-discard-modal .ant-modal-header,
+.application-draft-restore-modal .ant-modal-header {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  padding: 16px 24px;
+}
+
+.application-discard-modal .ant-modal-title,
+.application-draft-restore-modal .ant-modal-title {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.application-discard-modal .ant-modal-body,
+.application-draft-restore-modal .ant-modal-body {
+  padding: 20px 24px;
+  line-height: 1.6;
+}
+
+.application-discard-modal .ant-modal-footer,
+.application-draft-restore-modal .ant-modal-footer {
+  padding: 12px 20px;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+/* Dark theme overrides (matches existing theme system already used in this file) */
+.dark-theme .application-discard-modal .ant-modal-content,
+.dark-theme .application-draft-restore-modal .ant-modal-content,
+[data-theme="black"] .application-discard-modal .ant-modal-content,
+[data-theme="black"] .application-draft-restore-modal .ant-modal-content {
+  background: #1f1f2e;
+  color: var(--c-antd-gray-3);
+}
+
+.dark-theme .application-discard-modal .ant-modal-header,
+.dark-theme .application-draft-restore-modal .ant-modal-header,
+[data-theme="black"] .application-discard-modal .ant-modal-header,
+[data-theme="black"] .application-draft-restore-modal .ant-modal-header {
+  background: #1f1f2e;
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+.dark-theme .application-discard-modal .ant-modal-title,
+.dark-theme .application-draft-restore-modal .ant-modal-title,
+[data-theme="black"] .application-discard-modal .ant-modal-title,
+[data-theme="black"] .application-draft-restore-modal .ant-modal-title {
+  color: var(--c-antd-gray-3);
+}
+
+.dark-theme .application-discard-modal .ant-modal-footer,
+.dark-theme .application-draft-restore-modal .ant-modal-footer,
+[data-theme="black"] .application-discard-modal .ant-modal-footer,
+[data-theme="black"] .application-draft-restore-modal .ant-modal-footer {
+  border-top-color: rgba(255, 255, 255, 0.08);
+}
+
+/* ============================================================ */

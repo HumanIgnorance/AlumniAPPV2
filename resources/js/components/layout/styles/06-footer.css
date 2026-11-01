@@ -1,0 +1,98 @@
+/* Footer (split from layout/index.css; keep import order: see styles/index.js) */
+/* ===== PROFESSIONAL FOOTER STYLES ===== */
+.ant-layout-footer.app-footer {
+  flex: 0 0 auto !important;
+  flex-shrink: 0 !important;
+  padding: 8px 16px !important;
+  padding-bottom: calc(8px + env(safe-area-inset-bottom)) !important;
+  overflow: visible !important;
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+[data-theme="black"] .ant-layout-footer.app-footer {
+  background: linear-gradient(180deg, var(--surface) 0%, var(--surface-2) 100%) !important;
+  border-top: 1px solid var(--border) !important;
+}
+
+.app-footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 6px 10px;
+  font-size: 11px;
+  line-height: 1.4;
+  width: 100%;
+  padding-left: max(0px, env(safe-area-inset-left));
+  padding-right: max(0px, env(safe-area-inset-right));
+  box-sizing: border-box;
+}
+
+.app-footer-inner .app-footer-credits,
+.app-footer-inner .app-footer-copy,
+.app-footer-links .ant-typography {
+  font-size: 11px !important;
+  line-height: 1.4 !important;
+  white-space: normal !important;
+}
+
+.app-footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 4px 8px;
+}
+@media (max-width: 768px) {
+  .ant-layout-footer.app-footer {
+    padding: 8px 10px !important;
+  }
+
+  .app-footer-inner {
+    flex-direction: row !important;
+    gap: 0 !important;
+  }
+
+  .app-footer-links,
+  .app-footer-copy,
+  .app-footer-sep,
+  .app-footer-dot {
+    display: none !important;
+  }
+
+  .app-footer-inner .app-footer-credits {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    max-width: 100%;
+    font-size: clamp(9px, 3vw, 11px) !important;
+    line-height: 1.3 !important;
+    text-align: center;
+    white-space: nowrap !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .ant-layout-footer.app-footer {
+    padding: 8px 6px !important;
+  }
+
+  .app-footer-inner {
+    flex-direction: row !important;
+    gap: 0 !important;
+  }
+
+  .app-footer-inner .app-footer-credits {
+    font-size: clamp(8.5px, 3vw, 10px) !important;
+    text-align: center;
+  }
+}
+
+@media (max-width: 360px) {
+  .app-footer-inner .app-footer-credits {
+    font-size: clamp(8px, 2.9vw, 9px) !important;
+  }
+}

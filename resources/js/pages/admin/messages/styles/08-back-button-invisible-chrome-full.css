@@ -1,0 +1,423 @@
+/* Back button: invisible chrome, full tap target, slot before avatar */
+.chat-back-btn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  margin-right: 2px;
+  border: none;
+  background: transparent;
+  color: var(--m-text);
+  font-size: 1.6rem;
+  line-height: 1;
+  border-radius: 50%;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.18s var(--m-ease), transform 0.18s var(--m-ease);
+}
+.chat-back-btn:hover  { background: var(--m-surface-2); }
+.chat-back-btn:active { transform: scale(0.92); }
+
+/* --- Composer v2: textarea on top, actions row below ---------------- */
+.message-input-form.composer-v2 {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
+  background: var(--m-surface);
+  border-top: 1px solid var(--m-border);
+}
+.composer-v2 .composer-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: var(--m-surface-2);
+  border: 1px solid var(--m-border);
+  border-radius: 18px;
+  padding: 10px 12px;
+  transition: border-color 0.18s var(--m-ease), box-shadow 0.18s var(--m-ease);
+}
+.composer-v2 .composer-stack:focus-within {
+  border-color: var(--m-accent);
+  box-shadow: 0 0 0 3px var(--m-accent-ring);
+}
+.composer-v2 .composer-textarea {
+  width: 100%;
+  min-height: 40px;
+  max-height: 140px;
+  padding: 6px 4px;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--m-text);
+  font-size: 16px;   /* prevents iOS auto-zoom */
+  line-height: 1.4;
+  resize: none;
+  font-family: inherit;
+}
+.composer-v2 .composer-textarea::placeholder { color: var(--m-text-subtle); }
+
+.composer-v2 .composer-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-top: 1px dashed var(--m-border);
+  padding-top: 8px;
+}
+.composer-v2 .composer-icon-btn {
+  width: 38px;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  font-size: 1.15rem;
+  color: var(--m-text-muted);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.18s var(--m-ease), color 0.18s var(--m-ease);
+}
+.composer-v2 .composer-icon-btn:hover { background: var(--m-accent-soft); color: var(--m-accent); }
+
+.composer-v2 .composer-email-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 6px 10px;
+  background: transparent;
+  border-radius: 999px;
+  cursor: pointer;
+  user-select: none;
+  font-size: 0.82rem;
+  color: var(--m-text-muted);
+}
+.composer-v2 .composer-email-toggle input { accent-color: var(--m-accent); }
+.composer-v2 .composer-email-toggle .email-checkbox-text {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.composer-v2 .composer-email-toggle:has(input:checked) {
+  background: var(--m-accent-soft);
+  color: var(--m-accent);
+  font-weight: 600;
+}
+
+.composer-v2 .composer-send-btn {
+  width: 42px;
+  height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--c-white);
+  background: linear-gradient(135deg, var(--m-accent), var(--m-accent-3));
+  box-shadow: 0 6px 16px -6px var(--m-accent-ring);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: transform 0.18s var(--m-ease), box-shadow 0.18s var(--m-ease), opacity 0.18s var(--m-ease);
+}
+.composer-v2 .composer-send-btn:hover:not(:disabled) { transform: translateY(-1px); }
+.composer-v2 .composer-send-btn:active:not(:disabled) { transform: scale(0.94); }
+.composer-v2 .composer-send-btn:disabled { opacity: 0.45; cursor: not-allowed; box-shadow: none; }
+
+/* --- Mobile: show back btn, tighter header, sticky composer --------- */
+@media (max-width: 992px) {
+  .chat-back-btn { display: inline-flex; }
+
+  .chat-header {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    padding: 10px 12px !important;
+    background: var(--m-surface);
+    border-bottom: 1px solid var(--m-border);
+  }
+  .chat-header .chat-avatar-img,
+  .chat-header .chat-avatar {
+    width: 38px !important;
+    height: 38px !important;
+    font-size: 0.95rem;
+  }
+  .chat-header-actions { gap: 4px; }
+  .chat-header-actions .restrict-btn { font-size: 0.75rem; padding: 6px 10px; }
+
+  .message-input-form.composer-v2 {
+    position: sticky;
+    bottom: 0;
+    z-index: 5;
+  }
+}
+
+/* --- Very narrow: collapse "Notify via email" label to icon-only ---- */
+@media (max-width: 420px) {
+  .composer-v2 .composer-email-toggle .composer-email-label { display: none; }
+  .composer-v2 .composer-email-toggle {
+    flex: 0 0 auto;
+    padding: 6px 8px;
+  }
+  .composer-v2 .composer-actions { justify-content: space-between; }
+  .composer-v2 .composer-actions > .composer-icon-btn { order: 1; }
+  .composer-v2 .composer-actions > .composer-email-toggle { order: 2; margin-left: auto; }
+  .composer-v2 .composer-actions > .composer-send-btn { order: 3; }
+}
+
+/* --- Dark theme passthrough ---------------------------------------- */
+[data-theme="black"] .composer-v2 .composer-stack {
+  background: var(--c-gray-900);
+  border-color: var(--c-gray-800);
+}
+[data-theme="black"] .composer-v2 .composer-textarea { color: var(--c-gray-200); }
+[data-theme="black"] .chat-back-btn { color: var(--c-gray-200); }
+[data-theme="black"] .chat-back-btn:hover { background: var(--c-gray-800); }
+
+
+/* ========================================================================
+   ALUMNI MESSAGING — MOBILE PORTRAIT-LOCKED LAYOUT
+   Scope: .alumni-messages-container and its children ONLY.
+   Admin messaging (.messages-container) and desktop (≥769px) untouched.
+   ======================================================================== */
+
+/* Fallback custom prop — overridden at runtime by JS using visualViewport.
+   Using 100dvh handles browser chrome on iOS Safari / Android Chrome. */
+.alumni-messages-container {
+  --app-vh: 100dvh;
+}
+
+/* ---------- MOBILE (≤768px): force portrait-style stacked chat ---------- */
+@media (max-width: 768px) {
+  /* Full-bleed shell — no outer padding stealing height,
+     fixed viewport height so internal flex children can scroll. */
+  .alumni-messages-container {
+    width: 100%;
+    height: var(--app-vh, 100dvh);
+    min-height: 0;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;          /* prevent double scrollbar on body+list */
+    display: flex;
+    flex-direction: column;
+    background: var(--m-bg);
+  }
+
+  /* Hide the conversation list sidebar on mobile so the chat takes 100% width.
+     (Admin uses .conversations-sidebar inside .messages-container, NOT here.) */
+  .alumni-messages-container .conversations-sidebar {
+    display: none !important;
+  }
+
+  /* Remove the desktop card chrome that constrains height to calc(100vh-140px). */
+  .alumni-messages-container .messages-layout,
+  .alumni-messages-container .alumni-messages-layout {
+    height: 100%;
+    min-height: 0;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Chat column = full available height, vertical stack: header / body / input. */
+  .alumni-chat-container {
+    flex: 1 1 auto;
+    min-height: 0;             /* CRITICAL: allows inner scroll in flex column */
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+  }
+
+  /* Scrollable message region. min-height:0 is the flexbox scroll fix. */
+  .alumni-chat-body,
+  .alumni-chat-messages {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;  /* stop scroll chaining to page */
+    padding: 12px;
+  }
+
+  /* Sticky input bar — always pinned above keyboard / bottom edge. */
+  .alumni-chat-input {
+    flex: 0 0 auto;
+    position: sticky;
+    bottom: 0;
+    z-index: 10;
+    width: 100%;
+    background: var(--m-surface);
+    border-top: 1px solid var(--m-border);
+    padding: 8px 10px calc(8px + env(safe-area-inset-bottom));
+  }
+
+  /* Input field: 16px prevents iOS auto-zoom on focus. */
+  .alumni-chat-input textarea,
+  .alumni-chat-input input[type="text"] {
+    font-size: 16px;
+    max-height: 96px;
+  }
+
+  /* Hide site footer beneath the chat on mobile so it can't steal height. */
+  .alumni-messages-container ~ footer,
+  .alumni-messages-container ~ .app-footer,
+  body:has(.alumni-messages-container) > footer {
+    display: none !important;
+  }
+}
+
+/* ---------- LANDSCAPE on phones: full-bleed, compact header, max message area ----
+   Targets phones in landscape (short viewport ~360-414px tall).
+   Overrides the desktop base styles (height: calc(100dvh-140px), margin: 20px)
+   and targets the correct alumni-side class names used in the JSX. */
+@media (max-width: 992px) and (orientation: landscape) {
+  /* Override desktop card styles — go full-bleed, use the real viewport height */
+  .alumni-messages-container {
+    width: 100%;
+    height: var(--app-vh, 100dvh) !important;
+    max-height: var(--app-vh, 100dvh) !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background: var(--m-bg);
+  }
+
+  .alumni-messages-container .conversations-sidebar {
+    display: none !important;
+  }
+
+  .alumni-messages-container .messages-layout,
+  .alumni-messages-container .alumni-messages-layout {
+    height: 100%;
+    min-height: 0;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Compact the header so it doesn't eat landscape vertical space */
+  .alumni-messages-container .alumni-messages-header {
+    flex: 0 0 auto;
+    padding: 6px 14px;
+    min-height: 0;
+  }
+  .alumni-messages-container .alumni-messages-header .admin-header-avatar {
+    width: 32px;
+    height: 32px;
+  }
+  .alumni-messages-container .alumni-header-info h2 {
+    font-size: 0.88rem;
+  }
+  /* Hide subtitle/status line in landscape to save space */
+  .alumni-messages-container .alumni-header-info p,
+  .alumni-messages-container .alumni-header-info .admin-status {
+    display: none;
+  }
+
+  /* Error / restriction notice — slim it down */
+  .alumni-messages-container .alumni-error-notice,
+  .alumni-messages-container .restriction-notice {
+    padding: 6px 14px;
+    font-size: 0.8rem;
+  }
+
+  /* THE SCROLL AREA — must flex-grow to fill all remaining height */
+  .alumni-messages-container .alumni-messages-area {
+    flex: 1 1 auto;
+    min-height: 0;               /* CRITICAL: allows overflow-y to work inside flex */
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    padding: 6px 12px;
+  }
+
+  /* Input form — stays pinned at the bottom, slim padding */
+  .alumni-messages-container .alumni-message-input-form {
+    flex: 0 0 auto;
+    position: sticky;
+    bottom: 0;
+    z-index: 10;
+    width: 100%;
+    background: var(--m-surface);
+    border-top: 1px solid var(--m-border);
+    padding: 4px 10px calc(4px + env(safe-area-inset-bottom));
+    box-sizing: border-box;
+  }
+
+  /* Keep textarea from growing too tall and eating message space */
+  .alumni-messages-container .alumni-message-input-form .alumni-message-input,
+  .alumni-messages-container .alumni-message-input-form textarea {
+    font-size: 16px;   /* prevent iOS auto-zoom */
+    min-height: 32px;
+    max-height: 72px;
+  }
+
+  /* Also cover the chat-container / chat-body aliases used in admin-side sub-views */
+  .alumni-chat-container {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+  }
+  .alumni-chat-body,
+  .alumni-chat-messages {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    padding: 6px 12px;
+  }
+  .alumni-chat-input {
+    flex: 0 0 auto;
+    position: sticky;
+    bottom: 0;
+    z-index: 10;
+    width: 100%;
+    background: var(--m-surface);
+    border-top: 1px solid var(--m-border);
+    padding: 4px 10px calc(4px + env(safe-area-inset-bottom));
+  }
+
+  /* Hide the site footer so it can't steal height */
+  .alumni-messages-container ~ footer,
+  .alumni-messages-container ~ .app-footer,
+  body:has(.alumni-messages-container) > footer {
+    display: none !important;
+  }
+}
+
+
+/* =====================================================================
+   RESPONSIVE FIX PACK — Messenger/WhatsApp-style mobile chat
+   Placed at the END of the file so it wins the cascade over the older
+   mobile rules. Desktop (>= 993px) is intentionally untouched.
+   ===================================================================== */

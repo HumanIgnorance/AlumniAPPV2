@@ -1,0 +1,531 @@
+/* Phones portrait ≤ 575px */
+@media (max-width: 575px) {
+    .hp-hero-weather {
+        padding: 12px 14px;
+        gap: 10px;
+    }
+    .hp-hero-weather-time {
+        font-size: 17px;
+    }
+    .hp-hero-weather-temp {
+        font-size: 15px;
+    }
+    .hp-hero-weather-condition {
+        font-size: 10px;
+        max-width: 90px;
+    }
+}
+
+/* Extra-small phones ≤ 380px:
+   shrink the inner widget so location, clock, cloud & temp
+   all stay visible without horizontal scroll */
+@media (max-width: 380px) {
+    .hp-hero-weather {
+        padding: 10px 12px;
+        gap: 8px;
+    }
+    .hp-hero-weather-location {
+        font-size: 10px;
+        letter-spacing: 0.3px;
+    }
+    .hp-hero-weather-time {
+        font-size: 16px;
+    }
+    .hp-hero-weather-icon {
+        font-size: 18px;
+    }
+    .hp-hero-weather-temp {
+        font-size: 14px;
+    }
+    .hp-hero-weather-condition {
+        font-size: 9.5px;
+        max-width: 72px;
+    }
+}
+
+/* Dark theme */
+html[data-theme="black"] .hp-hero-weather {
+    background: rgba(26, 31, 43, 0.55) !important;
+    border-color: rgba(96, 165, 250, 0.25) !important;
+}
+html[data-theme="black"] .hp-hero--admin .hp-hero-weather {
+    background: rgba(42, 31, 21, 0.6) !important;
+    border-color: rgba(250, 140, 22, 0.3) !important;
+}
+html[data-theme="black"] .hp-hero-weather-time {
+    color: var(--c-blue-400) !important;
+}
+html[data-theme="black"] .hp-hero--admin .hp-hero-weather-time {
+    color: var(--c-amber-400) !important;
+}
+html[data-theme="black"] .hp-hero-weather-temp {
+    color: var(--c-slate-200) !important;
+}
+html[data-theme="black"] .hp-hero-weather-location,
+html[data-theme="black"] .hp-hero-weather-date,
+html[data-theme="black"] .hp-hero-weather-condition {
+    color: #a0aec0 !important;
+}
+
+/* ════════════════════════════════════════════════════════════
+   BRAND / LOGO SHOWCASE — animated header logo strip
+   ════════════════════════════════════════════════════════════ */
+.hp-brand-showcase {
+    position: relative;
+    padding: 40px 32px 36px;
+    margin-bottom: 20px;
+    border-radius: 24px;
+    background: linear-gradient(135deg, var(--c-white) 0%, var(--c-f5f7fb) 55%, #eef1f8 100%);
+    border: 1px solid #e8ecf5;
+    overflow: hidden;
+    box-shadow:
+        0 1px 2px rgba(16, 24, 40, 0.04),
+        0 20px 44px -18px rgba(20, 16, 70, 0.18);
+    transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.hp-brand-showcase::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(16, 24, 40, 0.08) 1px, transparent 1px);
+    background-size: 24px 24px;
+    opacity: 0.5;
+    pointer-events: none;
+    transition: background-image 0.3s ease;
+}
+
+/* Dark theme: showcase flips to a true black surface */
+html[data-theme="black"] .hp-brand-showcase {
+    background: linear-gradient(135deg, #05070f 0%, #0c1024 45%, #150a2e 100%);
+    box-shadow:
+        0 1px 2px rgba(0, 0, 0, 0.4),
+        0 20px 44px -18px rgba(0, 0, 0, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+html[data-theme="black"] .hp-brand-showcase::before {
+    background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+}
+
+/* ── Developer credit cluster (top-right corner) ─────────────────────── */
+.hp-brand-devteam {
+    position: absolute;
+    top: 20px;
+    right: 24px;
+    display: flex;
+    align-items: center;
+    z-index: 2;
+}
+.hp-dev-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid rgba(16, 24, 40, 0.15);
+    box-shadow: 0 2px 10px rgba(16, 24, 40, 0.18);
+    background: var(--c-white);
+    cursor: pointer;
+    transition:
+        transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+        box-shadow 0.25s ease,
+        border-color 0.3s ease;
+}
+html[data-theme="black"] .hp-dev-avatar {
+    border-color: var(--c-white);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+}
+.hp-dev-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* antd <Image> fills the circular avatar and stays clickable/zoomable */
+.hp-dev-avatar .ant-image,
+.hp-dev-avatar .hp-dev-avatar-image {
+    width: 100% !important;
+    height: 100% !important;
+    display: block !important;
+}
+.hp-dev-avatar .ant-image-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    cursor: pointer;
+}
+.hp-dev-avatar .ant-image-mask {
+    border-radius: 50%;
+    font-size: 14px;
+}
+
+/* Lightbox: show the opened John/Jonee photo generously large and crisp,
+   never shrunk down to thumbnail size regardless of the source file's
+   native dimensions. */
+.hp-dev-preview-root .ant-image-preview-img {
+    max-width: min(90vw, 680px);
+    max-height: 78vh;
+    width: auto;
+    height: auto;
+    min-width: 260px;
+    border-radius: 18px;
+    object-fit: contain;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+@media (max-width: 480px) {
+    .hp-dev-preview-root .ant-image-preview-img {
+        max-width: 94vw;
+        max-height: 70vh;
+        min-width: 200px;
+    }
+}
+
+/* Name / role caption shown under the enlarged image in the lightbox */
+.hp-dev-preview-stage {
+    position: relative;
+    display: inline-block;
+}
+.hp-dev-preview-caption {
+    position: absolute;
+    left: 50%;
+    bottom: -54px;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    background: rgba(20, 16, 40, 0.85);
+    padding: 8px 18px;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    white-space: nowrap;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+}
+.hp-dev-preview-name {
+    color: var(--c-white) !important;
+    font-size: 13px;
+    font-weight: 700;
+}
+.hp-dev-preview-role {
+    color: rgba(255, 255, 255, 0.7) !important;
+    font-size: 11px;
+}
+.hp-dev-avatar--2 {
+    margin-left: -16px;
+}
+.hp-dev-avatar:hover,
+.hp-dev-avatar:focus-visible {
+    transform: translateY(-4px) scale(1.18);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+    z-index: 3;
+}
+.hp-dev-avatar:active {
+    transform: translateY(-1px) scale(0.95);
+}
+.hp-dev-label {
+    margin-left: 12px;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: rgba(16, 24, 40, 0.65);
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    transition: color 0.3s ease;
+}
+html[data-theme="black"] .hp-dev-label {
+    color: rgba(255, 255, 255, 0.72);
+}
+
+/* ── Logo track: department badges orbiting the central site logo ───── */
+.hp-brand-track {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 44px;
+    flex-wrap: wrap;
+    z-index: 1;
+    /* Top clearance so the floating animation (translateY -10px, plus
+       -14px more on hover) never collides with the "Built by OCC Dev"
+       avatar badge pinned top-right of the showcase. This alone is enough:
+       it pushes the whole row down uniformly, so even a wrapped second
+       row stays clear — no need to also eat into the row's width, which
+       just causes premature wrapping and dead space on narrower screens. */
+    padding-top: 46px;
+}
+
+.hp-brand-center {
+    position: relative;
+    width: 168px;
+    height: 168px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.hp-brand-center-ring {
+    position: absolute;
+    inset: -14px;
+    border-radius: 50%;
+    background: conic-gradient(from 0deg, #ffd76a, #ff5c8a, #7c5cff, #35c7ff, #ffd76a);
+    animation: hp-spin 6s linear infinite;
+    -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 4px), var(--c-black) calc(100% - 4px));
+    mask: radial-gradient(farthest-side, transparent calc(100% - 4px), var(--c-black) calc(100% - 4px));
+}
+.hp-brand-center-glow {
+    position: absolute;
+    inset: -36px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(124, 92, 255, 0.5), transparent 70%);
+    animation: hp-pulse-glow 2.6s ease-in-out infinite;
+    pointer-events: none;
+}
+.hp-brand-center-img {
+    position: relative;
+    width: 168px;
+    height: 168px;
+    object-fit: contain;
+    background: transparent;
+    border-radius: 0;
+    padding: 0;
+    filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.45));
+    animation: hp-float 4.5s ease-in-out infinite;
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    z-index: 1;
+    cursor: pointer;
+}
+.hp-brand-center:hover .hp-brand-center-img {
+    transform: scale(1.1) rotate(-3deg);
+    animation-play-state: paused;
+}
+.hp-brand-center:active .hp-brand-center-img {
+    transform: scale(0.97);
+}
+
+.hp-brand-badge {
+    --accent: var(--c-antd-blue);
+    position: relative;
+    width: 128px;
+    height: 128px;
+    border-radius: 50%;
+    background: var(--c-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    box-shadow:
+        0 8px 22px rgba(16, 24, 40, 0.14),
+        0 0 0 4px rgba(16, 24, 40, 0.04);
+    cursor: pointer;
+    animation: hp-float 4.5s ease-in-out infinite;
+    animation-delay: calc(var(--i, 0) * 0.35s);
+    transition:
+        transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+        box-shadow 0.35s ease,
+        background 0.3s ease;
+    flex-shrink: 0;
+    outline: none;
+}
+/* Dark theme: circles flip to black to match the showcase surface */
+html[data-theme="black"] .hp-brand-badge {
+    background: #0f1320;
+    box-shadow:
+        0 8px 22px rgba(0, 0, 0, 0.32),
+        0 0 0 4px rgba(255, 255, 255, 0.07);
+}
+.hp-brand-badge img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 50%;
+}
+.hp-brand-badge-tag {
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0.6px;
+    color: rgba(16, 24, 40, 0.75);
+    white-space: nowrap;
+    transition: color 0.3s ease;
+}
+html[data-theme="black"] .hp-brand-badge-tag {
+    color: rgba(255, 255, 255, 0.8);
+}
+.hp-brand-badge:hover,
+.hp-brand-badge:focus-visible {
+    transform: translateY(-14px) scale(1.12) rotate(-3deg);
+    box-shadow:
+        0 20px 40px -8px var(--accent),
+        0 0 0 4px rgba(255, 255, 255, 0.2);
+    animation-play-state: paused;
+}
+.hp-brand-badge:active {
+    transform: translateY(-6px) scale(0.95);
+}
+
+@keyframes hp-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+@keyframes hp-spin {
+    to { transform: rotate(360deg); }
+}
+@keyframes hp-pulse-glow {
+    0%, 100% { opacity: 0.55; transform: scale(1); }
+    50% { opacity: 0.95; transform: scale(1.12); }
+}
+
+.hp-brand-caption {
+    display: block;
+    text-align: center;
+    margin-top: 44px;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.9px;
+    color: rgba(16, 24, 40, 0.55) !important;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+}
+html[data-theme="black"] .hp-brand-caption {
+    color: rgba(255, 255, 255, 0.6) !important;
+}
+
+/* ── Responsive ───────────────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+    .hp-brand-track {
+        gap: 32px;
+    }
+    .hp-brand-badge {
+        width: 104px;
+        height: 104px;
+    }
+    .hp-brand-center {
+        width: 136px;
+        height: 136px;
+    }
+    .hp-brand-center-img {
+        width: 112px;
+        height: 112px;
+    }
+}
+@media (max-width: 700px) {
+    .hp-brand-showcase {
+        padding: 34px 20px 32px;
+    }
+    /* Below this width, a plain flex-wrap splits the 5 items 3/2 (center
+       logo lands in the top row next to only one badge). Switch to an
+       explicit grid instead: the site logo gets its own centered row,
+       and all four department badges sit together in a single row
+       beneath it — reliable and balanced on every portrait phone. */
+    .hp-brand-track {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-areas:
+            "center center center center"
+            "b1 b2 b3 b4";
+        row-gap: 32px;
+        column-gap: 14px;
+        justify-items: center;
+        align-items: start;
+        /* Smaller top clearance to match the shrunk dev-team badge at
+           this breakpoint. */
+        padding-top: 34px;
+    }
+    .hp-brand-track > *:nth-child(1) {
+        grid-area: b1;
+    }
+    .hp-brand-track > *:nth-child(2) {
+        grid-area: b2;
+    }
+    .hp-brand-track > *:nth-child(3) {
+        grid-area: center;
+        margin-bottom: 6px;
+    }
+    .hp-brand-track > *:nth-child(4) {
+        grid-area: b3;
+    }
+    .hp-brand-track > *:nth-child(5) {
+        grid-area: b4;
+    }
+
+    .hp-brand-badge {
+        width: 76px;
+        height: 76px;
+        padding: 11px;
+    }
+    .hp-brand-center {
+        width: 108px;
+        height: 108px;
+    }
+    .hp-brand-center-img {
+        width: 108px;
+        height: 108px;
+    }
+    .hp-brand-badge-tag {
+        font-size: 11px;
+        bottom: -20px;
+    }
+    .hp-brand-caption {
+        margin-top: 30px;
+        font-size: 11.5px;
+    }
+    .hp-brand-devteam {
+        top: 16px;
+        right: 18px;
+    }
+}
+@media (max-width: 420px) {
+    .hp-brand-showcase {
+        padding: 30px 12px 28px;
+    }
+    .hp-brand-track {
+        column-gap: 8px;
+        row-gap: 26px;
+    }
+    .hp-brand-badge {
+        width: 62px;
+        height: 62px;
+        padding: 8px;
+    }
+    .hp-brand-center {
+        width: 90px;
+        height: 90px;
+    }
+    .hp-brand-center-img {
+        width: 90px;
+        height: 90px;
+    }
+    .hp-brand-badge-tag {
+        font-size: 9.5px;
+        bottom: -17px;
+        letter-spacing: 0.3px;
+    }
+    .hp-brand-caption {
+        margin-top: 26px;
+        font-size: 10.5px;
+    }
+    .hp-brand-devteam {
+        top: 10px;
+        right: 12px;
+    }
+    .hp-dev-avatar {
+        width: 34px;
+        height: 34px;
+    }
+    .hp-dev-label {
+        display: none;
+    }
+}
+
+/* Respect reduced-motion preference */
+@media (prefers-reduced-motion: reduce) {
+    .hp-brand-badge,
+    .hp-brand-center-img,
+    .hp-brand-center-ring,
+    .hp-brand-center-glow {
+        animation: none !important;
+    }
+}

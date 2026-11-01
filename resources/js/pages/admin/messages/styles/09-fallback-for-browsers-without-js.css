@@ -1,0 +1,448 @@
+/* Fallback for browsers without JS-set --app-vh (uses dynamic vh) */
+:root { --app-vh: 100dvh; }
+
+/* ---------- TABLET & MOBILE (<= 992px) ---------- */
+@media (max-width: 992px) {
+
+  /* Container fills the *real* viewport, not the static 100vh which
+     iOS/Android miscalculate when the URL bar or keyboard appears. */
+  .messages-container {
+    min-height: var(--app-vh, 100dvh);
+    height: var(--app-vh, 100dvh);
+    padding: 0;                       /* edge-to-edge like WhatsApp */
+    overflow: hidden;                 /* prevent double scrollbars   */
+  }
+
+  /* The chat shell becomes a vertical flex stack: header / list / input */
+  .messages-layout {
+    height: var(--app-vh, 100dvh);
+    border-radius: 0;                 /* full-bleed on phones        */
+    border: 0;
+    box-shadow: none;
+    flex-direction: column;
+  }
+
+  /* When a conversation is open, hide the sidebar and let chat take all space */
+  .messages-layout.chat-open .conversations-sidebar { display: none; }
+  .messages-layout.chat-open .chat-area             { display: flex; }
+
+  /* Chat area itself is the flex column the user described */
+  .chat-area {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;                    /* critical: allow children to shrink */
+    flex: 1 1 auto;
+  }
+
+  /* Header: compact and pinned at the top, does not scroll */
+  .chat-area > .chat-header {
+    flex: 0 0 auto;
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    padding: 10px 12px;
+  }
+
+  /* Messages list: the ONLY scrollable region */
+  .chat-area > .messages-list,
+  .chat-area > .chat-messages {
+    flex: 1 1 auto;
+    min-height: 0;                    /* required for flex overflow */
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;     /* stops body bounce-scrolling */
+    padding: 12px 12px 16px;
+  }
+
+  /* Input docked to the bottom; sticky keeps it visible above the keyboard
+     because the parent height is driven by visualViewport (--app-vh). */
+  .chat-area > .chat-input,
+  .chat-area > .message-input-area,
+  .message-input-form,
+  .alumni-message-input-form {
+    flex: 0 0 auto;
+    position: sticky;
+    bottom: 0;
+    z-index: 5;
+    padding: 8px 10px calc(8px + env(safe-area-inset-bottom));
+    background: var(--m-surface);
+    border-top: 1px solid var(--m-border);
+  }
+}
+
+/* ---------- MOBILE PORTRAIT (<= 576px) ---------- */
+@media (max-width: 576px) {
+  .chat-area > .chat-header        { padding: 8px 10px; }
+  .chat-header-info h3             { font-size: 0.98rem; line-height: 1.15; }
+  .chat-header-info p,
+  .chat-header-info .alumni-email  { font-size: 0.76rem; }
+
+  .messages-list, .chat-messages   { padding: 10px 10px 12px; gap: 6px; }
+  .alumni-message-input,
+  .message-input-wrapper textarea,
+  .message-input-wrapper input[type="text"] {
+    font-size: 16px;                /* prevents iOS auto-zoom on focus */
+    min-height: 40px;
+  }
+}
+
+/* ---------- MOBILE LANDSCAPE — the most important fix ---------- */
+/* Short viewport regardless of width: ultra-compact header, max chat area */
+@media (max-height: 500px) and (orientation: landscape) {
+  .messages-container,
+  .messages-layout         { height: var(--app-vh, 100dvh); min-height: 0; }
+
+  /* Shrink the header so the message list gets the room */
+  .chat-area > .chat-header {
+    padding: 4px 10px;
+    min-height: 40px;
+  }
+  .chat-header-info h3     { font-size: 0.9rem; }
+  .chat-header-info p,
+  .chat-header-info .alumni-email { display: none; }   /* hide secondary line */
+  .chat-header-info img,
+  .chat-header-info .avatar { width: 28px; height: 28px; }
+
+  /* Tighter message padding so more lines fit */
+  .messages-list, .chat-messages { padding: 6px 10px 8px; gap: 4px; }
+
+  /* Slim input row */
+  .message-input-form,
+  .alumni-message-input-form { padding: 4px 8px calc(4px + env(safe-area-inset-bottom)); }
+  .alumni-message-input,
+  .message-input-wrapper textarea {
+    min-height: 36px;
+    max-height: 88px;                /* never let textarea eat the chat */
+  }
+}
+
+/* ---------- TINY PHONES (320px) ---------- */
+@media (max-width: 360px) {
+  .chat-header-info h3     { font-size: 0.9rem; }
+  .chat-header-actions     { gap: 4px; }
+  .messages-list, .chat-messages { padding: 8px; }
+}
+
+/* ---------- FOOTER: collapse on mobile so it never steals chat height ---- */
+@media (max-width: 992px) {
+  /* Adjust the selector to match your real footer class/element */
+  footer,
+  .app-footer,
+  .site-footer {
+    display: none !important;        /* hide entirely on phones/tablets */
+  }
+}
+
+
+/* =========================================================
+   MOBILE FIXES — Lightbox visibility + Landscape sidebar
+   Appended overrides. Do not modify rules above.
+   ========================================================= */
+
+/* ---------- Lightbox: buttons always above image ---------- */
+.image-lightbox {
+  /* Column stack so image never overlaps action bar */
+  flex-direction: column;
+  padding:
+    calc(env(safe-area-inset-top, 0px) + 12px)
+    calc(env(safe-area-inset-right, 0px) + 12px)
+    calc(env(safe-area-inset-bottom, 0px) + 12px)
+    calc(env(safe-area-inset-left, 0px) + 12px);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.image-lightbox .lightbox-actions {
+  position: fixed;
+  top: calc(env(safe-area-inset-top, 0px) + 12px);
+  right: calc(env(safe-area-inset-right, 0px) + 12px);
+  z-index: 1000000;              /* strictly above image and MainLayout header */
+  display: flex;
+  gap: 10px;
+  pointer-events: auto;
+}
+
+.image-lightbox .lightbox-close,
+.image-lightbox .lightbox-download {
+  position: relative;            /* override any inherited absolute */
+  z-index: 1000001;
+  background: rgba(15, 23, 42, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  color: var(--c-white);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(6px);
+}
+
+/* Image wrapper reserves space for the action bar so it can NEVER cover it */
+.image-lightbox .lightbox-image-wrap {
+  flex: 1 1 auto;
+  width: 100%;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Top padding = safe-area + button height + gap */
+  padding-top: calc(env(safe-area-inset-top, 0px) + 64px);
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 8px);
+  box-sizing: border-box;
+}
+
+.image-lightbox .lightbox-image-wrap img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  display: block;
+}
+
+/* Neutralize the older mobile rule that let the image span the full viewport */
+@media (max-width: 992px) {
+  .image-lightbox .lightbox-image-wrap img,
+  .image-lightbox img.lightbox-image,
+  .image-lightbox .lightbox img {
+    max-width: 100% !important;
+    max-height: 100% !important;
+  }
+}
+
+/* Landscape phones: shorter safe zone, keep buttons visible */
+@media (orientation: landscape) and (max-height: 500px) {
+  .image-lightbox .lightbox-actions {
+    top: calc(env(safe-area-inset-top, 0px) + 6px);
+    right: calc(env(safe-area-inset-right, 0px) + 8px);
+  }
+  .image-lightbox .lightbox-close,
+  .image-lightbox .lightbox-download {
+    width: 38px;
+    height: 38px;
+  }
+  .image-lightbox .lightbox-image-wrap {
+    padding-top: calc(env(safe-area-inset-top, 0px) + 52px);
+  }
+}
+
+/* ---------- Sidebar height fix (portrait + landscape mobile) ---------- */
+/* Root cause: on mobile the .messages-layout is a column flex container,
+   but .conversations-sidebar had no flex sizing, so it collapsed to the
+   natural height of its children — leaving a blank background below and
+   preventing the internal list from scrolling normally. */
+@media (max-width: 992px) {
+  .messages-layout:not(.chat-open) .conversations-sidebar {
+    flex: 1 1 auto;
+    height: 100%;
+    min-height: 0;                 /* allow inner list to overflow */
+    max-height: none;              /* neutralize legacy max-height: 50vh */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* The list itself is the ONLY scrollable region inside the sidebar */
+  .messages-layout:not(.chat-open) .conversations-sidebar .conversations-list,
+  .messages-layout:not(.chat-open) .conversations-sidebar .alumni-list,
+  .messages-layout:not(.chat-open) .conversations-sidebar .archive-list {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 12px);
+  }
+
+  /* Sticky sub-headers so they don't scroll with the list */
+  .messages-layout:not(.chat-open) .conversations-sidebar .conversations-header,
+  .messages-layout:not(.chat-open) .conversations-sidebar .search-box,
+  .messages-layout:not(.chat-open) .conversations-sidebar .admin-tabs {
+    flex: 0 0 auto;
+  }
+}
+
+/* Landscape phones: header/search/tabs get compressed so more list rows fit */
+@media (orientation: landscape) and (max-height: 500px) {
+  .messages-container,
+  .messages-layout {
+    height: var(--app-vh, 100dvh) !important;
+    min-height: 0 !important;
+    max-height: var(--app-vh, 100dvh) !important;
+    overflow: hidden;
+  }
+
+  .messages-layout:not(.chat-open) .conversations-sidebar {
+    flex: 1 1 auto;
+    height: 100%;
+    max-height: none;
+  }
+
+  .conversations-header {
+    padding: 8px 14px !important;
+  }
+  .conversations-header h2 {
+    font-size: 1rem !important;
+  }
+  .search-box {
+    padding: 6px 10px !important;
+  }
+  .admin-tabs {
+    padding: 4px 8px !important;
+  }
+}
+/* =====================================================================
+   BULK TOOLBAR — FINAL COMPACT REDESIGN (single source of truth)
+   Placed last so it wins over every earlier ad-hoc rule/media-query
+   above. Fixes: oversized pill buttons, uneven wrapping, misaligned
+   count/cancel row.
+   ===================================================================== */
+.messages-container .bulk-toolbar,
+.messages-container .conversations-sidebar .bulk-toolbar {
+  display: none;
+  flex-direction: column;
+  gap: 8px !important;
+  margin: 8px 12px 0 !important;
+  padding: 8px 10px !important;
+  border-radius: 12px !important;
+  background: color-mix(in oklab, var(--m-accent) 8%, var(--m-surface)) !important;
+  border: 1px solid var(--m-accent-ring) !important;
+  box-shadow: none !important;
+  box-sizing: border-box;
+}
+.messages-container .bulk-toolbar.is-active {
+  display: flex !important;
+  animation: bulkToolbarIn .16s var(--m-ease);
+}
+
+/* ---- header row: count (left) + cancel (right), same baseline ---- */
+.messages-container .bulk-toolbar__header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 8px;
+  width: 100%;
+}
+.messages-container .bulk-toolbar__count {
+  display: inline-flex !important;
+  align-items: center;
+  height: 24px !important;
+  padding: 0 10px !important;
+  margin: 0 !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: .3px;
+  text-transform: uppercase;
+  color: var(--m-accent) !important;
+  background: var(--m-surface) !important;
+  border: 1px solid var(--m-border) !important;
+  border-radius: 999px !important;
+  white-space: nowrap;
+  line-height: 1;
+}
+.messages-container .bulk-toolbar__cancel {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+  padding: 0 10px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--m-text-muted);
+  cursor: pointer;
+  border-radius: 999px;
+  transition: color .15s var(--m-ease), background .15s var(--m-ease);
+}
+.messages-container .bulk-toolbar__cancel:hover {
+  color: var(--m-text);
+  background: var(--m-border);
+}
+
+/* ---- action row: 4 equal-width compact buttons, always aligned ---- */
+.messages-container .bulk-toolbar__actions {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 6px !important;
+  width: 100%;
+  flex-wrap: initial !important;
+}
+.messages-container .bulk-toolbar__actions .bulk-btn {
+  all: unset;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  height: 32px !important;
+  min-height: 32px !important;
+  max-height: 32px !important;
+  padding: 0 4px !important;
+  margin: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  line-height: 1 !important;
+  border-radius: 8px !important;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  border: 1px solid transparent !important;
+  transition: filter .15s var(--m-ease), transform .15s var(--m-ease);
+}
+.messages-container .bulk-toolbar__actions .bulk-btn:hover:not(:disabled) {
+  filter: brightness(1.06);
+  transform: translateY(-1px);
+}
+.messages-container .bulk-toolbar__actions .bulk-btn:active:not(:disabled) {
+  transform: translateY(0);
+  filter: brightness(.96);
+}
+.messages-container .bulk-toolbar__actions .bulk-btn.bulk-btn--primary,
+[data-theme="black"] .messages-container .bulk-toolbar__actions .bulk-btn.bulk-btn--primary {
+  background: var(--bulk-primary) !important;
+  color: var(--c-white) !important;
+}
+.messages-container .bulk-toolbar__actions .bulk-btn:not(.bulk-btn--primary):not(.bulk-btn--warn):not(.bulk-btn--danger),
+[data-theme="black"] .messages-container .bulk-toolbar__actions .bulk-btn:not(.bulk-btn--primary):not(.bulk-btn--warn):not(.bulk-btn--danger) {
+  background: var(--bulk-archive) !important;
+  color: var(--c-white) !important;
+}
+.messages-container .bulk-toolbar__actions .bulk-btn.bulk-btn--warn,
+[data-theme="black"] .messages-container .bulk-toolbar__actions .bulk-btn.bulk-btn--warn {
+  background: var(--bulk-warn) !important;
+  color: #1a1206 !important;
+}
+.messages-container .bulk-toolbar__actions .bulk-btn.bulk-btn--danger,
+[data-theme="black"] .messages-container .bulk-toolbar__actions .bulk-btn.bulk-btn--danger {
+  background: var(--bulk-danger) !important;
+  color: var(--c-white) !important;
+}
+
+/* ---- narrow sidebar / mobile: 2 columns instead of 4 ---- */
+@media (max-width: 420px) {
+  .messages-container .bulk-toolbar__actions {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  .messages-container .bulk-toolbar__actions .bulk-btn {
+    height: 34px !important;
+    min-height: 34px !important;
+    max-height: 34px !important;
+    font-size: 12.5px !important;
+  }
+}
+
+/* ---- select-toggle entry pill: keep it small too ---- */
+.messages-container .select-toggle {
+  height: 26px !important;
+  min-height: 26px !important;
+  padding: 0 10px !important;
+  font-size: 11.5px !important;
+  display: inline-flex;
+  align-items: center;
+}

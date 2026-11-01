@@ -1,0 +1,290 @@
+/* ==========================================================
+   DESIGN TOKENS — single source of truth for the color palette.
+   Generated from the colors the app actually used (>= 5 places).
+   Use  color: var(--c-slate-900)  in CSS, and  COLORS.slate900  in JS
+   (resources/js/config/theme.js — keep both files in sync).
+   To re-theme the app, change the hex values here AND in theme.js.
+   ========================================================== */
+:root {
+    --c-0a0c12: #0a0c12;
+    --c-0b1220: #0b1220;
+    --c-0ea973: #0ea973;
+    --c-1a1a2e: #1a1a2e;
+    --c-1a1f2b: #1a1f2b;
+    --c-1b1e27: #1b1e27;
+    --c-1d2230: #1d2230;
+    --c-1f1f1f: #1f1f1f;
+    --c-1f1f23: #1f1f23;
+    --c-2a2a2a: #2a2a2a;
+    --c-2a2a2f: #2a2a2f;
+    --c-2d2d2d: #2d2d2d;
+    --c-2d3748: #2d3748;
+    --c-5b6677: #5b6677;
+    --c-9aa4b2: #9aa4b2;
+    --c-9ba3af: #9ba3af;
+    --c-32d1b3: #32d1b3;
+    --c-87d068: #87d068;
+    --c-108ee9: #108ee9;
+    --c-242a36: #242a36;
+    --c-262a33: #262a33;
+    --c-003366: #003366;
+    --c-14161d: #14161d;
+    --c-111111: #111111;
+    --c-121620: #121620;
+    --c-252525: #252525;
+    --c-303030: #303030;
+    --c-303746: #303746;
+    --c-444444: #444444;
+    --c-555555: #555555;
+    --c-888888: #888888;
+    --c-999999: #999999;
+    --c-a0a0a0: #a0a0a0;
+    --c-a5a1f7: #a5a1f7;
+    --c-a8a8a8: #a8a8a8;
+    --c-a89a9a: #a89a9a;
+    --c-amber-200: #fde68a;
+    --c-amber-400: #fbbf24;
+    --c-amber-500: #f59e0b;
+    --c-amber-600: #d97706;
+    --c-amber-800: #92400e;
+    --c-amber-900: #78350f;
+    --c-antd-blue: #1890ff;
+    --c-antd-cyan: #13c2c2;
+    --c-antd-gold: #faad14;
+    --c-antd-gray-3: #f0f0f0;
+    --c-antd-gray-5: #d9d9d9;
+    --c-antd-gray-7: #8c8c8c;
+    --c-antd-green: #52c41a;
+    --c-antd-magenta: #eb2f96;
+    --c-antd-orange: #fa8c16;
+    --c-antd-purple: #722ed1;
+    --c-antd-red: #ff4d4f;
+    --c-bfbfbf: #bfbfbf;
+    --c-black: #000000;
+    --c-blue-300: #93c5fd;
+    --c-blue-400: #60a5fa;
+    --c-blue-600: #2563eb;
+    --c-blue-700: #1d4ed8;
+    --c-brand: #667eea;
+    --c-brand-2: #764ba2;
+    --c-c1c1c1: #c1c1c1;
+    --c-cc0000: #cc0000;
+    --c-cccccc: #cccccc;
+    --c-cyan-500: #06b6d4;
+    --c-e0e0e0: #e0e0e0;
+    --c-e6eaf1: #e6eaf1;
+    --c-e6f4ff: #e6f4ff;
+    --c-e6f7ff: #e6f7ff;
+    --c-e7e9ee: #e7e9ee;
+    --c-e7ecf3: #e7ecf3;
+    --c-e8ecef: #e8ecef;
+    --c-edf0f5: #edf0f5;
+    --c-eef0f5: #eef0f5;
+    --c-emerald-500: #10b981;
+    --c-f0e8e8: #f0e8e8;
+    --c-f0f2f5: #f0f2f5;
+    --c-f0f7ff: #f0f7ff;
+    --c-f1f1f1: #f1f1f1;
+    --c-f4f7fb: #f4f7fb;
+    --c-f5f7fa: #f5f7fa;
+    --c-f5f7fb: #f5f7fb;
+    --c-f6ffed: #f6ffed;
+    --c-f5222d: #f5222d;
+    --c-fa541c: #fa541c;
+    --c-fafcff: #fafcff;
+    --c-ffd700: #ffd700;
+    --c-fffbe6: #fffbe6;
+    --c-gray-100: #f3f4f6;
+    --c-gray-200: #e5e7eb;
+    --c-gray-300: #d1d5db;
+    --c-gray-333: #333333;
+    --c-gray-500: #6b7280;
+    --c-gray-666: #666666;
+    --c-gray-800: #1f2937;
+    --c-gray-900: #111827;
+    --c-green-500: #22c55e;
+    --c-indigo-200: #c7d2fe;
+    --c-indigo-300: #a5b4fc;
+    --c-indigo-400: #818cf8;
+    --c-indigo-500: #6366f1;
+    --c-indigo-600: #4f46e5;
+    --c-ink-0a: #0a0a0a;
+    --c-ink-1a: #1a1a1a;
+    --c-ink-14: #141414;
+    --c-neutral-100: #f5f5f5;
+    --c-neutral-800: #262626;
+    --c-orange-500: #f97316;
+    --c-purple-500: #a855f7;
+    --c-red-300: #fca5a5;
+    --c-red-400: #f87171;
+    --c-red-500: #ef4444;
+    --c-red-600: #dc2626;
+    --c-red-700: #b91c1c;
+    --c-rose-500: #f43f5e;
+    --c-sky-300: #7dd3fc;
+    --c-sky-400: #38bdf8;
+    --c-sky-500: #0ea5e9;
+    --c-slate-50: #f8fafc;
+    --c-slate-100: #f1f5f9;
+    --c-slate-200: #e2e8f0;
+    --c-slate-300: #cbd5e1;
+    --c-slate-400: #94a3b8;
+    --c-slate-500: #64748b;
+    --c-slate-900: #0f172a;
+    --c-teal-500: #14b8a6;
+    --c-violet-600: #7c3aed;
+    --c-white: #ffffff;
+    --c-zinc-50: #fafafa;
+}
+
+
+/* ==========================================================================
+   SEMANTIC THEME TOKENS — the ONE place light/dark values live.
+   Loaded eagerly (resources/js/app.js), so they exist before any lazy page
+   chunk arrives. Pages must NOT re-declare these; just use var(--surface) etc.
+   Dark mode is  <html data-theme="black">  (set by useAppTheme + app.blade.php).
+   Mirror of these values for JS/antd: resources/js/config/theme.js (SEMANTIC).
+   ========================================================================== */
+:root {
+    color-scheme: light;
+
+    /* typography (same stack that actually renders today) */
+    --font-sans: "open sans", Helvetica, Arial, sans-serif;
+    --fs-xs: 0.75rem;
+    --fs-sm: 0.8125rem;
+    --fs-md: 0.9375rem;
+    --fs-lg: 1.0625rem;
+    --fs-xl: 1.25rem;
+    --fs-2xl: 1.625rem;
+    --fw-regular: 400;
+    --fw-semibold: 600;
+    --fw-bold: 700;
+    --fw-extrabold: 800;
+    --lh-tight: 1.2;
+    --lh-snug: 1.35;
+    --lh-body: 1.6;
+
+    --ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
+    --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* accent */
+    --accent: var(--c-indigo-600);
+    --accent-2: var(--c-sky-500);
+    --accent-3: var(--c-violet-600);
+    --accent-soft: rgba(79, 70, 229, 0.1);
+    --accent-ring: rgba(79, 70, 229, 0.26);
+    --accent-grad: linear-gradient(135deg, var(--c-indigo-600) 0%, var(--c-violet-600) 50%, var(--c-sky-500) 100%);
+    --text-on-accent: var(--c-white);
+
+    /* surfaces / lines / text */
+    --bg: var(--c-f4f7fb);
+    --surface: var(--c-white);
+    --surface-2: var(--c-slate-100);
+    --border: var(--c-slate-200);
+    --border-strong: var(--c-slate-300);
+    --text: var(--c-0b1220);
+    --text-body: var(--c-555555);
+    --text-muted: var(--c-5b6677);
+    --text-subtle: var(--c-slate-400);
+    --overlay: rgba(255, 255, 255, 0.7);
+
+    /* status */
+    --success: #16a34a;
+    --success-soft: rgba(22, 163, 74, 0.12);
+    --success-text: #166534;
+    --warning: var(--c-amber-600);
+    --warning-soft: rgba(217, 119, 6, 0.12);
+    --warning-text: var(--c-amber-800);
+    --danger: var(--c-red-600);
+    --danger-soft: rgba(220, 38, 38, 0.1);
+    --danger-text: var(--c-red-700);
+    --info: var(--c-sky-500);
+    --info-soft: rgba(14, 165, 233, 0.12);
+    --info-text: #0369a1;
+
+    --shadow-xs: 0 1px 2px rgba(2, 6, 23, 0.05);
+    --shadow-sm: 0 4px 14px rgba(2, 6, 23, 0.06);
+    --shadow-md: 0 14px 34px rgba(2, 6, 23, 0.1);
+    --shadow-lg: 0 28px 60px rgba(2, 6, 23, 0.18);
+
+    --radius-sm: 10px;
+    --radius-md: 14px;
+    --radius-lg: 18px;
+    --radius-xl: 26px;
+}
+
+html[data-theme="black"] {
+    color-scheme: dark;
+
+    --bg: var(--c-0a0c12);
+    --surface: var(--c-121620);
+    --surface-2: var(--c-1a1f2b);
+    --border: var(--c-242a36);
+    --border-strong: var(--c-303746);
+    --text: var(--c-e7ecf3);
+    --text-body: var(--c-e7ecf3);
+    --text-muted: var(--c-9aa4b2);
+    --text-subtle: var(--c-gray-500);
+    --overlay: rgba(10, 12, 18, 0.7);
+
+    --accent-soft: rgba(99, 102, 241, 0.16);
+    --accent-ring: rgba(99, 102, 241, 0.3);
+
+    --success: var(--c-green-500);
+    --success-soft: rgba(34, 197, 94, 0.16);
+    --success-text: #86efac;
+    --warning: var(--c-amber-400);
+    --warning-soft: rgba(251, 191, 36, 0.16);
+    --warning-text: var(--c-amber-200);
+    --danger: var(--c-red-400);
+    --danger-soft: rgba(248, 113, 113, 0.16);
+    --danger-text: var(--c-red-300);
+    --info: var(--c-sky-400);
+    --info-soft: rgba(56, 189, 248, 0.16);
+    --info-text: var(--c-sky-300);
+
+    --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.5);
+    --shadow-sm: 0 4px 14px rgba(0, 0, 0, 0.45);
+    --shadow-md: 0 14px 34px rgba(0, 0, 0, 0.55);
+    --shadow-lg: 0 28px 60px rgba(0, 0, 0, 0.65);
+}
+
+/* First paint / lazy-loading screen: themed from the entry bundle, so it is
+   correct before any page chunk (and its CSS) has loaded. */
+html,
+body {
+    background: var(--bg);
+    color: var(--text);
+}
+
+.app-page-fallback,
+.app-boot {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg);
+    color: var(--text-muted);
+}
+
+.app-boot__spinner {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 3px solid var(--border-strong);
+    border-top-color: var(--accent);
+    animation: app-boot-spin 0.8s linear infinite;
+}
+
+@keyframes app-boot-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .app-boot__spinner {
+        animation-duration: 2.4s;
+    }
+}

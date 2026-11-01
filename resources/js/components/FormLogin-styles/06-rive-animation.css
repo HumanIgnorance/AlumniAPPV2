@@ -1,0 +1,879 @@
+/* Rive animation */
+.login-brand__rive {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    width: 100%;
+    height: 42%;
+    max-height: 460px;
+
+    z-index: 2;
+    opacity: 0.95;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+
+    overflow: hidden;
+    pointer-events: auto;
+}
+
+/* Rive wrapper */
+.login-brand__rive > div {
+    width: 100%;
+    height: 100%;
+}
+
+/* Rive canvas */
+.login-brand__rive canvas {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+
+    pointer-events: auto;
+    cursor: pointer;
+}
+
+/* Text above animation */
+.login-brand__top,
+.login-brand__bottom {
+    position: relative;
+    z-index: 3;
+}
+
+/* ============ Features Marquee (seamless infinite loop) ============ */
+.login-brand__marquee {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    padding: 14px 0;
+    margin: 8px 0 6px;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(
+        90deg,
+        transparent 0,
+        /* var(--surface-2) 12%,
+      var(--surface-2) 88%, */ transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(
+        90deg,
+        transparent 0,
+        var(--c-black) 8%,
+        var(--c-black) 92%,
+        transparent 100%
+    );
+    mask-image: linear-gradient(
+        90deg,
+        transparent 0,
+        var(--c-black) 8%,
+        var(--c-black) 92%,
+        transparent 100%
+    );
+}
+
+.login-brand__marquee-track {
+    display: flex;
+    flex-wrap: nowrap;
+    width: max-content;
+    /* track is exactly its content width */
+    gap: 36px;
+    padding-left: 36px;
+    /* matches gap so the loop is seamless */
+    will-change: transform;
+    animation: loginBrandMarquee 28s linear infinite;
+}
+
+/* Pause on hover for accessibility */
+.login-brand__marquee:hover .login-brand__marquee-track {
+    animation-play-state: paused;
+}
+
+.login-brand__marquee-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    flex: 0 0 auto;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    background: linear-gradient(
+        90deg,
+        var(--accent) 0%,
+        var(--accent-3) 50%,
+        var(--accent-2) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+}
+
+.login-brand__marquee-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: var(--accent-2);
+    box-shadow: 0 0 0 4px var(--accent-soft);
+    flex: 0 0 auto;
+}
+
+/* The track is duplicated in JSX, so moving by -50% loops perfectly */
+@keyframes loginBrandMarquee {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .login-brand__marquee-track {
+        animation: none;
+        transform: none;
+    }
+}
+
+/* Dark theme tweak */
+[data-theme="black"] .login-brand__marquee {
+    background: linear-gradient(
+        90deg,
+        transparent 0,
+        rgba(255, 255, 255, 0.02) 12%,
+        rgba(255, 255, 255, 0.02) 88%,
+        transparent 100%
+    );
+}
+
+.mobile-notice-card {
+    background: linear-gradient(135deg, var(--c-indigo-600), var(--c-sky-500)) !important;
+    color: var(--c-0b1220) !important;
+    border: 1px solid rgba(255, 255, 255, 0.35) !important;
+    box-shadow: 0 28px 60px rgba(2, 6, 23, 0.35) !important;
+}
+
+[data-theme="black"] .mobile-notice-card {
+    background: linear-gradient(135deg, #1e1b4b, #0c4a6e) !important;
+    color: var(--c-white) !important;
+    border: 1px solid rgba(255, 255, 255, 0.18) !important;
+    box-shadow: 0 28px 60px rgba(0, 0, 0, 0.75) !important;
+}
+
+.mobile-notice-card h3 {
+    color: inherit !important;
+}
+
+.mobile-notice-card .info-box {
+    background: rgba(255, 255, 255, 0.85) !important;
+    border: 1px solid rgba(255, 255, 255, 0.6) !important;
+    color: var(--c-0b1220) !important;
+}
+
+.mobile-notice-card .info-box .label,
+.mobile-notice-card .info-box .body,
+.mobile-notice-card .info-box .body strong {
+    color: var(--c-0b1220) !important;
+}
+
+[data-theme="black"] .mobile-notice-card .info-box {
+    background: rgba(10, 12, 18, 0.65) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    color: var(--c-white) !important;
+}
+
+[data-theme="black"] .mobile-notice-card .info-box .label,
+[data-theme="black"] .mobile-notice-card .info-box .body,
+[data-theme="black"] .mobile-notice-card .info-box .body strong {
+    color: var(--c-white) !important;
+}
+
+.mobile-notice-card .hint {
+    color: rgba(11, 18, 32, 0.75) !important;
+}
+
+[data-theme="black"] .mobile-notice-card .hint {
+    color: rgba(255, 255, 255, 0.75) !important;
+}
+
+.mobile-notice-card .icon-circle {
+    background: rgba(255, 255, 255, 0.22) !important;
+    border: 1px solid rgba(255, 255, 255, 0.55) !important;
+    color: var(--c-white) !important;
+}
+
+[data-theme="black"] .mobile-notice-card .icon-circle {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
+    color: var(--c-white) !important;
+}
+
+/* "Got it, Continue" button — force white text in BOTH themes */
+.mobile-notice-card .login-btn-primary,
+.mobile-notice-card .login-btn-primary:hover,
+.mobile-notice-card .login-btn-primary:focus,
+.mobile-notice-card .login-btn-primary:active {
+    color: var(--c-white) !important;
+    background: linear-gradient(135deg, #1e1b4b, #0c4a6e) !important;
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35) !important;
+}
+
+[data-theme="black"] .mobile-notice-card .login-btn-primary {
+    background: linear-gradient(135deg, var(--c-indigo-600), var(--c-sky-500)) !important;
+}
+
+/* ==========================================
+   Black Theme - Red Approval Warning Modal
+========================================== */
+
+[data-theme="black"] .pending-approval-modal .ant-modal-content {
+    background: var(--c-slate-900) !important;
+    border: 1px solid rgba(239, 68, 68, 0.45) !important;
+}
+
+/* Remove black background behind message */
+[data-theme="black"] .pending-approval-modal .ant-modal-body {
+    background: transparent !important;
+    color: var(--c-slate-100) !important;
+}
+
+[data-theme="black"] .pending-approval-modal .ant-modal-body p {
+    background: transparent !important;
+    color: var(--c-slate-100) !important;
+    margin: 0;
+}
+
+/* Title */
+[data-theme="black"] .pending-approval-modal .ant-modal-title,
+[data-theme="black"] .pending-approval-modal .ant-modal-title span {
+    color: var(--c-red-500) !important;
+    font-weight: 700;
+    text-shadow:
+        0 0 8px rgba(239, 68, 68, 0.45),
+        0 0 16px rgba(239, 68, 68, 0.25);
+}
+
+/* Header border */
+[data-theme="black"] .pending-approval-modal .ant-modal-header {
+    background: var(--c-slate-900) !important;
+    border-bottom: 1px solid rgba(239, 68, 68, 0.3) !important;
+}
+
+/* Body text */
+[data-theme="black"] .pending-approval-modal .ant-modal-body p {
+    color: var(--c-slate-100) !important;
+}
+
+/* Footer */
+[data-theme="black"] .pending-approval-modal .ant-modal-footer {
+    background: var(--c-slate-900) !important;
+    border-top: none !important;
+    padding-top: 12px !important;
+}
+
+/* Close button */
+[data-theme="black"] .pending-approval-modal .ant-modal-close {
+    color: var(--c-red-500) !important;
+}
+
+[data-theme="black"] .pending-approval-modal .ant-modal-close:hover {
+    color: var(--c-red-400) !important;
+}
+
+/* Got It button */
+[data-theme="black"] .pending-approval-modal .ant-btn-primary {
+    background: linear-gradient(135deg, var(--c-red-600) 0%, var(--c-red-500) 100%) !important;
+
+    border: none !important;
+    color: var(--c-white) !important;
+
+    box-shadow:
+        0 0 10px rgba(239, 68, 68, 0.35),
+        0 0 20px rgba(239, 68, 68, 0.2);
+}
+
+/* ==========================================
+   Black Theme - Amber Zoom Warning Modal
+========================================== */
+
+[data-theme="black"] .zoom-warning-modal .ant-modal-content {
+    background: var(--c-slate-900) !important;
+    border: 1px solid rgba(245, 158, 11, 0.45) !important;
+}
+
+/* Remove black background behind message */
+[data-theme="black"] .zoom-warning-modal .ant-modal-body {
+    background: transparent !important;
+    color: var(--c-slate-100) !important;
+}
+
+[data-theme="black"] .zoom-warning-modal .ant-modal-body p {
+    background: transparent !important;
+    color: var(--c-slate-100) !important;
+    margin: 0 0 10px 0;
+}
+
+[data-theme="black"] .zoom-warning-modal .ant-modal-body p:last-child {
+    margin-bottom: 0;
+}
+
+[data-theme="black"] .zoom-warning-modal .ant-modal-body strong {
+    color: var(--c-amber-400) !important;
+}
+
+/* Title */
+[data-theme="black"] .zoom-warning-modal .ant-modal-title,
+[data-theme="black"] .zoom-warning-modal .ant-modal-title span {
+    color: var(--c-amber-500) !important;
+    font-weight: 700;
+    text-shadow:
+        0 0 8px rgba(245, 158, 11, 0.45),
+        0 0 16px rgba(245, 158, 11, 0.25);
+}
+
+/* Header border */
+[data-theme="black"] .zoom-warning-modal .ant-modal-header {
+    background: var(--c-slate-900) !important;
+    border-bottom: 1px solid rgba(245, 158, 11, 0.3) !important;
+}
+
+/* Footer */
+[data-theme="black"] .zoom-warning-modal .ant-modal-footer {
+    background: var(--c-slate-900) !important;
+    border-top: none !important;
+    padding-top: 12px !important;
+}
+
+/* Close button (kept for consistency even though closable=false) */
+[data-theme="black"] .zoom-warning-modal .ant-modal-close {
+    color: var(--c-amber-500) !important;
+}
+
+[data-theme="black"] .zoom-warning-modal .ant-modal-close:hover {
+    color: var(--c-amber-400) !important;
+}
+
+/* OK button */
+[data-theme="black"] .zoom-warning-modal .ant-btn-primary {
+    background: linear-gradient(135deg, var(--c-amber-600) 0%, var(--c-amber-500) 100%) !important;
+
+    border: none !important;
+    color: var(--c-slate-900) !important;
+
+    box-shadow:
+        0 0 10px rgba(245, 158, 11, 0.35),
+        0 0 20px rgba(245, 158, 11, 0.2);
+}
+
+[data-theme="black"] .zoom-warning-modal .ant-btn-primary:hover {
+    background: linear-gradient(135deg, var(--c-amber-500) 0%, var(--c-amber-400) 100%) !important;
+}
+
+/* Mask */
+[data-theme="black"] .zoom-warning-modal.ant-modal-wrap .ant-modal-mask,
+[data-theme="black"] .zoom-warning-modal .ant-modal-mask {
+    background: rgba(0, 0, 0, 0.65) !important;
+}
+
+@media (max-width: 1024px) and (orientation: landscape) {
+    /* ---- Page & shell: no scrolling, locked to viewport ---- */
+    .login-page {
+        height: 100vh !important;
+        height: 100dvh !important;
+        overflow: hidden !important;
+        /* iOS notch safe area: reserves space on whichever side the
+           notch lands on in landscape. env() is 0 on Android/non-notched
+           devices, so this is a no-op there. */
+        padding-left: env(safe-area-inset-left) !important;
+        padding-right: env(safe-area-inset-right) !important;
+    }
+
+    .login-shell {
+        height: 100vh !important;
+        height: 100dvh !important;
+        overflow: hidden !important;
+        grid-template-columns: 1.05fr 1fr !important;
+        width: 100%;
+        box-sizing: border-box !important;
+    }
+
+    /* ---- Brand panel ---- */
+    .login-brand {
+        display: flex !important;
+        overflow: hidden !important;
+        border-right: 1px solid var(--border);
+        border-bottom: none;
+        padding: 10px 16px 8px !important;
+        gap: 4px !important;
+        min-width: 0;
+    }
+
+    .login-brand__chip {
+        font-size: 9.5px;
+        padding: 3px 9px;
+        letter-spacing: 0.05em;
+    }
+
+    .login-brand__title {
+        font-size: clamp(13px, 2.2vh, 19px) !important;
+        margin: 3px 0 3px;
+        line-height: 1.15;
+    }
+
+    .login-brand__lead {
+        font-size: clamp(9px, 1.35vh, 11.5px);
+        line-height: 1.38;
+        max-width: 100%;
+    }
+
+    /* ---- Features grid: REAL sizes, not transform-scaled ---- */
+    .login-brand__features {
+        flex: 1 1 auto;
+        min-height: 0;
+        padding: 0 !important;
+        gap: 0 !important;
+        /* Center the composition inside the panel */
+        align-content: center;
+        justify-content: center;
+    }
+
+    .login-brand__features.has-rive-center {
+        /* Scaled-down gaps so the grid itself is smaller */
+        row-gap: 50px !important;
+        column-gap: 150px !important;
+        padding: 0 !important;
+        position: relative;
+        /* No transform — layout IS the correct size */
+    }
+
+    /* ---- Rive: directly sized to 55% of 520px ≈ 286px ---- */
+    .login-brand__features.has-rive-center .login-brand__rive--center,
+    .login-brand__rive.login-brand__rive--center {
+        width: 286px !important;
+        height: 286px !important;
+        opacity: 1;
+        /* Keep the centering transform from base styles */
+        transform: translate(-50%, -50%) !important;
+    }
+
+    /* ---- Feature cards: directly sized ---- */
+    .login-brand__feature {
+        width: 132px !important;
+        max-width: 132px !important;
+        padding: 7px 9px !important;
+        gap: 7px !important;
+        border-radius: 10px !important;
+        min-width: 0;
+    }
+
+    /* Scale down the negative offsets proportionally (desktop: -35/-39 × 0.55) */
+    .login-brand__feature.feat--bl {
+        margin-top: -19px !important;
+    }
+
+    .login-brand__feature.feat--br {
+        margin-top: -21px !important;
+    }
+
+    .login-brand__feature.feat--tl {
+        margin-top: 0 !important;
+    }
+
+    .login-brand__feature.feat--tr {
+        margin-top: 0 !important;
+    }
+
+    /* ---- Feature card icons ---- */
+    .login-brand__feature .icon {
+        width: 22px !important;
+        height: 22px !important;
+        font-size: 11px !important;
+        border-radius: 6px !important;
+        flex-shrink: 0;
+    }
+
+    /* ---- Feature card typography: readable at small size ---- */
+    .login-brand__feature .meta strong,
+    .login-brand__feature h4 {
+        font-size: 11px !important;
+        font-weight: 700 !important;
+        line-height: 1.2 !important;
+        white-space: normal;
+        overflow: visible;
+        display: block;
+    }
+
+    .login-brand__feature .meta span,
+    .login-brand__feature p {
+        font-size: 10px !important;
+        line-height: 1.35 !important;
+        white-space: normal;
+        overflow: visible;
+        display: block;
+        color: var(--text-muted);
+    }
+
+    /* ---- Marquee ---- */
+    .login-brand__marquee {
+        padding: 5px 0;
+        margin: 3px 0 1px;
+    }
+
+    .login-brand__marquee-track {
+        gap: 18px;
+        padding-left: 18px;
+        animation-duration: 14s !important;
+    }
+
+    .login-brand__marquee-item {
+        font-size: 10.5px;
+        gap: 7px;
+    }
+
+    .login-brand__marquee-dot {
+        width: 4px;
+        height: 4px;
+    }
+
+    /* ---- Footer ---- */
+    .login-brand__footer {
+        font-size: 11px;
+    }
+
+    /* =========================================================
+     FORM PANEL — no overflow-y, card compressed to fit
+     ========================================================= */
+    .login-form-panel {
+        height: 100vh !important;
+        height: 100vh !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 8px 12px !important;
+        min-width: 0;
+    }
+
+    .login-card {
+        /* No overflow-y — compress the card instead */
+        overflow: hidden !important;
+        width: 100% !important;
+        max-width: 340px !important;
+        /* Let it shrink naturally to fit viewport height */
+        max-height: 100% !important;
+        padding: 10px 16px 12px !important;
+        margin: 0 auto;
+        border-radius: var(--radius-lg) !important;
+    }
+
+    /* Tighten every vertical gap inside the card */
+    .login-card__header {
+        margin-bottom: 6px !important;
+        padding-top: 2px !important;
+    }
+
+    .login-card__logo {
+        width: 34px !important;
+        height: 34px !important;
+        padding: 4px !important;
+        margin: 0 auto 3px !important;
+        animation: none !important;
+    }
+
+    .login-card__chip {
+        font-size: 9px !important;
+        padding: 2px 8px !important;
+        margin-bottom: 4px !important;
+    }
+
+    .login-card__title {
+        font-size: 14px !important;
+        margin: 1px 0 1px !important;
+    }
+
+    .login-card__subtitle {
+        font-size: 10.5px !important;
+    }
+
+    .login-card .ant-form-item {
+        margin-bottom: 7px !important;
+    }
+
+    .login-card .ant-form-item-label {
+        padding-bottom: 1px !important;
+    }
+
+    .login-card .ant-form-item-label > label {
+        font-size: 11px !important;
+    }
+
+    .login-label {
+        font-size: 11px !important;
+        margin-bottom: 3px !important;
+    }
+
+    .login-input.ant-input-affix-wrapper,
+    .login-input.ant-input {
+        padding: 4px 10px !important;
+        font-size: 12px !important;
+    }
+
+    .login-card .ant-input,
+    .login-card .ant-input-affix-wrapper,
+    .login-card .ant-input-password {
+        font-size: 12px !important;
+    }
+
+    .login-btn-primary {
+        height: 32px !important;
+        font-size: 13px !important;
+    }
+
+    .login-divider {
+        margin: 6px 0 !important;
+    }
+
+    .login-register-text {
+        font-size: 11.5px !important;
+    }
+
+    .login-tip {
+        padding: 8px 10px !important;
+        margin-top: 8px !important;
+    }
+
+    .login-tip .meta strong {
+        font-size: 11px !important;
+    }
+
+    .login-tip .meta span {
+        font-size: 10px !important;
+    }
+
+    .login-tip .icon {
+        width: 22px !important;
+        height: 22px !important;
+        font-size: 11px !important;
+    }
+
+    /* Checkbox row */
+    .login-card .ant-checkbox-wrapper {
+        font-size: 11px !important;
+    }
+
+    .login-page img,
+    .login-page canvas,
+    .login-page svg {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 1024px) and (orientation: landscape) and (max-height: 430px) {
+    /* ---- Brand panel ---- */
+    .login-brand {
+        padding: 6px 14px 5px !important;
+        gap: 3px !important;
+    }
+
+    .login-brand__chip {
+        font-size: 8.5px;
+        padding: 2px 7px;
+    }
+
+    .login-brand__title {
+        font-size: clamp(12px, 2.8vh, 16px) !important;
+        margin: 2px 0 2px;
+    }
+
+    .login-brand__lead {
+        font-size: clamp(8.5px, 1.9vh, 10.5px);
+    }
+
+    /* ---- Rive & cards: 50% of desktop on very short screens ---- */
+    .login-brand__features.has-rive-center {
+        row-gap: 44px !important;
+        column-gap: 130px !important;
+    }
+
+    .login-brand__features.has-rive-center .login-brand__rive--center,
+    .login-brand__rive.login-brand__rive--center {
+        width: 350px !important;
+        height: 350px !important;
+    }
+
+    .login-brand__feature {
+        width: 118px !important;
+        max-width: 118px !important;
+        padding: 5px 7px !important;
+        gap: 6px !important;
+    }
+
+    .login-brand__feature.feat--bl {
+        margin-top: -17px !important;
+    }
+
+    .login-brand__feature.feat--br {
+        margin-top: -18px !important;
+    }
+
+    .login-brand__feature .icon {
+        width: 20px !important;
+        height: 20px !important;
+        font-size: 10px !important;
+    }
+
+    .login-brand__feature .meta strong,
+    .login-brand__feature h4 {
+        font-size: 10px !important;
+    }
+
+    .login-brand__feature .meta span,
+    .login-brand__feature p {
+        font-size: 9px !important;
+    }
+
+    .login-brand__marquee {
+        padding: 3px 0;
+        margin: 2px 0 1px;
+    }
+
+    .login-brand__marquee-track {
+        animation-duration: 12s !important;
+        gap: 14px;
+        padding-left: 14px;
+    }
+
+    .login-brand__marquee-item {
+        font-size: 9.5px;
+    }
+
+    /* ---- Card: squeeze a few more px vertically ---- */
+    .login-form-panel {
+        padding: 5px 10px !important;
+    }
+
+    .login-card {
+        padding: 8px 14px 10px !important;
+        max-width: 310px !important;
+    }
+
+    .login-card__header {
+        margin-bottom: 4px !important;
+    }
+
+    .login-card__logo {
+        width: 28px !important;
+        height: 28px !important;
+        margin: 0 auto 2px !important;
+    }
+
+    .login-card__title {
+        font-size: 13px !important;
+    }
+
+    .login-card__subtitle {
+        font-size: 10px !important;
+    }
+
+    .login-card .ant-form-item {
+        margin-bottom: 5px !important;
+    }
+
+    .login-btn-primary {
+        height: 30px !important;
+        font-size: 12px !important;
+    }
+
+    .login-tip {
+        display: none !important;
+    }
+
+    /* hide tip on smallest phones to save space */
+}
+
+@media screen and (orientation: landscape) and (max-width: 1024px) {
+    .login-form-panel {
+        height: 100vh;
+        overflow: hidden;
+        align-items: flex-start;
+        justify-content: center;
+        padding: 12px;
+    }
+
+    .login-card {
+        width: 100%;
+        max-width: 400px;
+
+        height: auto;
+        max-height: calc(100vh - 24px);
+
+        overflow-y: auto !important;
+        overflow-x: hidden;
+
+        -webkit-overflow-scrolling: touch;
+
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+
+        flex-shrink: 1;
+    }
+
+    .login-card::-webkit-scrollbar {
+        display: none;
+        width: 0;
+        height: 0;
+    }
+}
+
+.mobile-landscape-logo {
+    display: none;
+}
+
+@media screen and (max-width: 1024px) and (orientation: landscape) {
+    .login-card {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .login-card__logo {
+        display: none !important;
+    }
+
+    .mobile-landscape-logo {
+        display: flex;
+        position: absolute;
+
+        top: 50%;
+        left: 50%;
+
+        transform: translate(-50%, -55%);
+
+        pointer-events: none;
+        z-index: 0;
+    }
+
+    .mobile-landscape-logo img {
+        width: min(55vh, 320px);
+        height: auto;
+
+        opacity: 0.16;
+
+        filter: none;
+    }
+
+    .login-card__header,
+    .login-alert,
+    .ant-form,
+    .login-divider,
+    .login-register-text,
+    .login-tip {
+        position: relative;
+        z-index: 2;
+    }
+}

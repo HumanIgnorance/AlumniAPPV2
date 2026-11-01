@@ -48,6 +48,9 @@ const ScrollProgressOrb = () => {
   const wrapRef = useRef(null)
   const scrollTargetRef = useRef(null)
   const dragStateRef = useRef({ pointerX: 0, pointerY: 0, origX: 0, origY: 0 })
+  // Removes the window pointer listeners if the orb unmounts mid-drag
+  const dragCleanupRef = useRef(null)
+  useEffect(() => () => dragCleanupRef.current?.(), [])
   const draggingRef = useRef(false)
   const suppressClickRef = useRef(false)
 
@@ -257,6 +260,10 @@ const ScrollProgressOrb = () => {
       }
       window.addEventListener("pointermove", handlePointerMove)
       window.addEventListener("pointerup", handlePointerUp)
+      dragCleanupRef.current = () => {
+        window.removeEventListener("pointermove", handlePointerMove)
+        window.removeEventListener("pointerup", handlePointerUp)
+      }
     },
     [handlePointerMove, handlePointerUp]
   )

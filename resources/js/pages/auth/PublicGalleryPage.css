@@ -53,11 +53,11 @@
 }
 
 .ph-page.light .pgal-section + .pgal-section {
-  border-top-color: #edf0f5;
+  border-top-color: var(--c-edf0f5);
 }
 
 .ph-page.dark .pgal-section + .pgal-section {
-  border-top-color: #1d2230;
+  border-top-color: var(--c-1d2230);
 }
 
 /* ============ YEAR / MONTH TIMELINE ============ */
@@ -78,11 +78,11 @@
 }
 
 .ph-page.light .pgal-month-heading {
-  border-bottom: 1px solid #edf0f5;
+  border-bottom: 1px solid var(--c-edf0f5);
 }
 
 .ph-page.dark .pgal-month-heading {
-  border-bottom: 1px solid #1d2230;
+  border-bottom: 1px solid var(--c-1d2230);
 }
 
 .pgal-month-label {
@@ -168,7 +168,7 @@
 }
 
 .pgal-media-carousel .slick-dots li.slick-active button {
-  background: #ffffff;
+  background: var(--c-white);
 }
 
 .pgal-media-count {
@@ -181,7 +181,7 @@
   padding: 3px 9px;
   border-radius: 999px;
   background: rgba(0, 0, 0, 0.55);
-  color: #ffffff;
+  color: var(--c-white);
   pointer-events: none;
 }
 
@@ -227,11 +227,11 @@
 }
 
 .ph-page.light .pgal-card-facts {
-  border-top: 1px dashed #e6eaf1;
+  border-top: 1px dashed var(--c-e6eaf1);
 }
 
 .ph-page.dark .pgal-card-facts {
-  border-top: 1px dashed #242a36;
+  border-top: 1px dashed var(--c-242a36);
 }
 
 .pgal-fact {
@@ -307,7 +307,7 @@
   border-radius: 50%;
   border: none;
   background: rgba(255, 255, 255, 0.12);
-  color: #fff;
+  color: var(--c-white);
   font-size: 18px;
   display: flex;
   align-items: center;
@@ -355,7 +355,7 @@
 }
 
 .pgal-lightbox-carousel .slick-dots li.slick-active button {
-  background: #ffffff;
+  background: var(--c-white);
 }
 
 .pgal-lightbox-nav {
@@ -368,7 +368,7 @@
   border-radius: 50%;
   border: none;
   background: rgba(255, 255, 255, 0.14);
-  color: #fff;
+  color: var(--c-white);
   font-size: 18px;
   display: flex;
   align-items: center;
@@ -394,7 +394,7 @@
 }
 
 .pgal-lightbox-title {
-  color: #fff;
+  color: var(--c-white);
   font-weight: 700;
   font-size: 16px;
 }

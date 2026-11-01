@@ -1,0 +1,355 @@
+/* ============ END DARK THEME SELECT FIX ============ */
+
+
+/* ============ LAST ACTIVE STATUS STYLES ============ */
+.last-active-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.status-dot.active {
+  background-color: var(--c-antd-green);
+  box-shadow: 0 0 8px var(--c-antd-green), 0 0 12px var(--c-antd-green);
+  animation: pulse-green 2s infinite;
+}
+
+.status-dot.offline {
+  background-color: var(--c-antd-red);
+}
+
+@keyframes pulse-green {
+  0% {
+    box-shadow: 0 0 0 0 rgba(82, 196, 26, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(82, 196, 26, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(82, 196, 26, 0);
+  }
+}
+
+/* Dark theme support */
+[data-theme="black"] .last-active-indicator .ant-typography {
+  color: inherit !important;
+}
+
+[data-theme="black"] .status-dot.active {
+  background-color: var(--c-antd-green);
+  box-shadow: 0 0 10px var(--c-antd-green), 0 0 20px var(--c-antd-green);
+}
+
+[data-theme="black"] .status-dot.offline {
+  background-color: var(--c-antd-red);
+  box-shadow: 0 0 6px var(--c-antd-red);
+}
+/* ============ END LAST ACTIVE STATUS STYLES ============ */
+
+
+/* ============ NEW REGISTERED CARD ============ */
+
+/* Make the card a flex column so body + actions tile perfectly */
+.new-registered-card {
+  display: flex;
+  flex-direction: column;
+  height: auto !important;          /* override the 100% from .alumni-card     */
+  overflow: hidden;
+  border: 1.5px solid #1890ff44;
+  box-shadow: 0 4px 16px rgba(24, 144, 255, 0.10);
+}
+
+.new-registered-card:hover {
+  border-color: var(--c-antd-blue);
+  box-shadow: 0 8px 28px rgba(24, 144, 255, 0.18);
+}
+
+/* The AntD card body — make it flex so nothing overflows */
+.new-registered-card .ant-card-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  overflow: hidden;               /* clip any accidental overflow              */
+}
+
+/* The wrapper we put around card body content */
+.new-registered-card .alumni-card-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+/* Header row: avatar + name */
+.new-registered-card .alumni-header {
+  margin-bottom: 0;
+  flex-shrink: 0;
+}
+
+/* Quiz status badge area — never grows, wraps naturally */
+.new-registered-card .nr-quiz-status {
+  flex-shrink: 0;
+}
+
+/* Details section — constrain so it doesn't push the card open */
+.new-registered-card .alumni-details {
+  margin-bottom: 8px;
+  flex-shrink: 0;
+}
+
+.new-registered-card .alumni-details .detail-item-alumini {
+  margin-bottom: 6px;
+}
+
+/* Bio — clamp to 2 lines max, then ellipsis; grows into remaining space */
+.new-registered-card .alumni-bio {
+  flex: 1;
+  margin-bottom: 0 !important;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  font-size: 13px;
+  color: var(--c-888888);
+  min-height: 0;
+}
+
+/* Ribbon wrapper must be position:relative so AntD ribbon clips correctly */
+.new-registered-card-ribbon-wrap {
+  position: relative;
+  height: 100%;
+}
+
+/* Push the ribbon down so it sits at the quiz-status level (right edge) */
+.new-registered-card .ant-ribbon {
+  top: 52px;          /* clears the avatar+name header (~48px) + small gap  */
+}
+
+/* Actions row — always hugs the bottom */
+.new-registered-card .ant-card-actions {
+  flex-shrink: 0;
+  background: var(--c-zinc-50);
+  border-top: 1px solid var(--c-antd-gray-3);
+  margin-top: auto;
+}
+
+/* Dark theme support */
+[data-theme="black"] .new-registered-card {
+  border-color: #1890ff66;
+  box-shadow: 0 4px 16px rgba(24, 144, 255, 0.15);
+}
+
+[data-theme="black"] .new-registered-card:hover {
+  border-color: var(--c-antd-blue);
+  box-shadow: 0 8px 28px rgba(24, 144, 255, 0.28);
+}
+
+[data-theme="black"] .new-registered-card .ant-card-actions {
+  background: var(--c-ink-1a) !important;
+  border-color: var(--c-gray-333) !important;
+}
+
+[data-theme="black"] .new-registered-card .ant-card-actions > li {
+  border-color: var(--c-gray-333) !important;
+}
+
+[data-theme="black"] .new-registered-card .ant-card-actions .anticon {
+  color: var(--c-a0a0a0) !important;
+}
+
+[data-theme="black"] .new-registered-card .ant-card-actions .anticon:hover {
+  color: var(--c-blue-400) !important;
+}
+
+[data-theme="black"] .new-registered-card .ant-divider {
+  border-color: var(--c-gray-333) !important;
+}
+
+[data-theme="black"] .new-registered-card .alumni-bio {
+  color: var(--c-a0a0a0);
+}
+
+
+/* ==================================================
+   PRINT PREVIEW — FORCE LIGHT THEME (on screen)
+   Overrides app dark mode so the preview modal and the
+   printable report always render on a white background
+   with dark, legible text, regardless of the active
+   app theme.
+   ================================================== */
+
+/* Modal shell */
+.print-preview-modal .ant-modal-content,
+.print-preview-modal .ant-modal-header,
+.print-preview-modal .ant-modal-body,
+.print-preview-modal .ant-modal-footer {
+  background: var(--c-white) !important;
+  color: var(--c-slate-900) !important;
+  border-color: var(--c-gray-200) !important;
+}
+.print-preview-modal .ant-modal-title,
+.print-preview-modal .ant-modal-close-x {
+  color: var(--c-slate-900) !important;
+}
+
+/* Printable surface — light theme always */
+#printable-area,
+#printable-area * {
+  color: var(--c-slate-900) !important;
+  border-color: var(--c-antd-gray-5);
+}
+#printable-area {
+  background: var(--c-white) !important;
+}
+#printable-area .ant-card,
+#printable-area .ant-card-body,
+#printable-area .ant-card-head {
+  background: var(--c-white) !important;
+  color: var(--c-slate-900) !important;
+  border-color: var(--c-antd-gray-5) !important;
+}
+#printable-area .ant-typography,
+#printable-area .ant-typography-secondary {
+  color: var(--c-slate-900) !important;
+}
+#printable-area .ant-table,
+#printable-area .ant-table-container,
+#printable-area .ant-table-content,
+#printable-area .ant-table-tbody > tr > td,
+#printable-area .ant-table-thead > tr > th {
+  background: var(--c-white) !important;
+  color: var(--c-slate-900) !important;
+}
+#printable-area .ant-table-thead > tr > th {
+  background: var(--c-f5f7fa) !important;
+  border-bottom: 1px solid var(--c-antd-gray-5) !important;
+}
+#printable-area .ant-table-tbody > tr:hover > td {
+  background: var(--c-zinc-50) !important;
+}
+#printable-area .ant-tag {
+  background: var(--c-f5f7fa) !important;
+  color: var(--c-slate-900) !important;
+  border-color: var(--c-antd-gray-5) !important;
+}
+
+/* Override app dark theme inside preview + printable area */
+[data-theme="black"] .print-preview-modal .ant-modal-content,
+[data-theme="black"] .print-preview-modal .ant-modal-header,
+[data-theme="black"] .print-preview-modal .ant-modal-body,
+[data-theme="black"] .print-preview-modal .ant-modal-footer,
+[data-theme="black"] #printable-area,
+[data-theme="black"] #printable-area * {
+  background-color: var(--c-white) !important;
+  color: var(--c-slate-900) !important;
+  border-color: var(--c-antd-gray-5) !important;
+}
+[data-theme="black"] #printable-area .ant-table-thead > tr > th {
+  background: var(--c-f5f7fa) !important;
+}
+
+/* ==================================================
+   PRINT PREVIEW HEADER — READABLE TITLE & CLOSE BUTTON
+   The title text and close (X) button must always read as
+   dark text on the white preview header, in every app theme,
+   and regardless of any gradient/opacity styling used
+   elsewhere in the app. Also normalizes the modal body's
+   scrollbar so it never renders as a dark/black bar.
+   ================================================== */
+.print-preview-modal .ant-modal-header .ant-modal-title,
+.print-preview-modal .ant-modal-title {
+  color: var(--c-slate-900) !important;
+  -webkit-text-fill-color: var(--c-slate-900) !important;
+  opacity: 1 !important;
+  font-weight: 600 !important;
+}
+.print-preview-modal .ant-modal-close,
+.print-preview-modal .ant-modal-close-x {
+  color: var(--c-slate-900) !important;
+  -webkit-text-fill-color: var(--c-slate-900) !important;
+  opacity: 1 !important;
+}
+.print-preview-modal .ant-modal-close .anticon,
+.print-preview-modal .ant-modal-close-x .anticon,
+.print-preview-modal .ant-modal-close svg {
+  color: var(--c-slate-900) !important;
+  fill: var(--c-slate-900) !important;
+}
+.print-preview-modal .ant-modal-close:hover,
+.print-preview-modal .ant-modal-close:hover .ant-modal-close-x {
+  color: var(--c-black) !important;
+  background: rgba(15, 23, 42, 0.06) !important;
+}
+[data-theme="black"] .print-preview-modal .ant-modal-header .ant-modal-title,
+[data-theme="black"] .print-preview-modal .ant-modal-title,
+[data-theme="black"] .print-preview-modal .ant-modal-close,
+[data-theme="black"] .print-preview-modal .ant-modal-close-x {
+  color: var(--c-slate-900) !important;
+  -webkit-text-fill-color: var(--c-slate-900) !important;
+  opacity: 1 !important;
+}
+[data-theme="black"] .print-preview-modal .ant-modal-close .anticon,
+[data-theme="black"] .print-preview-modal .ant-modal-close-x .anticon,
+[data-theme="black"] .print-preview-modal .ant-modal-close svg {
+  color: var(--c-slate-900) !important;
+  fill: var(--c-slate-900) !important;
+}
+
+/* Scrollbar inside the print preview modal — always light, never the
+   app's dark-theme scrollbar, so it doesn't look like a black bar
+   cutting through the white page. */
+.print-preview-modal .ant-modal-body {
+  scrollbar-color: var(--c-c1c1c1) var(--c-f1f1f1);
+}
+.print-preview-modal .ant-modal-body::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+.print-preview-modal .ant-modal-body::-webkit-scrollbar-track {
+  background: var(--c-f1f1f1) !important;
+  border-radius: 6px;
+}
+.print-preview-modal .ant-modal-body::-webkit-scrollbar-thumb {
+  background: var(--c-c1c1c1) !important;
+  border-radius: 6px;
+}
+.print-preview-modal .ant-modal-body::-webkit-scrollbar-thumb:hover {
+  background: var(--c-a8a8a8) !important;
+}
+
+/* Belt-and-suspenders: also reset html/body here in case this stylesheet
+   loads without the inline print styles in AlumniList.js — keeps the
+   printed page white even if the app is in black theme. */
+@media print {
+  html,
+  body {
+    background: var(--c-white) !important;
+    color: var(--c-slate-900) !important;
+  }
+}
+/* Course folder modal: keep header + footer buttons on-screen in short
+   viewports (e.g. landscape mobile), where the default modal body has no
+   height cap and pushes the footer below the fold, forcing the whole page
+   to scroll instead of just the modal content. */
+.course-folder-modal .ant-modal-body {
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+@media (max-height: 500px) {
+  .course-folder-modal {
+    top: 8px !important;
+  }
+  .course-folder-modal .ant-modal-body {
+    max-height: 55vh;
+  }
+}

@@ -1,16 +1,11 @@
 import "antd-css-utilities/utility.min.css";
-import { ConfigProvider, Empty } from "antd";
-import React from "react";
+import { ConfigProvider, Empty, Spin } from "antd";
+import React, { Suspense, useEffect } from "react";
 import ReactDOM from "react-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
-//import "../css/app.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./assets/scss/app.scss";
-// import "./assets/styles/main.css";
-// import "./assets/styles/responsive.css";
 import NoLayout from "./components/NoLayout";
-import Pages404 from "./pages/ErrorPages/Pages404";
-import Pages402 from "./pages/ErrorPages/Pages402";
 import { useLoader } from "./components/shared/Loader";
 
 import {
@@ -18,7 +13,11 @@ import {
     authRoutes,
     noLayoutRoutes,
     alumniRoutes,
+    Pages404,
+    Pages402,
 } from "./routes";
+import { getAntdTheme } from "~/config/antdTheme";
+import { useAppTheme } from "~/hooks/useAppTheme";
 
 const NonAuthmiddleware = ({
     component: Component,
@@ -38,6 +37,14 @@ const NonAuthmiddleware = ({
     />
 );
 
+// Themed by css/tokens.css (entry bundle), so it is correct in dark mode even
+// while page chunks and their CSS are still loading.
+const PageFallback = () => (
+    <div className="app-page-fallback" role="status" aria-label="Loading">
+        <Spin size="large" />
+    </div>
+);
+
 const queryClient = new QueryClient({
     defaultOptions: {
         queries: {
@@ -52,35 +59,24 @@ const queryClient = new QueryClient({
 
 function Main() {
     useLoader();
+    const { theme: appTheme } = useAppTheme();
+    const antdTheme = getAntdTheme(appTheme);
+
+    // Static helpers (message.loading, notification, Modal.confirm) live
+    // outside <ConfigProvider>, so give them the same theme.
+    useEffect(() => {
+        ConfigProvider.config({ theme: antdTheme });
+    }, [appTheme]);
+
     return (
         <QueryClientProvider client={queryClient}>
             <ConfigProvider
-                theme={{
-                    token: {
-                        colorPrimary: "#667eea",
-                        colorBgContainer: "#f9fafb", // default background
-                        borderRadius: 8, // rounded corners
-                        fontSize: 14, // base font size
-                    },
-                    components: {
-                        Table: {
-                            headerBg: "#f3f4f6",
-                            borderColor: "#e5e7eb",
-                        },
-                        Input: {
-                            colorBgContainer: "#ffffff",
-                            colorBorder: "#d1d5db",
-                            borderRadius: 6,
-                        },
-                        Modal: {
-                            colorBgElevated: "#ffffff",
-                            borderRadiusLG: 12,
-                        },
-                    },
-                }}
+                theme={antdTheme}
                 renderEmpty={() => <Empty description="No Data" />}
             >
                 <Router>
+                    {/* Pages are lazy-loaded (see routes/lazyPages.js) */}
+                    <Suspense fallback={<PageFallback />}>
                     <Switch>
                         {/* Auth Routes */}
                         {authRoutes.map((route, idx) => (
@@ -128,6 +124,7 @@ function Main() {
                         <Route component={Pages404} />
                         <Route component={Pages402} />
                     </Switch>
+                    </Suspense>
                 </Router>
             </ConfigProvider>
         </QueryClientProvider>

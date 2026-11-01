@@ -27,8 +27,13 @@ import { BASE_URL } from "~/utils/constant";
 // Reuses every design token (--ph-accent, .ph-btn, .ph-card, .grad, etc.)
 // already defined for the public site, same import pattern as
 // InstallPwaPage.js / PublicOccServicesPage.js.
-import "./PublicHomePage.css";
+import "./PublicHomePage-styles";
 import "./PublicContactPage.css";
+import useHeaderHeightVar from "~/hooks/useHeaderHeightVar";
+import useEventListener from "~/hooks/useEventListener";
+import { COLORS } from "~/config/theme";
+import { buildPageTitle } from "~/config/site";
+import { SITE } from "~/config/site";
 
 const { Title, Paragraph } = Typography;
 
@@ -40,7 +45,7 @@ const { Title, Paragraph } = Typography;
 // their own dedicated page.
 // ============================================================
 const CONTACT_ADDRESS = "ZONE C. Salva St, Opol, 9016 Misamis Oriental, Philippines";
-const CONTACT_EMAIL = "occ.antiquina.joneejohn@gmail.com";
+const CONTACT_EMAIL = SITE.contactEmail;
 const CONTACT_PHONE = "0949 660 0923";
 
 // ============================================================
@@ -72,47 +77,17 @@ const PublicContactPage = () => {
     const [errorMsg, setErrorMsg] = useState("");
 
     useEffect(() => {
-        document.title = "Contact Us | ATMS - Opol Community College";
+        document.title = buildPageTitle("Contact Us");
     }, []);
 
     // ============ Floating header shadow on scroll ============
-    useEffect(() => {
-        const onScroll = () => {
-            setScrolled(window.scrollY > 8);
-            setMobileNavOpen((open) => (open ? false : open));
-        };
-        window.addEventListener("scroll", onScroll);
-        return () => window.removeEventListener("scroll", onScroll);
-    }, []);
+    useEventListener("scroll", () => {
+        setScrolled(window.scrollY > 8);
+        setMobileNavOpen((open) => (open ? false : open));
+    });
 
     // ============ Keep --ph-header-h in sync with the real header ============
-    useEffect(() => {
-        const node = headerRef.current;
-        if (!node) return undefined;
-
-        const applyHeight = () => {
-            const height = node.offsetHeight;
-            if (height > 0) {
-                document.documentElement.style.setProperty("--ph-header-h", `${height}px`);
-            }
-        };
-
-        applyHeight();
-
-        let observer;
-        if (typeof ResizeObserver !== "undefined") {
-            observer = new ResizeObserver(applyHeight);
-            observer.observe(node);
-        }
-        window.addEventListener("resize", applyHeight);
-        window.addEventListener("orientationchange", applyHeight);
-
-        return () => {
-            if (observer) observer.disconnect();
-            window.removeEventListener("resize", applyHeight);
-            window.removeEventListener("orientationchange", applyHeight);
-        };
-    }, []);
+    useHeaderHeightVar(headerRef);
 
     const goHome = () => {
         window.location.href = "/";
@@ -205,10 +180,10 @@ const PublicContactPage = () => {
                     <img src={logo} alt="OCC Alumni Logo" />
                     <div className="ph-brand-text">
                         <span className="ph-brand-title">
-                            <span style={{ color: "#003366", fontWeight: 900 }}>O</span>
-                            <span style={{ color: "#FFD700", fontWeight: 900 }}>C</span>
-                            <span style={{ color: "#CC0000", fontWeight: 900 }}>C</span>{" "}
-                            <span style={{ color: "#003366", fontWeight: 900 }}>Alumni</span>
+                            <span style={{ color: COLORS.c003366, fontWeight: 900 }}>O</span>
+                            <span style={{ color: COLORS.ffd700, fontWeight: 900 }}>C</span>
+                            <span style={{ color: COLORS.cc0000, fontWeight: 900 }}>C</span>{" "}
+                            <span style={{ color: COLORS.c003366, fontWeight: 900 }}>Alumni</span>
                         </span>
                         <span className="ph-brand-sub">Opol Community College</span>
                     </div>

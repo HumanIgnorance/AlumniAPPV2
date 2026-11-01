@@ -42,14 +42,11 @@
 import { useMemo } from "react";
 import { useQuery } from "react-query";
 import axiosConfig from "~/utils/axiosConfig";
+import { REQUEST_OPTS } from "~/config/publicApi";
 
 const PUBLIC_EVENTS_ENDPOINT = "/public/events";
 const PUBLIC_EVENTS_QUERY_KEY = ["public-events", "full"];
 
-const REQUEST_OPTS = {
-    silent: true, // don't trigger the global error modal for anon visitors
-    skipAuthRedirect: true, // never bounce anonymous visitors to /login
-};
 
 // Same "unwrap whatever shape Laravel gives us" helper as
 // usePublicHomeData.js — kept local so this hook has no hidden

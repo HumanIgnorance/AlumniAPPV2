@@ -1,0 +1,170 @@
+/* Account dropdown panel + late overrides (part 2) (split from layout/index.css; keep import order: see styles/index.js) */
+/* ===== Account dropdown ("Theme: Light" panel) centering/overflow ===== */
+.account-dropdown-container {
+  width: 280px;
+  max-width: calc(100vw - 24px);
+  box-sizing: border-box;
+}
+
+@media (hover: none), (pointer: coarse) {
+
+  .ant-dropdown {
+    max-width: calc(100vw - 16px) !important;
+  }
+
+  .ant-dropdown .account-dropdown-container {
+    width: min(280px, calc(100vw - 24px));
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 360px) {
+  .account-dropdown-container {
+    width: calc(100vw - 24px);
+  }
+}
+
+.all-notifications-modal .ant-modal-body > div > div:last-child {
+  flex-wrap: wrap !important;
+  row-gap: 8px;
+}
+
+@media (max-width: 480px), (hover: none), (pointer: coarse) {
+  .all-notifications-modal .ant-modal-body > div > div:last-child {
+    justify-content: flex-start !important;
+  }
+
+  .all-notifications-modal .ant-modal-body > div > div:last-child > button {
+    flex: 0 0 auto;
+  }
+}
+
+
+.account-dropdown-scroll,
+.notification-list-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(102, 126, 234, 0.45) transparent;
+}
+
+.account-dropdown-scroll::-webkit-scrollbar,
+.notification-list-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.account-dropdown-scroll::-webkit-scrollbar-thumb,
+.notification-list-scroll::-webkit-scrollbar-thumb {
+  background-color: rgba(102, 126, 234, 0.45);
+  border-radius: 999px;
+}
+
+.account-dropdown-scroll::-webkit-scrollbar-track,
+.notification-list-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+[data-theme="black"] .account-dropdown-scroll,
+[data-theme="black"] .notification-list-scroll {
+  scrollbar-color: rgba(96, 165, 250, 0.5) transparent;
+}
+
+[data-theme="black"] .account-dropdown-scroll::-webkit-scrollbar-thumb,
+[data-theme="black"] .notification-list-scroll::-webkit-scrollbar-thumb {
+  background-color: rgba(96, 165, 250, 0.5);
+}
+
+
+.account-dropdown-container,
+.notification-dropdown-container {
+  max-height: calc(100vh - 80px);
+}
+
+@supports (height: 100dvh) {
+  .account-dropdown-container,
+  .notification-dropdown-container {
+    max-height: calc(100dvh - 80px);
+  }
+}
+
+.legal-footer-link {
+  transition: color 0.15s ease, text-decoration-color 0.15s ease;
+  text-decoration: none;
+}
+
+.legal-footer-link:hover {
+  text-decoration: underline;
+  color: var(--c-antd-blue) !important;
+}
+
+@keyframes helpSupportSlideDown {
+  from {
+    opacity: 0;
+    max-height: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    max-height: 220px;
+    transform: translateY(0);
+  }
+}
+
+.help-support-submenu {
+  overflow: hidden;
+  animation: helpSupportSlideDown 0.22s ease;
+}
+
+/* =========================================================
+   CAMERA / NOTCH SAFE AREA — LANDSCAPE MOBILE
+   Deliberately placed at the very end of the file: several older
+   rules above reset .row-header/#header/#content/footer padding to
+   plain pixel values inside plain "(max-width: 768px)" queries
+   (no orientation check), and being later in the file they would
+   otherwise win the cascade and cancel the safe-area padding out.
+   Living last guarantees this always applies in landscape, keeping
+   the burger, title, header icons, and footer text clear of the
+   camera cutout - same approach as FormLogin.css.
+
+   Uses max-height instead of max-width to detect "phone in
+   landscape": rotated iPhones report a viewport WIDTH of
+   812-932px (well past 768), so a max-width check here never
+   matched on any current iPhone. Landscape height stays under
+   ~430px on every current phone while tablets stay much taller
+   (iPad mini landscape height is 768px), so max-height:500px is
+   what actually singles out phones regardless of model. */
+@media (orientation: landscape) and (max-height: 500px) {
+  /* Safe-area padding lives on the OUTER box only (#header /
+     #content / .ant-layout-footer.app-footer). .row-header and
+     .app-footer-inner are children rendered INSIDE that box, so
+     they inherit the clearance for free - giving them their own
+     copy of the same padding stacked a second gap on top of the
+     first and is what showed up as "dead space" beside the header
+     and footer content on notched phones in landscape. */
+  #header,
+  #content,
+  .ant-layout-footer.app-footer {
+    padding-left: max(10px, env(safe-area-inset-left)) !important;
+    padding-right: max(10px, env(safe-area-inset-right)) !important;
+  }
+
+  /* These two no longer need their own safe-area padding - reset
+     any pixel padding from earlier rules so they sit flush inside
+     their already-padded parent instead of adding a second inset. */
+  .row-header {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .app-footer-inner {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  #sidebar-wrapper .ant-layout-sider,
+  .ant-drawer-content-wrapper .ant-drawer-content {
+    padding-left: env(safe-area-inset-left) !important;
+  }
+
+  .burger-menu {
+    left: max(0px, env(safe-area-inset-left)) !important;
+  }
+}

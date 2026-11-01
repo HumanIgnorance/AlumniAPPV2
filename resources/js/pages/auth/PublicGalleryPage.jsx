@@ -5,20 +5,8 @@ import {
     CalendarOutlined,
     PictureOutlined,
     ArrowRightOutlined,
-    MenuOutlined,
-    CloseOutlined,
-    SunOutlined,
-    MoonOutlined,
-    MailOutlined,
-    PhoneOutlined,
-    FacebookOutlined,
-    TwitterOutlined,
-    InstagramOutlined,
-    EnvironmentOutlined,
     LockOutlined,
 } from "@ant-design/icons";
-import logo from "~/assets/images/site-logo.png";
-import { CardSkeletonGrid } from "~/components";
 import { useAppTheme } from "~/hooks/useAppTheme";
 import usePublicGalleryData from "~/hooks/usePublicGalleryData";
 import usePreventInspect, { guardImageEvents, ZoomWarningModal } from "~/hooks/usePreventInspect";
@@ -28,9 +16,16 @@ import { BASE_URL } from "~/utils/constant";
 // the same site instead of a bolt-on. Only the gallery-page-specific
 // additions (year/month timeline, image swapper) live in
 // PublicGalleryPage.css.
-import "./PublicHomePage.css";
+import "./PublicHomePage-styles";
 import ScrollProgressOrb from "../admin/ScrollProgress/ScrollProgressOrb"
 import "./PublicGalleryPage.css";
+import scrollToSettled from "~/utils/scrollToSettled";
+import Reveal from "~/components/shared/Reveal";
+import useHeaderHeightVar from "~/hooks/useHeaderHeightVar";
+import useEventListener from "~/hooks/useEventListener";
+import { buildPageTitle } from "~/config/site";
+import PublicHeader from "~/components/shared/PublicHeader";
+import PublicFooter from "~/components/shared/PublicFooter";
 
 const { Title, Paragraph } = Typography;
 const { Option } = Select;
@@ -89,33 +84,6 @@ const getImageList = (gallery) => {
 // ============================================================
 // Reveal-on-scroll wrapper — identical pattern to PublicHomePage.js
 // ============================================================
-const Reveal = ({ children, as: As = "div", className = "", ...rest }) => {
-    const ref = useRef(null);
-    const [visible, setVisible] = useState(false);
-
-    useEffect(() => {
-        const node = ref.current;
-        if (!node) return undefined;
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    setVisible(true);
-                    observer.disconnect();
-                }
-            },
-            { threshold: 0.12 },
-        );
-        observer.observe(node);
-        return () => observer.disconnect();
-    }, []);
-
-    return (
-        <As ref={ref} className={`ph-reveal ${visible ? "is-visible" : ""} ${className}`} {...rest}>
-            {children}
-        </As>
-    );
-};
-
 // ============================================================
 // Gallery image swapper — a single static cover image when there's
 // only one photo, a lightweight auto-rotating carousel preview when
@@ -291,50 +259,6 @@ const YearSection = ({ yearRef, year, count, months, onLogin, onRegister, onMont
 // if the visitor scrolls or touches the screen themselves, so it
 // never fights a real, deliberate scroll.
 // ============================================================
-const scrollToSettled = (getTarget) => {
-    let cancelled = false;
-    let lastHeight = -1;
-    let stableCount = 0;
-    let attempts = 0;
-    const MAX_ATTEMPTS = 30; // ~2.7s ceiling at 90ms/tick, just in case
-    const STABLE_TICKS_NEEDED = 3;
-
-    const stop = () => {
-        cancelled = true;
-        window.removeEventListener("wheel", stop);
-        window.removeEventListener("touchmove", stop);
-        window.removeEventListener("keydown", stop);
-    };
-    window.addEventListener("wheel", stop, { passive: true });
-    window.addEventListener("touchmove", stop, { passive: true });
-    window.addEventListener("keydown", stop);
-
-    const tick = () => {
-        if (cancelled) return;
-        const el = getTarget();
-        if (!el) return stop();
-
-        el.scrollIntoView({ behavior: "auto", block: "start" });
-
-        const currentHeight = document.body.scrollHeight;
-        if (currentHeight === lastHeight) {
-            stableCount += 1;
-        } else {
-            stableCount = 0;
-            lastHeight = currentHeight;
-        }
-
-        attempts += 1;
-        if (stableCount >= STABLE_TICKS_NEEDED || attempts >= MAX_ATTEMPTS) {
-            return stop();
-        }
-        setTimeout(tick, 90);
-    };
-
-    tick();
-    return stop;
-};
-
 const PublicGalleryPage = () => {
     const { theme: currentTheme, toggleTheme } = useAppTheme();
     const isDark = currentTheme === "black";
@@ -352,7 +276,7 @@ const PublicGalleryPage = () => {
     const stopSettleScrollRef = useRef(null);
 
     useEffect(() => {
-        document.title = "Gallery | ATMS - Opol Community College";
+        document.title = buildPageTitle("Gallery");
     }, []);
 
     // Default the jump-to dropdown to the newest year once data arrives.
@@ -395,40 +319,14 @@ const PublicGalleryPage = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [loading]);
 
-    useEffect(() => {
-        const onScroll = () => {
-            setScrolled(window.scrollY > 8);
-            setMobileNavOpen((open) => (open ? false : open));
-        };
-        window.addEventListener("scroll", onScroll);
-        return () => window.removeEventListener("scroll", onScroll);
-    }, []);
+    useEventListener("scroll", () => {
+        setScrolled(window.scrollY > 8);
+        setMobileNavOpen((open) => (open ? false : open));
+    });
 
     // Keep --ph-header-h in sync, same measured-height pattern as
     // PublicHomePage.js so content never sits under the fixed header.
-    useEffect(() => {
-        const node = headerRef.current;
-        if (!node) return undefined;
-        const applyHeight = () => {
-            const height = node.offsetHeight;
-            if (height > 0) {
-                document.documentElement.style.setProperty("--ph-header-h", `${height}px`);
-            }
-        };
-        applyHeight();
-        let observer;
-        if (typeof ResizeObserver !== "undefined") {
-            observer = new ResizeObserver(applyHeight);
-            observer.observe(node);
-        }
-        window.addEventListener("resize", applyHeight);
-        window.addEventListener("orientationchange", applyHeight);
-        return () => {
-            if (observer) observer.disconnect();
-            window.removeEventListener("resize", applyHeight);
-            window.removeEventListener("orientationchange", applyHeight);
-        };
-    }, []);
+    useHeaderHeightVar(headerRef);
 
     const goLogin = useCallback(() => {
         window.location.href = "/login";
@@ -464,52 +362,18 @@ const PublicGalleryPage = () => {
         <div className={`ph-page ${isDark ? "dark" : "light"}`}>
             <ScrollProgressOrb />
             {/* ============ HEADER ============ */}
-            <header
-                ref={headerRef}
-                className={`ph-header ${scrolled ? "scrolled" : ""} ${isDark ? "dark" : "light"}`}
-            >
-                <div className="ph-brand" onClick={() => goTo("/")} role="button" tabIndex={0}>
-                    <img src={logo} alt="OCC Alumni Logo" />
-                    <div className="ph-brand-text">
-                        <span className="ph-brand-title">
-                            <span style={{ color: "#003366", fontWeight: 900 }}>O</span>
-                            <span style={{ color: "#FFD700", fontWeight: 900 }}>C</span>
-                            <span style={{ color: "#CC0000", fontWeight: 900 }}>C</span>{" "}
-                            <span style={{ color: "#003366", fontWeight: 900 }}>Alumni</span>
-                        </span>
-                        <span className="ph-brand-sub">Opol Community College</span>
-                    </div>
-                </div>
-
-                <nav className="ph-nav">
-                    {navItems.map((item) => (
-                        <button key={item.label} className="ph-nav-link" onClick={item.onClick}>
-                            {item.label}
-                        </button>
-                    ))}
-                </nav>
-
-                <div className="ph-header-actions">
-                    <button type="button" className="ph-theme-btn" onClick={toggleTheme} aria-label="Toggle theme">
-                        {isDark ? <MoonOutlined /> : <SunOutlined />}
-                    </button>
-                    <button className="ph-btn ph-btn-ghost ph-header-signin" onClick={goLogin}>
-                        Sign In
-                    </button>
-                    <button className="ph-btn ph-btn-solid ph-header-signup" onClick={goRegister}>
-                        Sign Up
-                    </button>
-                    <button
-                        type="button"
-                        className={`ph-burger ${mobileNavOpen ? "open" : ""}`}
-                        onClick={() => setMobileNavOpen((open) => !open)}
-                        aria-label={mobileNavOpen ? "Close menu" : "Open menu"}
-                        aria-expanded={mobileNavOpen}
-                    >
-                        {mobileNavOpen ? <CloseOutlined /> : <MenuOutlined />}
-                    </button>
-                </div>
-            </header>
+            <PublicHeader
+                headerRef={headerRef}
+                scrolled={scrolled}
+                isDark={isDark}
+                navItems={navItems}
+                toggleTheme={toggleTheme}
+                goTo={goTo}
+                goLogin={goLogin}
+                goRegister={goRegister}
+                mobileNavOpen={mobileNavOpen}
+                setMobileNavOpen={setMobileNavOpen}
+            />
 
             {/* ============ MOBILE NAV PANEL ============ */}
             <nav className={`ph-mobile-panel ${mobileNavOpen ? "open" : ""}`} aria-hidden={!mobileNavOpen}>
@@ -570,14 +434,7 @@ const PublicGalleryPage = () => {
 
             {/* ============ TIMELINE: ONE SECTION PER YEAR ============ */}
             {loading ? (
-                <section className="ph-section pgal-section">
-                    <CardSkeletonGrid
-                        variant="gallery"
-                        count={6}
-                        columns={{ xs: 24, sm: 12, lg: 8 }}
-                        gutter={[22, 22]}
-                    />
-                </section>
+                null
             ) : years.length === 0 ? (
                 <section className="ph-section pgal-section">
                     <div className="ph-state-box">
@@ -630,61 +487,7 @@ const PublicGalleryPage = () => {
                 here still only need to get someone back Home; every year
                 is reachable from the dropdown/nav above, same as requested
                 (matches PublicEventsPage.js's footer). */}
-            <footer className="ph-footer">
-                <div className="ph-footer-inner">
-                    <div className="ph-footer-brand-col">
-                        <div className="ph-footer-brand">
-                            <img src={logo} alt="OCC Alumni Logo" />
-                            <span className="ph-footer-brand-title">OCC Alumni Association</span>
-                        </div>
-                        <Paragraph className="ph-footer-desc">
-                            Connecting Opol Community College alumni worldwide, fostering
-                            lifelong relationships with the institution, and supporting
-                            the next generation of OCCians.
-                        </Paragraph>
-                        <div className="ph-footer-social">
-                            <a href="#" aria-label="Facebook"><FacebookOutlined /></a>
-                            <a href="#" aria-label="Twitter"><TwitterOutlined /></a>
-                            <a href="#" aria-label="Instagram"><InstagramOutlined /></a>
-                        </div>
-                    </div>
-
-                    <div>
-                        <div className="ph-footer-heading">Quick Links</div>
-                        <div className="ph-footer-links">
-                            <button onClick={() => goTo("/")}>Home</button>
-                            {/* <button onClick={() => goTo("/public-events")}>Events</button>
-                            <button onClick={() => goTo("/public-gallery")}>Gallery</button>
-                            <button onClick={() => goTo("/public-job-posts")}>Job Posts</button>
-                            <button onClick={() => goTo("/public-announcements")}>Announcements</button>
-                            <button onClick={() => goTo("/public-about")}>About</button>
-                            <button onClick={() => goTo("/public-faq")}>FAQs</button> */}
-                        </div>
-                    </div>
-
-                    <div>
-                        <div className="ph-footer-heading">ATMS</div>
-                        <div className="ph-footer-links">
-                            <button onClick={() => goTo("/public-contact")}>Contact Us</button>
-                            <button onClick={() => goTo("/public-credits")}>Credits</button>
-                            <button onClick={() => goTo("/install-pwa")}>Install PWA</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="ph-footer-bottom">
-                    <span>ATMS - All rights reserved.</span>
-                    <span className="ph-footer-credit">
-                        <code className="ph-footer-tag">{"</>"}</code>
-                        Developed by <strong className="ph-footer-dev-name"> <a href="https://www.facebook.com/EphemeralKun/" target="_blank" rel="noopener noreferrer">Antiquina, Jonee John R.</a></strong>
-                        <span className="ph-footer-dot">•</span> Secure
-                        <span className="ph-footer-dot">•</span> Alumni Association
-                        <span className="ph-footer-dot">•</span> Events
-                        <span className="ph-footer-dot">•</span> © {"2025"} ATMS
-                        <span className="ph-footer-dot">•</span> Built with <span className="ph-footer-heart">❤️</span>
-                    </span>
-                </div>
-            </footer>
+            <PublicFooter goTo={goTo} />
 
             <ZoomWarningModal open={zoomModalOpen} onClose={closeZoomModal} />
         </div>

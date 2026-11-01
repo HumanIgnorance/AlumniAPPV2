@@ -1,0 +1,397 @@
+/* ============ Stacked modal actions ============ */
+.modal-actions.modal-actions-stacked {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+}
+.modal-actions.modal-actions-stacked .modal-btn {
+  width: 100%;
+  justify-content: center;
+}
+
+/* ============ Send-confirm image preview ============ */
+.send-confirm-preview {
+  margin: 12px 0;
+  border-radius: var(--m-radius-md);
+  overflow: hidden;
+  border: 1px solid var(--m-border);
+  background: var(--m-surface-2);
+  display: flex;
+  justify-content: center;
+  max-height: clamp(180px, 36vh, 320px);
+}
+.send-confirm-preview img {
+  max-width: 100%;
+  max-height: clamp(180px, 36vh, 320px);
+  object-fit: contain;
+  display: block;
+}
+
+/* ============ Recovery acknowledgement label ============ */
+.recovery-ack-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 14px;
+  padding: 12px 14px;
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  border-radius: var(--m-radius-sm);
+  font-size: 13px;
+  color: #9a3412;
+  font-weight: 500;
+  cursor: pointer;
+  line-height: 1.5;
+}
+.recovery-ack-label input[type="checkbox"] {
+  margin-top: 2px;
+  width: 18px;
+  height: 18px;
+  accent-color: #ea580c;
+  flex-shrink: 0;
+}
+
+/* ============ Restrict-confirm alumni summary card ============ */
+.restrict-alumni-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 14px 0;
+  padding: 14px 16px;
+  background: var(--m-surface-2);
+  border: 1px solid var(--m-border);
+  border-radius: var(--m-radius-md);
+}
+.restrict-summary-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 4px 0;
+  border-bottom: 1px dashed var(--m-border);
+  flex-wrap: wrap;
+}
+.restrict-summary-row:last-child { border-bottom: 0; }
+.restrict-summary-label {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+  color: var(--m-text-muted);
+  flex-shrink: 0;
+}
+.restrict-summary-value {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--m-text);
+  text-align: right;
+  word-break: break-word;
+  min-width: 0;
+}
+
+/* ==============================================================
+   [data-theme="black"] — dark theme overrides
+   ============================================================== */
+
+[data-theme="black"] .bulk-actions-bar {
+  background: linear-gradient(180deg, #0f1623 0%, var(--c-0b1220) 100%);
+  border-bottom-color: rgba(255,255,255,.08);
+}
+[data-theme="black"] .bulk-toggle-btn {
+  background: var(--c-gray-900);
+  border-color: rgba(255,255,255,.14);
+  color: var(--c-slate-50);
+}
+[data-theme="black"] .bulk-toggle-btn:hover {
+  background: rgba(14,165,233,.18);
+  border-color: var(--m-accent);
+  color: var(--c-sky-300);
+}
+[data-theme="black"] .bulk-actions-buttons {
+  background: rgba(14,165,233,.10);
+  border-color: rgba(14,165,233,.35);
+}
+[data-theme="black"] .bulk-selected-count { color: var(--c-sky-300); }
+
+[data-theme="black"] .bulk-btn {
+  background: var(--c-gray-900);
+  border-color: rgba(255,255,255,.14);
+  color: var(--c-slate-50);
+}
+/* removed: legacy dark .bulk-btn.read/.archive/.restrict/.delete */
+
+[data-theme="black"] .conversation-item.bulk-selected {
+  background: rgba(14,165,233,.14) !important;
+  box-shadow: inset 3px 0 0 var(--m-accent);
+}
+
+[data-theme="black"] .chat-search-toggle {
+  background: var(--c-gray-900);
+  border-color: rgba(255,255,255,.14);
+  color: var(--c-slate-300);
+}
+[data-theme="black"] .chat-search-toggle:hover {
+  background: rgba(14,165,233,.18);
+  color: var(--c-sky-300);
+}
+[data-theme="black"] .chat-search-toggle.active {
+  background: var(--m-accent);
+  color: var(--c-white);
+  border-color: var(--m-accent);
+}
+
+[data-theme="black"] .message-search-panel {
+  background: #0f1623;
+  border-bottom-color: rgba(255,255,255,.08);
+}
+[data-theme="black"] .message-search-input {
+  background: var(--c-gray-900);
+  border-color: rgba(255,255,255,.14);
+  color: var(--c-slate-50);
+}
+[data-theme="black"] .message-search-input::placeholder { color: var(--c-slate-400); }
+[data-theme="black"] .message-search-input:focus {
+  background: var(--c-0b1220);
+  border-color: var(--m-accent);
+  box-shadow: 0 0 0 4px rgba(14,165,233,.25);
+}
+[data-theme="black"] .message-search-count { color: var(--c-slate-300); }
+[data-theme="black"] .message-search-nav,
+[data-theme="black"] .message-search-close {
+  background: var(--c-gray-900);
+  border-color: rgba(255,255,255,.14);
+  color: var(--c-slate-300);
+}
+[data-theme="black"] .message-search-nav:hover,
+[data-theme="black"] .message-search-close:hover {
+  background: rgba(14,165,233,.18);
+  color: var(--c-sky-300);
+  border-color: var(--m-accent);
+}
+
+[data-theme="black"] .msg-search-highlight {
+  background: rgba(252,211,77,.30);
+  color: var(--c-amber-200);
+  box-shadow: 0 0 0 1px rgba(252,211,77,.45);
+}
+[data-theme="black"] .msg-search-highlight.is-active {
+  background: var(--c-amber-500);
+  color: #1f1300;
+}
+
+[data-theme="black"] .conversation-item.search-active {
+  outline-color: rgba(14,165,233,.45);
+}
+
+[data-theme="black"] .admin-typing-indicator { color: var(--c-sky-300); }
+[data-theme="black"] .admin-typing-indicator::before { background: var(--c-sky-300); }
+
+[data-theme="black"] .draft-preview {
+  background: rgba(14,165,233,.10);
+  color: var(--c-slate-300);
+  border-left-color: var(--m-accent);
+}
+
+[data-theme="black"] .send-confirm-preview {
+  background: var(--c-0b1220);
+  border-color: rgba(255,255,255,.10);
+}
+
+[data-theme="black"] .recovery-ack-label {
+  background: rgba(234,88,12,.10);
+  border-color: rgba(234,88,12,.40);
+  color: #fdba74;
+}
+
+[data-theme="black"] .restrict-alumni-summary {
+  background: #0f1623;
+  border-color: rgba(255,255,255,.10);
+}
+[data-theme="black"] .restrict-summary-row { border-bottom-color: rgba(255,255,255,.08); }
+[data-theme="black"] .restrict-summary-label { color: var(--c-slate-400); }
+[data-theme="black"] .restrict-summary-value { color: var(--c-slate-50); }
+
+/* ==============================================================
+   RESPONSIVE BREAKPOINTS
+   ============================================================== */
+
+
+/* ---------- ≤480px Phones ---------- */
+@media (max-width: 480px) {
+  .bulk-actions-bar { padding: 8px; gap: 7px; }
+  .bulk-btn { font-size: 12px; padding: 10px 6px; }
+  .chat-search-toggle { width: 36px; height: 36px; min-width: 36px; font-size: 14px; }
+  .message-search-input { padding: 8px 12px; }
+  .message-search-nav,
+  .message-search-close { width: 36px; height: 36px; min-width: 36px; font-size: 13px; }
+  .send-confirm-preview { max-height: 220px; }
+  .send-confirm-preview img { max-height: 220px; }
+}
+
+/* ---------- ≤360px Small phones ---------- */
+@media (max-width: 360px) {
+  .bulk-actions-bar { padding: 7px; }
+  .bulk-actions-buttons { padding: 7px; gap: 5px; }
+  .bulk-btn {
+    flex: 1 1 100%; /* one button per row */
+    font-size: 12.5px;
+    padding: 10px 8px;
+  }
+  .bulk-selected-count { font-size: 11px; }
+  .chat-search-toggle { width: 34px; height: 34px; min-width: 34px; }
+
+  .message-search-panel { padding: 7px 8px; gap: 5px; }
+  .message-search-nav,
+  .message-search-close { width: 34px; height: 34px; min-width: 34px; }
+
+  .restrict-alumni-summary { padding: 11px; }
+  .recovery-ack-label { padding: 10px; font-size: 12px; }
+  .draft-preview { font-size: 12px; }
+}
+
+/* ---------- Landscape phones (short height) ---------- */
+@media (max-height: 480px) and (orientation: landscape) {
+  .send-confirm-preview { max-height: 150px; }
+  .send-confirm-preview img { max-height: 150px; }
+  .message-search-panel { padding: 6px 10px; }
+  .bulk-actions-bar { padding: 7px 10px; }
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .message-search-panel,
+  .admin-typing-indicator::before,
+  .bulk-toggle-btn,
+  .bulk-btn,
+  .chat-search-toggle {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* =====================================================================
+   CONVERSATION LIST — the ONLY scrollable region of the sidebar
+   ===================================================================== */
+.conversations-list {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  overflow-y: auto !important;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: var(--m-border-strong) transparent;
+}
+.conversations-list::-webkit-scrollbar { width: 6px; }
+.conversations-list::-webkit-scrollbar-thumb {
+  background: var(--m-border-strong);
+  border-radius: 999px;
+}
+.conversations-list::-webkit-scrollbar-thumb:hover { background: var(--m-accent); }
+
+/* =====================================================================
+   CHAT AREA: flex column, only messages scroll
+   ===================================================================== */
+.chat-area {
+  flex: 1 1 auto !important;
+  min-width: 0;
+  height: 100%;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+}
+.chat-area > .chat-header        { flex: 0 0 auto; }
+.chat-area > .message-search-panel { flex: 0 0 auto; }
+.chat-area > .messages-list,
+.chat-area > .chat-messages      { flex: 1 1 auto !important; min-height: 0 !important; overflow-y: auto !important; }
+.chat-area > .chat-input,
+.chat-area > .message-input-area { flex: 0 0 auto; }
+
+/* Mobile back button — hidden on desktop */
+.chat-back-btn { display: none; }
+
+
+/* =====================================================================
+   UNIFIED BULK TOOLBAR THEME — light + dark parity (single source of truth)
+   Replaces every earlier ad-hoc .bulk-btn override.
+   ===================================================================== */
+
+/* "0 SELECTED" count pill — colored in BOTH themes */
+.bulk-toolbar__count {
+  background: linear-gradient(135deg,
+    color-mix(in oklab, var(--bulk-primary) 14%, var(--m-surface)),
+    color-mix(in oklab, var(--c-teal-500) 12%, var(--m-surface))) !important;
+  border: 1px solid var(--m-accent-ring) !important;
+  color: var(--m-text) !important;
+}
+[data-theme="black"] .bulk-toolbar__count {
+  background: linear-gradient(135deg,
+    rgba(14,165,233,0.18),
+    rgba(20,184,166,0.14)) !important;
+  border-color: rgba(14,165,233,0.45) !important;
+  color: var(--c-slate-100) !important;
+}
+.bulk-toolbar__count-dot {
+  background: var(--c-emerald-500) !important;
+  box-shadow: 0 0 0 3px rgba(16,185,129,0.20) !important;
+}
+
+/* Buttons share the same vivid color tokens in BOTH themes */
+.bulk-toolbar .bulk-btn,
+[data-theme="black"] .bulk-toolbar .bulk-btn {
+  background: var(--bulk-archive) !important;
+  color: var(--c-white) !important;
+  border: 1px solid transparent !important;
+}
+.bulk-toolbar .bulk-btn.bulk-btn--primary,
+[data-theme="black"] .bulk-toolbar .bulk-btn.bulk-btn--primary {
+  background: var(--bulk-primary) !important;
+  color: var(--c-white) !important;
+}
+.bulk-toolbar .bulk-btn.bulk-btn--warn,
+[data-theme="black"] .bulk-toolbar .bulk-btn.bulk-btn--warn {
+  background: var(--bulk-warn) !important;
+  color: #1a1206 !important;
+}
+.bulk-toolbar .bulk-btn.bulk-btn--danger,
+[data-theme="black"] .bulk-toolbar .bulk-btn.bulk-btn--danger {
+  background: var(--bulk-danger) !important;
+  color: var(--c-white) !important;
+}
+
+/* Cancel (ghost) — themed per mode for contrast */
+.bulk-toolbar .bulk-btn.bulk-btn--ghost {
+  background: var(--m-surface) !important;
+  color: var(--m-text) !important;
+  border: 1px solid var(--m-border-strong) !important;
+}
+[data-theme="black"] .bulk-toolbar .bulk-btn.bulk-btn--ghost {
+  background: rgba(255,255,255,0.06) !important;
+  color: var(--c-slate-100) !important;
+  border: 1px solid rgba(255,255,255,0.18) !important;
+}
+
+/* Hover lift for all variants */
+.bulk-toolbar .bulk-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  filter: brightness(1.06);
+  box-shadow: 0 6px 14px rgba(2,6,23,0.18);
+}
+
+/* Unrelated dark-mode controls that previously shared the override block */
+[data-theme="black"] .select-toggle,
+[data-theme="black"] .chat-back-btn {
+  color: var(--c-white) !important;
+  background: rgba(255,255,255,0.04) !important;
+  border-color: rgba(255,255,255,0.10) !important;
+}
+
+
+
+
+
+/* ===========================================================
+   MOBILE-FIRST RESPONSIVE TRANSFORMATION (ADMIN VIEW ONLY)
+   Appended without modifying any existing rules above.
+   Drives off existing classes:
+     .messages-layout.chat-open   → set when a conversation is selected
+     .chat-back-btn               → already in markup, hidden on desktop
+   =========================================================== */

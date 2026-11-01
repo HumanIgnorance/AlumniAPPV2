@@ -1,0 +1,425 @@
+.gallery-page {
+
+  background:
+    radial-gradient(900px 500px at 100% -10%, rgba(14, 165, 233, 0.10), transparent 60%),
+    radial-gradient(900px 500px at -10% 110%, rgba(124, 58, 237, 0.10), transparent 60%),
+    var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  padding: 0 0 72px;
+  font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  /* Always visible. The old "start at opacity:0 until .is-revealed" meant any
+     hiccup in the reveal timer left the whole page blank. The fade-in is now a
+     one-shot animation that ends fully visible. */
+  opacity: 1;
+  animation: gallery-page-in 0.5s var(--ease-smooth) both;
+}
+
+@keyframes gallery-page-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+
+/* ============ Keyframes ============ */
+@keyframes galFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes galFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes galScaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes galFloat {
+
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+
+  50% {
+    transform: translateY(-12px) scale(1.04);
+  }
+}
+
+@keyframes galShine {
+  0% {
+    transform: translateX(-150%) skewX(-18deg);
+  }
+
+  100% {
+    transform: translateX(250%) skewX(-18deg);
+  }
+}
+
+@keyframes galOrbit {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate(18px, -18px) scale(1.08);
+  }
+
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+}
+
+/* ============ Container ============ */
+.gallery-page-container {
+  padding: 24px;
+  padding-top: 10px;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+/* ============ HERO ============ */
+.gal-hero {
+  position: relative;
+  overflow: hidden;
+  padding: 64px 28px 48px;
+  border-radius: var(--radius-xl);
+  background:
+    linear-gradient(180deg, var(--surface), var(--surface)) padding-box,
+    linear-gradient(135deg, rgba(14, 165, 233, 0.45), rgba(99, 102, 241, 0.35), rgba(20, 184, 166, 0.45)) border-box;
+  border: 1px solid transparent;
+  box-shadow: var(--shadow-md);
+}
+
+.gal-hero__bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.gal-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+  opacity: 0.5;
+  animation: galFloat 14s ease-in-out infinite;
+}
+
+.gal-blob-1 {
+  width: 280px;
+  height: 280px;
+  background: var(--c-sky-400);
+  top: -70px;
+  left: -50px;
+}
+
+.gal-blob-2 {
+  width: 320px;
+  height: 320px;
+  background: var(--c-indigo-500);
+  bottom: -130px;
+  right: -70px;
+  animation-duration: 18s;
+}
+
+.gal-blob-3 {
+  width: 200px;
+  height: 200px;
+  background: var(--c-teal-500);
+  top: 40%;
+  left: 55%;
+  animation-duration: 22s;
+  opacity: 0.35;
+}
+
+.gal-hero__grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(26, 20, 20, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(26, 20, 20, 0.05) 1px, transparent 1px);
+  background-size: 36px 36px;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+}
+
+[data-theme="black"] .gal-hero__grid {
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+}
+
+.gal-hero__content {
+  position: relative;
+  z-index: 1;
+  max-width: 920px;
+  margin: 0 auto;
+  text-align: center;
+  animation: galFadeUp 0.7s var(--ease-spring) both;
+}
+
+.gal-hero__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.gal-hero__logo {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  border-radius: 14px;
+  background: var(--surface);
+  padding: 6px;
+  box-shadow: var(--shadow-sm);
+  animation: galFloat 6s ease-in-out infinite;
+}
+
+.gal-hero__brand-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.gal-chip {
+  background: var(--accent-soft) !important;
+  color: var(--accent) !important;
+  border: 1px solid var(--accent-ring) !important;
+  border-radius: 999px !important;
+  padding: 4px 12px !important;
+  font-weight: 700 !important;
+  font-size: 11.5px !important;
+  letter-spacing: 0.08em;
+  margin: 0 !important;
+}
+
+.gal-hero__eyebrow {
+  color: var(--text-muted);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.gal-hero__title {
+  font-size: clamp(30px, 4.8vw, 52px) !important;
+  line-height: 1.1 !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.02em;
+  color: var(--text) !important;
+  margin: 6px 0 14px !important;
+}
+
+.grad-text {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 50%, var(--accent-3) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.gal-hero__lead {
+  color: var(--text-muted) !important;
+  font-size: 16px !important;
+  line-height: 1.7 !important;
+  max-width: 720px;
+  margin: 0 auto 24px !important;
+}
+
+.gal-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+/* Hero buttons */
+.gal-btn-primary,
+.gal-btn-primary-sm {
+  background: linear-gradient(135deg, var(--accent), var(--accent-3)) !important;
+  border: none !important;
+  color: var(--c-white) !important;
+  font-weight: 700 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 24px var(--accent-ring) !important;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s var(--ease-spring);
+}
+
+.gal-btn-primary {
+  height: 46px !important;
+  padding: 0 24px !important;
+}
+
+.gal-btn-primary-sm {
+  height: 40px !important;
+  padding: 0 18px !important;
+}
+
+.gal-btn-primary::after,
+.gal-btn-primary-sm::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+  animation: galShine 2.8s ease-in-out infinite;
+}
+
+.gal-btn-primary:hover,
+.gal-btn-primary-sm:hover {
+  transform: translateY(-2px);
+}
+
+.gal-btn-ghost {
+  height: 46px !important;
+  padding: 0 22px !important;
+  border-radius: 12px !important;
+  font-weight: 600 !important;
+  background: var(--surface) !important;
+  border: 1px solid var(--border-strong) !important;
+  color: var(--text) !important;
+  transition: all 0.2s var(--ease-spring);
+}
+
+.gal-btn-ghost:hover {
+  border-color: var(--accent) !important;
+  color: var(--accent) !important;
+  transform: translateY(-1px);
+}
+
+.gal-btn-ghost.is-active {
+  background: linear-gradient(135deg, var(--accent), var(--accent-3)) !important;
+  border-color: transparent !important;
+  color: var(--c-white) !important;
+  box-shadow: 0 8px 18px var(--accent-ring);
+}
+
+/* Hero stats */
+.gal-hero__stats {
+  margin-top: 36px !important;
+}
+
+.gal-stat-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-xs);
+  transition: transform 0.3s var(--ease-smooth), box-shadow 0.3s var(--ease-smooth), border-color 0.25s;
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+}
+
+.gal-stat-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  border-radius: 0 4px 4px 0;
+  background: var(--accent);
+  transition: width 0.3s var(--ease-smooth);
+}
+
+.gal-stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--accent-ring);
+}
+
+.gal-stat-card:hover::before {
+  width: 6px;
+}
+
+.gal-stat-card.stat-total::before {
+  background: var(--accent);
+}
+
+.gal-stat-card.stat-size::before {
+  background: var(--accent-2);
+}
+
+.gal-stat-card.stat-month::before {
+  background: var(--accent-3);
+}
+
+.gal-stat-icon {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  border-radius: 12px;
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.stat-size .gal-stat-icon {
+  background: rgba(245, 158, 11, 0.12);
+  color: var(--accent-2);
+}
+
+.stat-month .gal-stat-icon {
+  background: rgba(139, 92, 246, 0.12);
+  color: var(--accent-3);
+}
+
+.gal-stat-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.gal-stat-label {
+  display: block;
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+.gal-stat-body .ant-statistic-content {
+  color: var(--text) !important;
+  font-size: 22px !important;
+  font-weight: 800 !important;
+  line-height: 1.1;
+}

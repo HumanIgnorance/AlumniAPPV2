@@ -1,0 +1,389 @@
+/* ---------- Buttons (equal height, equal radius, color-coded) ---------- */
+.bulk-toolbar .bulk-btn {
+  all: unset;
+  box-sizing: border-box;
+  flex: 1 1 auto;                    /* equal share, wrap when tight */
+  min-width: 64px;                   /* never crushes text */
+  max-width: 100%;
+  height: 32px;
+  padding: 0 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+  border-radius: 999px;
+  text-align: center;
+  white-space: nowrap;
+  cursor: pointer;
+  border: 1px solid transparent;
+  background: var(--m-surface);
+  color: var(--m-text);
+  transition: transform .15s var(--m-ease),
+              filter .2s var(--m-ease),
+              box-shadow .2s var(--m-ease),
+              opacity .2s var(--m-ease);
+  user-select: none;
+}
+.bulk-toolbar .bulk-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+  box-shadow: 0 4px 12px rgba(2,6,23,.12);
+}
+.bulk-toolbar .bulk-btn:active:not(:disabled) { transform: translateY(0); filter: brightness(.96); }
+.bulk-toolbar .bulk-btn:disabled { opacity: .5; cursor: not-allowed; }
+.bulk-toolbar .bulk-btn:focus-visible {
+  outline: 2px solid var(--m-accent);
+  outline-offset: 2px;
+}
+
+/* base = Archive (slate). Variants override below for both themes. */
+.bulk-toolbar .bulk-btn                   { background: var(--bulk-archive); color: var(--c-white); border-color: transparent; }
+.bulk-toolbar .bulk-btn.bulk-btn--primary { background: var(--bulk-primary); color: var(--c-white); border-color: transparent; }
+.bulk-toolbar .bulk-btn.bulk-btn--warn    { background: var(--bulk-warn);    color: #1a1206; border-color: transparent; }
+.bulk-toolbar .bulk-btn.bulk-btn--danger  { background: var(--bulk-danger);  color: var(--c-white); border-color: transparent; }
+.bulk-toolbar .bulk-btn.bulk-btn--ghost   {
+  background: var(--m-surface);
+  color: var(--m-text);
+  border: 1px solid var(--m-border-strong);
+}
+
+/* ===================================================================
+   5. CONVERSATION ITEM — checkbox / avatar / info / actions
+   =================================================================== */
+.conversation-item {
+  display: flex !important;
+  align-items: center;
+  gap: 10px !important;
+  padding: 10px 12px !important;
+  min-width: 0;
+  border-radius: 14px;
+}
+.conversation-item > .bulk-select-checkbox { flex: 0 0 auto; margin: 0; }
+.conversation-item > .conversation-avatar,
+.conversation-item > .conversation-avatar-img {
+  flex: 0 0 auto;                    /* never shrink avatar */
+  width: 42px; height: 42px;
+}
+.conversation-item > .conversation-info {
+  flex: 1 1 auto;
+  min-width: 0;                      /* enables ellipsis */
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow: hidden;
+}
+.conversation-item .conversation-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-width: 0;
+}
+.conversation-item .conversation-top h4 {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0;
+  font-size: 13.5px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.conversation-item .conversation-time {
+  flex: 0 0 auto;
+  font-size: 11px;
+  color: var(--m-text-subtle);
+}
+.conversation-item .conversation-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 6px;
+  min-width: 0;
+}
+.conversation-item .last-message {
+  flex: 1 1 100%;
+  min-width: 0;
+  margin: 0;
+  font-size: 12px;
+  color: var(--m-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.conversation-item .actions-dropdown-container {
+  flex: 0 0 auto;
+  margin-left: auto;
+  align-self: center;
+}
+
+
+
+/* ===================================================================
+   7. DARK THEME parity for new controls
+   =================================================================== */
+[data-theme="black"] .admin-tabs .tab-btn {
+  background: rgba(255,255,255,.04) !important;
+  border-color: rgba(255,255,255,.10) !important;
+  color: var(--c-slate-300) !important;
+}
+[data-theme="black"] .admin-tabs .tab-btn.active {
+  background: linear-gradient(135deg, var(--m-accent), var(--m-accent-2)) !important;
+  color: var(--c-white) !important;
+}
+[data-theme="black"] .tab-btn__count        { background: rgba(255,255,255,.10); color: var(--c-white); }
+[data-theme="black"] .tab-btn.active .tab-btn__count { background: rgba(255,255,255,.25); }
+
+[data-theme="black"] .select-toggle {
+  background: rgba(255,255,255,.04) !important;
+  border-color: rgba(255,255,255,.10) !important;
+  color: var(--c-slate-300) !important;
+}
+
+[data-theme="black"] .bulk-toolbar {
+  background: linear-gradient(135deg, rgba(14,165,233,.10), rgba(20,184,166,.08)) !important;
+  border-color: rgba(14,165,233,.35) !important;
+}
+[data-theme="black"] .bulk-toolbar__count {
+  background: rgba(255,255,255,.06) !important;
+  border-color: rgba(255,255,255,.12) !important;
+  color: var(--c-white) !important;
+}
+[data-theme="black"] .bulk-toolbar .bulk-btn--cancel {
+  background: rgba(255,255,255,.04) !important;
+  color: var(--c-white) !important;
+  border-color: rgba(255,255,255,.18) !important;
+}
+
+/* ===================================================================
+   8. KILL legacy oversized rules (defensive — overrides anything earlier)
+   =================================================================== */
+
+
+.bulk-toggle-btn:hover {
+  background: var(--m-accent-soft);
+  border-color: var(--m-accent);
+  color: var(--m-accent);
+  transform: translateY(-1px);
+}
+.bulk-toggle-btn:active { transform: translateY(0); }
+
+.bulk-actions-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 10px;
+  background: var(--m-accent-soft);
+  border: 1px solid var(--m-accent-ring);
+  border-radius: var(--m-radius-md);
+}
+
+.bulk-selected-count {
+  flex: 1 1 100%;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--m-accent);
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+
+.bulk-btn {
+  flex: 1 1 calc(50% - 4px);
+  min-width: 0;
+  padding: 9px 12px;
+  min-height: 38px;
+  border-radius: var(--m-radius-sm);
+  border: 1px solid var(--m-border-strong);
+  background: var(--m-surface);
+  color: var(--m-text);
+  font-size: clamp(12px, 1vw, 13px);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .18s var(--m-ease);
+  box-shadow: var(--m-shadow-xs);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.bulk-btn:hover { transform: translateY(-1px); box-shadow: var(--m-shadow-sm); }
+.bulk-btn:active { transform: translateY(0); }
+/* removed: legacy .bulk-btn.read/.archive/.restrict/.delete (JSX uses BEM --primary/--warn/--danger) */
+
+.bulk-select-checkbox {
+  width: 18px;
+  height: 18px;
+  margin-right: 10px;
+  accent-color: var(--m-accent);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.conversation-item.bulk-selected {
+  background: var(--m-accent-soft) !important;
+  box-shadow: inset 3px 0 0 var(--m-accent);
+}
+
+/* ============ Chat header actions ============ */
+.chat-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.chat-search-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--m-border);
+  background: var(--m-surface);
+  color: var(--m-text-muted);
+  cursor: pointer;
+  font-size: 16px;
+  transition: all .18s var(--m-ease);
+}
+.chat-search-toggle:hover {
+  background: var(--m-accent-soft);
+  border-color: var(--m-accent);
+  color: var(--m-accent);
+}
+.chat-search-toggle.active {
+  background: var(--m-accent);
+  border-color: var(--m-accent);
+  color: var(--c-white);
+  box-shadow: 0 0 0 4px var(--m-accent-ring);
+}
+
+/* ============ In-conversation message search panel ============ */
+.message-search-panel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px clamp(10px, 1.5vw, 16px);
+  background: var(--m-surface);
+  border-bottom: 1px solid var(--m-border);
+  box-shadow: var(--m-shadow-xs);
+  animation: msPanelIn .22s var(--m-ease);
+  flex-wrap: nowrap;
+}
+@keyframes msPanelIn {
+  from { transform: translateY(-6px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+.message-search-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 9px 14px;
+  min-height: 38px;
+  border-radius: 999px;
+  border: 1px solid var(--m-border-strong);
+  background: var(--m-surface-2);
+  color: var(--m-text);
+  font-size: max(13px, 0.9rem); /* ≥16px on mobile prevents iOS zoom — see media query below */
+  outline: none;
+  transition: all .18s var(--m-ease);
+}
+.message-search-input:focus {
+  border-color: var(--m-accent);
+  background: var(--m-surface);
+  box-shadow: 0 0 0 4px var(--m-accent-ring);
+}
+
+.message-search-count {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--m-text-muted);
+  white-space: nowrap;
+  padding: 0 4px;
+  flex-shrink: 0;
+}
+
+.message-search-nav,
+.message-search-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  border-radius: 8px;
+  border: 1px solid var(--m-border);
+  background: var(--m-surface);
+  color: var(--m-text-muted);
+  cursor: pointer;
+  font-size: 14px;
+  transition: all .15s var(--m-ease);
+  flex-shrink: 0;
+}
+.message-search-nav:hover,
+.message-search-close:hover {
+  background: var(--m-accent-soft);
+  color: var(--m-accent);
+  border-color: var(--m-accent);
+}
+.message-search-nav:disabled { opacity: .4; cursor: not-allowed; }
+
+.msg-search-highlight {
+  background: var(--c-amber-200);
+  color: var(--c-amber-900);
+  padding: 1px 3px;
+  border-radius: 4px;
+  font-weight: 600;
+  box-shadow: 0 0 0 1px rgba(180, 83, 9, .2);
+}
+.msg-search-highlight.is-active {
+  background: var(--c-amber-500);
+  color: var(--c-white);
+  box-shadow: 0 0 0 2px rgba(245, 158, 11, .35);
+}
+
+.conversation-item.search-active {
+  outline: 2px solid var(--m-accent-ring);
+  outline-offset: -2px;
+}
+
+/* ============ Admin typing indicator ============ */
+.admin-typing-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 8px;
+  font-size: 12px;
+  font-style: italic;
+  color: var(--m-accent);
+  font-weight: 500;
+}
+.admin-typing-indicator::before {
+  content: "";
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--m-accent);
+  animation: typingPulse 1s infinite ease-in-out;
+}
+@keyframes typingPulse {
+  0%, 100% { opacity: .3; transform: scale(.8); }
+  50%      { opacity: 1;  transform: scale(1.1); }
+}
+
+/* ============ Draft preview inside modal ============ */
+.draft-preview {
+  margin-top: 10px;
+  padding: 10px 14px;
+  border-left: 3px solid var(--m-accent);
+  background: var(--m-accent-soft);
+  border-radius: 0 var(--m-radius-sm) var(--m-radius-sm) 0;
+  font-style: italic;
+  font-size: 13px;
+  color: var(--m-text-muted);
+  line-height: 1.5;
+  word-break: break-word;
+}

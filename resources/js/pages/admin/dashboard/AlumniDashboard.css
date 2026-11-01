@@ -21,16 +21,16 @@
 .dashboard-hero {
    --ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
-  --dh-accent: #4f46e5;
-  --dh-accent-2: #7c3aed;
-  --dh-accent-3: #0ea5e9;
+  --dh-accent: var(--c-indigo-600);
+  --dh-accent-2: var(--c-violet-600);
+  --dh-accent-3: var(--c-sky-500);
   --dh-accent-soft: rgba(79, 70, 229, 0.08);
   --dh-accent-ring: rgba(79, 70, 229, 0.22);
-  --dh-surface: #ffffff;
-  --dh-border: #e5e7eb;
-  --dh-border-strong: #d1d5db;
-  --dh-text: #0f172a;
-  --dh-text-muted: #64748b;
+  --dh-surface: var(--c-white);
+  --dh-border: var(--c-gray-200);
+  --dh-border-strong: var(--c-gray-300);
+  --dh-text: var(--c-slate-900);
+  --dh-text-muted: var(--c-slate-500);
   --dh-shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.04);
   --dh-shadow-sm: 0 2px 10px rgba(15, 23, 42, 0.06);
   --dh-shadow-md: 0 10px 28px rgba(15, 23, 42, 0.08);
@@ -76,9 +76,9 @@
   animation: dhOrbit 14s ease-in-out infinite;
   
 }
-.dashboard-hero .orb-1 { width: 240px; height: 240px; background: #6366f1; top: -60px; left: -40px; }
-.dashboard-hero .orb-2 { width: 300px; height: 300px; background: #06b6d4; bottom: -120px; right: -60px; animation-duration: 18s; }
-.dashboard-hero .orb-3 { width: 180px; height: 180px; background: #a855f7; top: 40%; left: 50%; animation-duration: 22s; opacity: 0.32; }
+.dashboard-hero .orb-1 { width: 240px; height: 240px; background: var(--c-indigo-500); top: -60px; left: -40px; }
+.dashboard-hero .orb-2 { width: 300px; height: 300px; background: var(--c-cyan-500); bottom: -120px; right: -60px; animation-duration: 18s; }
+.dashboard-hero .orb-3 { width: 180px; height: 180px; background: var(--c-purple-500); top: 40%; left: 50%; animation-duration: 22s; opacity: 0.32; }
 
 .dashboard-hero .grid-overlay {
   position: absolute;
@@ -216,7 +216,7 @@
   font-weight: 600 !important;
   font-size: 14px !important;
   border: none !important;
-  color: #fff !important;
+  color: var(--c-white) !important;
   background: linear-gradient(135deg, var(--dh-accent), var(--dh-accent-2)) !important;
   box-shadow: 0 10px 24px var(--dh-accent-ring) !important;
   display: inline-flex !important;
@@ -237,11 +237,11 @@
 .dashboard-hero__print-btn.ant-btn:hover,
 .dashboard-hero__print-btn.ant-btn:focus {
   transform: translateY(-2px);
-  color: #fff !important;
+  color: var(--c-white) !important;
   box-shadow: 0 14px 30px var(--dh-accent-ring) !important;
 }
 .dashboard-hero__print-btn.ant-btn .anticon {
-  color: #fff !important;
+  color: var(--c-white) !important;
 }
 
 /* Hero responsive */
@@ -267,35 +267,35 @@
   background:
     radial-gradient(1200px 500px at -10% -20%, rgba(99, 102, 241, 0.22), transparent 60%),
     radial-gradient(900px 400px at 110% 0%, rgba(14, 165, 233, 0.18), transparent 60%),
-    #14161d !important;
-  border-color: #262a33 !important;
+    var(--c-14161d) !important;
+  border-color: var(--c-262a33) !important;
 }
 [data-theme="black"] .dashboard-hero .grid-overlay {
   background-image:
     linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
 }
-[data-theme="black"] .dashboard-hero__title { color: #e7e9ee !important; }
+[data-theme="black"] .dashboard-hero__title { color: var(--c-e7e9ee) !important; }
 [data-theme="black"] .dashboard-hero__lead,
-[data-theme="black"] .dashboard-hero__eyebrow { color: #9ba3af !important; }
-[data-theme="black"] .dashboard-hero__logo { background: #1b1e27; }
+[data-theme="black"] .dashboard-hero__eyebrow { color: var(--c-9ba3af) !important; }
+[data-theme="black"] .dashboard-hero__logo { background: var(--c-1b1e27); }
 [data-theme="black"] .dashboard-hero__select .ant-select-selector {
-  background: #1b1e27 !important;
+  background: var(--c-1b1e27) !important;
   border-color: #2f3440 !important;
-  color: #e7e9ee !important;
+  color: var(--c-e7e9ee) !important;
 }
 [data-theme="black"] .dashboard-hero__select .ant-select-selection-item {
-  color: #e7e9ee !important;
+  color: var(--c-e7e9ee) !important;
 }
 [data-theme="black"] .dashboard-hero__select .ant-select-arrow {
-  color: #9ba3af;
+  color: var(--c-9ba3af);
 }
 
 /* Print button keeps the same blue/violet gradient + shine in black theme — never goes flat */
 [data-theme="black"] .dashboard-hero__print-btn.ant-btn {
   background: linear-gradient(135deg, var(--dh-accent), var(--dh-accent-2)) !important;
   box-shadow: 0 10px 24px var(--dh-accent-ring) !important;
-  color: #fff !important;
+  color: var(--c-white) !important;
 }
 [data-theme="black"] .dashboard-hero__print-btn.ant-btn:hover,
 [data-theme="black"] .dashboard-hero__print-btn.ant-btn:focus {
@@ -318,7 +318,7 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 .metric-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1); }
-.metric-card .ant-statistic-title { font-size: 14px; color: #666; margin-bottom: 8px; }
+.metric-card .ant-statistic-title { font-size: 14px; color: var(--c-gray-666); margin-bottom: 8px; }
 .metric-card .ant-statistic-content { font-size: 28px; font-weight: 600; }
 
 /* Dashboard Cards */
@@ -328,20 +328,20 @@
   transition: all 0.3s ease;
 }
 .dashboard-card:hover { box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1); }
-.dashboard-card .ant-card-head { border-bottom: 1px solid #f0f0f0; padding: 16px 24px; }
+.dashboard-card .ant-card-head { border-bottom: 1px solid var(--c-antd-gray-3); padding: 16px 24px; }
 .dashboard-card .ant-card-body { padding: 24px; }
 
 /* Chart Containers */
 .chart-container { width: 100%; }
-.chart-container .ant-typography { margin-bottom: 16px; color: #1a1a1a; font-weight: 600; }
+.chart-container .ant-typography { margin-bottom: 16px; color: var(--c-ink-1a); font-weight: 600; }
 .chart-legend { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; margin-top: 16px; }
-.legend-item { display: flex; align-items: center; gap: 8px; padding: 4px 8px; background: #fafafa; border-radius: 6px; }
+.legend-item { display: flex; align-items: center; gap: 8px; padding: 4px 8px; background: var(--c-zinc-50); border-radius: 6px; }
 .legend-color { width: 12px; height: 12px; border-radius: 2px; }
 
 /* List Styles */
-.dashboard-card .ant-list-item { padding: 16px 0; border-bottom: 1px solid #f0f0f0; }
+.dashboard-card .ant-list-item { padding: 16px 0; border-bottom: 1px solid var(--c-antd-gray-3); }
 .dashboard-card .ant-list-item:last-child { border-bottom: none; }
-.dashboard-card .ant-avatar { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+.dashboard-card .ant-avatar { background: linear-gradient(135deg, var(--c-brand) 0%, var(--c-brand-2) 100%); }
 
 /* Progress Bars */
 .dashboard-card .ant-progress-line { line-height: 1; }
@@ -368,18 +368,18 @@
 
 /* Scrollbar for charts */
 .chart-container::-webkit-scrollbar { height: 6px; }
-.chart-container::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 3px; }
-.chart-container::-webkit-scrollbar-thumb { background: #c1c1c1; border-radius: 3px; }
-.chart-container::-webkit-scrollbar-thumb:hover { background: #a8a8a8; }
+.chart-container::-webkit-scrollbar-track { background: var(--c-f1f1f1); border-radius: 3px; }
+.chart-container::-webkit-scrollbar-thumb { background: var(--c-c1c1c1); border-radius: 3px; }
+.chart-container::-webkit-scrollbar-thumb:hover { background: var(--c-a8a8a8); }
 
 /* Table */
 .dashboard-card .ant-table { background: transparent; }
-.dashboard-card .ant-table-thead > tr > th { background: #fafafa; border-bottom: 2px solid #f0f0f0; font-weight: 600; }
+.dashboard-card .ant-table-thead > tr > th { background: var(--c-zinc-50); border-bottom: 2px solid var(--c-antd-gray-3); font-weight: 600; }
 .dashboard-card .ant-table-tbody > tr > td { border-bottom: 1px solid #f8f8f8; }
-.dashboard-card .ant-table-tbody > tr:hover > td { background: #fafafa; }
+.dashboard-card .ant-table-tbody > tr:hover > td { background: var(--c-zinc-50); }
 
 /* Badges & Rate */
-.ant-badge-count { font-size: 10px; font-weight: 600; box-shadow: 0 0 0 1px #fff; }
+.ant-badge-count { font-size: 10px; font-weight: 600; box-shadow: 0 0 0 1px var(--c-white); }
 .ant-rate { font-size: 14px; }
 .ant-rate-star:not(:last-child) { margin-right: 4px; }
 
@@ -388,8 +388,38 @@
 
 
 
-[data-theme="black"] .legend-item { background: #2a2a2a !important; }
-[data-theme="black"] .legend-item .ant-typography { color: #fff !important; }
+/* Chart cards: the global .chart-container is hard-coded white (_global.scss),
+   so in dark theme the charts stayed white. Re-skin card + recharts parts.
+   #printable-area is excluded: the print preview is always light. */
+[data-theme="black"] .alumni-dashboard-container .chart-container {
+  background: var(--c-121620);
+  border: 1px solid var(--c-2a2a2a);
+  box-shadow: none;
+}
+[data-theme="black"] .alumni-dashboard-container .chart-container .ant-typography { color: var(--c-e7e9ee); }
+[data-theme="black"] .alumni-dashboard-container .recharts-cartesian-axis-tick-value,
+[data-theme="black"] .alumni-dashboard-container .recharts-legend-item-text,
+[data-theme="black"] .alumni-dashboard-container .recharts-label,
+[data-theme="black"] .alumni-dashboard-container .recharts-text { fill: var(--c-9ba3af) !important; }
+[data-theme="black"] .alumni-dashboard-container .recharts-legend-item-text { color: var(--c-e7e9ee) !important; }
+[data-theme="black"] .alumni-dashboard-container .recharts-cartesian-grid line,
+[data-theme="black"] .alumni-dashboard-container .recharts-cartesian-axis-line,
+[data-theme="black"] .alumni-dashboard-container .recharts-cartesian-axis-tick-line { stroke: var(--c-2a2a2a); }
+[data-theme="black"] .alumni-dashboard-container .recharts-tooltip-wrapper .recharts-default-tooltip {
+  background: var(--c-1b1e27) !important;
+  border-color: var(--c-2a2a2a) !important;
+}
+[data-theme="black"] .alumni-dashboard-container .recharts-tooltip-wrapper .recharts-tooltip-label,
+[data-theme="black"] .alumni-dashboard-container .recharts-tooltip-wrapper .recharts-tooltip-item { color: var(--c-e7e9ee) !important; }
+[data-theme="black"] .alumni-dashboard-container .chart-container .ant-table,
+[data-theme="black"] .alumni-dashboard-container .chart-container .ant-table-thead > tr > th,
+[data-theme="black"] .alumni-dashboard-container .chart-container .ant-table-tbody > tr > td {
+  background: transparent;
+  color: var(--c-e7e9ee);
+  border-color: var(--c-2a2a2a);
+}
+[data-theme="black"] .legend-item { background: var(--c-2a2a2a) !important; }
+[data-theme="black"] .legend-item .ant-typography { color: var(--c-white) !important; }
 
 /* ==================================================
    PRINT PREVIEW & PRINTABLE AREA — ALWAYS WHITE / DEFAULT
@@ -404,13 +434,13 @@
 .print-preview-modal .ant-modal-header,
 .print-preview-modal .ant-modal-body,
 .print-preview-modal .ant-modal-footer {
-  background: #ffffff !important;
-  color: #0f172a !important;
-  border-color: #e5e7eb !important;
+  background: var(--c-white) !important;
+  color: var(--c-slate-900) !important;
+  border-color: var(--c-gray-200) !important;
 }
 .print-preview-modal .ant-modal-title,
 .print-preview-modal .ant-modal-close-x {
-  color: #0f172a !important;
+  color: var(--c-slate-900) !important;
 }
 
 /* Override app dark theme inside preview + printable area (belt-and-suspenders:
@@ -422,12 +452,12 @@
 [data-theme="black"] .print-preview-modal .ant-modal-footer,
 [data-theme="black"] #printable-area,
 [data-theme="black"] #printable-area * {
-  background-color: #ffffff !important;
-  color: #0f172a !important;
-  border-color: #d9d9d9 !important;
+  background-color: var(--c-white) !important;
+  color: var(--c-slate-900) !important;
+  border-color: var(--c-antd-gray-5) !important;
 }
 [data-theme="black"] #printable-area .ant-table-thead > tr > th {
-  background: #f5f7fa !important;
+  background: var(--c-f5f7fa) !important;
 }
 
 /* ==================================================
@@ -440,73 +470,73 @@
    ================================================== */
 .print-preview-modal .ant-modal-header .ant-modal-title,
 .print-preview-modal .ant-modal-title {
-  color: #0f172a !important;
-  -webkit-text-fill-color: #0f172a !important;
+  color: var(--c-slate-900) !important;
+  -webkit-text-fill-color: var(--c-slate-900) !important;
   opacity: 1 !important;
   font-weight: 600 !important;
 }
 .print-preview-modal .ant-modal-close,
 .print-preview-modal .ant-modal-close-x {
-  color: #0f172a !important;
-  -webkit-text-fill-color: #0f172a !important;
+  color: var(--c-slate-900) !important;
+  -webkit-text-fill-color: var(--c-slate-900) !important;
   opacity: 1 !important;
 }
 .print-preview-modal .ant-modal-close .anticon,
 .print-preview-modal .ant-modal-close-x .anticon,
 .print-preview-modal .ant-modal-close svg {
-  color: #0f172a !important;
-  fill: #0f172a !important;
+  color: var(--c-slate-900) !important;
+  fill: var(--c-slate-900) !important;
 }
 .print-preview-modal .ant-modal-close:hover,
 .print-preview-modal .ant-modal-close:hover .ant-modal-close-x {
-  color: #000000 !important;
+  color: var(--c-black) !important;
   background: rgba(15, 23, 42, 0.06) !important;
 }
 [data-theme="black"] .print-preview-modal .ant-modal-header .ant-modal-title,
 [data-theme="black"] .print-preview-modal .ant-modal-title,
 [data-theme="black"] .print-preview-modal .ant-modal-close,
 [data-theme="black"] .print-preview-modal .ant-modal-close-x {
-  color: #0f172a !important;
-  -webkit-text-fill-color: #0f172a !important;
+  color: var(--c-slate-900) !important;
+  -webkit-text-fill-color: var(--c-slate-900) !important;
   opacity: 1 !important;
 }
 [data-theme="black"] .print-preview-modal .ant-modal-close .anticon,
 [data-theme="black"] .print-preview-modal .ant-modal-close-x .anticon,
 [data-theme="black"] .print-preview-modal .ant-modal-close svg {
-  color: #0f172a !important;
-  fill: #0f172a !important;
+  color: var(--c-slate-900) !important;
+  fill: var(--c-slate-900) !important;
 }
 
 /* Scrollbar inside the print preview modal — always light, never the
    app's dark-theme scrollbar, so it doesn't look like a black bar
    cutting through the white page. */
 .print-preview-modal .ant-modal-body {
-  scrollbar-color: #c1c1c1 #f1f1f1;
+  scrollbar-color: var(--c-c1c1c1) var(--c-f1f1f1);
 }
 .print-preview-modal .ant-modal-body::-webkit-scrollbar {
   width: 10px;
   height: 10px;
 }
 .print-preview-modal .ant-modal-body::-webkit-scrollbar-track {
-  background: #f1f1f1 !important;
+  background: var(--c-f1f1f1) !important;
   border-radius: 6px;
 }
 .print-preview-modal .ant-modal-body::-webkit-scrollbar-thumb {
-  background: #c1c1c1 !important;
+  background: var(--c-c1c1c1) !important;
   border-radius: 6px;
 }
 .print-preview-modal .ant-modal-body::-webkit-scrollbar-thumb:hover {
-  background: #a8a8a8 !important;
+  background: var(--c-a8a8a8) !important;
 }
 
 /* Printable surface — light theme always */
 #printable-area,
 #printable-area * {
-  color: #0f172a !important;
-  border-color: #d9d9d9;
+  color: var(--c-slate-900) !important;
+  border-color: var(--c-antd-gray-5);
 }
 #printable-area {
-  background: #ffffff !important;
+  background: var(--c-white) !important;
 }
 
 /* ==================================================
@@ -557,31 +587,31 @@
 #printable-area .ant-card,
 #printable-area .ant-card-body,
 #printable-area .ant-card-head {
-  background: #ffffff !important;
-  color: #0f172a !important;
-  border-color: #d9d9d9 !important;
+  background: var(--c-white) !important;
+  color: var(--c-slate-900) !important;
+  border-color: var(--c-antd-gray-5) !important;
 }
 #printable-area .ant-typography,
 #printable-area .ant-typography-secondary {
-  color: #0f172a !important;
+  color: var(--c-slate-900) !important;
 }
 #printable-area .print-muted {
-  color: #64748b !important;
+  color: var(--c-slate-500) !important;
 }
 #printable-area .ant-table,
 #printable-area .ant-table-container,
 #printable-area .ant-table-content,
 #printable-area .ant-table-tbody > tr > td,
 #printable-area .ant-table-thead > tr > th {
-  background: #ffffff !important;
-  color: #0f172a !important;
+  background: var(--c-white) !important;
+  color: var(--c-slate-900) !important;
 }
 #printable-area .ant-table-thead > tr > th {
-  background: #f5f7fa !important;
-  border-bottom: 1px solid #d9d9d9 !important;
+  background: var(--c-f5f7fa) !important;
+  border-bottom: 1px solid var(--c-antd-gray-5) !important;
 }
 #printable-area .ant-table-tbody > tr:hover > td {
-  background: #fafafa !important;
+  background: var(--c-zinc-50) !important;
 }
 
 /* ==================================================
@@ -594,8 +624,8 @@
    ================================================== */
 .print-block {
   margin-bottom: 8mm;
-  border: 1px solid #d9d9d9;
-  background: #ffffff;
+  border: 1px solid var(--c-antd-gray-5);
+  background: var(--c-white);
   break-inside: avoid;
   page-break-inside: avoid;
 }
@@ -641,18 +671,18 @@
 #printable-area .recharts-text,
 #printable-area .recharts-legend-item-text,
 #printable-area .recharts-cartesian-axis-tick-value {
-  fill: #0f172a !important;
-  color: #0f172a !important;
+  fill: var(--c-slate-900) !important;
+  color: var(--c-slate-900) !important;
 }
 
 /* Enhanced print report blocks */
 .print-section-title {
   font-size: 16px !important;
   font-weight: 700 !important;
-  color: #0f172a !important;
+  color: var(--c-slate-900) !important;
   margin: 0 0 10px 0 !important;
   padding-bottom: 6px;
-  border-bottom: 2px solid #1890ff;
+  border-bottom: 2px solid var(--c-antd-blue);
 }
 .print-insight-grid {
   display: grid;
@@ -661,14 +691,14 @@
   margin-top: 8px;
 }
 .print-insight-item {
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--c-gray-200);
   background: #fafbfc !important;
   border-radius: 8px;
   padding: 10px 12px;
 }
 .print-insight-label {
   font-size: 11px;
-  color: #64748b !important;
+  color: var(--c-slate-500) !important;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   font-weight: 600;
@@ -676,7 +706,7 @@
 .print-insight-value {
   font-size: 14px;
   font-weight: 700;
-  color: #0f172a !important;
+  color: var(--c-slate-900) !important;
   margin-top: 2px;
 }
 .print-signature {
@@ -690,7 +720,7 @@
   text-align: center;
 }
 .print-signature .sig-line {
-  border-top: 1px solid #0f172a;
+  border-top: 1px solid var(--c-slate-900);
   margin-top: 40px;
   padding-top: 4px;
   font-size: 11px;
@@ -703,7 +733,7 @@
      on screen and on paper. Never duplicate an appearance rule
      inside @media print again; that duplication is exactly what
      caused preview/print drift before.
-   - @media print, inside the `<style jsx global>` block in
+   - @media print, inside the `\3c style jsx global>` block in
      DashboardPage.js, is reserved strictly for page MECHANICS:
      hiding everything except #printable-area, switching it to
      position:absolute so it fills the physical page, hiding the

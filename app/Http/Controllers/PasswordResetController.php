@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Alumni;
 use App\Models\User;
-use App\Models\PasswordReset;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
@@ -163,7 +162,8 @@ class PasswordResetController extends Controller
         $request->validate([
             'email' => 'required|email',
             'token' => 'required|string',
-            'password' => 'required|string|min:8|confirmed',
+            // Same rules the reset form shows (8+ chars, upper, lower, number)
+            'password' => ['required', 'string', 'min:8', 'confirmed', 'regex:/[a-z]/', 'regex:/[A-Z]/', 'regex:/[0-9]/'],
         ]);
 
         $email = $request->email;
@@ -205,6 +205,13 @@ class PasswordResetController extends Controller
         if ($user) {
             $user->password = Hash::make($request->password);
             $user->save();
+
+            // A reset must end any session an attacker (or old device) holds.
+            try {
+                $user->tokens()->delete();
+            } catch (\Throwable $e) {
+                Log::warning('Could not revoke tokens after password reset: ' . $e->getMessage());
+            }
 
             Log::info('Password reset successful for user: ' . $email);
         } else {

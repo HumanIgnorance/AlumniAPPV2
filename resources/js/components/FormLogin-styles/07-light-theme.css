@@ -1,0 +1,170 @@
+/* Light theme */
+[data-theme=""] .mobile-landscape-logo img,
+html:not([data-theme]) .mobile-landscape-logo img {
+    opacity: 0.08;
+}
+
+[data-theme="black"] .mobile-landscape-logo img {
+    opacity: 0.18;
+    filter: none;
+}
+
+@media only screen and (orientation: landscape) and (max-height: 500px) and (hover: none) and (pointer: coarse) {
+    /* ---------- Inputs: transparent background, keep border/text/icons ---------- */
+    .login-page .ant-input,
+    .login-page .ant-input-affix-wrapper,
+    .login-page .ant-input-password,
+    .login-page .ant-input-affix-wrapper .ant-input,
+    .login-page .ant-input-password .ant-input {
+        background: transparent !important;
+        background-color: transparent !important;
+        -webkit-text-fill-color: var(--text) !important;
+        /* NOTE: no 9999s transition here — that hack must stay scoped to
+           :-webkit-autofill only (see rule below), otherwise it also
+           delays normal background-color changes such as theme toggling,
+           which makes the input appear "stuck" on a solid color after
+           switching theme in landscape until the component remounts. */
+    }
+
+    /* ---------- Autofill only: separately defeat Chrome's yellow autofill paint ---------- */
+    .login-page input:-webkit-autofill,
+    .login-page input:-webkit-autofill:hover,
+    .login-page input:-webkit-autofill:focus,
+    .login-page input:-webkit-autofill:active {
+        background: transparent !important;
+        background-color: transparent !important;
+        -webkit-box-shadow: 0 0 0 1000px transparent inset !important;
+        box-shadow: 0 0 0 1000px transparent inset !important;
+        -webkit-text-fill-color: var(--text) !important;
+        transition: background-color 9999s ease-in-out 0s !important;
+    }
+
+    /* Focus state — keep ring/border, no fill */
+    .login-page .ant-input:focus,
+    .login-page .ant-input-affix-wrapper-focused,
+    .login-page .ant-input-password.ant-input-affix-wrapper-focused {
+        background: transparent !important;
+        background-color: transparent !important;
+    }
+
+    /* Placeholders readable over watermark */
+    .login-page .ant-input::placeholder,
+    .login-page .ant-input-affix-wrapper input::placeholder {
+        color: var(--text-muted) !important;
+        opacity: 1 !important;
+    }
+
+    /* ---------- Alerts: transparent bg, KEEP colored text/icons/border ---------- */
+    .login-page .ant-alert,
+    .login-page .ant-alert-error,
+    .login-page .ant-alert-warning,
+    .login-page .ant-alert-success,
+    .login-page .ant-alert-info {
+        background: transparent !important;
+        background-color: transparent !important;
+        box-shadow: none !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        /* border + message + icon colors are left untouched so
+       red error / amber warning / green success / blue info
+       text remains fully visible and intact. */
+    }
+
+    /* ---------- Reset Password / forgot-password sections ---------- */
+    .login-page .reset-password,
+    .login-page .reset-password-section,
+    .login-page .forgot-password,
+    .login-page .forgot-password-section,
+    .login-page .ant-modal-content,
+    .login-page .ant-modal-header,
+    .login-page .ant-modal-body,
+    .login-page .ant-modal-footer {
+        background: transparent !important;
+        background-color: transparent !important;
+        box-shadow: none !important;
+    }
+
+    /* ---------- Password strength / progress: no color fill ---------- */
+    .login-page .ant-progress-inner,
+    .login-page .ant-progress-bg,
+    .login-page .password-strength,
+    .login-page .password-strength-bar,
+    .login-page .password-strength-meter {
+        background: transparent !important;
+        background-color: transparent !important;
+        border: 1px solid var(--border) !important;
+    }
+
+    /* ---------- Form card / wrapper: let the watermark breathe ---------- */
+    .login-page .login-card,
+    .login-page .login-form,
+    .login-page .form-wrapper,
+    .login-page .login-right,
+    .login-page .login-panel {
+        background: transparent !important;
+        background-color: transparent !important;
+        box-shadow: none !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+    }
+
+    /* ---------- Dark theme parity ---------- */
+    [data-theme="black"] .login-page .ant-input,
+    [data-theme="black"] .login-page .ant-input-affix-wrapper,
+    [data-theme="black"] .login-page .ant-input-password,
+    [data-theme="black"] .login-page .ant-alert,
+    [data-theme="black"] .login-page .ant-alert-error,
+    [data-theme="black"] .login-page .ant-alert-warning,
+    [data-theme="black"] .login-page .ant-alert-success,
+    [data-theme="black"] .login-page .ant-alert-info,
+    [data-theme="black"] .login-page .login-card,
+    [data-theme="black"] .login-page .login-form,
+    [data-theme="black"] .login-page .form-wrapper {
+        background: transparent !important;
+        background-color: transparent !important;
+        box-shadow: none !important;
+    }
+}
+
+
+@media (max-width: 768px) {
+    .login-page,
+    .login-shell {
+        height: 100vh; /* fallback for browsers without dvh support */
+        height: 100dvh;
+        max-height: 100dvh;
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+/* ============ Back to Home (text-only link, beside NEW HERE) ============ */
+/* Scoped, additive only — does not modify any existing rule/class above. */
+.login-divider-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.login-divider-row .login-divider {
+    flex: 1;
+    min-width: 0;
+}
+
+.login-back-home-inline {
+    flex-shrink: 0;
+    white-space: nowrap;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* Narrow screens: keep it on one line, just tighten the gap a bit */
+@media (max-width: 380px) {
+    .login-divider-row {
+        gap: 8px;
+    }
+
+    .login-back-home-inline {
+        font-size: 11px;
+    }
+}

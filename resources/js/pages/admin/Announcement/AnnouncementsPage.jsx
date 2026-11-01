@@ -17,7 +17,6 @@ import {
     Empty,
     Popconfirm,
     Image,
-    Badge,
     Tooltip,
     Alert,
     Space,
@@ -39,12 +38,13 @@ import {
 } from "@ant-design/icons";
 import dayjs from "dayjs";
 import { useQueryClient } from "react-query";
-import secureLocalStorage from "react-secure-storage";
-import { Layout, CardSkeletonGrid } from "~/components";
+import { Layout } from "~/components";
 import axiosConfig from "~/utils/axiosConfig";
 import useAnnouncements from "~/hooks/useAnnouncements";
 import logo from "~/assets/images/OCC_LOGO.png";
 import "./AnnouncementsPage.css";
+import { ROLES } from "~/config/roles";
+import { getUserRole } from "~/utils/session";
 
 const { Title, Text, Paragraph } = Typography;
 const { TextArea } = Input;
@@ -81,8 +81,8 @@ const isScheduled = (a) =>
     dayjs(a.publish_date).startOf("day").isAfter(dayjs().startOf("day"));
 
 export default function AnnouncementPage() {
-    const role = secureLocalStorage.getItem("userRole");
-    const isAdmin = role === "admin";
+    const role = getUserRole();
+    const isAdmin = role === ROLES.ADMIN;
 
     const { data, isLoading, isFetching } = useAnnouncements();
     const queryClient = useQueryClient();
@@ -537,13 +537,7 @@ export default function AnnouncementPage() {
                     )}
                 </div>
 
-                {isLoading ? (
-                    <CardSkeletonGrid
-                        variant="gallery"
-                        count={6}
-                        containerClassName="ann-grid"
-                    />
-                ) : filtered.length === 0 ? (
+                {isLoading ? null : filtered.length === 0 ? (
                     <Empty
                         description="No announcements found"
                         className="ann-empty"

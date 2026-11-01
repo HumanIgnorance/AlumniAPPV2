@@ -76,8 +76,13 @@ class RouteServiceProvider extends ServiceProvider
         // AuthController, which threw a bare \Exception on lockout —
         // that produced an uncaught 500, not a proper 429.
         RateLimiter::for('login', function (Request $request) {
+            // Every attempt counts (even successful ones), so a per-hour cap of
+            // 5 locked out people who simply logged in and out a few times.
             $key = Str::lower((string) $request->input('email')) . '|' . $request->ip();
-            return Limit::perHour(5)->by($key);
+            return [
+                Limit::perMinute(5)->by('login-min|' . $key),
+                Limit::perHour(30)->by('login-hr|' . $key),
+            ];
         });
 
         // Password reset: unauthenticated by design (find-account,
@@ -86,7 +91,14 @@ class RouteServiceProvider extends ServiceProvider
         // probing (find-account reveals whether an email exists) and
         // reset-email spam against a victim's inbox.
         RateLimiter::for('password-reset', function (Request $request) {
-            return Limit::perHour(5)->by($request->ip());
+            // The whole flow (find, send, verify, reset) shares this limiter.
+            // Keyed per email+IP so one campus NAT address is not shared by
+            // everyone, with a looser per-IP ceiling against enumeration.
+            $email = Str::lower((string) $request->input('email'));
+            return [
+                Limit::perHour(10)->by('pw-email|' . $email . '|' . $request->ip()),
+                Limit::perHour(60)->by('pw-ip|' . $request->ip()),
+            ];
         });
 
         // Public self-registration: unauthenticated, writes a new DB

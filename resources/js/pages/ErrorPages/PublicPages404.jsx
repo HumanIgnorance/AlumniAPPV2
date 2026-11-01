@@ -14,8 +14,10 @@ import { useAppTheme } from "~/hooks/useAppTheme";
 // defined for the public site so this page looks like part of the same
 // site instead of a bolt-on antd <Result/> screen — same import pattern
 // as PublicEventsPage.js / PublicJobPostsPage.js.
-import "../auth/PublicHomePage.css";
+import "../auth/PublicHomePage-styles";
 import "./PublicPages404.css";
+import { COLORS } from "~/config/theme";
+import { buildPageTitle } from "~/config/site";
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -45,7 +47,7 @@ const PublicPages404 = () => {
     const [zoomModalOpen, setZoomModalOpen] = useState(false);
 
     useEffect(() => {
-        document.title = "Page Not Found | ATMS - Opol Community College";
+        document.title = buildPageTitle("Page Not Found");
         try {
             setAttemptedPath(window.location.pathname + window.location.search);
         } catch {
@@ -195,10 +197,10 @@ const PublicPages404 = () => {
                 >
                     <img src={logo} alt="OCC Alumni Logo" />
                     <span className="pp404-brand-title">
-                        <span style={{ color: "#003366", fontWeight: 900 }}>O</span>
-                        <span style={{ color: "#FFD700", fontWeight: 900 }}>C</span>
-                        <span style={{ color: "#CC0000", fontWeight: 900 }}>C</span>{" "}
-                        <span style={{ color: "#003366", fontWeight: 900 }}>Alumni</span>
+                        <span style={{ color: COLORS.c003366, fontWeight: 900 }}>O</span>
+                        <span style={{ color: COLORS.ffd700, fontWeight: 900 }}>C</span>
+                        <span style={{ color: COLORS.cc0000, fontWeight: 900 }}>C</span>{" "}
+                        <span style={{ color: COLORS.c003366, fontWeight: 900 }}>Alumni</span>
                     </span>
                 </div>
 
@@ -243,11 +245,11 @@ const PublicPages404 = () => {
                             display: "inline-flex",
                             alignItems: "center",
                             gap: 8,
-                            color: "#f59e0b",
+                            color: COLORS.amber500,
                             fontWeight: 700,
                         }}
                     >
-                        <ExclamationCircleOutlined style={{ color: "#f59e0b" }} />
+                        <ExclamationCircleOutlined style={{ color: COLORS.amber500 }} />
                         Browser Zoom Detected
                     </span>
                 }

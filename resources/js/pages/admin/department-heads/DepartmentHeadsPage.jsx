@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react"
+import { useState, useRef } from "react"
 import {
   Card,
   Table,
@@ -13,7 +13,6 @@ import {
   Popconfirm,
   Row,
   Col,
-  Statistic,
 } from "antd"
 import {
   PlusOutlined,
@@ -36,22 +35,22 @@ import {
 } from "~/hooks/useDepartmentHeads"
 import useCourses from "~/hooks/useCourses"
 import moment from "moment"
-import secureLocalStorage from "react-secure-storage"
 import "./DepartmentHeadsPage.css"
 import beedLogo from "~/assets/images/beed-logo.png";
 import bsbaLogo from "~/assets/images/bsba-logo.png";
 import bsitLogo from "~/assets/images/bsit-logo.jpg";
 import educLogo from "~/assets/images/educ-logo.png";
+import { COLORS } from "~/config/theme";
 
 
 const { Title, Text } = Typography
 const { Option } = Select
 
 const courseColors = {
-  1: "#f5222d",
-  2: "#1890ff",
-  3: "#1890ff",
-  4: "#faad14",
+  1: COLORS.f5222d,
+  2: COLORS.antdBlue,
+  3: COLORS.antdBlue,
+  4: COLORS.antdGold,
 }
 
 const courseLogos = {
@@ -76,18 +75,18 @@ const getLastActiveStatus = (lastActive, isOnline) => {
   if (isGenuinelyOnline) {
     return {
       status: "active",
-      color: "#52c41a",
+      color: COLORS.antdGreen,
       text: "Active now",
-      dotColor: "#52c41a",
+      dotColor: COLORS.antdGreen,
     }
   }
 
   if (!lastActive) {
     return {
       status: "offline",
-      color: "#ff4d4f",
+      color: COLORS.antdRed,
       text: "Never active",
-      dotColor: "#ff4d4f",
+      dotColor: COLORS.antdRed,
     }
   }
 
@@ -119,9 +118,9 @@ const getLastActiveStatus = (lastActive, isOnline) => {
 
   return {
     status: "offline",
-    color: "#ff4d4f",
+    color: COLORS.antdRed,
     text: timeText,
-    dotColor: "#ff4d4f",
+    dotColor: COLORS.antdRed,
   }
 }
 
@@ -509,7 +508,7 @@ const DepartmentHeadsPage = () => {
                 <Col xs={24} sm={12} md={12} lg={6} key={course.id}>
                   <div
                     className={`dh-dept-card ${isAssigned ? "is-assigned" : "is-unassigned"}`}
-                    style={{ "--dh-dept-accent": courseColors[course.id] || "#94a3b8" }}
+                    style={{ "--dh-dept-accent": courseColors[course.id] || COLORS.slate400 }}
                   >
                     <div className="dh-dept-card__top">
                       <span className="dh-dept-card__code">{course.course_code}</span>
@@ -574,7 +573,7 @@ const DepartmentHeadsPage = () => {
         <Card
           title={
             <Space>
-              <TeamOutlined style={{ color: "#4f46e5" }} />
+              <TeamOutlined style={{ color: COLORS.indigo600 }} />
               <span>Department Heads List</span>
             </Space>
           }

@@ -1,0 +1,409 @@
+/* ============ Responsive — Tablet ============ */
+@media (max-width: 992px) {
+  .gallery-page-container {
+    padding: 18px 18px 0;
+  }
+
+  .gal-hero {
+    padding: 52px 22px 40px;
+  }
+
+  .gal-hero__title {
+    font-size: 36px !important;
+  }
+}
+
+/* ============ Responsive — Phone ============ */
+@media (max-width: 768px) {
+  .gallery-page-container {
+    padding: 14px 14px 0;
+  }
+
+  .gal-hero {
+    padding: 44px 18px 32px;
+    margin: 4px 0 20px;
+    border-radius: var(--radius-lg);
+  }
+
+  .gal-hero__brand {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .gal-hero__brand-meta {
+    align-items: center;
+  }
+
+  .gal-hero__title {
+    font-size: 30px !important;
+  }
+
+  .gal-hero__lead {
+    font-size: 14.5px !important;
+  }
+
+  .gal-hero__actions .ant-btn {
+    width: 100%;
+  }
+
+  .gal-filters-card .ant-card-body {
+    padding: 16px !important;
+  }
+
+  .gal-search-input.ant-input-affix-wrapper,
+  .gal-filter-select .ant-select-selector,
+  .gal-filter-actions .ant-btn {
+    height: 42px !important;
+  }
+
+  .gal-filter-actions .ant-btn {
+    flex: 1;
+  }
+
+  .gal-image-wrapper,
+  .gal-carousel,
+  .gal-carousel-slide,
+  .gal-carousel-slide img,
+  .gal-image {
+    height: 200px;
+  }
+
+  .gal-image-count-badge {
+    padding: 3px 8px;
+    font-size: 11px;
+    top: 10px;
+    right: 10px;
+  }
+
+  .gal-selection-checkbox {
+    top: 10px;
+    left: 10px;
+  }
+
+  .gal-modal {
+    max-width: 96vw;
+    margin: 0 auto;
+  }
+
+  .gal-modal .ant-modal {
+    max-width: 96vw !important;
+    margin: 8px auto !important;
+  }
+
+  .gal-modal .ant-modal-content {
+    border-radius: var(--radius-md) !important;
+  }
+
+  .gal-modal .ant-modal-body {
+    padding: 18px !important;
+  }
+
+  .gal-modal .ant-modal-header {
+    padding: 16px 18px !important;
+  }
+
+  .gal-modal-actions {
+    text-align: center;
+  }
+
+  .gal-modal-actions .ant-space {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .gal-modal-actions .ant-btn {
+    flex: 1;
+    min-width: 120px;
+  }
+
+  .gal-selection-actions .ant-card-body {
+    padding: 12px 14px !important;
+  }
+
+  .gal-selection-actions .ant-space {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .gal-selection-actions .ant-btn {
+    flex: 1;
+    min-width: 110px;
+    border-radius: 10px !important;
+  }
+
+  .gal-bulk-delete-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .gal-pagination {
+    margin-top: 24px;
+    padding: 10px 0;
+  }
+
+  .gal-pagination .ant-pagination-options {
+    display: none;
+  }
+
+  .gal-pagination .ant-pagination-total-text {
+    width: 100%;
+    text-align: center;
+    margin: 0 0 8px 0;
+    font-size: 12px;
+  }
+}
+
+/* ============ Responsive — Small Phone ============ */
+@media (max-width: 576px) {
+  .gallery-page-container {
+    padding: 12px 12px 0;
+  }
+
+  .gal-hero {
+    padding: 36px 16px 28px;
+    border-radius: var(--radius-md);
+  }
+
+  .gal-hero__title {
+    font-size: 26px !important;
+  }
+
+  .gal-hero__logo {
+    width: 48px;
+    height: 48px;
+  }
+
+  .gal-image-wrapper,
+  .gal-carousel,
+  .gal-carousel-slide,
+  .gal-carousel-slide img,
+  .gal-image {
+    height: 200px;
+  }
+
+  .gal-card-title {
+    font-size: 13.5px !important;
+  }
+
+  .gal-card-date {
+    font-size: 11px;
+  }
+
+  .gal-bulk-delete-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .gal-modal-actions .ant-btn {
+    font-size: 13px;
+  }
+}
+
+/* ============ Responsive — Tiny Phone ============ */
+@media (max-width: 360px) {
+  .gallery-page-container {
+    padding: 10px 10px 0;
+  }
+
+  .gal-hero__title {
+    font-size: 22px !important;
+  }
+
+  .gal-image-wrapper,
+  .gal-carousel,
+  .gal-carousel-slide,
+  .gal-carousel-slide img,
+  .gal-image {
+    height: 180px;
+  }
+
+  .gal-bulk-delete-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============ Accessibility — Reduced Motion ============ */
+@media (prefers-reduced-motion: reduce) {
+
+  .gallery-page,
+  .gal-hero__content,
+  .gal-section,
+  .gal-image-card,
+  .gal-hero__logo,
+  .gal-blob,
+  .gal-btn-primary::after,
+  .gal-btn-primary-sm::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .gal-image-card:hover {
+    transform: none;
+  }
+
+  .gal-image-card:hover .gal-image,
+  .gal-image-card:hover .gal-carousel-slide img {
+    transform: none;
+  }
+}
+
+
+
+/* ==================================================================
+   ============ MODALS v2 — Dark Theme Polish + UX Refresh ==========
+   Appended override section. Strengthens dark-theme parity with the
+   Gallery page and modernizes spacing, hierarchy, validation, and
+   responsiveness for Upload / Edit / Delete modals.
+   ================================================================== */
+
+/* ---------- Shared modal surface (Light + Dark) ---------- */
+.gal-modal .ant-modal,
+.gal-delete-modal .ant-modal {
+  padding-bottom: 0;
+}
+
+.gal-modal .ant-modal-content,
+.gal-delete-modal .ant-modal-content {
+  background: var(--surface) !important;
+  background-image: none !important;
+  color: var(--text) !important;
+  border-radius: var(--radius-xl) !important;
+  border: 1px solid var(--border) !important;
+  box-shadow: var(--shadow-lg) !important;
+  overflow: hidden;
+}
+
+.gal-modal .ant-modal-header,
+.gal-delete-modal .ant-modal-header {
+  background: var(--surface) !important;
+  background-image: none !important;
+  border-bottom: 1px solid var(--border) !important;
+  padding: 20px 24px !important;
+}
+
+.gal-modal .ant-modal-body,
+.gal-delete-modal .ant-modal-body {
+  background: var(--surface) !important;
+  color: var(--text) !important;
+  padding: 24px !important;
+}
+
+.gal-modal .ant-modal-footer,
+.gal-delete-modal .ant-modal-footer {
+  background: var(--surface-2) !important;
+  border-top: 1px solid var(--border) !important;
+  padding: 16px 24px !important;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.gal-modal .ant-modal-title,
+.gal-delete-modal .ant-modal-title {
+  color: var(--text) !important;
+}
+
+/* ---------- Dark-theme parity (true dark surfaces) ---------- */
+[data-theme="black"] .gal-modal .ant-modal-content,
+[data-theme="black"] .gal-delete-modal .ant-modal-content {
+  background: var(--surface) !important;
+  border: 1px solid var(--border) !important;
+  box-shadow:
+    0 30px 80px -20px rgba(0, 0, 0, 0.7),
+    0 18px 50px -12px rgba(0, 0, 0, 0.55),
+    0 0 0 1px var(--border) !important;
+}
+
+[data-theme="black"] .gal-modal .ant-modal-header,
+[data-theme="black"] .gal-delete-modal .ant-modal-header {
+  background: linear-gradient(180deg, var(--surface) 0%, var(--surface-2) 100%) !important;
+  border-bottom: 1px solid var(--border) !important;
+}
+
+[data-theme="black"] .gal-modal .ant-modal-body,
+[data-theme="black"] .gal-delete-modal .ant-modal-body {
+  background: var(--surface) !important;
+  color: var(--text) !important;
+}
+
+[data-theme="black"] .gal-modal .ant-modal-footer,
+[data-theme="black"] .gal-delete-modal .ant-modal-footer {
+  background: var(--surface-2) !important;
+  border-top: 1px solid var(--border) !important;
+}
+
+[data-theme="black"] .ant-modal-mask {
+  background: rgba(0, 0, 0, 0.72) !important;
+  backdrop-filter: blur(8px);
+}
+
+/* Title icon chip — dark */
+[data-theme="black"] .gal-modal .ant-modal-title .anticon {
+  color: var(--c-indigo-300) !important;
+  background: var(--accent-soft) !important;
+  box-shadow: inset 0 0 0 1px var(--accent-ring) !important;
+}
+
+[data-theme="black"] .gal-delete-modal .ant-modal-title .anticon {
+  color: var(--c-red-300) !important;
+  background: rgba(239, 68, 68, 0.15) !important;
+  box-shadow: inset 0 0 0 1px rgba(239, 68, 68, 0.30) !important;
+}
+
+/* Close button — dark */
+[data-theme="black"] .gal-modal .ant-modal-close-x,
+[data-theme="black"] .gal-delete-modal .ant-modal-close-x {
+  color: var(--text-muted) !important;
+  background: var(--surface-2) !important;
+  border: 1px solid var(--border) !important;
+}
+
+[data-theme="black"] .gal-modal .ant-modal-close-x:hover {
+  color: var(--c-indigo-300) !important;
+  background: var(--accent-soft) !important;
+  border-color: var(--accent-ring) !important;
+}
+
+[data-theme="black"] .gal-delete-modal .ant-modal-close-x:hover {
+  color: var(--c-red-300) !important;
+  background: rgba(239, 68, 68, 0.15) !important;
+  border-color: rgba(239, 68, 68, 0.30) !important;
+}
+
+/* ---------- Form fields ---------- */
+.gal-modal .ant-form-item {
+  margin-bottom: 18px;
+}
+
+.gal-modal .ant-form-item-label {
+  padding-bottom: 6px !important;
+}
+
+.gal-modal .ant-form-item-label>label {
+  color: var(--text) !important;
+  font-weight: 600;
+  font-size: 13.5px;
+  letter-spacing: 0.01em;
+}
+
+.gal-modal .ant-form-item-extra {
+  color: var(--text-muted) !important;
+  font-size: 12.5px;
+  margin-top: 6px;
+}
+
+.gal-modal .ant-form-item-explain-error {
+  color: var(--c-red-500) !important;
+  font-size: 12.5px;
+  font-weight: 600;
+  margin-top: 6px;
+  padding: 6px 10px;
+  background: rgba(239, 68, 68, 0.08);
+  border-left: 3px solid var(--c-red-500);
+  border-radius: 6px;
+  animation: galFadeUp 0.2s var(--ease-smooth) both;
+}
+
+[data-theme="black"] .gal-modal .ant-form-item-explain-error {
+  background: rgba(239, 68, 68, 0.14);
+  color: var(--c-red-300) !important;
+}

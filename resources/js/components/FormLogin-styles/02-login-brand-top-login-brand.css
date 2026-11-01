@@ -1,0 +1,363 @@
+/* .login-brand__top, .login-brand__bottom { position: relative; z-index: 2; } */
+
+/*  Black theme */
+
+/* Black theme */
+
+/* When the Rive stage sits at the center of the features grid */
+.login-brand__features.has-rive-center {
+    row-gap: 90px;
+    column-gap: 260px;
+    padding: 8px 0;
+    justify-content: center;
+
+    position: relative;
+}
+
+.login-brand__features.has-rive-center .login-brand__rive--center,
+.login-brand__rive.login-brand__rive--center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    transform: translate(-50%, -50%);
+    width: 520px;
+    height: 520px;
+
+    z-index: 3;
+    /* behind feature cards */
+    pointer-events: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-brand__rive--center > *,
+.login-brand__rive--center canvas {
+    width: 100% !important;
+    height: 100% !important;
+    display: block;
+}
+
+.login-brand__feature {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 12px;
+    /* proper box, not pill */
+    background: color-mix(in srgb, var(--surface) 90%, transparent);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-xs);
+    transition:
+        transform 0.25s var(--ease-smooth),
+        box-shadow 0.25s var(--ease-smooth),
+        border-color 0.25s,
+        background 0.25s;
+    animation: loginFadeUp 0.6s var(--ease-spring) both;
+    width: 220px;
+    /* enough to fully read text */
+    max-width: 240px;
+    min-height: 0;
+}
+
+/* ==========================================
+   Feature Card Position Adjustments
+   ========================================== */
+
+.login-brand__feature.feat--tl {
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: end;
+    align-self: end;
+
+    /* Alumni Network */
+    margin-top: 1%;
+}
+
+.login-brand__feature.feat--tr {
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: start;
+    align-self: end;
+
+    /* Career Boost */
+    margin-top: 1%;
+}
+
+.login-brand__feature.feat--bl {
+    grid-column: 1;
+    grid-row: 2;
+    justify-self: end;
+    align-self: start;
+
+    /* Secure Access */
+    margin-top: -35px;
+}
+
+.login-brand__feature.feat--br {
+    grid-column: 2;
+    grid-row: 2;
+    justify-self: start;
+    align-self: start;
+
+    /* Live Analytics */
+    margin-top: -39px;
+}
+
+.login-brand__feature:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent-ring);
+    box-shadow: var(--shadow-md);
+    background: color-mix(in srgb, var(--surface) 98%, transparent);
+}
+
+[data-theme="black"] .login-brand__feature {
+    background: color-mix(in srgb, var(--surface) 78%, transparent);
+}
+
+[data-theme="black"] .login-brand__feature:hover {
+    background: color-mix(in srgb, var(--surface) 94%, transparent);
+}
+
+@media (max-width: 1280px) {
+    .login-brand__features.has-rive-center {
+        row-gap: clamp(50px, 7vw, 100px);
+        column-gap: clamp(100px, 14vw, 200px);
+    }
+
+    .login-brand__rive--center {
+        width: clamp(260px, 26vw, 380px);
+        height: clamp(260px, 26vw, 380px);
+    }
+
+    .login-brand__feature {
+        width: 200px;
+    }
+}
+
+.login-brand__feature .icon {
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: var(--c-white);
+    font-size: 14px;
+}
+
+.login-brand__feature .meta strong {
+    display: block;
+    color: var(--text);
+    font-size: 12.5px;
+    font-weight: 700;
+    margin-bottom: 1px;
+}
+
+.login-brand__feature .meta span {
+    color: var(--text-muted);
+    font-size: 11px;
+    line-height: 1.4;
+}
+
+/* ============ Form panel (right) ============ */
+
+/* Form labels / inputs */
+
+/* Black theme */
+
+/* Password eye icon */
+
+/* Black theme */
+
+/* Hover state */
+
+/* Primary action button */
+.login-btn-primary {
+    width: 100%;
+    height: 38px !important;
+    /* was 46px */
+    border: none !important;
+    border-radius: 10px !important;
+    font-weight: 700 !important;
+    color: var(--c-white) !important;
+    background: linear-gradient(
+        135deg,
+        var(--accent),
+        var(--accent-2)
+    ) !important;
+    box-shadow: 0 10px 24px var(--accent-ring) !important;
+    position: relative;
+    overflow: hidden;
+    transition:
+        transform 0.2s var(--ease-smooth),
+        box-shadow 0.2s var(--ease-smooth);
+}
+
+.login-btn-primary::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(134, 40, 40, 0.35),
+        transparent
+    );
+    animation: loginShine 2.8s ease-in-out infinite;
+}
+
+/* Divider */
+
+/* Link */
+
+/* Tip box */
+
+/* Success / info boxes */
+
+/* Password strength */
+
+/* Password requirements grid */
+
+/* Match indicator */
+
+/* ============ Alert ============ */
+
+/* ============ Mobile notice ============ */
+
+[data-theme="black"] .mobile-notice-card {
+    background: var(--c-black) !important;
+    color: var(--c-white) !important;
+    border: 1px solid var(--c-gray-333) !important;
+    box-shadow: 0 28px 60px rgba(0, 0, 0, 0.85) !important;
+}
+
+[data-theme="black"] .mobile-notice-card .info-box {
+    background: var(--c-111111);
+    border-color: var(--c-gray-333);
+}
+
+[data-theme="black"] .mobile-notice-card .info-box .body {
+    color: var(--c-gray-300);
+}
+
+[data-theme="black"] .mobile-notice-card .hint {
+    color: #9ca3af;
+}
+
+[data-theme="black"] .mobile-notice-card .icon-circle {
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.15),
+        rgba(255, 255, 255, 0.03)
+    );
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: var(--c-white);
+}
+
+/* Mobile notice card uses absolute (non-token) colors so it stays
+   solid even when rendered outside the .login-page token scope. */
+
+/* ============ Success modal ============
+   The Ant Modal renders in a portal at <body>, OUTSIDE the .login-page token
+   scope, so CSS variables like --surface / --text resolve to nothing and the
+   modal looks transparent/glass. Use absolute solid colors here, mirrored by
+   a [data-theme="black"] override on <html>. */
+
+.login-success-modal h3 {
+    margin: 0 0 8px;
+    color: var(--c-0b1220);
+    font-size: 22px;
+    font-weight: 800;
+}
+
+[data-theme="black"] .login-success-modal h3 {
+    color: var(--c-e7ecf3);
+}
+
+.login-success-modal p {
+    color: var(--c-5b6677);
+    font-size: 14px;
+    margin: 0 0 22px;
+}
+
+[data-theme="black"] .login-success-modal p {
+    color: var(--c-9aa4b2);
+}
+
+.login-success-modal__loader {
+    width: 80px;
+    height: 80px;
+    display: inline-block;
+    animation: loginSpin 1.2s linear infinite;
+}
+
+/* ============ Responsive ============ */
+
+/* ============ Reduced motion ============ */
+
+/* ============ Sign-in redirect loader (MainPage-style) ============ */
+
+/* Rive animation */
+
+/* Rive wrapper */
+
+/* Rive canvas */
+
+/* Text above animation */
+
+/* ==============================================
+   FormLogin.css — Modern, Professional, User-Friendly
+   Alumni Tracing Management System (Login Module)
+   Matches the design language of AboutPage / FaqPage:
+   - Token-based theming (light + [data-theme="black"])
+   - Gradient hero header, glass surfaces, soft shadows
+   - Smooth, accessible micro-interactions
+   ============================================== */
+
+/* ============ Design Tokens ============ */
+
+.login-page {
+
+    height: 100vh;
+    /* was min-height — lock to viewport */
+    width: 100%;
+    position: relative;
+    color: var(--text);
+    background:
+        radial-gradient(
+            900px 500px at 100% -10%,
+            rgba(14, 165, 233, 0.1),
+            transparent 60%
+        ),
+        radial-gradient(
+            900px 500px at -10% 110%,
+            rgba(124, 58, 237, 0.1),
+            transparent 60%
+        ),
+        var(--bg);
+    font-family:
+        -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, sans-serif;
+    opacity: 0;
+    transform: translateY(8px);
+    transition:
+        opacity 0.6s var(--ease-smooth),
+        transform 0.6s var(--ease-smooth);
+}
+
+.login-page.is-revealed {
+    opacity: 1;
+    transform: translateY(0);
+}

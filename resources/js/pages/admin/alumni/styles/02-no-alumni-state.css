@@ -1,0 +1,384 @@
+/* No Alumni State */
+.no-alumni-card {
+  text-align: center;
+  padding: 48px 24px;
+  border-radius: 12px;
+}
+
+.no-alumni-content {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+/* Badge and Tag Styles */
+.ant-badge-count {
+  font-size: 10px;
+  font-weight: 600;
+  box-shadow: 0 0 0 1px var(--c-white);
+}
+
+.ant-tag {
+  border-radius: 12px;
+  font-size: 11px;
+  padding: 2px 8px;
+  font-weight: 500;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .alumni-list-container {
+    padding: 16px;
+  }
+  
+  .header-content {
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .controls-section {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .controls-left,
+  .controls-right {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+  }
+
+  /* Explicit margins instead of relying only on flexbox `gap`,
+     since some mobile WebViews don't support gap on flex containers
+     and were rendering these items with zero spacing. */
+  .controls-left > *,
+  .controls-right > * {
+    margin: 0 0 12px 0 !important;
+  }
+  .controls-left > *:last-child,
+  .controls-right > *:last-child {
+    margin-bottom: 0 !important;
+  }
+  
+  .controls-left .ant-input,
+  .controls-left .ant-select {
+    width: 100% !important;
+  }
+
+  .select-mode-controls {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .select-mode-controls .ant-btn {
+    width: 100%;
+    margin: 0 0 10px 0 !important;
+  }
+
+  .select-mode-controls .ant-btn:last-child {
+    margin-bottom: 0 !important;
+  }
+  
+  .list-item-content {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+  
+  .list-item-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .list-item-details .ant-space {
+    flex-direction: column;
+    gap: 8px !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .alumni-header {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .alumni-actions {
+    flex-direction: column;
+  }
+  
+  .list-item-main {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+/* Custom animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.alumni-card,
+.alumni-list-item {
+  animation: fadeInUp 0.5s ease;
+}
+
+/* Card actions */
+.alumni-card .ant-card-actions {
+  background: var(--c-zinc-50);
+  border-top: 1px solid var(--c-antd-gray-3);
+}
+
+.alumni-card .ant-card-actions > li {
+  margin: 12px 0;
+}
+
+.alumni-card .ant-card-actions .anticon {
+  color: var(--c-gray-666);
+  transition: color 0.3s ease;
+}
+
+.alumni-card .ant-card-actions .anticon:hover {
+  color: var(--c-antd-blue);
+}
+
+/* ============================================
+   Dark Theme — Header Hero
+   ============================================ */
+[data-theme="black"] .ae-hero {
+  --ae-surface: var(--c-121620);
+  --ae-border: var(--c-242a36);
+  --ae-text: var(--c-e7ecf3);
+  --ae-text-muted: var(--c-9aa4b2);
+  --ae-accent-soft: rgba(14, 165, 233, 0.16);
+  --ae-shadow-sm: 0 4px 14px rgba(0,0,0,0.45);
+  --ae-shadow-md: 0 14px 34px rgba(0,0,0,0.55);
+
+  background:
+    linear-gradient(180deg, var(--c-121620), var(--c-121620)) padding-box,
+    linear-gradient(135deg, rgba(14,165,233,0.55), rgba(99,102,241,0.45), rgba(20,184,166,0.55)) border-box;
+}
+[data-theme="black"] .ae-hero__bg .dot-grid {
+  background-image: radial-gradient(rgba(255,255,255,0.08) 1px, transparent 1px);
+}
+[data-theme="black"] .ae-stat {
+  background: rgba(26, 31, 43, 0.85);
+  border-color: var(--c-242a36);
+}
+[data-theme="black"] .ae-stat__value { color: var(--c-e7ecf3); }
+[data-theme="black"] .ae-hero__logo { background: var(--c-1a1f2b); }
+
+
+/* Black theme - Skill Tags */
+[data-theme="black"] .skill-tag {
+  background: var(--c-ink-1a) !important;
+  color: var(--c-a0a0a0) !important;
+  border-color: var(--c-gray-333) !important;
+}
+
+[data-theme="black"] .skill-tag-small {
+  background: var(--c-ink-1a) !important;
+  color: var(--c-a0a0a0) !important;
+}
+
+/* Black theme - Card Actions */
+[data-theme="black"] .alumni-card .ant-card-actions {
+  background: var(--c-ink-1a) !important;
+  border-color: var(--c-gray-333) !important;
+}
+
+[data-theme="black"] .alumni-card .ant-card-actions > li {
+  border-color: var(--c-gray-333) !important;
+}
+
+[data-theme="black"] .alumni-card .ant-card-actions .anticon {
+  color: var(--c-a0a0a0) !important;
+}
+
+[data-theme="black"] .alumni-card .ant-card-actions .anticon:hover {
+  color: var(--c-blue-400) !important;
+}
+
+/* Black theme - Card Hover */
+[data-theme="black"] .alumni-card:hover {
+  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Black theme - List View Items */
+[data-theme="black"] .alumni-list-item {
+  border-color: var(--c-gray-333) !important;
+  background: var(--c-ink-0a) !important;
+}
+
+[data-theme="black"] .alumni-list-item:hover {
+  background: var(--c-ink-1a) !important;
+}
+
+[data-theme="black"] .list-item-name {
+  color: var(--c-white) !important;
+}
+
+/* Black theme - Divider */
+[data-theme="black"] .alumni-card .ant-divider {
+  border-color: var(--c-gray-333) !important;
+}
+
+/* Black theme - No Alumni Card */
+[data-theme="black"] .no-alumni-card {
+  background: var(--c-ink-0a) !important;
+  border-color: var(--c-gray-333) !important;
+}
+
+[data-theme="black"] .no-alumni-card .ant-typography {
+  color: var(--c-white) !important;
+}
+
+[data-theme="black"] .no-alumni-card .ant-typography-secondary {
+  color: var(--c-a0a0a0) !important;
+}
+
+/* Black theme - Form Items in Modal */
+[data-theme="black"] .ant-form-item-label > label {
+  color: var(--c-white) !important;
+}
+
+[data-theme="black"] .ant-input,
+[data-theme="black"] .ant-input-affix-wrapper {
+  background: var(--c-ink-1a) !important;
+  border-color: var(--c-gray-333) !important;
+  color: var(--c-white) !important;
+}
+
+[data-theme="black"] .ant-input::placeholder {
+  color: var(--c-a0a0a0) !important;
+}
+
+[data-theme="black"] textarea.ant-input {
+  background: var(--c-ink-1a) !important;
+  border-color: var(--c-gray-333) !important;
+  color: var(--c-white) !important;
+}
+
+/* Black theme - Statistic */
+[data-theme="black"] .ant-statistic-title {
+  color: var(--c-a0a0a0) !important;
+}
+
+[data-theme="black"] .ant-statistic-content {
+  color: var(--c-white) !important;
+}
+
+/* Black theme - Course Folder Modal */
+[data-theme="black"] .ant-modal-content .ant-list-item {
+  background: var(--c-ink-0a) !important;
+  border-color: var(--c-gray-333) !important;
+}
+
+[data-theme="black"] .ant-modal-content .ant-list-item:hover {
+  background: var(--c-ink-1a) !important;
+}
+
+[data-theme="black"] .ant-modal-content .ant-list-item-meta-title {
+  color: var(--c-white) !important;
+}
+
+[data-theme="black"] .ant-modal-content .ant-list-item-meta-description {
+  color: var(--c-a0a0a0) !important;
+}
+
+/* Black theme - Empty State */
+[data-theme="black"] .ant-empty-description {
+  color: var(--c-a0a0a0) !important;
+}
+
+
+/* Black theme - Status Description Box (inline styled) */
+[data-theme="black"] .ant-modal-content div[style*="background-color"],
+[data-theme="black"] .ant-modal-content div[style*="backgroundColor"] {
+  background-color: var(--c-ink-1a) !important;
+  color: var(--c-a0a0a0) !important;
+}
+
+[data-theme="black"] .ant-modal-content div[style*="background-color"] .ant-typography,
+[data-theme="black"] .ant-modal-content div[style*="backgroundColor"] .ant-typography,
+[data-theme="black"] .ant-modal-content div[style*="background-color"] span,
+[data-theme="black"] .ant-modal-content div[style*="backgroundColor"] span {
+  color: var(--c-a0a0a0) !important;
+}
+
+/* Alternative: Target by padding pattern commonly used for info boxes */
+[data-theme="black"] .ant-modal-body > .ant-form div[style*="padding: 12px"],
+[data-theme="black"] .ant-modal-body .ant-form div[style*="padding: 12px"] {
+  background-color: var(--c-ink-1a) !important;
+}
+
+[data-theme="black"] .ant-modal-body > .ant-form div[style*="padding: 12px"] .ant-typography-secondary,
+[data-theme="black"] .ant-modal-body .ant-form div[style*="padding: 12px"] .ant-typography-secondary {
+  color: var(--c-a0a0a0) !important;
+}
+
+/* ============ END BLACK THEME STYLES FOR ALUMNI LIST ============ */
+
+/* ============ DARK THEME - SELECT DROPDOWN FIX ============ */
+/* Fixes unreadable dark/black text on the dark selector background
+   (e.g. "Current Employment Status" select in Edit Status modals) */
+[data-theme="black"] .ant-select-selector {
+  background-color: var(--c-ink-1a) !important;
+  border-color: var(--c-gray-333) !important;
+}
+
+[data-theme="black"] .ant-select-selection-item,
+[data-theme="black"] .ant-select-selection-search-input {
+  color: var(--c-white) !important;
+}
+
+[data-theme="black"] .ant-select-selection-placeholder {
+  color: var(--c-antd-gray-7) !important;
+}
+
+[data-theme="black"] .ant-select-arrow,
+[data-theme="black"] .ant-select-clear {
+  color: var(--c-a0a0a0) !important;
+  background: transparent !important;
+}
+
+[data-theme="black"] .ant-select-disabled .ant-select-selector {
+  background-color: var(--c-ink-14) !important;
+  color: var(--c-gray-666) !important;
+}
+
+/* Dropdown panel (the list of options that pops open) */
+[data-theme="black"] .ant-select-dropdown {
+  background-color: var(--c-ink-1a) !important;
+  border: 1px solid var(--c-gray-333) !important;
+}
+
+[data-theme="black"] .ant-select-item {
+  color: var(--c-white) !important;
+}
+
+[data-theme="black"] .ant-select-item-option-content {
+  color: var(--c-white) !important;
+}
+
+[data-theme="black"] .ant-select-item-option-active:not(.ant-select-item-option-disabled) {
+  background-color: var(--c-neutral-800) !important;
+}
+
+[data-theme="black"] .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+  background-color: #2a2a3d !important;
+  color: var(--c-white) !important;
+  font-weight: 600;
+}
+
+[data-theme="black"] .ant-select-item-empty {
+  color: var(--c-a0a0a0) !important;
+}

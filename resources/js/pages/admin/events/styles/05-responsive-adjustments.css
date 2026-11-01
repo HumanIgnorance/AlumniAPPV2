@@ -1,0 +1,447 @@
+/* Responsive adjustments */
+
+/* Custom colors for different guideline types */
+.health-guideline {
+    border-left: 3px solid var(--c-antd-red);
+    padding-left: 8px;
+}
+
+.security-guideline {
+    border-left: 3px solid var(--c-antd-blue);
+    padding-left: 8px;
+}
+
+.accessibility-guideline {
+    border-left: 3px solid var(--c-antd-purple);
+    padding-left: 8px;
+}
+
+.conduct-guideline {
+    border-left: 3px solid var(--c-antd-orange);
+    padding-left: 8px;
+}
+
+.emergency-guideline {
+    border-left: 3px solid var(--c-fa541c);
+    padding-left: 8px;
+}
+
+.prohibited-guideline {
+    border-left: 3px solid var(--c-f5222d);
+    padding-left: 8px;
+}
+
+/* ==================================================
+   PRINT PREVIEW — FORCE LIGHT THEME (on screen)
+   Overrides app dark mode so the preview modal and the
+   printable report always render on a white background
+   with dark, legible text, regardless of the active
+   app theme.
+   ================================================== */
+
+/* Modal shell */
+.print-preview-modal .ant-modal-content,
+.print-preview-modal .ant-modal-header,
+.print-preview-modal .ant-modal-body,
+.print-preview-modal .ant-modal-footer {
+    background: var(--c-white) !important;
+    color: var(--c-slate-900) !important;
+    border-color: var(--c-gray-200) !important;
+}
+.print-preview-modal .ant-modal-title,
+.print-preview-modal .ant-modal-close-x {
+    color: var(--c-slate-900) !important;
+}
+
+/* Printable surface — light theme always */
+#printable-area,
+#printable-area * {
+    color: var(--c-slate-900) !important;
+    border-color: var(--c-antd-gray-5);
+    /* Lock accent/status colors so they don't shift with the app theme */
+    --accent: var(--c-indigo-600);
+    --danger: var(--c-red-500);
+    --success: var(--c-green-500);
+    --warning: var(--c-amber-500);
+}
+#printable-area {
+    background: var(--c-white) !important;
+}
+#printable-area .ant-card,
+#printable-area .ant-card-body,
+#printable-area .ant-card-head {
+    background: var(--c-white) !important;
+    color: var(--c-slate-900) !important;
+    border-color: var(--c-antd-gray-5) !important;
+}
+#printable-area .ant-typography,
+#printable-area .ant-typography-secondary {
+    color: var(--c-slate-900) !important;
+}
+#printable-area .ant-table,
+#printable-area .ant-table-container,
+#printable-area .ant-table-content,
+#printable-area .ant-table-tbody > tr > td,
+#printable-area .ant-table-thead > tr > th {
+    background: var(--c-white) !important;
+    color: var(--c-slate-900) !important;
+}
+#printable-area .ant-table-thead > tr > th {
+    background: var(--c-f5f7fa) !important;
+    border-bottom: 1px solid var(--c-antd-gray-5) !important;
+}
+#printable-area .ant-table-tbody > tr:hover > td {
+    background: var(--c-zinc-50) !important;
+}
+
+/* Override app dark theme inside preview + printable area */
+[data-theme="black"] .print-preview-modal .ant-modal-content,
+[data-theme="black"] .print-preview-modal .ant-modal-header,
+[data-theme="black"] .print-preview-modal .ant-modal-body,
+[data-theme="black"] .print-preview-modal .ant-modal-footer,
+[data-theme="black"] #printable-area,
+[data-theme="black"] #printable-area * {
+    background-color: var(--c-white) !important;
+    color: var(--c-slate-900) !important;
+    border-color: var(--c-antd-gray-5) !important;
+}
+[data-theme="black"] #printable-area .ant-table-thead > tr > th {
+    background: var(--c-f5f7fa) !important;
+}
+
+/* ==================================================
+     PRINT PREVIEW HEADER — READABLE TITLE & CLOSE BUTTON
+     The title text and close (X) button must always read as
+     dark text on the white preview header, in every app theme,
+     and regardless of any gradient/opacity styling used
+     elsewhere in the app. Also normalizes the modal body's
+     scrollbar so it never renders as a dark/black bar.
+     ================================================== */
+.print-preview-modal .ant-modal-header .ant-modal-title,
+.print-preview-modal .ant-modal-title {
+    color: var(--c-slate-900) !important;
+    -webkit-text-fill-color: var(--c-slate-900) !important;
+    opacity: 1 !important;
+    font-weight: 600 !important;
+}
+.print-preview-modal .ant-modal-close,
+.print-preview-modal .ant-modal-close-x {
+    color: var(--c-slate-900) !important;
+    -webkit-text-fill-color: var(--c-slate-900) !important;
+    opacity: 1 !important;
+}
+.print-preview-modal .ant-modal-close .anticon,
+.print-preview-modal .ant-modal-close-x .anticon,
+.print-preview-modal .ant-modal-close svg {
+    color: var(--c-slate-900) !important;
+    fill: var(--c-slate-900) !important;
+}
+.print-preview-modal .ant-modal-close:hover,
+.print-preview-modal .ant-modal-close:hover .ant-modal-close-x {
+    color: var(--c-black) !important;
+    background: rgba(15, 23, 42, 0.06) !important;
+}
+[data-theme="black"] .print-preview-modal .ant-modal-header .ant-modal-title,
+[data-theme="black"] .print-preview-modal .ant-modal-title,
+[data-theme="black"] .print-preview-modal .ant-modal-close,
+[data-theme="black"] .print-preview-modal .ant-modal-close-x {
+    color: var(--c-slate-900) !important;
+    -webkit-text-fill-color: var(--c-slate-900) !important;
+    opacity: 1 !important;
+}
+[data-theme="black"] .print-preview-modal .ant-modal-close .anticon,
+[data-theme="black"] .print-preview-modal .ant-modal-close-x .anticon,
+[data-theme="black"] .print-preview-modal .ant-modal-close svg {
+    color: var(--c-slate-900) !important;
+    fill: var(--c-slate-900) !important;
+}
+
+/* Scrollbar inside the print preview modal — always light, never the
+     app's dark-theme scrollbar, so it doesn't look like a black bar
+     cutting through the white page. */
+.print-preview-modal .ant-modal-body {
+    scrollbar-color: var(--c-c1c1c1) var(--c-f1f1f1);
+}
+.print-preview-modal .ant-modal-body::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+.print-preview-modal .ant-modal-body::-webkit-scrollbar-track {
+    background: var(--c-f1f1f1) !important;
+    border-radius: 6px;
+}
+.print-preview-modal .ant-modal-body::-webkit-scrollbar-thumb {
+    background: var(--c-c1c1c1) !important;
+    border-radius: 6px;
+}
+.print-preview-modal .ant-modal-body::-webkit-scrollbar-thumb:hover {
+    background: var(--c-a8a8a8) !important;
+}
+
+/* Print styles */
+@media print {
+    /* Belt-and-suspenders: also reset here in case this stylesheet loads
+       without index.css's global print reset — keeps the printed page
+       white even if the app is in black theme. */
+    html,
+    body {
+        background: var(--c-white) !important;
+        color: var(--c-slate-900) !important;
+    }
+
+    .ant-modal-mask,
+    .ant-modal-wrap {
+        position: static !important;
+    }
+
+    .ant-modal {
+        position: static !important;
+        width: 100% !important;
+        max-width: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .ant-modal-content {
+        box-shadow: none !important;
+    }
+
+    .ant-modal-footer,
+    .ant-modal-close {
+        display: none !important;
+    }
+}
+
+/* Registration count badge in card */
+.event-card .ant-card-actions .ant-badge {
+    cursor: pointer;
+}
+
+.event-card .ant-card-actions .ant-badge .anticon {
+    font-size: 16px;
+}
+
+.event-card.has-featured .event-status-badge {
+    top: 16px !important; /* Same height as featured ribbon */
+    left: 50% !important; /* Move to horizontal center */
+    right: auto !important;
+    transform: translateX(-50%); /* Perfect center */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+
+    /* Make the two-column layout stack vertically on mobile */
+    .event-details-body .ant-row {
+        flex-direction: column;
+    }
+
+    .event-details-body .ant-col-16,
+    .event-details-body .ant-col-8 {
+        width: 100% !important;
+        max-width: 100% !important;
+        flex: 0 0 100% !important;
+    }
+
+    /* Make the details grid inside the card stack on mobile */
+    .event-details-grid .ant-col-12 {
+        width: 100% !important;
+        max-width: 100% !important;
+        flex: 0 0 100% !important;
+    }
+
+    /* Reduce spacing for detail items on mobile */
+    .detail-item-large {
+        padding: 8px 0;
+    }
+
+    /* Stack registration progress text on mobile */
+    .registration-progress > div {
+        flex-direction: column;
+        align-items: flex-start !important;
+        gap: 4px;
+    }
+
+    /* Reduce gallery height on mobile/tablet */
+    .event-gallery-section {
+        height: 280px;
+    }
+
+    .carousel-slide {
+        height: 280px;
+    }
+
+    .event-detail-image,
+    .carousel-slide .ant-image,
+    .carousel-slide .ant-image-img {
+        height: 280px !important;
+        width: 100% !important;
+        display: block !important;
+        object-fit: cover;
+    }
+
+    .image-placeholder {
+        height: 280px;
+    }
+
+    /* Speakers grid responsive */
+    .speakers-card .ant-col-8 {
+        width: 100% !important;
+        max-width: 100% !important;
+        flex: 0 0 100% !important;
+    }
+
+    /* Remove sticky positioning on mobile */
+    .pricing-card {
+        position: static;
+        margin-top: 16px;
+    }
+
+    .event-sidebar {
+        position: static;
+    }
+
+    /* Adjust event info card spacing */
+    .event-info-card {
+        margin-bottom: 16px;
+    }
+
+    /* Stack organizer section on mobile */
+
+    .organizer-actions {
+        align-self: flex-start;
+        margin-top: 8px;
+    }
+
+    /* Tags card margin */
+    .tags-card {
+        margin-top: 16px;
+    }
+
+    /* Safety card margin */
+    .safety-card {
+        margin-top: 16px;
+    }
+
+    /* Agenda card responsive */
+    .agenda-card {
+        margin-top: 16px;
+    }
+
+    .agenda-item {
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .agenda-time {
+        min-width: auto;
+    }
+
+    /* Guideline items responsive */
+    .guideline-item {
+        margin-left: 4px;
+    }
+
+    .category-header {
+        gap: 6px;
+    }
+
+    /* Early bird pricing responsive */
+    .early-bird-pricing {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    /* Modal header title responsive */
+    .event-detail-header {
+        flex-direction: column;
+        align-items: flex-start !important;
+        gap: 8px;
+        padding-right: 24px !important;
+    }
+
+    .event-detail-header .ant-typography {
+        font-size: 18px !important;
+    }
+}
+/* Extra small screens */
+@media (max-width: 480px) {
+    .event-details-modal {
+        width: 100% !important;
+        margin: 0;
+        top: 0;
+        padding: 0;
+        max-width: 100vw;
+    }
+
+    .event-details-modal .ant-modal-content {
+        border-radius: 0;
+    }
+
+    .event-details-body {
+        padding: 12px;
+    }
+
+    .event-gallery-section {
+        height: 240px;
+        min-height: 240px;
+        width: 100%;
+    }
+
+    .carousel-slide {
+        height: 240px;
+        width: 100%;
+    }
+
+    .event-detail-image-root,
+    .event-detail-image-wrapper,
+    .carousel-slide .ant-image {
+        display: block !important;
+        width: 100% !important;
+        height: 240px !important;
+    }
+
+    .event-detail-image,
+    .carousel-slide .ant-image-img {
+        display: block !important;
+        width: 100% !important;
+        height: 240px !important;
+        max-width: 100% !important;
+        object-fit: cover !important;
+        object-position: center center;
+    }
+
+    .image-placeholder {
+        height: 240px;
+        width: 100%;
+    }
+
+    .detail-item-large {
+        gap: 8px;
+    }
+
+    .detail-icon {
+        font-size: 16px;
+    }
+
+    .pricing-header .ant-typography {
+        font-size: 20px !important;
+    }
+
+    .register-btn {
+        height: 44px;
+        font-size: 14px;
+    }
+
+    /* Contact modals footer buttons stack on small screens */
+    .ant-modal-footer {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .ant-modal-footer .ant-btn {
+        flex: 1 1 auto;
+        min-width: 100px;
+    }
+}

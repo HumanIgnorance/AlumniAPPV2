@@ -1,0 +1,407 @@
+/* ============ Sections ============ */
+.gal-section {
+  margin: 24px 0 0;
+  animation: galFadeUp 0.5s var(--ease-spring) both;
+}
+
+.gal-section-chip {
+  background: var(--accent-soft) !important;
+  color: var(--accent) !important;
+  border: 1px solid var(--accent-ring) !important;
+  border-radius: 999px !important;
+  padding: 4px 12px !important;
+  font-weight: 700 !important;
+  font-size: 11px !important;
+  letter-spacing: 0.08em;
+  margin: 0 0 10px !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.gal-section-chip--accent {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.14), rgba(139, 92, 246, 0.14)) !important;
+  color: var(--accent-2) !important;
+  border-color: rgba(245, 158, 11, 0.30) !important;
+}
+
+/* ============ Selection Actions Bar ============ */
+.gal-selection-actions {
+  border-radius: var(--radius-lg) !important;
+  border: 1px solid var(--accent-ring) !important;
+  background: linear-gradient(135deg, var(--accent-soft), transparent) !important;
+  box-shadow: var(--shadow-sm) !important;
+}
+
+.gal-selection-actions .ant-card-body {
+  padding: 14px 18px !important;
+  background: transparent !important;
+}
+
+.gal-selection-actions .selection-count {
+  color: var(--accent) !important;
+  font-size: 13.5px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ============ Filters Card ============ */
+.gal-filters-card {
+  border-radius: var(--radius-lg) !important;
+  border: 1px solid var(--border) !important;
+  background: var(--surface) !important;
+  box-shadow: var(--shadow-sm) !important;
+}
+
+.gal-filters-card .ant-card-body {
+  padding: 22px !important;
+  background: transparent !important;
+}
+
+.gal-filters-head {
+  margin-bottom: 14px;
+}
+
+.gal-filters-sub {
+  color: var(--text-muted) !important;
+  font-size: 12.5px;
+  display: block;
+}
+
+.gal-search-input.ant-input-affix-wrapper {
+  border-radius: 12px !important;
+  height: 44px !important;
+  padding: 0 14px !important;
+  background: var(--surface-2) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text) !important;
+  transition: all 0.2s var(--ease-smooth);
+}
+
+.gal-search-input.ant-input-affix-wrapper:hover,
+.gal-search-input.ant-input-affix-wrapper-focused {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 4px var(--accent-soft) !important;
+  background: var(--surface) !important;
+}
+
+.gal-search-input .ant-input {
+  background: transparent !important;
+  color: var(--text) !important;
+}
+
+.gal-search-input .anticon {
+  color: var(--accent);
+}
+
+.gal-filter-select .ant-select-selector {
+  border-radius: 12px !important;
+  height: 44px !important;
+  background: var(--surface-2) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text) !important;
+  display: flex !important;
+  align-items: center;
+  transition: all 0.2s var(--ease-smooth) !important;
+}
+
+.gal-filter-select:hover .ant-select-selector,
+.gal-filter-select.ant-select-focused .ant-select-selector {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 4px var(--accent-soft) !important;
+}
+
+.gal-filter-actions {
+  width: 100%;
+}
+
+.gal-filter-actions .ant-btn {
+  border-radius: 12px !important;
+  height: 44px;
+  font-weight: 600;
+}
+
+.gal-filter-actions .ant-btn:not(.ant-btn-primary) {
+  background: var(--surface) !important;
+  border: 1px solid var(--border-strong) !important;
+  color: var(--text) !important;
+}
+
+.gal-filter-actions .ant-btn:not(.ant-btn-primary):not(:disabled):hover {
+  border-color: var(--accent) !important;
+  color: var(--accent) !important;
+}
+
+/* ============ List Header ============ */
+.gal-list-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.gal-list-title {
+  color: var(--text) !important;
+  margin: 6px 0 2px !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.01em;
+}
+
+.gal-list-sub {
+  color: var(--text-muted) !important;
+  font-size: 13px;
+}
+
+/* ============ Grid ============ */
+.gal-grid-container {
+  min-height: 320px;
+  position: relative;
+}
+
+.gal-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 320px;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.gal-loading .ant-spin-dot-item {
+  background-color: var(--accent);
+}
+
+.gal-loading .ant-spin-text {
+  color: var(--text-muted);
+  margin-top: 10px;
+}
+
+.gal-empty-card {
+  background: var(--surface) !important;
+  border: 1px dashed var(--border-strong) !important;
+  border-radius: var(--radius-lg) !important;
+}
+
+.gal-empty-card .ant-card-body {
+  padding: 56px 20px;
+  text-align: center;
+}
+
+.gal-empty-text {
+  color: var(--text-muted);
+}
+
+.gal-grid {
+  animation: galFadeIn 0.4s var(--ease-smooth) both;
+}
+
+/* ============ Image Cards ============ */
+.gal-image-card {
+  border-radius: var(--radius-lg) !important;
+  overflow: hidden;
+  border: 1px solid var(--border) !important;
+  background: var(--surface) !important;
+  box-shadow: var(--shadow-xs) !important;
+  transition: transform 0.35s var(--ease-spring),
+    box-shadow 0.35s var(--ease-smooth),
+    border-color 0.25s;
+  animation: galScaleIn 0.45s var(--ease-spring) both;
+  position: relative;
+  will-change: transform;
+}
+
+.gal-image-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2), var(--accent-3));
+  opacity: 0;
+  transition: opacity 0.3s var(--ease-smooth);
+  z-index: 2;
+}
+
+/* .gal-image-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-md) !important;
+  border-color: var(--accent-ring) !important;
+}
+
+.gal-image-card:hover::before {
+  opacity: 1;
+} */
+
+.gal-image-card.selected {
+  border: 2px solid var(--accent) !important;
+  box-shadow: 0 0 0 4px var(--accent-soft), var(--shadow-md) !important;
+}
+
+.gal-image-card .ant-card-body {
+  background: var(--surface) !important;
+  padding: 14px 16px !important;
+}
+
+.gal-image-card .ant-card-actions {
+  background: var(--surface) !important;
+  border-top: 1px solid var(--border) !important;
+}
+
+.gal-image-card .ant-card-actions>li {
+  border-right-color: var(--border) !important;
+  margin: 8px 0;
+}
+
+.gal-image-wrapper {
+  position: relative;
+  height: 220px;
+  overflow: hidden;
+  cursor: pointer;
+  background: var(--surface-2);
+}
+
+.gal-carousel,
+.gal-carousel-slide {
+  height: 220px;
+}
+
+.gal-carousel-slide img,
+.gal-image {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  transition: transform 0.7s var(--ease-spring), filter 0.4s ease;
+  display: block;
+}
+
+.gal-image-card:hover .gal-image,
+.gal-image-card:hover .gal-carousel-slide img {
+  transform: scale(1.07);
+}
+
+.gal-selection-checkbox {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 10;
+  background: var(--surface);
+  padding: 5px;
+  border-radius: 8px;
+  box-shadow: var(--shadow-sm);
+  animation: galScaleIn 0.25s var(--ease-spring) both;
+}
+
+.gal-image-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(26, 20, 20, 0) 0%, rgba(26, 20, 20, 0.78) 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  color: var(--c-white);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  padding: 16px;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.2px;
+}
+
+.gal-image-card:hover .gal-image-overlay {
+  opacity: 1;
+}
+
+.gal-view-icon {
+  font-size: 26px;
+  margin-bottom: 6px;
+  color: var(--c-white);
+}
+
+.gal-image-count-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(26, 20, 20, 0.82);
+  color: var(--c-white);
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  z-index: 5;
+  box-shadow: var(--shadow-sm);
+}
+
+.gal-image-count-badge .anticon {
+  font-size: 12px;
+}
+
+.gal-card-title {
+  font-weight: 700 !important;
+  font-size: 14.5px;
+  color: var(--text) !important;
+}
+
+.gal-card-meta {
+  width: 100%;
+  margin-top: 6px;
+}
+
+.gal-card-date {
+  font-size: 12px;
+  color: var(--text-muted) !important;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.gal-card-tag {
+  font-size: 10.5px !important;
+  font-weight: 700 !important;
+  border-radius: 6px !important;
+  padding: 1px 8px !important;
+  line-height: 18px !important;
+  border: 1px solid transparent !important;
+  margin: 0 !important;
+}
+
+.tag-photos {
+  background: rgba(139, 92, 246, 0.12) !important;
+  color: var(--accent-3) !important;
+  border-color: rgba(139, 92, 246, 0.28) !important;
+}
+
+.tag-type {
+  background: var(--accent-soft) !important;
+  color: var(--accent) !important;
+  border-color: var(--accent-ring) !important;
+}
+
+.tag-size {
+  background: rgba(245, 158, 11, 0.12) !important;
+  color: var(--accent-2) !important;
+  border-color: rgba(245, 158, 11, 0.30) !important;
+}
+
+.gal-action-btn {
+  transition: transform 0.2s var(--ease-spring), color 0.2s, background 0.2s;
+  font-size: 15px;
+  color: var(--text-muted) !important;
+  border-radius: 8px !important;
+}
+
+.gal-action-btn:hover {
+  transform: scale(1.15);
+  color: var(--accent) !important;
+  background: var(--accent-soft) !important;
+}

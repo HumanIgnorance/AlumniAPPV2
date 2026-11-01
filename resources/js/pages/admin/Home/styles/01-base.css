@@ -1,0 +1,442 @@
+/* ── Entry reveal ─────────────────────────────────────────── */
+.hp-root {
+    padding: 20px 24px 32px;
+    min-height: 100%;
+    opacity: 0;
+    transform: translateY(12px);
+    transition:
+        opacity 0.5s ease,
+        transform 0.5s ease;
+}
+.hp-root.hp-revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ── HERO ─────────────────────────────────────────────────── */
+.hp-hero {
+    position: relative;
+    padding: 32px 36px 28px;
+    border-radius: 20px;
+    background:
+        linear-gradient(135deg, var(--c-white) 0%, #f5f9ff 60%, #eef3ff 100%);
+    border: 1px solid #e8efff;
+    overflow: hidden;
+    margin-bottom: 4px;
+    box-shadow:
+        0 1px 2px rgba(16, 24, 40, 0.04),
+        0 10px 30px -18px rgba(24, 144, 255, 0.25);
+}
+.hp-hero--admin {
+    background:
+        linear-gradient(135deg, #fffbf2 0%, #fff5e6 55%, #f6f0ff 100%);
+    border-color: #ffe7c2;
+    box-shadow:
+        0 1px 2px rgba(16, 24, 40, 0.04),
+        0 10px 30px -18px rgba(250, 140, 22, 0.3);
+}
+
+.hp-hero-bg-shape {
+    position: absolute;
+    top: -60px;
+    right: -60px;
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    background: linear-gradient(
+        135deg,
+        rgba(24, 144, 255, 0.16),
+        rgba(114, 46, 209, 0.16)
+    );
+    filter: blur(10px);
+    pointer-events: none;
+}
+.hp-hero-bg-shape-2 {
+    top: auto;
+    right: auto;
+    bottom: -80px;
+    left: -60px;
+    width: 220px;
+    height: 220px;
+    background: linear-gradient(
+        135deg,
+        rgba(82, 196, 26, 0.14),
+        rgba(19, 194, 194, 0.14)
+    );
+}
+.hp-hero--admin .hp-hero-bg-shape {
+    background: linear-gradient(
+        135deg,
+        rgba(250, 140, 22, 0.18),
+        rgba(245, 34, 45, 0.14)
+    );
+}
+.hp-hero--admin .hp-hero-bg-shape-2 {
+    background: linear-gradient(
+        135deg,
+        rgba(114, 46, 209, 0.16),
+        rgba(250, 173, 20, 0.14)
+    );
+}
+.hp-hero-grid-overlay {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(24, 144, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(24, 144, 255, 0.05) 1px, transparent 1px);
+    background-size: 32px 32px;
+    mask-image: radial-gradient(circle at top right, var(--c-black) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.hp-hero-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    position: relative;
+    z-index: 1;
+}
+.hp-hero-left {
+    flex: 1;
+    min-width: 0;
+}
+
+.hp-hero-chip {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 6px;
+    background: rgba(24, 144, 255, 0.1) !important;
+    border: 1px solid rgba(24, 144, 255, 0.25) !important;
+    color: var(--c-antd-blue) !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    padding: 4px 12px !important;
+    border-radius: 99px !important;
+    margin-bottom: 12px !important;
+}
+.hp-hero--admin .hp-hero-chip {
+    background: rgba(250, 140, 22, 0.12) !important;
+    border-color: rgba(250, 140, 22, 0.3) !important;
+    color: #d46b08 !important;
+}
+
+.hp-greeting-row {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 4px;
+}
+.hp-greeting-text {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--c-neutral-800);
+    line-height: 1.3;
+}
+.hp-greeting-name {
+    font-size: 30px !important;
+    font-weight: 800 !important;
+    background: linear-gradient(90deg, var(--c-antd-blue), var(--c-antd-purple));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 0 !important;
+    line-height: 1.2 !important;
+    letter-spacing: -0.5px;
+}
+.hp-hero--admin .hp-greeting-name {
+    background: linear-gradient(90deg, var(--c-antd-orange), var(--c-f5222d));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.hp-greeting-wave {
+    font-size: 24px;
+    display: inline-block;
+    animation: hp-wave 2.4s ease-in-out infinite;
+    transform-origin: 70% 70%;
+}
+@keyframes hp-wave {
+    0%, 60%, 100% { transform: rotate(0deg); }
+    10% { transform: rotate(14deg); }
+    20% { transform: rotate(-8deg); }
+    30% { transform: rotate(14deg); }
+    40% { transform: rotate(-4deg); }
+    50% { transform: rotate(10deg); }
+}
+
+.hp-date-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 10px;
+}
+.hp-date-icon {
+    color: var(--c-antd-gray-7);
+    font-size: 13px;
+}
+.hp-date-text {
+    font-size: 13px;
+    color: var(--c-antd-gray-7);
+}
+.hp-hero-tagline {
+    font-size: 14px;
+    color: #4a5568;
+    max-width: 520px;
+    margin: 0;
+    line-height: 1.65;
+}
+.hp-hero-tagline strong {
+    color: var(--c-antd-blue);
+}
+.hp-hero--admin .hp-hero-tagline strong {
+    color: #d46b08;
+}
+
+.hp-hero-right {
+    flex-shrink: 0;
+}
+.hp-hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    border-radius: 99px;
+    background: linear-gradient(135deg, var(--c-antd-blue) 0%, var(--c-antd-purple) 100%);
+    color: var(--c-white);
+    font-size: 13px;
+    font-weight: 700;
+    white-space: nowrap;
+    box-shadow: 0 8px 22px rgba(24, 144, 255, 0.35);
+    letter-spacing: 0.3px;
+}
+/* The badge is now a <button> so it can toggle the logo showcase —
+   reset native button chrome and layer on interactive states. */
+button.hp-hero-badge--toggle {
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    transition:
+        transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+        box-shadow 0.25s ease,
+        filter 0.25s ease;
+}
+button.hp-hero-badge--toggle:hover {
+    transform: translateY(-2px) scale(1.03);
+    filter: brightness(1.06);
+    box-shadow: 0 12px 28px rgba(24, 144, 255, 0.45);
+}
+.hp-hero--admin button.hp-hero-badge--toggle:hover {
+    box-shadow: 0 12px 28px rgba(250, 140, 22, 0.5);
+}
+button.hp-hero-badge--toggle:active {
+    transform: translateY(0) scale(0.97);
+}
+button.hp-hero-badge--toggle:focus-visible {
+    outline: 2px solid var(--c-white);
+    outline-offset: 2px;
+}
+button.hp-hero-badge--active {
+    box-shadow:
+        0 8px 22px rgba(24, 144, 255, 0.35),
+        0 0 0 3px rgba(255, 255, 255, 0.4);
+}
+.hp-hero--admin button.hp-hero-badge--active {
+    box-shadow:
+        0 8px 22px rgba(250, 140, 22, 0.4),
+        0 0 0 3px rgba(255, 255, 255, 0.4);
+}
+.hp-hero-badge-chevron {
+    font-size: 11px;
+    margin-left: 2px;
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.hp-hero-badge-chevron--open {
+    transform: rotate(180deg);
+}
+.hp-hero--admin .hp-hero-badge {
+    background: linear-gradient(135deg, var(--c-antd-orange) 0%, var(--c-f5222d) 100%);
+    box-shadow: 0 8px 22px rgba(250, 140, 22, 0.4);
+}
+.hp-hero-badge-icon {
+    font-size: 16px;
+}
+.hp-hero-divider {
+    margin: 18px 0 !important;
+    border-color: transparent !important;
+}
+
+/* ── BRAND SHOWCASE TOGGLE — collapse / expand with a pop ───────────── */
+.hp-brand-toggle-wrap {
+    max-height: 0;
+    opacity: 0;
+    margin-bottom: 0;
+    transform-origin: top center;
+    transform: scaleY(0.9) translateY(-18px);
+    overflow: hidden;
+    pointer-events: none;
+    transition:
+        max-height 0.55s cubic-bezier(0.4, 0, 0.2, 1),
+        opacity 0.4s ease,
+        transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+        margin-bottom 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.hp-brand-toggle-wrap--open {
+    max-height: 1000px;
+    opacity: 1;
+    margin-bottom: 20px;
+    transform: scaleY(1) translateY(0);
+    pointer-events: auto;
+}
+.hp-brand-toggle-wrap .hp-brand-showcase {
+    margin-bottom: 0;
+}
+
+/* ── SECTIONS ─────────────────────────────────────────────── */
+.hp-section {
+    margin-bottom: 24px;
+}
+.hp-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+.hp-section-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    color: var(--c-neutral-800) !important;
+    margin: 0 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+}
+
+/* ── STATS GRID ───────────────────────────────────────────── */
+.hp-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+}
+
+.hp-stat-card {
+    border-radius: 14px !important;
+    background: var(--c-white) !important;
+    box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04),
+        0 4px 14px -8px rgba(16, 24, 40, 0.1) !important;
+    transition:
+        box-shadow 0.25s ease,
+        transform 0.25s ease;
+    height: 100%;
+    border: 1px solid #f0f4fa !important;
+}
+.hp-stat-card:hover {
+    box-shadow: 0 6px 24px -8px rgba(24, 144, 255, 0.22) !important;
+    transform: translateY(-3px);
+}
+.hp-stat-inner {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-height: 52px;
+}
+.hp-stat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+}
+.hp-stat-text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+.hp-stat-value {
+    font-size: 24px;
+    font-weight: 800;
+    color: #1a202c;
+    line-height: 1.1;
+    letter-spacing: -0.3px;
+    font-variant-numeric: tabular-nums;
+}
+.hp-stat-label {
+    font-size: 12px;
+    color: #718096;
+    margin-top: 4px;
+    font-weight: 500;
+}
+
+/* ── WEATHER CARD ─────────────────────────────────────────── */
+.hp-weather-inner {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 52px;
+}
+.hp-weather-left {
+    flex: 1;
+    min-width: 0;
+}
+.hp-weather-right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    flex-shrink: 0;
+    min-width: 64px;
+}
+.hp-weather-divider {
+    width: 1px;
+    height: 44px;
+    background: var(--c-antd-gray-3);
+    flex-shrink: 0;
+}
+.hp-weather-location {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 2px;
+}
+.hp-weather-location-label {
+    font-size: 11px;
+    color: var(--c-antd-gray-7);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+.hp-weather-time {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--c-antd-blue);
+    line-height: 1.1;
+    font-variant-numeric: tabular-nums;
+}
+.hp-weather-date {
+    font-size: 11px;
+    color: var(--c-antd-gray-7);
+    margin-top: 1px;
+}
+.hp-weather-icon {
+    font-size: 20px;
+    line-height: 1;
+}
+.hp-weather-temp {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--c-neutral-800);
+    line-height: 1;
+}
+.hp-weather-condition {
+    font-size: 10px;
+    color: var(--c-antd-gray-7);
+    text-align: center;
+    max-width: 80px;
+    line-height: 1.3;
+}

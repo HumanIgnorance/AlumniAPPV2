@@ -38,14 +38,11 @@
 import { useMemo } from "react";
 import { useQuery } from "react-query";
 import axiosConfig from "~/utils/axiosConfig";
+import { REQUEST_OPTS } from "~/config/publicApi";
 
 const PUBLIC_GALLERY_ENDPOINT = "/public/galleries";
 const PUBLIC_GALLERY_QUERY_KEY = ["public-galleries", "full"];
 
-const REQUEST_OPTS = {
-    silent: true, // don't trigger the global error modal for anon visitors
-    skipAuthRedirect: true, // never bounce anonymous visitors to /login
-};
 
 // Same "unwrap whatever shape Laravel gives us" helper as
 // usePublicHomeData.js / the rest of the app.

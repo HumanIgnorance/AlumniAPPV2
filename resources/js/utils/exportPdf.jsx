@@ -8,6 +8,7 @@
 
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import { COLORS } from "~/config/theme";
 
 const A4_WIDTH_MM = 210;
 const A4_HEIGHT_MM = 297;
@@ -35,7 +36,7 @@ export async function exportElementToPdf(elementId, options = {}) {
   const canvas = await html2canvas(element, {
     scale,
     useCORS: true,
-    backgroundColor: "#ffffff",
+    backgroundColor: COLORS.white,
     logging: false,
     windowWidth: element.scrollWidth,
     windowHeight: element.scrollHeight,

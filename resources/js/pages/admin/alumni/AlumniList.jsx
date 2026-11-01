@@ -47,9 +47,9 @@ import {
   CloseCircleOutlined,
 } from "@ant-design/icons"
 import moment from "moment"
-import "./AlumniList.css"
+import "./styles";
 import "~/styles/printPreview.css"
-import { Layout, AlumniDetails, CardSkeletonGrid } from "~/components"
+import { Layout, AlumniDetails } from "~/components"
 import { exportElementToPdf } from "~/utils/exportPdf"
 import useAlumni from "~/hooks/useAlumni"
 import useAlumniDirectory from "~/hooks/useAlumniDirectory"
@@ -57,1286 +57,23 @@ import useEmployeeStatus from "~/hooks/useEmployeeStatus"
 import useQuizResult from "~/hooks/useQuizResult"
 import axiosConfig from "~/utils/axiosConfig"
 import { BASE_URL } from "~/utils/constant"
-import secureLocalStorage from "react-secure-storage"
 import logo from "~/assets/images/OCC_LOGO.png"
+import { COLORS } from "~/config/theme";
+import { ROLES } from "~/config/roles";
+import { getUserRole } from "~/utils/session";
+import { useIsTouchDevice } from "~/hooks/useIsTouchDevice";
+import { employmentStatusOptions, courseFolders } from "~/pages/admin/alumni/parts/alumniListConstants";
+import { StatusUpdateModal, BulkStatusUpdateModal } from "~/pages/admin/alumni/parts/StatusModals";
+import { AlumniCard, NewRegisteredCard } from "~/pages/admin/alumni/parts/AlumniCards";
+import { CourseFolderModal } from "~/pages/admin/alumni/parts/CourseFolderModal";
 
 const { Title, Text, Paragraph } = Typography
 const { Option } = Select
 const { TabPane } = Tabs
 const { TextArea } = Input
 
-const statusColors = {
-  Employed: "green",
-  Unemployed: "red",
-  "Under Employed": "orange",
-}
-
-const employmentStatusOptions = [
-  { value: "all", label: "All Employment", color: "default" },
-  { value: "employed", label: "Employed", color: "green" },
-  { value: "unemployed", label: "Unemployed", color: "red" },
-  { value: "under_employed", label: "Under Employed", color: "orange" },
-  // { value: "graduate_school", label: "Graduate School", color: "blue" },
-]
-
-const statusOptions = [
-  { value: "all", label: "All Status", color: "default" },
-  { value: "pending", label: "Pending Review", color: "orange" },
-  { value: "approved", label: "Approved", color: "green" },
-  { value: "new_registered", label: "New Registered", color: "blue" },
-  { value: "inactive", label: "Inactive", color: "red" },
-  { value: "rejected", label: "Rejected", color: "red" },
-]
-
-const majorOptions = [
-  "Computer Science",
-  "Business Administration",
-  "Engineering",
-  "Biology",
-  "Psychology",
-  "Marketing",
-  "Finance",
-  "Arts & Sciences",
-]
-
-const sortOptions = [
-  { value: "name-asc", label: "Name: A to Z" },
-  { value: "name-desc", label: "Name: Z to A" },
-  { value: "graduation-desc", label: "Graduation: Recent First" },
-  { value: "graduation-asc", label: "Graduation: Oldest First" },
-  { value: "salary-desc", label: "Salary: High to Low" },
-  { value: "salary-asc", label: "Salary: Low to High" },
-  { value: "rating-desc", label: "Highest Rated" },
-  { value: "lastActive-desc", label: "Recently Active" },
-]
-
-const courseFolders = [
-  { id: 1, code: "BSIT", name: "Bachelor of Science in Information Technology", color: "#f5222d" },
-  { id: 2, code: "BSEd", name: "Bachelor in Teacher Education", color: "#1890ff" },
-  { id: 3, code: "BEED", name: "Bachelor of Elementary Education", color: "#1890ff" },
-  { id: 4, code: "BSBA", name: "Bachelor of Science in Business Administration", color: "#faad14" },
-]
-
-const getStatusIcon = (status) => {
-  switch (status) {
-    case "approved":
-      return <CheckCircleOutlined style={{ color: "#52c41a" }} />
-    case "pending":
-      return <ClockCircleOutlined style={{ color: "#faad14" }} />
-    case "inactive":
-      return <StopOutlined style={{ color: "#ff4d4f" }} />
-    case "rejected":
-      return <CloseCircleOutlined style={{ color: "#ff4d4f" }} />
-    default:
-      return <UserOutlined />
-  }
-}
-
-const getEmploymentStatusTag = (status) => {
-  const config = {
-    Employed: {
-      color: "green",
-      text: "Employed",
-      icon: <CheckCircleOutlined />,
-    },
-    Unemployed: {
-      color: "red",
-      text: "Seeking Work",
-      icon: <ClockCircleOutlined />,
-    },
-    "Under Employed": {
-      color: "orange",
-      text: "Under Employed",
-      icon: <ExclamationCircleOutlined />,
-    },
-  }
-
-  // No employment_status on the alumni record yet — either they didn't
-  // set one at registration, or an admin hasn't set one via the "Edit
-  // Status" modal. Previously this fell through to
-  // `{ color: "default", text: status }` with status === undefined,
-  // which rendered as a blank, unlabeled tag with no way to tell it
-  // apart from a loading glitch. Show an explicit "Not Set" tag instead
-  // so it's clear the value is genuinely unset, not a display bug.
-  if (!status) {
-    return (
-      <Tag color="default" icon={<ExclamationCircleOutlined />}>
-        Not Set
-      </Tag>
-    )
-  }
-
-  const statusConfig = config[status] || {
-    color: "default",
-    text: status,
-  }
-  return (
-    <Tag color={statusConfig.color} icon={statusConfig.icon}>
-      {statusConfig.text}
-    </Tag>
-  )
-}
-
-
-
-const getLastActiveStatus = (lastActive, isOnline) => {
-  const now = moment();
-  const lastActiveTime = lastActive ? moment(lastActive) : null;
-
-  // Grace period: heartbeat fires every 2 min, so we allow up to 5 min
-  // before treating a stale is_online flag as unreliable.
-  // This prevents "ghost online" caused by a browser crash / forced close
-  // where beforeunload could not fire.
-  const HEARTBEAT_GRACE_MINUTES = 5;
-
-  const isGenuinelyOnline =
-    isOnline &&
-    lastActiveTime !== null &&
-    now.diff(lastActiveTime, "minutes") < HEARTBEAT_GRACE_MINUTES;
-
-  if (isGenuinelyOnline) {
-    return {
-      status: "active",
-      color: "#52c41a",
-      text: "Active now",
-      dotColor: "#52c41a",
-    };
-  }
-
-  if (!lastActive) {
-    return {
-      status: "offline",
-      color: "#ff4d4f",
-      text: "Never active",
-      dotColor: "#ff4d4f",
-    };
-  }
-
-  const diffSeconds = now.diff(lastActiveTime, "seconds");
-  const diffMinutes = now.diff(lastActiveTime, "minutes");
-  const diffHours   = now.diff(lastActiveTime, "hours");
-  const diffDays    = now.diff(lastActiveTime, "days");
-  const diffWeeks   = now.diff(lastActiveTime, "weeks");
-  const diffMonths  = now.diff(lastActiveTime, "months");
-  const diffYears   = now.diff(lastActiveTime, "years");
-
-  let timeText = "";
-
-  if (diffSeconds < 60) {
-    timeText = diffSeconds <= 1 ? "Just now" : `${diffSeconds} seconds ago`;
-  } else if (diffMinutes < 60) {
-    timeText = diffMinutes === 1 ? "1 minute ago" : `${diffMinutes} minutes ago`;
-  } else if (diffHours < 24) {
-    timeText = diffHours === 1 ? "1 hour ago" : `${diffHours} hours ago`;
-  } else if (diffDays < 7) {
-    timeText = diffDays === 1 ? "1 day ago" : `${diffDays} days ago`;
-  } else if (diffWeeks < 4) {
-    timeText = diffWeeks === 1 ? "1 week ago" : `${diffWeeks} weeks ago`;
-  } else if (diffMonths < 12) {
-    timeText = diffMonths === 1 ? "1 month ago" : `${diffMonths} months ago`;
-  } else {
-    timeText = diffYears === 1 ? "1 year ago" : `${diffYears} years ago`;
-  }
-
-  return {
-    status: "offline",
-    color: "#ff4d4f",
-    text: timeText,
-    dotColor: "#ff4d4f",
-  };
-};
-
-const LastActiveIndicator = ({ lastActive, isOnline }) => {
-  const statusInfo = getLastActiveStatus(lastActive, isOnline);
-  
-  return (
-    <div className="last-active-indicator" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-      <span 
-        className="status-dot"
-        style={{
-          width: '10px',
-          height: '10px',
-          borderRadius: '50%',
-          backgroundColor: statusInfo.dotColor,
-          display: 'inline-block',
-          boxShadow: statusInfo.status === 'active' 
-            ? `0 0 8px ${statusInfo.dotColor}, 0 0 12px ${statusInfo.dotColor}` 
-            : 'none',
-          animation: statusInfo.status === 'active' ? 'pulse-green 2s infinite' : 'none'
-        }}
-      />
-      <Text 
-        type="secondary" 
-        style={{ 
-          color: statusInfo.color,
-          fontSize: '13px',
-          fontWeight: statusInfo.status === 'active' ? '500' : '400'
-        }}
-      >
-        {statusInfo.text}
-      </Text>
-    </div>
-  );
-};
-// ============ END LAST ACTIVE STATUS HELPER FUNCTIONS ============
-
-
-const StatusUpdateModal = ({ visible, onCancel, onOk, alumnus, loading, statuses }) => {
-  const [form] = Form.useForm()
-  const [selectedStatus, setSelectedStatus] = useState("pending")
-
-  useEffect(() => {
-    if (alumnus) {
-      form.setFieldsValue({
-        status: alumnus.status || "pending",
-        employment_status_id: alumnus.employment_status_id,
-        admin_notes: alumnus.admin_notes || "",
-      })
-
-      setSelectedStatus(alumnus.status || "pending")
-    }
-  }, [alumnus, form])
-
-  const handleSubmit = () => {
-    form.validateFields().then((values) => {
-      onOk({
-        ...values,
-        status: selectedStatus,
-      })
-    })
-  }
-
-  const handleClose = () => {
-    form.resetFields()
-    onCancel()
-  }
-
-  const getStatusDescription = (status) => {
-    const descriptions = {
-      approved: "Alumni will be visible in the directory and can be contacted by other users.",
-      pending: "Alumni profile will be under review and not visible to others until approved.",
-      inactive: "Alumni profile will be hidden from the directory and marked as inactive.",
-      rejected: "Alumni account will be rejected. The alumni will see your admin notes when they try to log in, with instructions to contact the Administrator Office for further clarification.",
-    }
-    return descriptions[status] || ""
-  }
-  return (
-    <Modal
-      title={`Update Status - ${alumnus?.first_name ?? ""} ${alumnus?.last_name ?? ""}`}
-      open={visible}
-      onCancel={handleClose}
-      onOk={handleSubmit}
-      confirmLoading={loading}
-      width={600}
-    >
-      <Form form={form} layout="vertical">
-        <Form.Item label="New Status" name="status" rules={[{ required: true, message: "Please select a status" }]}>
-          <Select onChange={setSelectedStatus}>
-            <Option value="approved">
-              <Space>
-                <CheckCircleOutlined style={{ color: "#52c41a" }} />
-                Approved
-              </Space>
-            </Option>
-            <Option value="pending">
-              <Space>
-                <ClockCircleOutlined style={{ color: "#faad14" }} />
-                Pending Review
-              </Space>
-            </Option>
-            <Option value="rejected">
-              <Space>
-                <CloseCircleOutlined style={{ color: "#ff4d4f" }} />
-                Rejected
-              </Space>
-            </Option>
-            {/* <Option value="inactive">
-              <Space>
-                <StopOutlined style={{ color: "#ff4d4f" }} />
-                Inactive
-              </Space>
-            </Option> */}
-          </Select>
-        </Form.Item>
-        <Form.Item
-          name="employment_status_id"
-          label="Current Employment Status"
-          rules={[
-            {
-              required: true,
-              message: "Please select employment status",
-            },
-          ]}
-        >
-          <Select placeholder="Select employment status">
-            {statuses?.map((status) => (
-              <Option key={status.id} value={status.id}>
-                {status.status_name}
-              </Option>
-            ))}
-          </Select>
-        </Form.Item>
-
-        {selectedStatus && (
-          <div
-            style={{
-              padding: "12px",
-              backgroundColor: "#f5f5f5",
-              borderRadius: "6px",
-              marginBottom: "16px",
-            }}
-          >
-            <Text type="secondary">{getStatusDescription(selectedStatus)}</Text>
-          </div>
-        )}
-
-        <Form.Item
-          label="Admin Notes"
-          name="admin_notes"
-          rules={[
-            {
-              required: true,
-              message: "Please provide notes for this status change",
-            },
-          ]}
-        >
-          <TextArea rows={4} maxLength={500} showCount placeholder="Explain the reason for the status change" />
-        </Form.Item>
-      </Form>
-    </Modal>
-  )
-}
-
-// ============ BULK STATUS UPDATE MODAL ============
-const BulkStatusUpdateModal = ({ visible, onCancel, onOk, selectedAlumni, loading, statuses }) => {
-  const [form] = Form.useForm()
-  const [selectedStatus, setSelectedStatus] = useState("pending")
-
-  useEffect(() => {
-    if (visible) {
-      form.setFieldsValue({
-        status: "pending",
-        employment_status_id: undefined,
-        admin_notes: "",
-      })
-      setSelectedStatus("pending")
-    }
-  }, [visible, form])
-
-  const handleSubmit = () => {
-    form.validateFields().then((values) => {
-      onOk({
-        ...values,
-        status: selectedStatus,
-      })
-    })
-  }
-
-  const handleClose = () => {
-    form.resetFields()
-    onCancel()
-  }
-
-  const getStatusDescription = (status) => {
-    const descriptions = {
-      approved: "Alumni will be visible in the directory and can be contacted by other users.",
-      pending: "Alumni profile will be under review and not visible to others until approved.",
-      inactive: "Alumni profile will be hidden from the directory and marked as inactive.",
-      rejected: "Selected alumni accounts will be rejected. They will see your admin notes on login with instructions to contact the Administrator Office.",
-    }
-    return descriptions[status] || ""
-  }
-
-  return (
-    <Modal
-      title={`Bulk Update Status - ${selectedAlumni.length} Alumni Selected`}
-      open={visible}
-      onCancel={handleClose}
-      onOk={handleSubmit}
-      confirmLoading={loading}
-      width={600}
-    >
-      <div style={{ marginBottom: 16 }}>
-        <Text strong>Selected Alumni:</Text>
-        <div style={{ maxHeight: 100, overflowY: 'auto', marginTop: 8, padding: 8, backgroundColor: '#f5f5f5', borderRadius: 6 }}>
-          {selectedAlumni.map((alumnus, index) => (
-            <Tag key={alumnus.id} style={{ marginBottom: 4 }}>
-              {alumnus.first_name} {alumnus.last_name}
-            </Tag>
-          ))}
-        </div>
-      </div>
-      
-      <Form form={form} layout="vertical">
-        <Form.Item label="New Status" name="status" rules={[{ required: true, message: "Please select a status" }]}>
-          <Select onChange={setSelectedStatus}>
-            <Option value="approved">
-              <Space>
-                <CheckCircleOutlined style={{ color: "#52c41a" }} />
-                Approved
-              </Space>
-            </Option>
-            <Option value="pending">
-              <Space>
-                <ClockCircleOutlined style={{ color: "#faad14" }} />
-                Pending Review
-              </Space>
-            </Option>
-            <Option value="rejected">
-              <Space>
-                <CloseCircleOutlined style={{ color: "#ff4d4f" }} />
-                Rejected
-              </Space>
-            </Option>
-          </Select>
-        </Form.Item>
-        
-        <Form.Item
-          name="employment_status_id"
-          label="Current Employment Status"
-          rules={[
-            {
-              required: true,
-              message: "Please select employment status",
-            },
-          ]}
-        >
-          <Select placeholder="Select employment status">
-            {statuses?.map((status) => (
-              <Option key={status.id} value={status.id}>
-                {status.status_name}
-              </Option>
-            ))}
-          </Select>
-        </Form.Item>
-
-        {selectedStatus && (
-          <div
-            style={{
-              padding: "12px",
-              backgroundColor: "#f5f5f5",
-              borderRadius: "6px",
-              marginBottom: "16px",
-            }}
-          >
-            <Text type="secondary">{getStatusDescription(selectedStatus)}</Text>
-          </div>
-        )}
-
-        <Form.Item
-          label="Admin Notes"
-          name="admin_notes"
-          rules={[
-            {
-              required: true,
-              message: "Please provide notes for this status change",
-            },
-          ]}
-        >
-          <TextArea rows={4} maxLength={500} showCount placeholder="Explain the reason for the status change" />
-        </Form.Item>
-      </Form>
-    </Modal>
-  )
-}
-// ============ END BULK STATUS UPDATE MODAL ============
-
-// On touch devices (phones/tablets, portrait or landscape), antd Tooltip
-// has no real "hover" to leave, so tapping the View Profile / Edit Status
-// icons leaves the tooltip popup stuck open on top of the card — it never
-// gets a mouseleave to close it, and it doesn't go away when the profile
-// drawer or status modal opens on top of it, which is the overlap seen on
-// mobile. Same fix already used in index.js: detect touch capability and
-// force the tooltip off (trigger=[] / open=false) instead of relying on
-// hover, since these devices don't need hover tooltips anyway.
-const useIsTouchDevice = () => {
-  const [isTouchDevice, setIsTouchDevice] = useState(false)
-
-  useEffect(() => {
-    const hasTouch =
-      typeof window !== "undefined" &&
-      ("ontouchstart" in window ||
-        (navigator.maxTouchPoints && navigator.maxTouchPoints > 0) ||
-        (navigator.msMaxTouchPoints && navigator.msMaxTouchPoints > 0))
-    setIsTouchDevice(!!hasTouch)
-  }, [])
-
-  return isTouchDevice
-}
-
-const AlumniCard = ({ alumnus, handleView, handleStatusUpdate, isSelectable, isSelected, onSelectChange }) => {
-  const role = secureLocalStorage.getItem("userRole")
-  const isTouchDevice = useIsTouchDevice()
-
-  const isRecentlyUpdated = useMemo(() => {
-    if (!alumnus.updated_at) return false
-    const updated = moment(alumnus.updated_at)
-    const now = moment()
-
-    return now.diff(updated, "seconds") < 30 && alumnus.created_at !== alumnus.updated_at
-  }, [alumnus.updated_at, alumnus.created_at])
-
-  const handleCheckboxChange = (e) => {
-    e.stopPropagation()
-    onSelectChange(alumnus.id, e.target.checked)
-  }
-
-  return (
-    <Badge.Ribbon text="Featured" color="red" style={{ display: alumnus.isFeatured ? "block" : "none" }}>
-      <Card
-        className={`alumni-card ${isSelected ? 'alumni-card-selected' : ''}`}
-        actions={[
-          <Tooltip
-            key="view"
-            onClick={() => handleView(alumnus)}
-            title="View Profile"
-            trigger={isTouchDevice ? [] : ["hover"]}
-            open={isTouchDevice ? false : undefined}
-          >
-            <EyeOutlined />
-          </Tooltip>,
-          ...(role === "admin"
-            ? [
-              <Tooltip
-                title="Edit Status"
-                key="edit"
-                onClick={() => handleStatusUpdate(alumnus, "approved")}
-                trigger={isTouchDevice ? [] : ["hover"]}
-                open={isTouchDevice ? false : undefined}
-              >
-                <EditOutlined />
-              </Tooltip>,
-            ]
-            : []),
-        ]}
-      >
-        <div className="alumni-card-content">
-          {isSelectable && (
-            <div className="alumni-card-checkbox" onClick={(e) => e.stopPropagation()}>
-              <Checkbox checked={isSelected} onChange={handleCheckboxChange} />
-            </div>
-          )}
-          <div className="alumni-header">
-            <Avatar size={64} src={alumnus.profile_image_url} />
-            <div className="alumni-basic-info">
-              <Title level={4} className="alumni-name">
-                {alumnus.first_name} {alumnus.last_name}
-                {getStatusIcon(alumnus.status)}
-              </Title>
-              <Text type="secondary">
-                {alumnus.major} • Class of {alumnus.graduation_year}
-              </Text>
-
-              {/* {role === "admin" && isRecentlyUpdated && (
-                <div style={{ marginTop: 8 }}>
-                  <Tag color="blue" icon={<BellOutlined />}>
-                    New Updated Information
-                  </Tag>
-                </div>
-              )} */}
-            </div>
-          </div>
-
-          <Divider />
-
-          <div className="alumni-details">
-            <div className="detail-item-alumini">
-              <TeamOutlined />
-              <Text strong>Employment:</Text>
-              {getEmploymentStatusTag(alumnus?.employment_status?.status_name)}
-            </div>
-
-            {alumnus.currentCompany && (
-              <div className="detail-item-alumini">
-                <UserOutlined />
-                <Text>{alumnus.currentCompany}</Text>
-                <Text type="secondary">• {alumnus.position}</Text>
-              </div>
-            )}
-
-            <div className="detail-item-alumini">
-              <EnvironmentOutlined />
-              <Text>{alumnus.address}</Text>
-            </div>
-
-            {alumnus.salary && (
-              <div className="detail-item-alumini">
-                <DollarOutlined />
-                <Text strong>${alumnus.salary.toLocaleString()}</Text>
-                <Text type="secondary">/year</Text>
-              </div>
-            )}
-
-<div className="detail-item-alumini">
-  <CalendarOutlined />
-  <LastActiveIndicator 
-    lastActive={alumnus.last_active || alumnus.lastActive || null} 
-    isOnline={alumnus.is_online || false} 
-  />
-</div>
-
-
-{role === "admin" && alumnus.admin_notes && (
-  <div className="detail-item-alumini">
-    <ExclamationCircleOutlined />
-    <Text type="secondary" style={{ fontStyle: "italic" }}>
-      Note: {alumnus.admin_notes}
-    </Text>
-  </div>
-)}
-
-          </div>
-
-          <div className="alumni-skills">
-            {Array.isArray(alumnus?.technical_skills) &&
-              alumnus?.technical_skills?.slice(0, 4).map((skill) => (
-                <Tag key={skill} className="skill-tag">
-                  {skill}
-                </Tag>
-              ))}
-            {Array.isArray(alumnus?.technical_skills) && alumnus?.technical_skills.length > 4 && (
-              <Tag className="skill-tag">+{alumnus?.technical_skills.length - 4} more</Tag>
-            )}
-          </div>
-
-          <Paragraph ellipsis={{ rows: 2 }} className="alumni-bio">
-            {alumnus.bio}
-          </Paragraph>
-        </div>
-      </Card>
-    </Badge.Ribbon>
-  )
-}
-
-// ============ QUIZ STATUS HELPERS ============
-const getAlumniQuizStatus = (alumnus, quizResults) => {
-  if (!Array.isArray(quizResults) || quizResults.length === 0) return []
-
-  // Get all unique quiz types that exist in results
-  const allTypes = [...new Set(quizResults.map((r) => r.type))]
-
-  // Get the quiz results for this specific alumni (matched by name or user id)
-  const alumniResults = quizResults.filter(
-    (r) =>
-      r.user?.name?.toLowerCase() ===
-        `${alumnus.first_name} ${alumnus.last_name}`.toLowerCase() ||
-      r.user?.id === alumnus.user_id ||
-      r.alumni_id === alumnus.id
-  )
-
-  const takenTypes = [...new Set(alumniResults.map((r) => r.type))]
-
-  return allTypes.map((type) => ({
-    type,
-    label: type === "abcd" ? "ABCD Quiz" : type === "rate" ? "Rating Quiz" : type,
-    taken: takenTypes.includes(type),
-    color: takenTypes.includes(type) ? "green" : "orange",
-    icon: type === "rate" ? <StarOutlined /> : <UnorderedListOutlined />,
-  }))
-}
-
-// ============ NEW REGISTERED CARD ============
-const NewRegisteredCard = ({ alumnus, handleView, handleStatusUpdate, quizResults }) => {
-  const role = secureLocalStorage.getItem("userRole")
-  const isTouchDevice = useIsTouchDevice()
-  const quizStatuses = getAlumniQuizStatus(alumnus, quizResults)
-
-  // "New Acct" badge lifetime = exactly 24 hours from the registration timestamp.
-  // Example: registered today at 1:00 PM → badge disappears tomorrow at 1:00 PM.
-  const showNewBadge = useMemo(() => {
-    if (!alumnus.created_at) return false
-    const created = moment(alumnus.created_at)
-    if (!created.isValid()) return false
-    return moment().diff(created, "hours", true) < 24
-  }, [alumnus.created_at])
-
-  const CardInner = (
-
-    <Card
-      className="alumni-card new-registered-card"
-      actions={[
-        <Tooltip
-          key="view"
-          onClick={() => handleView(alumnus)}
-          title="View Profile"
-          trigger={isTouchDevice ? [] : ["hover"]}
-          open={isTouchDevice ? false : undefined}
-        >
-          <EyeOutlined />
-        </Tooltip>,
-        ...(role === "admin"
-          ? [
-              <Tooltip
-                title="Edit Status"
-                key="edit"
-                onClick={() => handleStatusUpdate(alumnus, "approved")}
-                trigger={isTouchDevice ? [] : ["hover"]}
-                open={isTouchDevice ? false : undefined}
-              >
-                <EditOutlined />
-              </Tooltip>,
-            ]
-          : []),
-      ]}
-    >
-      <div className="alumni-card-content">
-
-        {/* ── Avatar + name row ── */}
-        <div className="alumni-header">
-          <Avatar size={56} src={alumnus.profile_image_url} />
-          <div className="alumni-basic-info">
-            <Title level={5} className="alumni-name" style={{ marginBottom: 2 }}>
-              {alumnus.first_name} {alumnus.last_name}
-              {getStatusIcon(alumnus.status)}
-            </Title>
-            <Text type="secondary" style={{ fontSize: 12 }}>
-              {alumnus.major} • {alumnus.graduation_year}
-            </Text>
-          </div>
-        </div>
-
-        <Divider style={{ margin: "8px 0" }} />
-
-        {/* ── Quiz status badges ── */}
-        <div className="nr-quiz-status" style={{ marginBottom: 8 }}>
-          <Text strong style={{ fontSize: 11, display: "block", marginBottom: 5 }}>
-            Quiz Status:
-          </Text>
-          {quizStatuses.length === 0 ? (
-            <Tag color="default" style={{ fontSize: 11 }}>No quizzes available</Tag>
-          ) : (
-            <Space wrap size={[4, 4]}>
-              {quizStatuses.map((qs) => (
-                <Tooltip
-                  key={qs.type}
-                  title={qs.taken ? `${qs.label} completed` : `${qs.label} not taken`}
-                  trigger={isTouchDevice ? [] : ["hover"]}
-                  open={isTouchDevice ? false : undefined}
-                >
-                  <Tag
-                    color={qs.taken ? "green" : "orange"}
-                    icon={qs.icon}
-                    style={{ fontSize: 11, margin: 0 }}
-                  >
-                    {qs.label}: <strong>{qs.taken ? "Completed ✓" : "Not Taken"}</strong>
-                  </Tag>
-                </Tooltip>
-              ))}
-            </Space>
-          )}
-        </div>
-
-        <Divider style={{ margin: "8px 0" }} />
-
-        {/* ── Details ── */}
-        <div className="alumni-details">
-          <div className="detail-item-alumini">
-            <TeamOutlined />
-            <Text strong style={{ fontSize: 12 }}>Employment:</Text>
-            {getEmploymentStatusTag(alumnus?.employment_status?.status_name)}
-          </div>
-
-          {alumnus.address && (
-            <div className="detail-item-alumini">
-              <EnvironmentOutlined />
-              <Text style={{ fontSize: 12 }}>{alumnus.address}</Text>
-            </div>
-          )}
-
-          <div className="detail-item-alumini">
-            <CalendarOutlined />
-            <LastActiveIndicator
-              lastActive={alumnus.last_active || alumnus.lastActive || null}
-              isOnline={alumnus.is_online || false}
-            />
-          </div>
-
-          <div className="detail-item-alumini">
-            <ClockCircleOutlined />
-            <Text type="secondary" style={{ fontSize: 12 }}>
-              Registered: {alumnus.created_at ? moment(alumnus.created_at).fromNow() : "N/A"}
-            </Text>
-          </div>
-
-          {role === "admin" && alumnus.admin_notes && (
-            <div className="detail-item-alumini">
-              <ExclamationCircleOutlined />
-              <Text type="secondary" style={{ fontStyle: "italic", fontSize: 12 }}>
-                Note: {alumnus.admin_notes}
-              </Text>
-            </div>
-          )}
-        </div>
-
-        {/* ── Bio — capped to 2 lines by CSS ── */}
-        {alumnus.bio && (
-          <Paragraph ellipsis={{ rows: 2 }} className="alumni-bio">
-            {alumnus.bio}
-          </Paragraph>
-        )}
-
-      </div>
-    </Card>
-  )
-
-  if (!showNewBadge) {
-    return CardInner
-  }
-
-  return (
-    <Badge.Ribbon
-      text={
-        <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: 0.3 }}>
-          <BellOutlined style={{ marginRight: 4 }} />
-          New Acct
-        </span>
-      }
-      color="#1890ff"
-      placement="end"
-    >
-      {CardInner}
-    </Badge.Ribbon>
-  )
-}
-
-// ============ END NEW REGISTERED CARD ============
-
-const CourseFolderModal = ({ visible, onCancel, course, alumni, handleView }) => {
-  const [folderSearch, setFolderSearch] = useState("")
-  const [folderEmploymentFilter, setFolderEmploymentFilter] = useState("all")
-  const [printPreviewVisible, setPrintPreviewVisible] = useState(false)
-
-  // Filter alumni by course_id and search/employment filters
-  const filteredCourseAlumni = useMemo(() => {
-    let filtered = alumni.filter((a) => a.course_id === course.id && a.status !== "rejected")
-
-    // Apply search filter
-    if (folderSearch) {
-      const searchLower = folderSearch.toLowerCase()
-      filtered = filtered.filter((a) => {
-        const firstName = a?.first_name?.toLowerCase() || ""
-        const lastName = a?.last_name?.toLowerCase() || ""
-        return firstName.includes(searchLower) || lastName.includes(searchLower)
-      })
-    }
-
-    // Apply employment status filter
-    if (folderEmploymentFilter !== "all") {
-      const statusMap = {
-        employed: 1,
-        unemployed: 2,
-        under_employed: 3,
-      }
-      filtered = filtered.filter((a) => a.employment_status_id === statusMap[folderEmploymentFilter])
-    }
-
-    return filtered
-  }, [alumni, course.id, folderSearch, folderEmploymentFilter])
-
-  const [isGeneratingPdf, setIsGeneratingPdf] = useState(false)
-
-  const handlePrint = () => {
-    setPrintPreviewVisible(true)
-  }
-
-  const handleActualPrint = async () => {
-    setIsGeneratingPdf(true)
-    try {
-      const courseLabel = course?.name
-        ? course.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")
-        : "course"
-      await exportElementToPdf("printable-area", {
-        filename: `alumni-list-${courseLabel}.pdf`,
-      })
-    } catch (err) {
-      console.error("Failed to generate PDF:", err)
-      message.error("Failed to generate PDF. Please try again.")
-    } finally {
-      setIsGeneratingPdf(false)
-    }
-  }
-
-  return (
-    <>
-      <Modal
-        title={
-          <Space>
-            <FolderOutlined style={{ color: course.color }} />
-            <span>
-              {course.code} - {course.name}
-            </span>
-          </Space>
-        }
-        open={visible}
-        onCancel={onCancel}
-        width={1200}
-        style={{ top: 24, maxWidth: "calc(100vw - 16px)" }}
-        styles={{ body: { maxHeight: "70vh", overflowY: "auto" } }}
-        className="course-folder-modal"
-        footer={[
-          <Button key="print" type="primary" icon={<PrinterOutlined />} onClick={handlePrint}>
-            Print Preview
-          </Button>,
-          <Button key="close" onClick={onCancel}>
-            Close
-          </Button>,
-        ]}
-      >
-        <Space direction="vertical" style={{ width: "100%" }} size="large">
-          {/* Search and Filter Controls */}
-          <Row gutter={16}>
-            <Col span={12}>
-              <Input
-                placeholder="Search alumni by name..."
-                prefix={<SearchOutlined />}
-                value={folderSearch}
-                onChange={(e) => setFolderSearch(e.target.value)}
-                size="large"
-                allowClear
-              />
-            </Col>
-            <Col span={12}>
-              <Select
-                value={folderEmploymentFilter}
-                onChange={setFolderEmploymentFilter}
-                style={{ width: "100%" }}
-                size="large"
-                placeholder="Employment Status"
-              >
-                <Option value="all">
-                  <Tag color="default">All Employment</Tag>
-                </Option>
-                <Option value="employed">
-                  <Tag color="green">Employed</Tag>
-                </Option>
-                <Option value="unemployed">
-                  <Tag color="red">Unemployed</Tag>
-                </Option>
-                <Option value="under_employed">
-                  <Tag color="orange">Under Employed</Tag>
-                </Option>
-              </Select>
-            </Col>
-          </Row>
-
-          {/* Statistics */}
-          <Card>
-            <Row gutter={16}>
-              <Col span={6}>
-                <Statistic title="Total Alumni" value={filteredCourseAlumni.length} prefix={<TeamOutlined />} />
-              </Col>
-              <Col span={6}>
-                <Statistic
-                  title="Employed"
-                  value={filteredCourseAlumni.filter((a) => a.employment_status_id === 1).length}
-                  valueStyle={{ color: "#52c41a" }}
-                />
-              </Col>
-              <Col span={6}>
-                <Statistic
-                  title="Unemployed"
-                  value={filteredCourseAlumni.filter((a) => a.employment_status_id === 2).length}
-                  valueStyle={{ color: "#ff4d4f" }}
-                />
-              </Col>
-              <Col span={6}>
-                <Statistic
-                  title="Under Employed"
-                  value={filteredCourseAlumni.filter((a) => a.employment_status_id === 3).length}
-                  valueStyle={{ color: "#faad14" }}
-                />
-              </Col>
-            </Row>
-          </Card>
-
-          {/* Alumni List */}
-          <div style={{ maxHeight: "500px", overflowY: "auto" }}>
-            {filteredCourseAlumni.length === 0 ? (
-              <Card>
-                <div style={{ textAlign: "center", padding: "40px 0" }}>
-                  <Title level={4}>No alumni found</Title>
-                  <Text type="secondary">No alumni match your search criteria for this course</Text>
-                </div>
-              </Card>
-            ) : (
-              <List
-                dataSource={filteredCourseAlumni}
-                renderItem={(alumnus) => (
-                  <List.Item
-                    key={alumnus.id}
-                    actions={[
-                      <Button key="view" type="link" icon={<EyeOutlined />} onClick={() => handleView(alumnus)}>
-                        View
-                      </Button>,
-                    ]}
-                  >
-                    <List.Item.Meta
-                      avatar={<Avatar size={50} src={alumnus.profile_image_url} />}
-                      title={
-                        <Space>
-                          <span>
-                            {alumnus.first_name} {alumnus.last_name}
-                          </span>
-                          {getStatusIcon(alumnus.status)}
-                        </Space>
-                      }
-                      description={
-                        <Space direction="vertical" size="small">
-                          <Text type="secondary">Class of {alumnus.graduation_year}</Text>
-                          {getEmploymentStatusTag(alumnus?.employment_status?.status_name)}
-                          {alumnus.current_company && (
-                            <Text>
-                              {alumnus.job_title} at {alumnus.current_company}
-                            </Text>
-                          )}
-                        </Space>
-                      }
-                    />
-                  </List.Item>
-                )}
-              />
-            )}
-          </div>
-        </Space>
-      </Modal>
-
-      {/* Print Preview Modal — forced light theme via wrapClassName.
-          #printable-area uses the shared .printable-area-surface (fixed
-          real A4 size, see ~/styles/printPreview.css) inside the shared
-          scrollable .print-preview-canvas wrapper, so this report is
-          pixel-consistent with every other PDF in the app and never
-          reflows or gets clipped between mobile portrait/landscape. */}
-      <Modal
-        title="Print Preview - A4 Layout"
-        open={printPreviewVisible}
-        onCancel={() => setPrintPreviewVisible(false)}
-        width={900}
-        style={{ top: 16, maxWidth: "calc(100vw - 16px)" }}
-        styles={{ body: { maxHeight: "78vh", overflowY: "auto", padding: 0 } }}
-        wrapClassName="print-preview-modal"
-        className="print-preview-modal"
-        footer={[
-          <Button key="cancel" onClick={() => setPrintPreviewVisible(false)}>
-            Cancel
-          </Button>,
-          <Button key="print" type="primary" icon={<FilePdfOutlined />} loading={isGeneratingPdf} onClick={handleActualPrint}>
-            {isGeneratingPdf ? "Generating PDF..." : "Download PDF"}
-          </Button>,
-        ]}
-      >
-        <div className="print-preview-canvas">
-        <div
-          id="printable-area"
-          data-print-theme="light"
-          className="printable-area-surface"
-          style={{
-            backgroundColor: "#fff",
-            color: "#0f172a",
-          }}
-        >
-          <div
-            className="print-report-header"
-            style={{ textAlign: "center", borderBottom: "2px solid #000" }}
-          >
-            <img
-              src={logo || "/placeholder.svg"}
-              alt="OCC Logo"
-              style={{ width: "80px", height: "80px", marginBottom: "10px", objectFit: "contain" }}
-            />
-            <Title level={2} style={{ margin: 0, color: "#000" }}>
-              Alumni Directory Report
-            </Title>
-            <Title level={4} style={{ margin: "10px 0", color: course.color }}>
-              {course.code} - {course.name}
-            </Title>
-            <Text type="secondary" style={{ color: "#666" }}>
-              Generated on: {moment().format("MMMM DD, YYYY")}
-            </Text>
-          </div>
-
-          {/* Print Statistics */}
-          <Card className="print-block" style={{ border: "1px solid #d9d9d9" }}>
-            <Row gutter={16}>
-              <Col span={6}>
-                <div style={{ textAlign: "center" }}>
-                  <Title level={3} style={{ color: "#000" }}>
-                    {filteredCourseAlumni.length}
-                  </Title>
-                  <Text style={{ color: "#000" }}>Total Alumni</Text>
-                </div>
-              </Col>
-              <Col span={6}>
-                <div style={{ textAlign: "center" }}>
-                  <Title level={3} style={{ color: "#52c41a" }}>
-                    {filteredCourseAlumni.filter((a) => a.employment_status_id === 1).length}
-                  </Title>
-                  <Text style={{ color: "#000" }}>Employed</Text>
-                </div>
-              </Col>
-              <Col span={6}>
-                <div style={{ textAlign: "center" }}>
-                  <Title level={3} style={{ color: "#ff4d4f" }}>
-                    {filteredCourseAlumni.filter((a) => a.employment_status_id === 2).length}
-                  </Title>
-                  <Text style={{ color: "#000" }}>Unemployed</Text>
-                </div>
-              </Col>
-              <Col span={6}>
-                <div style={{ textAlign: "center" }}>
-                  <Title level={3} style={{ color: "#faad14" }}>
-                    {filteredCourseAlumni.filter((a) => a.employment_status_id === 3).length}
-                  </Title>
-                  <Text style={{ color: "#000" }}>Under Employed</Text>
-                </div>
-              </Col>
-            </Row>
-          </Card>
-
-          {/* Print Table */}
-          <Table
-            className="print-block"
-            dataSource={filteredCourseAlumni}
-            pagination={false}
-            size="small"
-            rowKey="id"
-            style={{ width: "100%" }}
-            columns={[
-              {
-                title: "No.",
-                key: "index",
-                width: 50,
-                render: (_, __, index) => index + 1,
-              },
-              {
-                title: "Name",
-                key: "name",
-                render: (alumnus) => `${alumnus.first_name} ${alumnus.last_name}`,
-              },
-              {
-                title: "Graduation Year",
-                dataIndex: "graduation_year",
-                key: "graduation_year",
-                width: 120,
-              },
-              {
-                title: "Employment Status",
-                key: "employment",
-                width: 150,
-                render: (alumnus) => alumnus?.employment_status?.status_name || "N/A",
-              },
-              {
-                title: "Company",
-                dataIndex: "current_company",
-                key: "current_company",
-                render: (text) => text || "N/A",
-              },
-              {
-                title: "Position",
-                dataIndex: "job_title",
-                key: "job_title",
-                render: (text) => text || "N/A",
-              },
-            ]}
-          />
-
-          {/* Print Footer */}
-          <div style={{ marginTop: "40px", paddingTop: "20px", borderTop: "1px solid #d9d9d9", textAlign: "center" }}>
-            <Text type="secondary" style={{ color: "#666" }}>
-              This is an official document generated from the Alumni Management System
-            </Text>
-          </div>
-        </div>
-        </div>
-      </Modal>
-
-      {/* Print mechanics only — appearance (size/padding/typography/table
-          density) lives once, unconditionally, in ~/styles/printPreview.css.
-          Duplicating appearance here is exactly what let the preview drift
-          from the downloaded PDF before. */}
-      <style jsx global>{`
-        @media print {
-          html,
-          body {
-            background: #ffffff !important;
-            color: #0f172a !important;
-          }
-
-          body * {
-            visibility: hidden !important;
-          }
-
-          #printable-area,
-          #printable-area * {
-            visibility: visible !important;
-          }
-
-          #printable-area {
-            position: absolute !important;
-            left: 0 !important;
-            top: 0 !important;
-            margin: 0 !important;
-            z-index: 999999 !important;
-          }
-
-          .ant-modal-mask,
-          .ant-modal-wrap {
-            position: static !important;
-            background: none !important;
-          }
-
-          .ant-modal,
-          .ant-modal-content {
-            position: static !important;
-            box-shadow: none !important;
-            border: none !important;
-            background: transparent !important;
-          }
-
-          .ant-modal-header,
-          .ant-modal-footer,
-          .ant-modal-close {
-            display: none !important;
-          }
-
-          .ant-modal-body {
-            padding: 0 !important;
-          }
-
-          .print-preview-canvas {
-            background: none !important;
-            padding: 0 !important;
-            overflow: visible !important;
-          }
-          .print-preview-canvas .printable-area-surface {
-            box-shadow: none !important;
-          }
-
-          * {
-            -webkit-print-color-adjust: exact !important;
-            print-color-adjust: exact !important;
-            color-adjust: exact !important;
-          }
-
-          @page {
-            size: A4 portrait;
-            margin: 10mm;
-          }
-
-          html, body {
-            width: 210mm !important;
-            height: 297mm !important;
-            margin: 0 !important;
-            padding: 0 !important;
-            background: #fff !important;
-          }
-        }
-      `}</style>
-    </>
-  )
-}
-
 const AlumniList = () => {
-  const role = secureLocalStorage.getItem("userRole")
+  const role = getUserRole()
   // GET /alumni (useAlumni) is role:admin-gated on the backend by
   // design (see routes/api.php — regular alumni are not authorized to
   // enumerate every other alumni's full record). This page is reused
@@ -1344,7 +81,7 @@ const AlumniList = () => {
   // ("Browse the OCC Alumni Directory..." below), so it needs the right
   // data source per role: admins get the full admin record set, everyone
   // else gets the minimized public-safe directory.
-  const isAdminRole = role === "admin"
+  const isAdminRole = role === ROLES.ADMIN
   const queryClient = useQueryClient()
   const adminAlumniQuery = useAlumni({ enabled: isAdminRole })
   const directoryQuery = useAlumniDirectory({ enabled: !isAdminRole })
@@ -1630,7 +367,7 @@ useEffect(() => {
   const filteredAndSortedAlumni = useMemo(() => {
     const filtered = alumni.filter((alumnus) => {
       // Non-admins should never see rejected alumni
-      if (role !== "admin" && alumnus.status === "rejected") {
+      if (role !== ROLES.ADMIN && alumnus.status === "rejected") {
         return false
       }
 
@@ -1794,7 +531,7 @@ useEffect(() => {
             </Title>
 
             <Paragraph className="ae-hero__lead">
-           {role === "admin"
+           {role === ROLES.ADMIN
   ? "Manage and connect with OCC alumni. Track employment status, engagement, and graduate outcomes across every batch."
   : "Browse the OCC Alumni Directory, connect with fellow graduates, and build meaningful professional relationships within the alumni community."
 }
@@ -1834,7 +571,7 @@ useEffect(() => {
         </section>
         <br></br>
 
-        {role === "admin" && (
+        {role === ROLES.ADMIN && (
           <>
             <Card
               title={
@@ -1923,7 +660,7 @@ useEffect(() => {
                                 }}
                               >
                                 <Text type="secondary">Employed:</Text>
-                                <Text style={{ color: "#52c41a" }}>{employedCount}</Text>
+                                <Text style={{ color: COLORS.antdGreen }}>{employedCount}</Text>
                               </div>
                               <div
                                 style={{
@@ -1932,7 +669,7 @@ useEffect(() => {
                                 }}
                               >
                                 <Text type="secondary">Unemployed:</Text>
-                                <Text style={{ color: "#ff4d4f" }}>{unemployedCount}</Text>
+                                <Text style={{ color: COLORS.antdRed }}>{unemployedCount}</Text>
                               </div>
                               <div
                                 style={{
@@ -1941,7 +678,7 @@ useEffect(() => {
                                 }}
                               >
                                 <Text type="secondary">Under Emp:</Text>
-                                <Text style={{ color: "#faad14" }}>{underEmployedCount}</Text>
+                                <Text style={{ color: COLORS.antdGold }}>{underEmployedCount}</Text>
                               </div>
                             </Space>
                           </div>
@@ -1955,7 +692,7 @@ useEffect(() => {
           </>
         )}
 
-        {role === "admin" && (
+        {role === ROLES.ADMIN && (
           <Card className="tabs-card">
             <Tabs activeKey={activeTab} onChange={setActiveTab} className="status-tabs">
               <TabPane
@@ -1966,7 +703,7 @@ useEffect(() => {
                     <Badge
                       count={stats.total}
                       style={{
-                        backgroundColor: "#52c41a",
+                        backgroundColor: COLORS.antdGreen,
                         marginLeft: 8,
                       }}
                     />
@@ -1982,7 +719,7 @@ useEffect(() => {
                     <Badge
                       count={stats.pending}
                       style={{
-                        backgroundColor: "#faad14",
+                        backgroundColor: COLORS.antdGold,
                         marginLeft: 8,
                       }}
                     />
@@ -1998,7 +735,7 @@ useEffect(() => {
                     <Badge
                       count={stats.approved}
                       style={{
-                        backgroundColor: "#52c41a",
+                        backgroundColor: COLORS.antdGreen,
                         marginLeft: 8,
                       }}
                     />
@@ -2014,7 +751,7 @@ useEffect(() => {
                     <Badge
                       count={stats.newRegistered}
                       style={{
-                        backgroundColor: "#1890ff",
+                        backgroundColor: COLORS.antdBlue,
                         marginLeft: 8,
                       }}
                     />
@@ -2022,7 +759,7 @@ useEffect(() => {
                 }
                 key="new_registered"
               />
-              {role === "admin" && (
+              {role === ROLES.ADMIN && (
                 <TabPane
                   tab={
                     <span>
@@ -2031,7 +768,7 @@ useEffect(() => {
                       <Badge
                         count={stats.rejected}
                         style={{
-                          backgroundColor: "#ff4d4f",
+                          backgroundColor: COLORS.antdRed,
                           marginLeft: 8,
                         }}
                       />
@@ -2087,7 +824,7 @@ useEffect(() => {
               </Select>
 
               {/* ============ SELECT MODE CONTROLS ============ */}
-              {role === "admin" && (
+              {role === ROLES.ADMIN && (
                 <div className="select-mode-controls">
                   <Button
                     type={isSelectMode ? "primary" : "default"}
@@ -2122,14 +859,7 @@ useEffect(() => {
 
         {/* Alumni Display */}
         <div className="alumni-display">
-          {isLoading ? (
-            <CardSkeletonGrid
-              variant="gallery"
-              count={8}
-              columns={{ xs: 24, sm: 12, lg: 8, xl: 6 }}
-              gutter={[24, 24]}
-            />
-          ) : filteredAndSortedAlumni.length === 0 ? (
+          {isLoading ? null : filteredAndSortedAlumni.length === 0 ? (
             <Card className="no-alumni-card">
               <div className="no-alumni-content">
                 <Title level={3}>
@@ -2158,8 +888,8 @@ useEffect(() => {
                 bodyStyle={{ padding: "10px 16px" }}
               >
                 <Space>
-                  <BellOutlined style={{ color: "#1890ff", fontSize: 16 }} />
-                  <Text style={{ color: "#1890ff" }}>
+                  <BellOutlined style={{ color: COLORS.antdBlue, fontSize: 16 }} />
+                  <Text style={{ color: COLORS.antdBlue }}>
                     <strong>New Registered Alumni</strong> — Showing approved accounts registered within the last 7 days.
                     Quiz badges indicate which quizzes each alumni has completed.
                   </Text>

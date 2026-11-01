@@ -1,0 +1,132 @@
+/* Notification responsive fix (admin & alumni) (split from layout/index.css; keep import order: see styles/index.js) */
+/* ===== NOTIFICATION RESPONSIVE FIX (Admin & Alumni) ===== */
+/* Notification bell button - keep compact and never overlap header items */
+.btn-notification {
+  flex-shrink: 0 !important;
+}
+
+/* Tablet and below */
+@media (max-width: 1000px) {
+
+  /* Notification dropdown overlay - fit within viewport */
+  .ant-dropdown {
+    max-width: calc(100vw - 16px) !important;
+  }
+
+  .notification-dropdown-container,
+  .ant-dropdown .notification-dropdown-container {
+    max-width: calc(100vw - 16px) !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+  }
+
+  .notification-dropdown-container * {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+}
+
+/* Mobile phones */
+@media (max-width: 768px) {
+
+  /* Bell button - smaller so it fits with avatar */
+  .btn-notification {
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
+    padding: 0 !important;
+  }
+
+  .btn-notification .anticon {
+    font-size: 16px !important;
+  }
+
+  /* Notification dropdown */
+  .ant-dropdown {
+    max-width: 100vw !important;
+    left: 8px !important;
+    right: 8px !important;
+    width: calc(100vw - 16px) !important;
+  }
+
+  .notification-dropdown-container {
+    width: calc(100vw - 16px) !important;
+    max-width: calc(100vw - 16px) !important;
+  }
+
+  /* Notification list rows - prevent text overflow */
+  .notification-dropdown-container .ant-list-item,
+  .ant-modal .ant-list-item {
+    flex-wrap: wrap !important;
+    word-break: break-word !important;
+    overflow-wrap: anywhere !important;
+  }
+
+  .notification-dropdown-container .ant-list-item-meta-title,
+  .notification-dropdown-container .ant-list-item-meta-description,
+  .ant-modal .ant-list-item-meta-title,
+  .ant-modal .ant-list-item-meta-description {
+    white-space: normal !important;
+    word-break: break-word !important;
+    overflow-wrap: anywhere !important;
+    max-width: 100% !important;
+  }
+
+  /* "All Notifications" modal - full width, no overflow */
+  .ant-modal {
+    max-width: 95vw !important;
+    width: 95vw !important;
+    margin: 8px auto !important;
+    padding-bottom: 0 !important;
+  }
+
+  .ant-modal-content {
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+  }
+
+  .ant-modal-body {
+    max-height: calc(100vh - 140px) !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    padding: 12px !important;
+  }
+
+  .ant-modal-header,
+  .ant-modal-title {
+    max-width: 100% !important;
+    overflow: hidden !important;
+  }
+
+  .ant-modal-title>div {
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+  }
+
+  /* Header action area - avatar + bell must not collide with title */
+  .row-header .second {
+    flex-shrink: 0 !important;
+    gap: 6px !important;
+  }
+}
+
+/* Very small phones */
+@media (max-width: 380px) {
+  .btn-notification {
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    min-height: 32px !important;
+  }
+
+  .ant-modal {
+    width: 98vw !important;
+    max-width: 98vw !important;
+    margin: 4px auto !important;
+  }
+
+  .ant-modal-body {
+    padding: 8px !important;
+  }
+}

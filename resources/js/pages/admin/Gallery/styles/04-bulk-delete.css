@@ -1,0 +1,400 @@
+/* Bulk delete */
+.gal-bulk-delete-preview {
+  margin: 18px 0;
+  padding: 20px;
+  background:
+    linear-gradient(180deg, var(--c-fafcff) 0%, var(--c-slate-100) 100%);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+}
+
+.gal-bulk-delete-preview .ant-typography {
+  color: var(--text) !important;
+}
+
+.gal-bulk-delete-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.gal-bulk-delete-item {
+  text-align: center;
+}
+
+.gal-bulk-delete-item img {
+  width: 100%;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: var(--shadow-xs);
+  border: 1px solid var(--border);
+  margin-bottom: 6px;
+  transition: transform 0.2s var(--ease-spring);
+}
+
+.gal-bulk-delete-item img:hover {
+  transform: scale(1.04);
+}
+
+.gal-bulk-delete-title {
+  font-size: 11px;
+  color: var(--text-muted) !important;
+  display: block;
+}
+
+.gal-bulk-delete-more {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--accent), var(--accent-3));
+  color: var(--c-white);
+  font-weight: 700;
+  font-size: 13px;
+  border-radius: 10px;
+  height: 64px;
+}
+
+/* Light modal mask — subtle blur for premium feel */
+.gal-modal .ant-modal-mask,
+.gal-delete-modal .ant-modal-mask,
+.ant-modal-root .ant-modal-mask {
+  background: rgba(15, 23, 42, 0.45) !important;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+/* ============ Dark Theme — Modals (TRUE BLACK) ============ */
+[data-theme="black"] .gal-modal .ant-modal-content,
+[data-theme="black"] .gal-modal .ant-modal-header,
+[data-theme="black"] .gal-modal .ant-modal-body,
+[data-theme="black"] .gal-modal .ant-modal-footer,
+[data-theme="black"] .gal-delete-modal .ant-modal-content,
+[data-theme="black"] .gal-delete-modal .ant-modal-header,
+[data-theme="black"] .gal-delete-modal .ant-modal-body,
+[data-theme="black"] .gal-delete-modal .ant-modal-footer {
+  background: #0d0d0f !important;
+  background-image: none !important;
+  border-color: var(--c-1f1f23) !important;
+  color: var(--c-f0e8e8) !important;
+}
+
+[data-theme="black"] .gal-modal .ant-modal-content,
+[data-theme="black"] .gal-delete-modal .ant-modal-content {
+  border: 1px solid var(--c-1f1f23) !important;
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(255, 255, 255, 0.02) inset !important;
+}
+
+[data-theme="black"] .gal-modal .ant-modal-header,
+[data-theme="black"] .gal-delete-modal .ant-modal-header {
+  background: linear-gradient(180deg, #131316, #0d0d0f) !important;
+  border-bottom: 1px solid var(--c-1f1f23) !important;
+}
+
+[data-theme="black"] .gal-modal .ant-modal-footer,
+[data-theme="black"] .gal-delete-modal .ant-modal-footer {
+  border-top: 1px solid var(--c-1f1f23) !important;
+}
+
+[data-theme="black"] .gal-modal .ant-modal-title,
+[data-theme="black"] .gal-delete-modal .ant-modal-title {
+  color: #f5f0f0 !important;
+}
+
+[data-theme="black"] .gal-modal .ant-modal-title .anticon {
+  background: rgba(244, 63, 94, 0.14);
+  color: var(--c-rose-500);
+}
+
+[data-theme="black"] .gal-delete-modal .ant-modal-title .anticon {
+  background: rgba(239, 68, 68, 0.18);
+  color: #ff6b6b;
+}
+
+[data-theme="black"] .gal-modal .ant-modal-close-x,
+[data-theme="black"] .gal-delete-modal .ant-modal-close-x {
+  background: #1a1a1e !important;
+  color: var(--c-a89a9a) !important;
+  border: 1px solid var(--c-2a2a2f) !important;
+}
+
+[data-theme="black"] .gal-modal .ant-modal-close-x:hover,
+[data-theme="black"] .gal-delete-modal .ant-modal-close-x:hover {
+  background: var(--c-2a2a2f) !important;
+  color: var(--c-white) !important;
+}
+
+/* Form fields */
+[data-theme="black"] .gal-modal .ant-form-item-label>label {
+  color: #e8dede !important;
+}
+
+[data-theme="black"] .gal-modal .ant-input,
+[data-theme="black"] .gal-modal .ant-picker,
+[data-theme="black"] .gal-modal .ant-input-affix-wrapper,
+[data-theme="black"] .gal-modal .ant-input-number,
+[data-theme="black"] .gal-modal textarea.ant-input,
+[data-theme="black"] .gal-modal .ant-select:not(.ant-select-customize-input) .ant-select-selector {
+  background: #15151a !important;
+  border: 1px solid #26262c !important;
+  color: var(--c-f0e8e8) !important;
+}
+
+[data-theme="black"] .gal-modal .ant-input::placeholder,
+[data-theme="black"] .gal-modal textarea.ant-input::placeholder,
+[data-theme="black"] .gal-modal .ant-picker-input>input::placeholder,
+[data-theme="black"] .gal-modal .ant-select-selection-placeholder {
+  color: #6b5c5c !important;
+}
+
+[data-theme="black"] .gal-modal .ant-input:focus,
+[data-theme="black"] .gal-modal .ant-picker-focused,
+[data-theme="black"] .gal-modal .ant-input-affix-wrapper-focused,
+[data-theme="black"] .gal-modal .ant-select-focused:not(.ant-select-disabled) .ant-select-selector {
+  border-color: var(--c-rose-500) !important;
+  box-shadow: 0 0 0 4px rgba(244, 63, 94, 0.18) !important;
+}
+
+[data-theme="black"] .gal-modal .ant-picker-input>input,
+[data-theme="black"] .gal-modal .ant-select-selection-item {
+  color: var(--c-f0e8e8) !important;
+}
+
+[data-theme="black"] .gal-modal .ant-picker-suffix,
+[data-theme="black"] .gal-modal .ant-select-arrow,
+[data-theme="black"] .gal-modal .ant-input-prefix,
+[data-theme="black"] .gal-modal .ant-input-suffix {
+  color: var(--c-a89a9a) !important;
+}
+
+/* Upload dragger */
+[data-theme="black"] .gal-upload-dragger {
+  background: #131318 !important;
+  border-color: var(--c-2a2a2f) !important;
+}
+
+[data-theme="black"] .gal-upload-dragger:hover {
+  background: rgba(244, 63, 94, 0.08) !important;
+  border-color: var(--c-rose-500) !important;
+}
+
+[data-theme="black"] .gal-upload-dragger .ant-upload-drag-icon,
+[data-theme="black"] .gal-upload-dragger .ant-upload-drag-icon .anticon {
+  color: var(--c-rose-500) !important;
+}
+
+[data-theme="black"] .gal-upload-dragger .ant-upload-text {
+  color: var(--c-f0e8e8) !important;
+}
+
+[data-theme="black"] .gal-upload-dragger .ant-upload-hint {
+  color: var(--c-a89a9a) !important;
+}
+
+[data-theme="black"] .gal-upload-dragger .ant-upload-list-item {
+  background: #1a1a1e !important;
+  border-color: var(--c-2a2a2f) !important;
+  color: var(--c-f0e8e8) !important;
+}
+
+[data-theme="black"] .gal-upload-dragger .ant-upload-list-item-name {
+  color: var(--c-f0e8e8) !important;
+}
+
+/* Buttons inside modals */
+[data-theme="black"] .gal-modal-actions .ant-btn-default,
+[data-theme="black"] .gal-delete-modal .ant-btn-default {
+  background: #1a1a1e !important;
+  border: 1px solid var(--c-2a2a2f) !important;
+  color: var(--c-f0e8e8) !important;
+}
+
+[data-theme="black"] .gal-modal-actions .ant-btn-default:hover,
+[data-theme="black"] .gal-delete-modal .ant-btn-default:hover {
+  background: #25252b !important;
+  border-color: #38383f !important;
+  color: var(--c-white) !important;
+}
+
+[data-theme="black"] .gal-modal-actions .ant-btn-primary {
+  background: linear-gradient(135deg, var(--c-rose-500), #be123c) !important;
+  box-shadow: 0 6px 18px rgba(244, 63, 94, 0.35);
+}
+
+/* Preview boxes inside modals */
+[data-theme="black"] .gal-current-image-preview,
+[data-theme="black"] .gal-delete-preview,
+[data-theme="black"] .gal-bulk-delete-preview {
+  background: #131318 !important;
+  border-color: #26262c !important;
+}
+
+[data-theme="black"] .gal-current-image-preview .ant-typography,
+[data-theme="black"] .gal-delete-preview .ant-typography,
+[data-theme="black"] .gal-bulk-delete-preview .ant-typography {
+  color: #e8dede !important;
+}
+
+[data-theme="black"] .gal-bulk-delete-title {
+  color: var(--c-a89a9a) !important;
+}
+
+[data-theme="black"] .gal-preview-thumb,
+[data-theme="black"] .gal-delete-images img,
+[data-theme="black"] .gal-bulk-delete-item img {
+  border-color: var(--c-2a2a2f) !important;
+}
+
+/* Date picker dropdown panel */
+[data-theme="black"] .ant-picker-dropdown .ant-picker-panel-container {
+  background: #0d0d0f !important;
+  border: 1px solid var(--c-1f1f23) !important;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.7) !important;
+}
+
+[data-theme="black"] .ant-picker-dropdown .ant-picker-header,
+[data-theme="black"] .ant-picker-dropdown .ant-picker-content th,
+[data-theme="black"] .ant-picker-dropdown .ant-picker-cell {
+  color: #e8dede !important;
+}
+
+[data-theme="black"] .ant-picker-dropdown .ant-picker-header button {
+  color: var(--c-a89a9a) !important;
+}
+
+[data-theme="black"] .ant-picker-dropdown .ant-picker-cell-in-view {
+  color: var(--c-f0e8e8) !important;
+}
+
+[data-theme="black"] .ant-picker-dropdown .ant-picker-cell:hover .ant-picker-cell-inner {
+  background: rgba(244, 63, 94, 0.15) !important;
+}
+
+[data-theme="black"] .ant-picker-dropdown .ant-picker-cell-selected .ant-picker-cell-inner {
+  background: var(--c-rose-500) !important;
+  color: var(--c-white) !important;
+}
+
+/* Select dropdown */
+[data-theme="black"] .ant-select-dropdown {
+  background: #0d0d0f !important;
+  border: 1px solid var(--c-1f1f23) !important;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.7) !important;
+}
+
+[data-theme="black"] .ant-select-dropdown .ant-select-item {
+  color: #e8dede !important;
+}
+
+[data-theme="black"] .ant-select-dropdown .ant-select-item-option-active:not(.ant-select-item-option-disabled) {
+  background: rgba(244, 63, 94, 0.12) !important;
+}
+
+[data-theme="black"] .ant-select-dropdown .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+  background: rgba(244, 63, 94, 0.2) !important;
+  color: var(--c-white) !important;
+  font-weight: 600;
+}
+
+/* Modal mask — deeper blur in dark */
+[data-theme="black"] .ant-modal-mask {
+  background: rgba(0, 0, 0, 0.72) !important;
+  backdrop-filter: blur(6px);
+}
+
+/* ============ Preview Lightbox ============ */
+.gal-preview-root .ant-image-preview-mask {
+  background: rgba(0, 0, 0, 0.92);
+  backdrop-filter: blur(8px);
+}
+
+/* Safety net: even if rc-image's computed scale is briefly stale right
+   after a rotation (before the key-based remount in JS kicks in), the
+   image itself can never render larger than the viewport. Prevents the
+   "zoomed in / cropped" flash in landscape. */
+.gal-preview-root .ant-image-preview-img {
+  max-width: 100vw !important;
+  max-height: 100vh !important;
+  object-fit: contain;
+}
+
+@media (max-width: 1024px) and (orientation: landscape) {
+  /* Leave a little breathing room at the bottom so the photo doesn't sit
+     flush behind the fixed caption overlay (.gal-preview-caption-fixed). */
+  .gal-preview-root .ant-image-preview-img {
+    max-height: calc(100vh - 60px) !important;
+  }
+}
+
+.gal-preview-toolbar .ant-btn {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  color: var(--c-white) !important;
+  transition: all 0.2s var(--ease-spring);
+}
+
+.gal-preview-toolbar .ant-btn:hover {
+  background: rgba(255, 255, 255, 0.22) !important;
+  transform: translateY(-1px);
+}
+
+.gal-preview-toolbar .ant-btn-primary {
+  background: linear-gradient(135deg, var(--accent), var(--accent-3)) !important;
+  border-color: transparent !important;
+}
+
+.gal-preview-toolbar .ant-btn-primary:hover {
+  filter: brightness(1.1);
+}
+
+.gal-preview-stage {
+  position: relative;
+  display: inline-block;
+}
+
+/* Caption overlay — rendered as a sibling of Image.PreviewGroup in the JSX
+   (not inside imageRender), and pinned with position:fixed so it sits
+   directly against the viewport rather than inheriting the photo's own
+   pan/zoom/rotate transform. This is what keeps it on-screen and legible
+   in landscape, and after zooming or rotating the image. */
+.gal-preview-caption-fixed {
+  position: fixed;
+  left: 50%;
+  bottom: max(16px, env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  z-index: 1051;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  background: rgba(26, 20, 20, 0.85);
+  padding: 8px 16px;
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  white-space: nowrap;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  pointer-events: none;
+  max-width: 92vw;
+}
+
+.gal-preview-caption-fixed .gal-preview-caption-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 92vw;
+}
+
+.gal-preview-caption-title {
+  color: var(--c-white) !important;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.gal-preview-caption-meta {
+  color: rgba(255, 255, 255, 0.7) !important;
+  font-size: 11px;
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+}

@@ -1,8 +1,3 @@
-// import React, { Component } from "react";
-// import { Result, Button, Typography } from "antd";
-// import { Layout } from "~/components";
-// import { Link } from "react-router-dom";
-// import secureLocalStorage from "react-secure-storage";
 
 // const { Text } = Typography;
 
@@ -60,8 +55,10 @@ import React from "react";
 import { Result, Button, Typography } from "antd";
 import { Layout } from "~/components";
 import { Link } from "react-router-dom";
-import secureLocalStorage from "react-secure-storage";
 import { useAppTheme } from "~/hooks/useAppTheme";
+import { COLORS } from "~/config/theme";
+import { ROLES } from "~/config/roles";
+import { getUserRole } from "~/utils/session";
 
 const { Text } = Typography;
 
@@ -74,15 +71,15 @@ const Pages402 = () => {
 
     const isDark = currentTheme === "black";
 
-    const role = secureLocalStorage.getItem("userRole");
+    const role = getUserRole();
 
     let redirectLink = "/alumni";
 
-    if (role === "admin") {
+    if (role === ROLES.ADMIN) {
         redirectLink = "/home";
-    } else if (role === "department_head") {
+    } else if (role === ROLES.DEPARTMENT_HEAD) {
         redirectLink = "/department-dashboard";
-    } else if (role === "alumni") {
+    } else if (role === ROLES.ALUMNI) {
         redirectLink = "/home";
     }
 
@@ -101,7 +98,7 @@ const Pages402 = () => {
                        title={
                            <span
                                style={{
-                                   color: isDark ? "#ffffff" : "#000000",
+                                   color: isDark ? COLORS.white : COLORS.black,
                                }}
                            >
                                404
@@ -110,7 +107,7 @@ const Pages402 = () => {
                     subTitle={
                         <Text
                             style={{
-                                color: isDark ? "#fff" : "#000",
+                                color: isDark ? COLORS.white : COLORS.black,
                             }}
                         >
                             Sorry, the page you visited is Under

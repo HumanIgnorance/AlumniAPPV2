@@ -1,0 +1,390 @@
+/* Applicant Info Container */
+.applicant-info-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.applicant-info-large {
+  gap: 16px;
+}
+
+.applicant-avatar {
+  flex-shrink: 0;
+}
+
+.applicant-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.applicant-name-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.applicant-name {
+  font-size: 14px;
+  color: var(--c-neutral-800);
+}
+
+.applicant-email {
+  font-size: 12px;
+  display: block;
+  margin-top: 2px;
+  color: var(--c-antd-gray-7);
+}
+
+/* Job Card Meta */
+.job-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 10px;
+}
+
+.job-card-meta .meta-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  transition: transform 0.3s ease;
+}
+
+.job-card-meta .meta-item:hover {
+  transform: translateX(4px);
+}
+
+.job-card-meta .meta-item .anticon {
+  color: var(--c-brand);
+  font-size: 14px;
+}
+
+.job-card-date {
+  font-size: 12px;
+  color: var(--c-antd-gray-7);
+  display: flex;
+  align-items: center;
+  margin-top: 12px;
+}
+
+/* Job Card Actions */
+.job-card-actions {
+  padding: 16px 24px;
+  border-top: 1px solid var(--c-antd-gray-3);
+  background: linear-gradient(135deg, var(--c-zinc-50) 0%, var(--c-f5f7fa) 100%);
+}
+
+.job-card-actions .ant-btn {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.job-card-actions .ant-btn:hover {
+  transform: translateY(-2px);
+}
+
+/* ============ Empty State Card ============ */
+
+.empty-state-card {
+  border-radius: 16px;
+  text-align: center;
+  padding: 64px 24px;
+  animation: fadeInUp 0.5s ease-out;
+}
+
+.empty-state-card .ant-empty-image {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* ============ Create Job Card ============ */
+
+.create-job-card {
+  border-radius: 16px;
+  border: 2px dashed var(--c-antd-gray-5);
+  text-align: center;
+  transition: all 0.3s ease;
+  animation: fadeInUp 0.5s ease-out;
+}
+
+.create-job-card:hover {
+  border-color: var(--c-brand);
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.03) 0%, rgba(118, 75, 162, 0.03) 100%);
+}
+
+.create-job-content {
+  padding: 48px 24px;
+}
+
+.create-job-icon {
+  margin-bottom: 20px;
+  animation: float 3s ease-in-out infinite;
+}
+
+.create-job-content p {
+  color: var(--c-gray-666);
+  margin-bottom: 24px;
+  font-size: 15px;
+}
+
+/* ============ Job Details Drawer - Enhanced ============ */
+
+.job-details-drawer .ant-drawer-body {
+  padding: 0;
+}
+
+.job-details-content {
+  padding: 0;
+}
+
+.job-details-banner {
+  margin-bottom: 16px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.job-details-image-container {
+  position: relative;
+  height: 220px;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--c-f5f7fa) 0%, #e4e8eb 100%);
+}
+
+.job-details-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.job-details-header {
+  padding: 24px 24px 0;
+  animation: fadeInUp 0.4s ease-out;
+}
+
+.job-details-badges {
+  margin-top: 12px;
+}
+
+.job-details-creator-card {
+  margin: 16px 24px;
+  border-radius: 12px;
+  animation: fadeInUp 0.4s ease-out 0.1s both;
+}
+
+.job-details-info {
+  padding: 0 24px;
+  animation: fadeInUp 0.4s ease-out 0.2s both;
+}
+
+.job-details-info .info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 8px 0;
+  transition: all 0.3s ease;
+}
+
+.job-details-info .info-item:hover {
+  padding-left: 8px;
+  background: rgba(102, 126, 234, 0.05);
+  border-radius: 8px;
+}
+
+.job-details-info .info-icon {
+  font-size: 18px;
+  color: var(--c-brand);
+  margin-top: 2px;
+}
+
+.job-details-section {
+  padding: 0 24px;
+  margin-bottom: 16px;
+  animation: fadeInUp 0.4s ease-out 0.3s both;
+}
+
+.job-details-actions {
+  padding: 24px;
+  animation: fadeInUp 0.4s ease-out 0.4s both;
+}
+
+/* ============ Applications Drawer ============ */
+
+.applications-drawer .ant-drawer-body {
+  padding: 16px;
+  background: linear-gradient(135deg, var(--c-f5f7fa) 0%, var(--c-e8ecef) 100%);
+}
+
+.applications-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.application-card {
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  animation: fadeInUp 0.4s ease-out both;
+}
+
+.application-card:nth-child(1) { animation-delay: 0.1s; }
+.application-card:nth-child(2) { animation-delay: 0.15s; }
+.application-card:nth-child(3) { animation-delay: 0.2s; }
+
+/* ============ Table Styles - Enhanced ============ */
+
+.job-table {
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.job-table .ant-table-thead > tr > th {
+  background: linear-gradient(135deg, var(--c-zinc-50) 0%, var(--c-f5f7fa) 100%);
+  font-weight: 600;
+  color: var(--c-gray-333);
+  border-bottom: 2px solid var(--c-antd-gray-3);
+  padding: 16px;
+}
+
+.job-table .ant-table-tbody > tr {
+  transition: all 0.3s ease;
+}
+
+.job-table .ant-table-tbody > tr:hover > td {
+  background: linear-gradient(135deg, #f0f5ff 0%, var(--c-e6f4ff) 100%);
+}
+
+.job-table .ant-table-tbody > tr > td {
+  border-bottom: 1px solid var(--c-antd-gray-3);
+  padding: 16px;
+}
+
+.table-job-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* ============ Modal Styles - Enhanced ============ */
+
+.job-form-modal .ant-modal-content,
+.application-modal .ant-modal-content {
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+}
+
+.job-form-modal .ant-modal-header,
+.application-modal .ant-modal-header {
+  border-bottom: 1px solid var(--c-antd-gray-3);
+  padding: 24px 28px;
+  background: linear-gradient(135deg, var(--c-zinc-50) 0%, var(--c-white) 100%);
+}
+
+.job-form-modal .ant-modal-title,
+.application-modal .ant-modal-title {
+  font-weight: 600;
+  font-size: 20px;
+  color: var(--c-neutral-800);
+}
+
+.job-form-modal .ant-modal-body,
+.application-modal .ant-modal-body {
+  padding: 28px;
+  animation: fadeInUp 0.4s ease-out;
+}
+
+.job-form-modal .ant-form-item-label > label,
+.application-modal .ant-form-item-label > label {
+  font-weight: 500;
+  color: var(--c-gray-333);
+}
+
+.job-form-modal .ant-input,
+.job-form-modal .ant-input-textarea textarea,
+.application-modal .ant-input,
+.application-modal .ant-input-textarea textarea {
+  border-radius: 10px;
+  border: 1px solid var(--c-antd-gray-5);
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.job-form-modal .ant-input:hover,
+.job-form-modal .ant-input:focus,
+.application-modal .ant-input:hover,
+.application-modal .ant-input:focus {
+  border-color: var(--c-brand);
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+}
+
+/* ============ Fix: character counter (showCount) overlapping
+   the helper/"extra" text and required text below each field.
+   AntD renders the counter as a floated element; without clearing
+   it, the wrapper's height collapses and the counter overlaps
+   whatever comes next. ============ */
+.job-form-modal .ant-input-textarea-show-count,
+.job-form-modal .ant-input-show-count,
+.application-modal .ant-input-textarea-show-count,
+.application-modal .ant-input-show-count {
+  display: block;
+  overflow: hidden;
+}
+
+.job-form-modal .ant-input-textarea-show-count::after,
+.job-form-modal .ant-input-show-count::after,
+.application-modal .ant-input-textarea-show-count::after,
+.application-modal .ant-input-show-count::after {
+  display: block;
+  float: right;
+  clear: both;
+  margin-top: 6px;
+  font-size: 12px;
+  line-height: 1.4;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.job-form-modal .ant-form-item-extra,
+.application-modal .ant-form-item-extra {
+  clear: both;
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.job-form-modal .ant-form-item-control-input-content > *,
+.application-modal .ant-form-item-control-input-content > * {
+  max-width: 100%;
+}
+
+.job-form-modal .ant-modal-footer,
+.application-modal .ant-modal-footer {
+  border-top: 1px solid var(--c-antd-gray-3);
+  padding: 20px 28px;
+  background: linear-gradient(135deg, var(--c-zinc-50) 0%, var(--c-white) 100%);
+}
+
+/* ============ Badge and Tag Styles - Enhanced ============ */
+
+.ant-badge-count {
+  font-size: 10px;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.ant-tag {
+  border-radius: 16px;
+  font-size: 11px;
+  padding: 4px 12px;
+  font-weight: 500;
+  border: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ant-tag:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}

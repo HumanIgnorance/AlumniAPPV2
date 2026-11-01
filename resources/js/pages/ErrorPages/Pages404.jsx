@@ -1,8 +1,3 @@
-// import React, { Component } from "react";
-// import { Result, Button } from "antd";
-// import { Layout } from "~/components"
-// import { Link, useLocation } from "react-router-dom"
-// import secureLocalStorage from "react-secure-storage"
 // class Pages404 extends Component {
 //     constructor() {
 //         super();
@@ -55,14 +50,17 @@
 import React, { useEffect } from "react";
 import { Result, Button, Typography } from "antd";
 import { Link } from "react-router-dom";
-import secureLocalStorage from "react-secure-storage";
 import { useAppTheme } from "~/hooks/useAppTheme";
+import { COLORS } from "~/config/theme";
+import { ROLES } from "~/config/roles";
+import { buildPageTitle } from "~/config/site";
+import { getUserRole } from "~/utils/session";
 
 const { Text } = Typography;
 
 const Pages404 = () => {
     useEffect(() => {
-        document.title = "Page Not Found | ATMS - Opol Community College";
+        document.title = buildPageTitle("Page Not Found");
     }, []);
 
     // ============ THEME SYNC ============
@@ -73,15 +71,15 @@ const Pages404 = () => {
 
     const isDark = currentTheme === "black";
 
-    const role = secureLocalStorage.getItem("userRole");
+    const role = getUserRole();
 
     let redirectLink = "/alumni";
 
-    if (role === "admin") {
+    if (role === ROLES.ADMIN) {
         redirectLink = "/home";
-    } else if (role === "department_head") {
+    } else if (role === ROLES.DEPARTMENT_HEAD) {
         redirectLink = "/department-dashboard";
-    } else if (role === "alumni") {
+    } else if (role === ROLES.ALUMNI) {
         redirectLink = "/home";
     }
 
@@ -92,7 +90,7 @@ const Pages404 = () => {
                 alignItems: "center",
                 justifyContent: "center",
                 height: "100vh",
-                background: isDark ? "#0a0a0a" : "#ffffff",
+                background: isDark ? COLORS.ink0a : COLORS.white,
             }}
         >
          <Result
@@ -100,7 +98,7 @@ const Pages404 = () => {
     title={
         <span
             style={{
-                color: isDark ? "#ffffff" : "#000000",
+                color: isDark ? COLORS.white : COLORS.black,
             }}
         >
             404
@@ -109,7 +107,7 @@ const Pages404 = () => {
     subTitle={
         <Text
             style={{
-                color: isDark ? "#ffffff" : "#000000",
+                color: isDark ? COLORS.white : COLORS.black,
             }}
         >
             Sorry, the page you visited does not exist.

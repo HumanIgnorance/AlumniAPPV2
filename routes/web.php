@@ -31,6 +31,42 @@ use App\Http\Controllers\SpaController;
 // /manifest.json and return the app.blade.php view instead of JSON.
 Route::get('/manifest.json', PwaManifestController::class)->name('pwa.manifest');
 
+// ---------------------------------------------------------------------
+// Public file fallback: GET /storage/{path}
+//
+// Gallery, announcement, event, job-banner and profile images are all
+// referenced as /storage/<path> (see Gallery/Announcement models). That URL
+// normally works only if `php artisan storage:link` created the
+// public/storage symlink. On Windows/XAMPP that link is often missing (it
+// needs admin rights, and zip/copy operations drop it), which makes EVERY
+// uploaded image 404.
+//
+// When the symlink exists the web server serves the file itself and this
+// route is never hit. When it does not, this route streams the same file
+// straight out of storage/app/public so images still display.
+// Only the `public` disk is exposed; the `private` disk is untouched.
+// ---------------------------------------------------------------------
+Route::get('/storage/{path}', function (string $path) {
+    $root = realpath(storage_path('app/public'));
+    $file = $root ? realpath($root . DIRECTORY_SEPARATOR . $path) : false;
+
+    // Block traversal (../), missing files and anything outside the public disk.
+    if (!$file || strpos($file, $root . DIRECTORY_SEPARATOR) !== 0 || !is_file($file)) {
+        abort(404);
+    }
+
+    // Never serve executable/script files, even if one ever lands in storage.
+    $ext = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+    if (in_array($ext, ['php', 'phtml', 'phar', 'html', 'htm', 'js', 'svg'], true)) {
+        abort(404);
+    }
+
+    return response()->file($file, [
+        'Cache-Control' => 'public, max-age=86400',
+        'X-Content-Type-Options' => 'nosniff',
+    ]);
+})->where('path', '.+')->name('storage.fallback');
+
 // Catch-all SPA route — now passes through SpaController so the server
 // can inject per-route SEO tags (title/description/canonical) into
 // app.blade.php before React takes over on the client.

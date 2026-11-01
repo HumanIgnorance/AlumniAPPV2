@@ -1,0 +1,490 @@
+/* ============ CTA BANNER ============ */
+.ph-cta-banner {
+  margin: 20px 32px 70px;
+  max-width: 1176px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 30px;
+  padding: 54px 40px;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  background: linear-gradient(135deg, var(--ph-accent), var(--ph-accent-3) 55%, var(--ph-accent-2));
+}
+
+.ph-cta-banner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(300px 200px at 10% 0%, rgba(255, 255, 255, 0.18), transparent 60%),
+    radial-gradient(300px 200px at 90% 100%, rgba(255, 255, 255, 0.14), transparent 60%);
+}
+
+.ph-cta-content {
+  position: relative;
+  z-index: 1;
+}
+
+.ph-cta-title {
+  color: var(--c-white) !important;
+  font-size: 30px !important;
+  font-weight: 800 !important;
+  margin: 0 0 10px !important;
+}
+
+.ph-cta-sub {
+  color: rgba(255, 255, 255, 0.88) !important;
+  font-size: 15px !important;
+  max-width: 520px;
+  margin: 0 auto 26px !important;
+}
+
+.ph-cta-actions {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.ph-btn-white {
+  background: var(--c-white);
+  color: var(--ph-accent);
+  box-shadow: 0 10px 24px rgba(2, 6, 23, 0.2);
+}
+
+.ph-btn-white:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 30px rgba(2, 6, 23, 0.28);
+}
+
+.ph-btn-outline-white {
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.7);
+  color: var(--c-white);
+}
+
+.ph-btn-outline-white:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* ============ FOOTER ============ */
+/* display/visibility/width forced defensively: this makes the footer
+   immune to any broad, non-scoped `footer { display:none }` rule that
+   might come from elsewhere (a browser extension, a leftover template
+   stylesheet, etc.) — nothing legitimate in this app ever needs to
+   hide it, on any breakpoint or orientation. */
+.ph-footer {
+  display: block !important;
+  visibility: visible !important;
+  width: 100% !important;
+  padding: 54px 32px 24px;
+  padding-bottom: calc(24px + env(safe-area-inset-bottom));
+  padding-left: calc(32px + env(safe-area-inset-left));
+  padding-right: calc(32px + env(safe-area-inset-right));
+  box-sizing: border-box;
+  border-top: 1px solid transparent;
+}
+
+.ph-page.light .ph-footer { background: #0f1420; }
+.ph-page.dark .ph-footer { background: #05070c; }
+
+.ph-footer-inner {
+  max-width: 1240px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.3fr 1fr 1fr;
+  gap: 40px;
+}
+
+.ph-footer * {
+  color: var(--c-slate-300);
+}
+
+.ph-footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.ph-footer-brand img {
+  height: 40px;
+  width: 40px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.ph-footer-brand-title {
+  font-weight: 800;
+  font-size: 16px;
+  color: var(--c-white);
+}
+
+.ph-footer-desc {
+  font-size: 13.5px;
+  line-height: 1.7;
+  opacity: 0.75;
+  max-width: 320px;
+  margin-bottom: 18px;
+}
+
+.ph-footer-social {
+  display: flex;
+  gap: 10px;
+}
+
+.ph-footer-social a {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, transform 0.2s ease;
+  color: var(--c-white) !important;
+}
+
+.ph-footer-social a:hover {
+  background: linear-gradient(135deg, var(--ph-accent), var(--ph-accent-2));
+  transform: translateY(-2px);
+}
+
+.ph-footer-heading {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  color: var(--c-blue-300) !important;
+}
+
+.ph-footer-links {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  column-gap: 28px;
+  row-gap: 11px;
+  justify-content: start;
+}
+
+.ph-footer-links button,
+.ph-footer-links a {
+  background: none;
+  border: none;
+  padding: 0;
+  text-align: left;
+  font-size: 13.5px;
+  opacity: 0.78;
+  cursor: pointer;
+  font-family: inherit;
+  transition: opacity 0.2s ease, color 0.2s ease;
+}
+
+.ph-footer-links button:hover,
+.ph-footer-links a:hover {
+  opacity: 1;
+  color: var(--c-a5a1f7) !important;
+}
+
+.ph-footer-contact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13.5px;
+  opacity: 0.8;
+  margin-bottom: 14px;
+  line-height: 1.5;
+}
+
+.ph-footer-contact-item .anticon {
+  margin-top: 2px;
+  color: var(--c-blue-300);
+}
+
+.ph-footer-bottom {
+  max-width: 1240px;
+  margin: 36px auto 0;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: 12.5px;
+  opacity: 0.55;
+}
+
+/* ============ FOOTER CREDIT (highlighted developer line) ============ */
+.ph-footer-credit {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  opacity: 1 !important;
+}
+
+.ph-footer-tag {
+  font-family: "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 6px;
+  color: var(--c-blue-300) !important;
+  background: rgba(147, 197, 253, 0.12);
+  border: 1px solid rgba(147, 197, 253, 0.25);
+}
+
+.ph-footer-dev-name {
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--ph-accent-2), var(--ph-accent), var(--ph-accent-3));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  padding: 0 1px;
+}
+
+.ph-footer-dot {
+  opacity: 0.4;
+  margin: 0 1px;
+}
+
+.ph-footer-heart {
+  display: inline-block;
+  animation: ph-heart-beat 1.6s ease-in-out infinite;
+}
+
+@keyframes ph-heart-beat {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.25); }
+}
+
+@media (max-width: 575px) {
+  .ph-footer-bottom { flex-direction: column; align-items: flex-start; }
+  .ph-footer-credit { font-size: 12px; }
+}
+
+/* ============ REVEAL ANIMATION ============ */
+.ph-reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ph-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ==========================================================================
+   RESPONSIVE
+   Breakpoints: >=1200 desktop, 992-1199 small desktop/large tablet landscape,
+   768-991 tablet, 576-767 mobile landscape, <576 mobile portrait
+   ========================================================================== */
+
+@media (max-width: 1199px) {
+  .ph-container, .ph-section { padding-left: 24px; padding-right: 24px; }
+  .ph-header { padding: 12px 24px; }
+  .ph-hero { padding: 22px 24px 30px; }
+  .ph-footer { padding: 46px 24px 22px; }
+  .ph-cta-banner { margin-left: 24px; margin-right: 24px; }
+  .ph-nav { gap: 20px; }
+}
+
+@media (max-width: 991px) {
+  .ph-nav { display: none; }
+  .ph-burger { display: inline-flex; }
+
+  /* Sign In stays visible in the header on phones/tablets, right next
+     to the theme toggle. Sign Up is hidden here by default (mobile
+     portrait); the landscape override below brings it back. */
+  .ph-header-signup { display: none; }
+
+  .ph-hero-inner {
+    grid-template-columns: 1fr;
+    gap: 36px;
+    text-align: left;
+  }
+
+  /* Portrait now matches landscape's order: the welcome copy ("Main
+     Campus... Welcome home") comes first, the visual block sits below
+     it — previously order: -1 put the visual on top in portrait only,
+     which was inconsistent with landscape. */
+  .ph-hero-copy { order: 0; }
+
+  .ph-hero-visual {
+    height: auto;
+    order: 1;
+  }
+
+  .ph-visual-block { aspect-ratio: 1 / 1; }
+
+  .ph-hero-lead { max-width: 100%; }
+
+  .ph-grid { grid-template-columns: repeat(2, 1fr); }
+  .ph-gallery-grid { grid-template-columns: repeat(3, 1fr); }
+
+  .ph-footer-inner {
+    grid-template-columns: 1fr 1fr;
+    row-gap: 32px;
+  }
+
+  .ph-footer-brand-col { grid-column: 1 / -1; }
+}
+
+@media (max-width: 767px) {
+  .ph-hero-title { font-size: clamp(28px, 7vw, 38px) !important; }
+  .ph-hero-visual { height: auto; }
+  .ph-section { padding: 42px 20px; }
+  .ph-hero { padding: 18px 20px 24px; }
+  .ph-header { padding: 12px 18px; }
+  .ph-container { padding: 0 18px; }
+
+  .ph-grid { grid-template-columns: 1fr; }
+  .ph-gallery-grid { grid-template-columns: repeat(2, 1fr); }
+
+  .ph-section-head { flex-direction: column; align-items: flex-start; }
+
+  .ph-footer { padding: 40px 18px 20px; }
+  .ph-footer-inner { grid-template-columns: 1fr; gap: 30px; }
+  .ph-cta-banner { padding: 40px 22px; margin: 16px 18px 54px; border-radius: 22px; }
+  .ph-cta-title { font-size: 24px !important; }
+
+  .ph-card { flex-direction: column; }
+  .ph-card-icon-wrap { width: 100%; height: 150px; }
+}
+
+@media (max-width: 575px) {
+  /* "Opol Community College" stays visible in the header on mobile
+     portrait — sized down a touch so it fits comfortably next to the
+     theme toggle, Sign In button, and burger icon. */
+  .ph-brand-sub { font-size: 9px; letter-spacing: 0.05em; }
+  .ph-hero-badge { font-size: 11px; }
+  .ph-hero-stats { gap: 18px; }
+  .ph-hero-cta .ph-btn { flex: 1 1 auto; }
+  .ph-gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .ph-header-actions .ph-btn-lg { padding: 9px 16px; }
+  .ph-header-actions .ph-header-signin { padding: 8px 14px; font-size: 13px; }
+}
+
+/* Smallest phones (iPhone SE / older Android, ~320-374px wide), both
+   portrait and landscape — tighten the footer a bit further so nothing
+   overflows or feels cramped at the very bottom of the width range. */
+@media (max-width: 374px) {
+  .ph-footer { padding: 34px 14px 18px; }
+  .ph-footer-inner { gap: 24px; }
+  .ph-footer-links { column-gap: 18px; }
+  .ph-footer-bottom { flex-direction: column; align-items: flex-start; gap: 6px; }
+}
+
+
+@media (max-width: 900px) and (orientation: landscape) {
+  /* Mobile landscape: Sign Up rejoins Sign In in the header, beside
+     the theme toggle — there's enough width here for both. */
+  .ph-header-signup { display: inline-flex; }
+
+  .ph-hero-inner { grid-template-columns: 1fr; }
+  .ph-hero-copy { order: 0; }
+  .ph-hero-visual {
+    grid-template-columns: repeat(4, 1fr);
+    /* extra auto row up top so the badge has its own row to sit in,
+       instead of the images having to make room underneath it */
+    grid-template-rows: auto 1fr;
+    height: auto;
+    order: 1;
+    margin-top: 6px;
+    row-gap: 10px;
+  }
+  .ph-visual-block { aspect-ratio: 1 / 1; }
+  .ph-hero { padding: 12px 24px 18px; }
+
+  /* Was position: absolute, centered on top of the images (covering
+     the two middle ones). In landscape it now becomes a normal grid
+     item pinned to its own row above the images — spans the full
+     width, but only takes up as much of it as its content needs,
+     centered like a small title over the row instead of sitting on
+     top of it. */
+  .ph-visual-3 {
+    position: static;
+    top: auto;
+    left: auto;
+    transform: none;
+    grid-row: 1;
+    grid-column: 1 / -1;
+    justify-self: center;
+    margin: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ph-visual-events, .ph-visual-1, .ph-visual-2, .ph-visual-gallery, .ph-badge-1, .ph-reveal {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* ============ ZOOM WARNING MODAL ============
+   Same component/markup as FormLogin's zoom-warning-modal. AntD Modals
+   portal to document.body, outside .ph-page, so this can't be scoped
+   under .ph-page.dark — it has to key off the global [data-theme]
+   attribute, same as FormLogin.css does. Light theme uses the plain
+   antd Modal defaults (no overrides needed). */
+[data-theme="black"] .zoom-warning-modal .ant-modal-content {
+    background: var(--c-slate-900) !important;
+    border: 1px solid rgba(245, 158, 11, 0.45) !important;
+}
+
+[data-theme="black"] .zoom-warning-modal .ant-modal-body {
+    background: transparent !important;
+    color: var(--c-slate-100) !important;
+}
+
+[data-theme="black"] .zoom-warning-modal .ant-modal-body p {
+    background: transparent !important;
+    color: var(--c-slate-100) !important;
+    margin: 0 0 10px 0;
+}
+
+[data-theme="black"] .zoom-warning-modal .ant-modal-body p:last-child {
+    margin-bottom: 0;
+}
+
+[data-theme="black"] .zoom-warning-modal .ant-modal-body strong {
+    color: var(--c-amber-400) !important;
+}
+
+[data-theme="black"] .zoom-warning-modal .ant-modal-title,
+[data-theme="black"] .zoom-warning-modal .ant-modal-title span {
+    color: var(--c-amber-500) !important;
+    font-weight: 700;
+    text-shadow:
+        0 0 8px rgba(245, 158, 11, 0.45),
+        0 0 16px rgba(245, 158, 11, 0.25);
+}
+
+[data-theme="black"] .zoom-warning-modal .ant-modal-header {
+    background: var(--c-slate-900) !important;
+    border-bottom: 1px solid rgba(245, 158, 11, 0.3) !important;
+}
+
+[data-theme="black"] .zoom-warning-modal .ant-modal-footer {
+    background: var(--c-slate-900) !important;
+    border-top: none !important;
+    padding-top: 12px !important;
+}
+
+[data-theme="black"] .zoom-warning-modal .ant-modal-close {
+    color: var(--c-amber-500) !important;
+}
+
+[data-theme="black"] .zoom-warning-modal .ant-modal-close:hover {
+    color: var(--c-amber-400) !important;
+}
+
+[data-theme="black"] .zoom-warning-modal.ant-modal-wrap .ant-modal-mask,
+[data-theme="black"] .zoom-warning-modal .ant-modal-mask {
+    background: rgba(0, 0, 0, 0.65) !important;
+}

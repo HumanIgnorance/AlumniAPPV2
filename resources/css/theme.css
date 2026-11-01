@@ -1,0 +1,56 @@
+/* ==========================================================
+   SHARED THEME TOKENS  (semantic layer on top of tokens.css)
+   ----------------------------------------------------------
+   tokens.css  = raw palette (--c-xxxxxx)
+   theme.css   = what things MEAN (--app-*): page background, card surface,
+                 text, borders. Light is the default; dark is applied by
+                 <html data-theme="black"> (set by useAppTheme + app.blade.php).
+
+   Rule for all new/fixed CSS:  use  var(--app-*)  instead of a hex value or a
+   per-page copy of the palette, so every page flips to dark together.
+   JS equivalent: resources/js/config/theme.js (THEME_SEMANTIC).
+   ========================================================== */
+:root {
+    --app-bg: #ffffff;
+    --app-surface: #ffffff;
+    --app-surface-2: #f1f3f6;
+    --app-border: #e2e6ec;
+    --app-border-strong: #cbd2dc;
+    --app-text: #0f172a;
+    --app-text-muted: #5b6677;
+    --app-text-subtle: #8a94a6;
+    --app-accent: #4f46e5;
+    --app-accent-soft: rgba(79, 70, 229, 0.12);
+    --app-success: #16a34a;
+    --app-warning: #f59e0b;
+    --app-danger: #dc2626;
+    --app-shadow: 0 4px 14px rgba(2, 6, 23, 0.08);
+    --app-font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, sans-serif;
+}
+
+html[data-theme="black"] {
+    --app-bg: #0a0c12;
+    --app-surface: #121620;
+    --app-surface-2: #1a1f2b;
+    --app-border: #242a36;
+    --app-border-strong: #303746;
+    --app-text: #e7e9ee;
+    --app-text-muted: #9ba3af;
+    --app-text-subtle: #6f7887;
+    --app-accent: #818cf8;
+    --app-accent-soft: rgba(129, 140, 248, 0.16);
+    --app-success: #4ade80;
+    --app-warning: #fbbf24;
+    --app-danger: #f87171;
+    --app-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+    color-scheme: dark;
+}
+
+/* Page canvas follows the theme — so loaders, route fallbacks and the moment
+   after logout never flash white in dark mode. */
+html,
+body {
+    background-color: var(--app-bg);
+    color: var(--app-text);
+}

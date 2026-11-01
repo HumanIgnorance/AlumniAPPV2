@@ -1,0 +1,212 @@
+/* ==========================================================
+   COMPACT PAGE HEADERS  (all pages inside the login)
+   ----------------------------------------------------------
+   Every feature page (Dashboard, Events, Gallery, Announcements,
+   Job Posts, Alumni, Audit Log, Feedback, FAQ, About, Department
+   pages, Questions, Quiz pages) used to open with a full-width
+   "hero" of 60-130px padding, a 50px title and a stack of stat
+   cards that pushed the real content below the fold.
+
+   This file turns all of them into ONE consistent slim header:
+
+      [logo] [CHIP]  Page title ............. [actions / stats]
+      one-line description
+
+   It is selector-prefixed with #app so it always wins over the
+   per-page stylesheets (which load lazily, in any order), without
+   touching those files. To tweak the whole app's header size,
+   change the variables below.
+   ========================================================== */
+:root {
+    --pg-hdr-pad-y: 14px;
+    --pg-hdr-pad-x: 20px;
+    --pg-hdr-radius: 16px;
+    --pg-hdr-gap: 16px;
+    --pg-hdr-title: clamp(20px, 1.6vw + 12px, 26px);
+    --pg-hdr-logo: 38px;
+}
+
+/* ---------- 1. The header container ---------- */
+#app :is(.ae-hero, .gal-hero, .fb-hero, .faq-hero, .about-hero, .dh-hero, .qm-hero, .quiz-hero, .dashboard-hero, .dashboard-header-card) {
+    padding: var(--pg-hdr-pad-y) var(--pg-hdr-pad-x) !important;
+    border-radius: var(--pg-hdr-radius) !important;
+    margin: 0 0 var(--pg-hdr-gap) !important;
+    min-height: 0 !important;
+    height: auto !important;
+    text-align: left !important;
+}
+#app .quiz-hero { margin: 12px auto var(--pg-hdr-gap) !important; }
+
+/* decorative blobs stay behind, but can't enlarge the box */
+#app :is(.ae-hero, .gal-hero, .fb-hero, .faq-hero, .about-hero, .dh-hero, .qm-hero, .quiz-hero, .dashboard-hero, .dashboard-header-card) :is([class*="__bg"], .dh-hero__bg) {
+    overflow: hidden;
+}
+
+/* ---------- 2. Inner layout: one tidy flex row that wraps ---------- */
+#app :is(.ae-hero__content, .gal-hero__content, .fb-hero__content, .faq-hero__content, .about-hero__content, .quiz-hero__content,
+         .dh-hero__content, .qm-hero__content, .dashboard-hero__content, .dashboard-header-card .dh-header-row) {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 8px 14px !important;
+    max-width: none !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    text-align: left !important;
+}
+/* "left" wrappers (dashboard / dept / questions) become the same flex row */
+#app :is(.dashboard-hero__left, .dh-hero__left, .qm-hero__left, .dashboard-header-card .dh-header-row > div:first-child) {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    gap: 6px 14px !important;
+    flex: 1 1 320px !important;
+    min-width: 0 !important;
+    text-align: left !important;
+}
+
+/* ---------- 3. Brand: logo + chip on one line ---------- */
+#app :is(.ae-hero__brand, .gal-hero__brand, .fb-hero__brand, .faq-hero__brand, .about-hero__brand, .quiz-hero__brand, .dashboard-hero__brand) {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+#app :is(.ae-hero__logo, .gal-hero__logo, .fb-hero__logo, .faq-hero__logo, .about-hero__logo, .quiz-hero__logo, .dashboard-hero__logo) {
+    width: var(--pg-hdr-logo) !important;
+    height: var(--pg-hdr-logo) !important;
+    padding: 4px !important;
+    border-radius: 10px !important;
+    flex: 0 0 auto;
+    animation: none !important;
+}
+#app :is(.ae-hero__brand-meta, .gal-hero__brand-meta, .fb-hero__brand-meta, .faq-hero__brand-meta, .about-hero__brand-meta, .quiz-hero__brand-meta, .dashboard-hero__brand-meta) {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    margin: 0 !important;
+}
+/* the secondary "eyebrow" line is redundant once the page has a title */
+#app :is(.ae-hero__eyebrow, .gal-hero__eyebrow, .fb-hero__eyebrow, .faq-hero__eyebrow, .about-hero__eyebrow, .quiz-hero__eyebrow, .dashboard-hero__eyebrow) {
+    display: none !important;
+}
+#app :is(.ae-hero, .gal-hero, .fb-hero, .faq-hero, .about-hero, .quiz-hero, .dashboard-hero, .dh-hero, .qm-hero) .ant-tag {
+    margin: 0 !important;
+    font-size: 11px !important;
+    line-height: 20px !important;
+    padding: 0 8px !important;
+}
+
+/* ---------- 4. Title + description ---------- */
+#app :is(.ae-hero__title, .gal-hero__title, .fb-hero__title, .faq-hero__title, .about-hero__title, .quiz-hero__title,
+         .dashboard-hero__title, .dh-hero__title, .qm-hero__title, .dh-header-title) {
+    font-size: var(--pg-hdr-title) !important;
+    line-height: 1.2 !important;
+    margin: 0 !important;
+    letter-spacing: -0.01em;
+}
+#app :is(.ae-hero__lead, .gal-hero__lead, .fb-hero__lead, .faq-hero__lead, .about-hero__lead, .quiz-hero__lead,
+         .dashboard-hero__lead, .dh-hero__lead, .qm-hero__lead, .dh-header-sub) {
+    flex: 1 1 100% !important;
+    order: 4;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    font-size: 13.5px !important;
+    line-height: 1.45 !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* ---------- 5. Actions / controls / stats: pushed to the right ---------- */
+/* order: brand, title, then actions/stats on the same row; description below */
+#app :is(.ae-hero__brand, .gal-hero__brand, .fb-hero__brand, .faq-hero__brand, .about-hero__brand, .quiz-hero__brand, .dashboard-hero__brand) { order: 1; }
+#app :is(.ae-hero__title, .gal-hero__title, .fb-hero__title, .faq-hero__title, .about-hero__title, .quiz-hero__title,
+         .dashboard-hero__title, .dh-hero__title, .qm-hero__title, .dh-header-title) { order: 2; flex: 0 1 auto !important; min-width: 0; }
+#app :is(.gal-hero__actions, .ae-hero__stats, .fb-hero__stats, .qm-hero__stats, .gal-hero__stats, .about-hero__cta, .quiz-hero__company) { order: 3; }
+#app :is(.gal-hero__actions, .dashboard-hero__controls, .dh-hero__actions, .qm-hero__actions, .about-hero__cta, .dh-header-select) {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    gap: 8px !important;
+    margin: 0 0 0 auto !important;
+    width: auto !important;
+}
+#app :is(.gal-hero__actions, .dashboard-hero__controls, .dh-hero__actions, .qm-hero__actions) .ant-btn {
+    height: 34px !important;
+    padding: 0 14px !important;
+    font-size: 13px !important;
+}
+
+/* stat tiles become small inline pills */
+#app :is(.ae-hero__stats, .fb-hero__stats, .qm-hero__stats, .gal-hero__stats) {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+    max-width: none !important;
+    margin: 0 0 0 auto !important;
+    width: auto !important;
+    justify-content: flex-end !important;
+}
+#app .gal-hero__stats { margin-right: 0 !important; margin-left: auto !important; }
+#app .gal-hero__stats > .ant-col {
+    flex: 0 0 auto !important;
+    width: auto !important;
+    max-width: none !important;
+    padding: 0 !important;
+}
+#app :is(.ae-stat, .gal-stat-card, .fb-stat, .qm-stat) {
+    padding: 6px 12px !important;
+    gap: 10px !important;
+    border-radius: 12px !important;
+    min-width: 0 !important;
+    transform: none !important;
+}
+#app :is(.ae-stat__icon, .gal-stat-icon, .fb-stat__icon, .qm-stat__icon) {
+    width: 28px !important;
+    height: 28px !important;
+    border-radius: 8px !important;
+    font-size: 14px !important;
+}
+#app :is(.ae-stat__value, .fb-stat__value, .qm-stat__value, .gal-stat-card .ant-statistic-content, .gal-stat-card .ant-statistic-content-value) {
+    font-size: 16px !important;
+    line-height: 1.1 !important;
+}
+#app :is(.ae-stat__label, .gal-stat-label, .fb-stat__label, .qm-stat__label) {
+    font-size: 11px !important;
+    line-height: 1.2 !important;
+}
+
+/* quiz header company row stays one slim line */
+#app .quiz-hero__company { margin: 0 0 0 auto !important; }
+
+/* ---------- 6. Home page greeting hero ---------- */
+#app .hp-hero { padding: 16px 22px 14px !important; border-radius: var(--pg-hdr-radius) !important; }
+#app .hp-hero-chip { margin-bottom: 6px !important; }
+#app .hp-greeting-name { font-size: clamp(22px, 1.6vw + 12px, 28px) !important; }
+#app .hp-greeting-text { font-size: 17px !important; }
+#app .hp-date-row { margin-bottom: 4px !important; }
+
+/* ---------- 7. Phones ---------- */
+@media (max-width: 767px) {
+    :root { --pg-hdr-pad-y: 12px; --pg-hdr-pad-x: 14px; --pg-hdr-radius: 14px; --pg-hdr-gap: 12px; --pg-hdr-logo: 32px; }
+    #app :is(.ae-hero__lead, .gal-hero__lead, .fb-hero__lead, .faq-hero__lead, .about-hero__lead, .quiz-hero__lead,
+             .dashboard-hero__lead, .dh-hero__lead, .qm-hero__lead, .dh-header-sub) {
+        -webkit-line-clamp: 2;
+        font-size: 12.5px !important;
+    }
+    #app :is(.gal-hero__actions, .dashboard-hero__controls, .dh-hero__actions, .qm-hero__actions,
+             .ae-hero__stats, .fb-hero__stats, .qm-hero__stats, .gal-hero__stats) {
+        margin-left: 0 !important;
+        width: 100% !important;
+        justify-content: flex-start !important;
+    }
+    #app :is(.dashboard-hero__select, .dashboard-hero__select .ant-select-selector) { width: 100% !important; }
+    #app :is(.ae-stat, .gal-stat-card, .fb-stat, .qm-stat) { flex: 1 1 calc(50% - 8px); }
+}

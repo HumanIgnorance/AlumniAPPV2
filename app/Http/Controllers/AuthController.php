@@ -4,17 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Faculties;
 use App\Models\Alumni;
-use App\Models\Coaches;
 use App\Models\Notification;
 use App\Models\User;
 use App\Models\Course;
 use App\Models\AuditLog;
-use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cookie;
 use App\Http\Middleware\TokenFromAuthCookie;

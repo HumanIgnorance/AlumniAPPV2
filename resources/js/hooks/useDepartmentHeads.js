@@ -110,4 +110,3 @@ export const useDepartmentHeadAlumni = () => {
   )
 }
 
-export default useDepartmentHeads

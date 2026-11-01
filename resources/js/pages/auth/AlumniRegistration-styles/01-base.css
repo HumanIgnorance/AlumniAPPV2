@@ -1,0 +1,354 @@
+/* ============ Design Tokens (mirror of FormLogin) ============ */
+.alumni-registration {
+
+  min-height: 100vh;
+  width: 100%;
+  padding: 32px 20px 64px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  position: relative;
+  z-index: 10;
+
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto,
+               "Helvetica Neue", Arial, sans-serif;
+
+  background:
+    radial-gradient(900px 500px at 100% -10%, rgba(14, 165, 233, 0.10), transparent 60%),
+    radial-gradient(900px 500px at -10% 110%, rgba(124, 58, 237, 0.10), transparent 60%),
+    var(--bg);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* ============ Dark theme (mirror of FormLogin) ============ */
+[data-theme="black"] .alumni-registration {
+
+  background:
+    radial-gradient(900px 500px at 100% -10%, rgba(14, 165, 233, 0.10), transparent 60%),
+    radial-gradient(900px 500px at -10% 110%, rgba(124, 58, 237, 0.12), transparent 60%),
+    var(--bg);
+}
+
+/* ============ Keyframes ============ */
+@keyframes regFadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes regFloat {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
+}
+@keyframes regShine {
+  0%   { transform: translateX(-150%) skewX(-18deg); }
+  100% { transform: translateX(250%) skewX(-18deg); }
+}
+@keyframes regSlideIn {
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ============ Card Shell ============ */
+.registration-card {
+  width: 100%;
+  max-width: 1040px;
+  margin: 16px 0;
+  background:
+    linear-gradient(180deg, var(--surface), var(--surface)) padding-box,
+    linear-gradient(135deg,
+      rgba(79, 70, 229, 0.45),
+      rgba(14, 165, 233, 0.35),
+      rgba(124, 58, 237, 0.45)) border-box !important;
+  border: 1px solid transparent !important;
+  border-radius: var(--radius-xl) !important;
+  box-shadow: var(--shadow-lg) !important;
+  color: var(--text);
+  animation: regFadeUp 0.6s var(--ease-spring) both;
+  overflow: hidden;
+  position: relative;
+}
+.registration-card .ant-card-body {
+  padding: 36px 40px !important;
+  background: transparent !important;
+}
+[data-theme="black"] .registration-card,
+[data-theme="black"] .registration-card .ant-card-body {
+  background: var(--surface) !important;
+  color: var(--text) !important;
+}
+[data-theme="black"] .registration-card {
+  background:
+    linear-gradient(180deg, var(--surface), var(--surface)) padding-box,
+    linear-gradient(135deg,
+      rgba(99, 102, 241, 0.55),
+      rgba(14, 165, 233, 0.45),
+      rgba(168, 85, 247, 0.55)) border-box !important;
+}
+
+/* ============ Back Button ============ */
+.back-to-login-section { margin-bottom: 8px; text-align: left; }
+.back-to-login-btn {
+  color: var(--text-muted) !important;
+  font-weight: 600 !important;
+  padding: 4px 10px !important;
+  border-radius: 10px !important;
+  transition: all 0.25s var(--ease-smooth);
+}
+.back-to-login-btn:hover,
+.back-to-login-btn:focus {
+  color: var(--accent) !important;
+  background: var(--accent-soft) !important;
+}
+
+/* ============ Company Hero Header ============ */
+.company-header {
+  position: relative;
+  overflow: hidden;
+  margin: 8px 0 20px;
+  padding: 32px 28px;
+  border-radius: var(--radius-lg);
+  background:
+    radial-gradient(700px 320px at -10% -10%, rgba(79, 70, 229, 0.14), transparent 60%),
+    radial-gradient(700px 320px at 110% 0%,  rgba(14, 165, 233, 0.14), transparent 60%),
+    var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+.company-header::after {
+  content: "";
+  position: absolute; inset: 0;
+  background-image:
+    radial-gradient(rgba(15, 23, 42, 0.08) 1px, transparent 1px);
+  background-size: 18px 18px;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+  pointer-events: none;
+}
+[data-theme="black"] .company-header::after {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+}
+
+.company-logo-section {
+  position: relative; z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 4px 0;
+}
+.company-logo {
+  flex-shrink: 0;
+  background: var(--surface) !important;
+  padding: 6px;
+  border-radius: 16px !important;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
+  animation: regFloat 6s ease-in-out infinite;
+}
+.company-info { flex: 1; min-width: 0; }
+.company-name {
+  margin: 0 0 6px !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.015em;
+  font-size: clamp(20px, 2.6vw, 28px) !important;
+  background: linear-gradient(135deg,
+              var(--accent) 0%,
+              var(--accent-3) 50%,
+              var(--accent-2) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent !important;
+}
+.company-slogan {
+  display: block;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  color: var(--text-muted) !important;
+  margin-bottom: 12px;
+}
+.company-details { margin-top: 8px; }
+.company-details .ant-space,
+.company-details .ant-typography {
+  color: var(--text-muted) !important;
+  font-size: 13px;
+}
+.company-details .anticon { color: var(--accent); }
+.company-header .ant-divider { display: none; }
+
+/* ============ Registration Header ============ */
+.registration-header {
+  text-align: center;
+  padding: 4px 0 8px;
+}
+.registration-header h3.ant-typography,
+.registration-header h3 {
+  margin: 0 0 8px !important;
+  color: var(--text) !important;
+  font-weight: 800 !important;
+  font-size: clamp(22px, 3vw, 30px) !important;
+  letter-spacing: -0.015em;
+}
+.registration-header .ant-typography-secondary {
+  color: var(--text-muted) !important;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* ============ Progress ============ */
+.progress-section {
+  margin: 20px auto 8px;
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.progress-section .ant-progress-line { width: 100%; }
+.progress-section .ant-progress-bg {
+  background: linear-gradient(90deg, var(--accent), var(--accent-2)) !important;
+  height: 8px !important;
+  border-radius: 999px !important;
+}
+.progress-section .ant-progress-inner {
+  background: var(--surface-2) !important;
+  border-radius: 999px !important;
+}
+.progress-section .ant-typography,
+.progress-section .ant-progress-text {
+  color: var(--text-muted) !important;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+/* ============ Steps ============ */
+.registration-steps { margin: 28px 0 8px; }
+.registration-steps .ant-steps-item-title {
+  font-weight: 600 !important;
+  color: var(--text-muted) !important;
+}
+.registration-steps .ant-steps-item-process .ant-steps-item-title,
+.registration-steps .ant-steps-item-finish .ant-steps-item-title {
+  color: var(--text) !important;
+}
+.registration-steps .ant-steps-item-description {
+  color: var(--text-subtle) !important;
+}
+.registration-steps .ant-steps-item-icon {
+  background: var(--surface) !important;
+  border-color: var(--border-strong) !important;
+  transition: all 0.25s var(--ease-smooth);
+}
+.registration-steps .ant-steps-item-icon .ant-steps-icon {
+  color: var(--text-muted) !important;
+}
+.registration-steps .ant-steps-item-process .ant-steps-item-icon {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2)) !important;
+  border-color: transparent !important;
+  box-shadow: 0 0 0 6px var(--accent-soft);
+}
+.registration-steps .ant-steps-item-process .ant-steps-item-icon .ant-steps-icon { color: var(--c-white) !important; }
+.registration-steps .ant-steps-item-finish .ant-steps-item-icon {
+  background: var(--surface) !important;
+  border-color: var(--accent) !important;
+}
+.registration-steps .ant-steps-item-finish .ant-steps-item-icon .ant-steps-icon { color: var(--accent) !important; }
+.registration-steps .ant-steps-item-tail::after {
+  background-color: var(--border) !important;
+}
+.registration-steps .ant-steps-item-finish > .ant-steps-item-container > .ant-steps-item-tail::after {
+  background-color: var(--accent) !important;
+}
+
+/* ============ Form Step ============ */
+.form-step {
+  padding: 8px 0;
+  animation: regSlideIn 0.35s var(--ease-smooth);
+}
+.form-step h3,
+.form-step .ant-typography h3 {
+  margin-bottom: 8px !important;
+  color: var(--text) !important;
+  font-weight: 700;
+}
+.form-step .ant-typography-secondary {
+  color: var(--text-muted) !important;
+}
+
+/* ============ Form fields (Ant Design) ============ */
+.alumni-registration .ant-form-item-label > label,
+.registration-form .ant-form-item-label > label {
+  font-weight: 600 !important;
+  color: var(--text) !important;
+  font-size: 13.5px !important;
+}
+.alumni-registration .ant-form-item-label > label.ant-form-item-required::before {
+  color: var(--c-red-500) !important;
+}
+.alumni-registration .ant-form-item-explain-error {
+  color: var(--c-red-500) !important;
+  font-size: 12.5px;
+}
+
+/* ============ Multi-select / Tags fields (e.g. Honors/Awards) ============
+   By default, antd's tag-mode Select should grow its own height to fit
+   wrapped tag rows. On narrow single-column mobile layouts this can fail
+   silently (tags wrap but the box height doesn't follow), so the extra
+   rows spill outside the field and visually overlap whatever comes next.
+   Force the selector to size itself to its content in every case. */
+.alumni-registration .ant-select-selector {
+  height: auto !important;
+}
+.alumni-registration .ant-select-multiple .ant-select-selector,
+.alumni-registration .ant-select-selector .ant-select-selection-overflow {
+  flex-wrap: wrap !important;
+  align-items: flex-start !important;
+  row-gap: 6px !important;
+}
+.alumni-registration .ant-select-multiple .ant-select-selection-overflow-item {
+  max-width: 100% !important;
+  flex: none !important;
+}
+.alumni-registration .ant-select-multiple .ant-select-selection-item {
+  max-width: 100% !important;
+  white-space: normal !important;
+  overflow-wrap: anywhere !important;
+}
+.alumni-registration .ant-select-multiple .ant-select-selection-search {
+  min-width: 60px !important;
+}
+
+.alumni-registration .ant-input,
+.alumni-registration .ant-input-affix-wrapper,
+.alumni-registration .ant-input-password,
+.alumni-registration .ant-input-number,
+.alumni-registration .ant-input-number-input,
+.alumni-registration .ant-picker,
+.alumni-registration .ant-select-selector,
+.alumni-registration textarea.ant-input {
+  border-radius: 12px !important;
+  border: 1px solid var(--border-strong) !important;
+  background: var(--surface) !important;
+  color: var(--text) !important;
+  transition: border-color 0.2s var(--ease-smooth),
+              box-shadow 0.2s var(--ease-smooth) !important;
+}
+.alumni-registration .ant-input,
+.alumni-registration .ant-input-affix-wrapper {
+  padding: 8px 12px !important;
+}
+.alumni-registration .ant-input-affix-wrapper .ant-input {
+  border: none !important;
+  background: transparent !important;
+  padding: 0 !important;
+}
+.alumni-registration .ant-input::placeholder,
+.alumni-registration .ant-input-affix-wrapper input::placeholder,
+.alumni-registration .ant-picker-input input::placeholder,
+.alumni-registration .ant-select-selection-placeholder {
+  color: var(--text-subtle) !important;
+}
+.alumni-registration .ant-input-prefix .anticon,
+.alumni-registration .ant-input-suffix .anticon,
+.alumni-registration .ant-picker-suffix {
+  color: var(--text-subtle) !important;
+}

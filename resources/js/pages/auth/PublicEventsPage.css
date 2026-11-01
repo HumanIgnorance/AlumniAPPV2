@@ -53,11 +53,11 @@
 }
 
 .ph-page.light .pev-section + .pev-section {
-  border-top-color: #edf0f5;
+  border-top-color: var(--c-edf0f5);
 }
 
 .ph-page.dark .pev-section + .pev-section {
-  border-top-color: #1d2230;
+  border-top-color: var(--c-1d2230);
 }
 
 /* ============ EVENT CARD ============ */
@@ -124,7 +124,7 @@
 }
 
 .pev-media-carousel .slick-dots li.slick-active button {
-  background: #ffffff;
+  background: var(--c-white);
 }
 
 .pev-media-count {
@@ -137,7 +137,7 @@
   padding: 3px 9px;
   border-radius: 999px;
   background: rgba(0, 0, 0, 0.55);
-  color: #ffffff;
+  color: var(--c-white);
   pointer-events: none;
 }
 
@@ -188,12 +188,12 @@
 
 .pev-badge.is-ongoing {
   background: rgba(16, 185, 129, 0.14);
-  color: #0ea973;
+  color: var(--c-0ea973);
 }
 
 .pev-badge.is-completed {
   background: rgba(107, 114, 128, 0.16);
-  color: #6b7280;
+  color: var(--c-gray-500);
 }
 
 .pev-badge.is-featured {
@@ -208,7 +208,7 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #0ea973;
+  background: var(--c-0ea973);
   margin-right: 2px;
   animation: pevPulse 1.6s ease-in-out infinite;
 }
@@ -245,11 +245,11 @@
 }
 
 .ph-page.light .pev-card-facts {
-  border-top: 1px dashed #e6eaf1;
+  border-top: 1px dashed var(--c-e6eaf1);
 }
 
 .ph-page.dark .pev-card-facts {
-  border-top: 1px dashed #242a36;
+  border-top: 1px dashed var(--c-242a36);
 }
 
 .pev-fact {

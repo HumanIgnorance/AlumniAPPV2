@@ -1,0 +1,590 @@
+/* Black theme - Event Details Body */
+[data-theme="black"] .event-details-body {
+    background: var(--c-ink-0a) !important;
+    color: var(--c-white) !important;
+}
+
+[data-theme="black"] .event-details-body .ant-typography {
+    color: var(--c-white) !important;
+}
+
+[data-theme="black"] .event-details-body .ant-typography-secondary {
+    color: var(--c-a0a0a0) !important;
+}
+
+[data-theme="black"] .event-description-detailed {
+    color: var(--c-a0a0a0) !important;
+}
+
+/* Black theme - Detail Items */
+[data-theme="black"] .detail-item-large {
+    color: var(--c-white) !important;
+}
+
+[data-theme="black"] .detail-content .ant-typography {
+    color: var(--c-white) !important;
+}
+
+[data-theme="black"] .detail-content .ant-typography-secondary {
+    color: var(--c-a0a0a0) !important;
+}
+
+/* Black theme - Registration Progress */
+[data-theme="black"] .registration-progress {
+    background: var(--c-ink-1a) !important;
+}
+
+[data-theme="black"] .registration-progress .ant-typography {
+    color: var(--c-white) !important;
+}
+
+/* Black theme - Progress bar trail (the unfilled track).
+   Without this override the inner track is too dark to see on a black background. */
+[data-theme="black"] .ant-progress-inner,
+[data-theme="black"] .ant-progress .ant-progress-inner {
+    background-color: #3a3a3a !important;
+}
+
+/* Keep the filled bar and percentage text readable */
+[data-theme="black"] .ant-progress-text {
+    color: var(--c-e0e0e0) !important;
+}
+
+/* Ensure the active-status animated stripe is visible */
+[data-theme="black"] .ant-progress-bg {
+    position: relative;
+}
+
+/* Black theme - Pricing Card */
+[data-theme="black"] .pricing-card {
+    background: var(--c-ink-0a) !important;
+    border-color: var(--c-gray-333) !important;
+}
+
+[data-theme="black"] .pricing-card .ant-card-body {
+    background: var(--c-ink-0a) !important;
+}
+
+[data-theme="black"] .pricing-header .ant-typography {
+    color: var(--c-white) !important;
+}
+
+/* Black theme - Speaker Card */
+[data-theme="black"] .speaker-card {
+    background: var(--c-ink-1a) !important;
+    border-color: var(--c-gray-333) !important;
+}
+
+[data-theme="black"] .speaker-card:hover {
+    border-color: var(--c-blue-400) !important;
+}
+
+[data-theme="black"] .speaker-info .ant-typography {
+    color: var(--c-white) !important;
+}
+
+/* Black theme - Agenda */
+[data-theme="black"] .agenda-item {
+    border-color: var(--c-gray-333) !important;
+}
+
+[data-theme="black"] .agenda-time .ant-typography {
+    color: var(--c-blue-400) !important;
+}
+
+[data-theme="black"] .agenda-content .ant-typography {
+    color: var(--c-white) !important;
+}
+
+/* Black theme - Safety, Tags, Agenda Cards */
+[data-theme="black"] .safety-card,
+[data-theme="black"] .tags-card,
+[data-theme="black"] .agenda-card {
+    background: var(--c-ink-0a) !important;
+    border-color: var(--c-gray-333) !important;
+}
+
+[data-theme="black"] .safety-card .ant-card-head,
+[data-theme="black"] .tags-card .ant-card-head,
+[data-theme="black"] .agenda-card .ant-card-head {
+    background: var(--c-ink-0a) !important;
+    border-color: var(--c-gray-333) !important;
+    color: var(--c-white) !important;
+}
+
+[data-theme="black"] .safety-card .ant-card-body,
+[data-theme="black"] .tags-card .ant-card-body,
+[data-theme="black"] .agenda-card .ant-card-body {
+    background: var(--c-ink-0a) !important;
+}
+
+/* Black theme - Guideline */
+[data-theme="black"] .guideline-category {
+    border-color: var(--c-gray-333) !important;
+}
+
+[data-theme="black"] .category-header {
+    border-color: var(--c-gray-333) !important;
+}
+
+[data-theme="black"] .category-header .ant-typography {
+    color: var(--c-white) !important;
+}
+
+[data-theme="black"] .guideline-item .ant-typography {
+    color: var(--c-a0a0a0) !important;
+}
+
+/* Black theme - Scrollbar */
+[data-theme="black"]
+    .create-event-modal
+    .ant-modal-body::-webkit-scrollbar-track,
+[data-theme="black"]
+    .event-details-modal
+    .ant-modal-body::-webkit-scrollbar-track {
+    background: var(--c-ink-1a) !important;
+}
+
+[data-theme="black"]
+    .create-event-modal
+    .ant-modal-body::-webkit-scrollbar-thumb,
+[data-theme="black"]
+    .event-details-modal
+    .ant-modal-body::-webkit-scrollbar-thumb {
+    background: var(--c-gray-333) !important;
+}
+
+[data-theme="black"]
+    .create-event-modal
+    .ant-modal-body::-webkit-scrollbar-thumb:hover,
+[data-theme="black"]
+    .event-details-modal
+    .ant-modal-body::-webkit-scrollbar-thumb:hover {
+    background: var(--c-555555) !important;
+}
+
+/* Black theme - Image Placeholder */
+[data-theme="black"] .image-placeholder {
+    background: var(--c-ink-1a) !important;
+    color: var(--c-a0a0a0) !important;
+}
+
+/* Black theme - Dividers */
+[data-theme="black"] .ant-divider {
+    border-color: var(--c-gray-333) !important;
+}
+
+/* Black theme - Statistic */
+[data-theme="black"] .ant-statistic-title {
+    color: var(--c-a0a0a0) !important;
+}
+
+[data-theme="black"] .ant-statistic-content {
+    color: var(--c-white) !important;
+}
+
+/* Black theme - Alert */
+[data-theme="black"] .ant-alert {
+    background: var(--c-ink-1a) !important;
+    border-color: var(--c-gray-333) !important;
+}
+
+[data-theme="black"] .TimePicker.RangePicker.ant-alert-message {
+    color: var(--c-white) !important;
+}
+
+[data-theme="black"] .ant-alert-description {
+    color: var(--c-a0a0a0) !important;
+}
+
+/* Black theme - Steps */
+[data-theme="black"] .ant-steps-item-title {
+    color: var(--c-white) !important;
+}
+
+[data-theme="black"] .ant-steps-item-description {
+    color: var(--c-a0a0a0) !important;
+}
+
+/* Black theme - Event Info Card */
+[data-theme="black"] .event-info-card {
+    background: var(--c-ink-0a) !important;
+    border-color: var(--c-gray-333) !important;
+}
+
+[data-theme="black"] .event-info-card .ant-card-head {
+    background: var(--c-ink-0a) !important;
+    border-color: var(--c-gray-333) !important;
+}
+
+[data-theme="black"] .event-info-card .ant-card-body {
+    background: var(--c-ink-0a) !important;
+}
+
+/* Black theme - Organizer */
+[data-theme="black"] .organizer-info .ant-typography {
+    color: var(--c-white) !important;
+}
+
+/* Black theme - Tags Detailed */
+[data-theme="black"] .event-tag-detailed {
+    background: var(--c-ink-1a) !important;
+    border-color: var(--c-gray-333) !important;
+}
+
+/* ============ END BLACK THEME STYLES FOR ALUMNI EVENTS ============ */
+/* Responsive Design */
+@media (max-width: 768px) {
+    .event-details-modal {
+        width: 95% !important;
+        margin: 10px;
+    }
+
+    .event-details-body {
+        padding: 16px;
+    }
+
+    .event-details-body .ant-col-16,
+    .event-details-body .ant-col-8 {
+        width: 100%;
+    }
+
+    .event-status-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .event-organizer-detailed {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .organizer-actions {
+        align-self: flex-end;
+    }
+
+    /* FIX: Featured tags wrap on mobile - target Ant Design Space component */
+    .event-info-card .ant-space {
+        flex-wrap: wrap !important;
+        gap: 6px !important;
+        max-width: 100% !important;
+    }
+
+    .event-info-card .ant-space-item {
+        margin-right: 0 !important;
+    }
+
+    .event-info-card .ant-tag {
+        font-size: 11px;
+        padding: 2px 6px;
+        margin-bottom: 4px;
+    }
+
+    .event-meta {
+        flex-wrap: wrap;
+        gap: 6px;
+        max-width: 100%;
+    }
+
+    .event-tags-detailed {
+        flex-wrap: wrap;
+        gap: 6px;
+        max-width: 100%;
+    }
+
+    .event-tag-detailed {
+        font-size: 11px;
+        padding: 2px 6px;
+    }
+}
+
+/* Alumni Details - Contact Actions */
+[data-theme="black"] .preview-contact-info .ant-btn {
+    color: var(--c-white) !important;
+    border-color: var(--c-444444) !important;
+}
+
+[data-theme="black"] .preview-contact-info .ant-btn .anticon {
+    color: var(--c-white) !important;
+}
+
+/* Event Header Actions */
+[data-theme="black"] .event-header-actions .ant-btn {
+    color: var(--c-white) !important;
+}
+
+[data-theme="black"] .event-header-actions .ant-btn .anticon {
+    color: var(--c-white) !important;
+}
+/* InputNumber Dark Theme */
+[data-theme="black"] .ant-input-number {
+    background: var(--c-ink-1a) !important;
+    border-color: var(--c-gray-333) !important;
+}
+
+[data-theme="black"] .ant-input-number-input {
+    background: var(--c-ink-1a) !important;
+    color: var(--c-white) !important;
+}
+
+[data-theme="black"] .ant-input-number-group-addon {
+    background: var(--c-ink-1a) !important;
+    color: var(--c-white) !important;
+    border-color: var(--c-gray-333) !important;
+}
+
+[data-theme="black"] .ant-input-number-handler-wrap {
+    background: var(--c-ink-1a) !important;
+}
+
+[data-theme="black"] .ant-input-number-handler {
+    border-color: var(--c-gray-333) !important;
+}
+
+[data-theme="black"] .ant-input-number-handler-up-inner,
+[data-theme="black"] .ant-input-number-handler-down-inner {
+    color: var(--c-white) !important;
+}
+
+/* Organizer Actions */
+[data-theme="black"] .organizer-actions .ant-btn {
+    color: var(--c-white) !important;
+    border-color: var(--c-444444) !important;
+}
+
+[data-theme="black"] .organizer-actions .ant-btn .anticon {
+    color: var(--c-white) !important;
+}
+
+[data-theme="black"] .organizer-actions a {
+    color: var(--c-white) !important;
+}
+
+[data-theme="black"] .organizer-actions .anticon {
+    color: var(--c-white) !important;
+}
+
+/* DatePicker & TimePicker placeholder text */
+[data-theme="black"] .ant-picker-input input::placeholder {
+    color: var(--c-white) !important;
+    opacity: 1 !important;
+}
+
+/* Actual input text */
+[data-theme="black"] .ant-picker-input > input {
+    color: var(--c-white) !important;
+    -webkit-text-fill-color: var(--c-white) !important;
+}
+
+@media (max-width: 480px) {
+    /* ---- Details-modal carousel (event-gallery-section) ---- */
+    .event-gallery-section,
+    .event-carousel,
+    .event-carousel .slick-list,
+    .event-carousel .slick-track {
+        height: 240px !important;
+        min-height: 240px !important;
+    }
+
+    .event-gallery-section {
+        width: 100% !important;
+    }
+
+    /* Slick's per-slide inner wrapper — safe to size */
+    .event-carousel .slick-slide > div {
+        height: 240px !important;
+    }
+
+    .carousel-slide {
+        position: relative !important;
+        display: block !important;
+        overflow: hidden !important;
+        width: 100% !important;
+        height: 240px !important;
+    }
+
+    .carousel-slide .event-detail-image,
+    .carousel-slide img {
+        display: block !important;
+        width: 100% !important;
+        height: 240px !important;
+        object-fit: cover !important;
+        object-position: center center !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+
+    /* Hover overlay never triggers on touch — keep hidden so it doesn't cover image */
+    .event-detail-image-overlay {
+        opacity: 0 !important;
+    }
+
+    /* ---- Event-card cover (portrait card grid view) ---- */
+    .event-cover {
+        height: 185px !important;
+        min-height: 185px !important;
+    }
+
+    .event-cover-img {
+        height: 185px !important;
+        width: 100% !important;
+        object-fit: cover !important;
+        object-position: center center !important;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+
+    .event-cover-placeholder {
+        height: 185px !important;
+    }
+
+    /* Event-card carousel on mobile portrait */
+    .event-card-carousel,
+    .event-card-carousel .slick-list,
+    .event-card-carousel .slick-track {
+        height: 185px !important;
+        min-height: 185px !important;
+    }
+
+    .event-card-carousel .slick-slide > div {
+        height: 185px !important;
+    }
+
+    .event-card-carousel-slide {
+        height: 185px !important;
+    }
+
+    .event-card-carousel-slide .event-cover-img {
+        height: 185px !important;
+        width: 100% !important;
+        object-fit: cover !important;
+        object-position: center center !important;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+}
+
+/* ============================================================
+   MOBILE PORTRAIT FIXES
+   1) Event Tags select overflowing outside its bordered box
+   2) Spacing between Event Type / Category dropdown options
+   3) Gap between "Create Event" button and the category/type
+      filters on the events toolbar (mobile portrait)
+   4) Gap between Cancel / Create Event buttons in the modal
+      footer on mobile portrait
+   ============================================================ */
+
+/* ---- 1) Event Tags: force the selector box to grow with
+   wrapped tags instead of letting the second row spill out
+   underneath, on top of the Event Agenda field below it. ---- */
+.form-tags.ant-select-multiple .ant-select-selector {
+    height: auto !important;
+    min-height: 40px;
+    overflow: visible !important;
+    flex-wrap: wrap;
+    padding: 4px 8px !important;
+}
+
+.form-tags .ant-select-selection-overflow {
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.form-tags .ant-select-selection-overflow-item {
+    max-width: 100%;
+}
+
+.form-tags .ant-select-selection-search {
+    max-width: 100%;
+}
+
+.form-tags .ant-select-selection-search-input {
+    width: 100% !important;
+}
+
+@media (max-width: 480px) {
+    .form-tags .ant-select-selection-overflow-item .ant-select-selection-item {
+        max-width: calc(100% - 8px);
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+/* ---- 2) Event Type / Category select dropdown (both the
+   Create Event form and the toolbar filters use this same
+   dropdown markup): add breathing room between each colored
+   option row so they don't look like one solid touching
+   block. Dropdown is portaled to <body>, so this is
+   intentionally unscoped to the modal/card. ---- */
+.ant-select-dropdown .ant-select-item {
+    margin: 4px 6px;
+    padding: 6px 10px;
+    border-radius: 8px;
+    width: auto;
+}
+
+.ant-select-dropdown .ant-select-item-option-content {
+    display: flex;
+    align-items: center;
+}
+
+.ant-select-dropdown .ant-select-item-option-content .ant-tag {
+    margin: 0;
+    padding: 4px 10px;
+    border-radius: 8px;
+    width: 100%;
+    text-align: left;
+    box-sizing: border-box;
+}
+
+/* ---- 3) Events toolbar (search + Event Type + Category +
+   Create Event button): on mobile portrait these were flex
+   children with fixed pixel widths (300px / 180px / 200px)
+   that don't fit a phone screen, so they crowded together
+   with no visible gap once wrapped. Stack them full width
+   with a consistent vertical gap instead. ---- */
+@media (max-width: 576px) {
+    .controls-section {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+
+    .controls-left {
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+        gap: 12px;
+    }
+
+    .controls-left .ant-input,
+    .controls-left .ant-input-affix-wrapper,
+    .controls-left .ant-select {
+        width: 100% !important;
+    }
+
+    .controls-right {
+        width: 100%;
+    }
+
+    .controls-right .ant-btn {
+        width: 100%;
+    }
+}
+
+/* ---- 4) Cancel / Create Event modal footer buttons: make sure
+   they keep a real gap and don't get squeezed edge-to-edge when
+   they wrap to full width on very small screens. ---- */
+@media (max-width: 480px) {
+    .form-actions-full {
+        gap: 10px;
+    }
+
+    .form-actions-full .ant-btn {
+        margin: 0;
+    }
+}

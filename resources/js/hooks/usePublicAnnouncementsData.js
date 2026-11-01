@@ -46,14 +46,11 @@
 import { useMemo } from "react";
 import { useQuery } from "react-query";
 import axiosConfig from "~/utils/axiosConfig";
+import { REQUEST_OPTS } from "~/config/publicApi";
 
 const PUBLIC_ANNOUNCEMENTS_ENDPOINT = "/public/announcements";
 const PUBLIC_ANNOUNCEMENTS_QUERY_KEY = ["public-announcements", "full"];
 
-const REQUEST_OPTS = {
-    silent: true, // don't trigger the global error modal for anon visitors
-    skipAuthRedirect: true, // never bounce anonymous visitors to /login
-};
 
 // Kept value-for-value in sync with CATEGORY_OPTIONS in the admin
 // AnnouncementsPage.js so a "maintenance" announcement reads

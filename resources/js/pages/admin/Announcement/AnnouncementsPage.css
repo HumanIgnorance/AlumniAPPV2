@@ -1,12 +1,12 @@
 .ann-page {
-    --ann-accent: #4f46e5;
-    --ann-accent-2: #7c3aed;
+    --ann-accent: var(--c-indigo-600);
+    --ann-accent-2: var(--c-violet-600);
     --ann-accent-soft: rgba(79, 70, 229, 0.1);
     --ann-accent-ring: rgba(79, 70, 229, 0.22);
-    --ann-surface: #ffffff;
-    --ann-border: #e2e8f0;
-    --ann-text: #0b1220;
-    --ann-text-muted: #5b6677;
+    --ann-surface: var(--c-white);
+    --ann-border: var(--c-slate-200);
+    --ann-text: var(--c-0b1220);
+    --ann-text-muted: var(--c-5b6677);
     --ann-shadow-sm: 0 4px 14px rgba(2, 6, 23, 0.06);
     --ann-shadow-md: 0 14px 34px rgba(2, 6, 23, 0.1);
 
@@ -18,7 +18,7 @@
 [data-theme="black"] .ann-page {
     --ann-surface: #171a23;
     --ann-border: #2a2e3a;
-    --ann-text: #e7e9ee;
+    --ann-text: var(--c-e7e9ee);
     --ann-text-muted: #9aa3b2;
     --ann-accent-ring: rgba(124, 58, 237, 0.3);
 }
@@ -35,15 +35,15 @@
 .ae-hero {
     --ae-ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
     --ae-ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
-    --ae-accent: #0ea5e9;
-    --ae-accent-2: #14b8a6;
-    --ae-accent-3: #6366f1;
+    --ae-accent: var(--c-sky-500);
+    --ae-accent-2: var(--c-teal-500);
+    --ae-accent-3: var(--c-indigo-500);
     --ae-accent-soft: rgba(14, 165, 233, 0.1);
     --ae-accent-ring: rgba(14, 165, 233, 0.28);
-    --ae-surface: #ffffff;
-    --ae-border: #e2e8f0;
-    --ae-text: #0b1220;
-    --ae-text-muted: #5b6677;
+    --ae-surface: var(--c-white);
+    --ae-border: var(--c-slate-200);
+    --ae-text: var(--c-0b1220);
+    --ae-text-muted: var(--c-5b6677);
     --ae-shadow-sm: 0 4px 14px rgba(2, 6, 23, 0.06);
     --ae-shadow-md: 0 14px 34px rgba(2, 6, 23, 0.1);
 
@@ -99,14 +99,14 @@
 .ae-hero__bg .blob-1 {
     width: 280px;
     height: 280px;
-    background: #38bdf8;
+    background: var(--c-sky-400);
     top: -70px;
     left: -50px;
 }
 .ae-hero__bg .blob-2 {
     width: 320px;
     height: 320px;
-    background: #6366f1;
+    background: var(--c-indigo-500);
     bottom: -130px;
     right: -70px;
     animation-duration: 18s;
@@ -114,7 +114,7 @@
 .ae-hero__bg .blob-3 {
     width: 200px;
     height: 200px;
-    background: #14b8a6;
+    background: var(--c-teal-500);
     top: 40%;
     left: 55%;
     animation-duration: 22s;
@@ -267,15 +267,15 @@
 }
 .ae-stat__icon--blue {
     background: rgba(99, 102, 241, 0.12);
-    color: #6366f1;
+    color: var(--c-indigo-500);
 }
 .ae-stat__icon--green {
     background: rgba(16, 185, 129, 0.12);
-    color: #10b981;
+    color: var(--c-emerald-500);
 }
 .ae-stat__icon--gray {
     background: rgba(100, 116, 139, 0.12);
-    color: #64748b;
+    color: var(--c-slate-500);
 }
 .ae-stat__body {
     display: flex;
@@ -342,16 +342,16 @@
 
 /* Dark theme — matches AlumniEvents.css black theme for the hero */
 [data-theme="black"] .ae-hero {
-    --ae-surface: #121620;
-    --ae-border: #242a36;
-    --ae-text: #e7ecf3;
-    --ae-text-muted: #9aa4b2;
+    --ae-surface: var(--c-121620);
+    --ae-border: var(--c-242a36);
+    --ae-text: var(--c-e7ecf3);
+    --ae-text-muted: var(--c-9aa4b2);
     --ae-accent-soft: rgba(14, 165, 233, 0.16);
     --ae-shadow-sm: 0 4px 14px rgba(0, 0, 0, 0.45);
     --ae-shadow-md: 0 14px 34px rgba(0, 0, 0, 0.55);
 
     background:
-        linear-gradient(180deg, #121620, #121620) padding-box,
+        linear-gradient(180deg, var(--c-121620), var(--c-121620)) padding-box,
         linear-gradient(
                 135deg,
                 rgba(14, 165, 233, 0.55),
@@ -368,13 +368,13 @@
 }
 [data-theme="black"] .ae-stat {
     background: rgba(26, 31, 43, 0.85);
-    border-color: #242a36;
+    border-color: var(--c-242a36);
 }
 [data-theme="black"] .ae-stat__value {
-    color: #e7ecf3;
+    color: var(--c-e7ecf3);
 }
 [data-theme="black"] .ae-hero__logo {
-    background: #1a1f2b;
+    background: var(--c-1a1f2b);
 }
 
 /* ===== New-announcement button, placed in the toolbar row ===== */
@@ -458,10 +458,10 @@
     gap: 4px;
     font-size: 12px;
     font-weight: 600;
-    color: #fff;
+    color: var(--c-white);
     padding: 3px 10px;
     border-radius: 999px;
-    background: linear-gradient(135deg, #f59e0b, #f97316);
+    background: linear-gradient(135deg, var(--c-amber-500), var(--c-orange-500));
     box-shadow: 0 6px 16px rgba(245, 158, 11, 0.35);
 }
 
@@ -478,17 +478,17 @@
     gap: 4px;
     font-size: 12px;
     font-weight: 600;
-    color: #fff;
+    color: var(--c-white);
     padding: 3px 10px;
     border-radius: 999px;
-    background: linear-gradient(135deg, #2563eb, #38bdf8);
+    background: linear-gradient(135deg, var(--c-blue-600), var(--c-sky-400));
     box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35);
 }
 
 .ann-card-image {
     height: 150px;
     overflow: hidden;
-    background: #f1f5f9;
+    background: var(--c-slate-100);
 }
 
 .ann-card-image img {
@@ -503,7 +503,7 @@
     align-items: center;
     justify-content: center;
     font-size: 48px;
-    color: #fff;
+    color: var(--c-white);
     background: linear-gradient(135deg, var(--ann-accent), var(--ann-accent-2));
 }
 
@@ -515,16 +515,16 @@
     border-radius: 14px;
     margin: 16px 0;
     font-size: 64px;
-    color: #fff;
+    color: var(--c-white);
     background: linear-gradient(135deg, var(--ann-accent), var(--ann-accent-2));
 }
 
 /* Category-tinted gradients so placeholders aren't all identical */
-.ann-cat-general { background: linear-gradient(135deg, #64748b, #94a3b8); }
-.ann-cat-academic { background: linear-gradient(135deg, #2563eb, #60a5fa); }
-.ann-cat-event { background: linear-gradient(135deg, #7c3aed, #a78bfa); }
+.ann-cat-general { background: linear-gradient(135deg, var(--c-slate-500), var(--c-slate-400)); }
+.ann-cat-academic { background: linear-gradient(135deg, var(--c-blue-600), var(--c-blue-400)); }
+.ann-cat-event { background: linear-gradient(135deg, var(--c-violet-600), #a78bfa); }
 .ann-cat-career { background: linear-gradient(135deg, #059669, #34d399); }
-.ann-cat-urgent { background: linear-gradient(135deg, #dc2626, #f87171); }
+.ann-cat-urgent { background: linear-gradient(135deg, var(--c-red-600), var(--c-red-400)); }
 .ann-cat-maintenance { background: linear-gradient(135deg, #ea580c, #fb923c); }
 .ann-cat-other { background: linear-gradient(135deg, #0891b2, #22d3ee); }
 

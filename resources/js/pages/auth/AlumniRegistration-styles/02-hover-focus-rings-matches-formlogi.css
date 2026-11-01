@@ -1,0 +1,415 @@
+/* Hover / focus rings (matches FormLogin) */
+.alumni-registration .ant-input:hover,
+.alumni-registration .ant-input-affix-wrapper:hover,
+.alumni-registration .ant-input-password:hover,
+.alumni-registration .ant-input-number:hover,
+.alumni-registration .ant-picker:hover,
+.alumni-registration .ant-select:not(.ant-select-disabled):hover .ant-select-selector {
+  border-color: var(--accent) !important;
+}
+.alumni-registration .ant-input:focus,
+.alumni-registration .ant-input-focused,
+.alumni-registration .ant-input-affix-wrapper-focused,
+.alumni-registration .ant-input-number-focused,
+.alumni-registration .ant-picker-focused,
+.alumni-registration .ant-select-focused .ant-select-selector {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 4px var(--accent-soft) !important;
+  outline: none !important;
+}
+
+/* Dark theme inputs (surface-2 fill for separation) */
+[data-theme="black"] .alumni-registration .ant-input,
+[data-theme="black"] .alumni-registration .ant-input-affix-wrapper,
+[data-theme="black"] .alumni-registration .ant-input-password,
+[data-theme="black"] .alumni-registration .ant-input-number,
+[data-theme="black"] .alumni-registration .ant-input-number-input,
+[data-theme="black"] .alumni-registration .ant-picker,
+[data-theme="black"] .alumni-registration .ant-select-selector,
+[data-theme="black"] .alumni-registration textarea.ant-input {
+  background: var(--surface-2) !important;
+  color: var(--text) !important;
+  border-color: var(--border-strong) !important;
+}
+[data-theme="black"] .alumni-registration .ant-input::placeholder,
+[data-theme="black"] .alumni-registration .ant-input-affix-wrapper input::placeholder,
+[data-theme="black"] .alumni-registration .ant-picker-input input::placeholder,
+[data-theme="black"] .alumni-registration .ant-select-selection-placeholder {
+  color: var(--c-gray-500) !important;
+}
+[data-theme="black"] .alumni-registration .ant-input-password-icon {
+  color: var(--text-muted) !important;
+}
+[data-theme="black"] .alumni-registration .ant-input-password-icon:hover {
+  color: var(--accent) !important;
+}
+/* ============ Portal-rendered popups (Select/DatePicker dropdowns) ============
+   These render at <body>, OUTSIDE .alumni-registration, so CSS variables from
+   the component scope are NOT available. Use explicit colors so the default
+   (light) theme gets a solid white fill instead of falling back to transparent. */
+
+/* Select dropdown */
+.ant-select-dropdown {
+  background: var(--c-white) !important;
+  border: 1px solid var(--c-slate-200) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 14px 34px rgba(2, 6, 23, 0.10) !important;
+}
+.ant-select-item {
+  color: var(--c-0b1220) !important;
+  background: var(--c-white) !important;
+  border-radius: 8px !important;
+  margin: 2px 4px !important;
+}
+.ant-select-item-option-active:not(.ant-select-item-option-disabled) {
+  background: rgba(79, 70, 229, 0.10) !important;
+  color: var(--c-0b1220) !important;
+}
+.ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+  background: rgba(79, 70, 229, 0.10) !important;
+  color: var(--c-indigo-600) !important;
+  font-weight: 600;
+}
+
+/* Dark theme overrides for Select dropdown */
+[data-theme="black"] .ant-select-dropdown,
+.ant-select-dropdown[data-theme="black"] {
+  background: var(--c-121620) !important;
+  border-color: var(--c-242a36) !important;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.55) !important;
+}
+[data-theme="black"] .ant-select-item,
+.ant-select-dropdown[data-theme="black"] .ant-select-item {
+  color: var(--c-e7ecf3) !important;
+  background: var(--c-121620) !important;
+}
+[data-theme="black"] .ant-select-item-option-active:not(.ant-select-item-option-disabled),
+.ant-select-dropdown[data-theme="black"] .ant-select-item-option-active:not(.ant-select-item-option-disabled) {
+  background: rgba(99, 102, 241, 0.16) !important;
+  color: var(--c-e7ecf3) !important;
+}
+[data-theme="black"] .ant-select-item-option-selected:not(.ant-select-item-option-disabled),
+.ant-select-dropdown[data-theme="black"] .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+  background: rgba(99, 102, 241, 0.16) !important;
+  color: var(--c-indigo-300) !important;
+  font-weight: 600;
+}
+
+/* DatePicker panel (Date of Birth, etc.) */
+.ant-picker-dropdown .ant-picker-panel-container,
+.ant-picker-dropdown .ant-picker-panel,
+.ant-picker-dropdown .ant-picker-date-panel,
+.ant-picker-dropdown .ant-picker-month-panel,
+.ant-picker-dropdown .ant-picker-year-panel,
+.ant-picker-dropdown .ant-picker-decade-panel {
+  background: var(--c-white) !important;
+  border: 1px solid var(--c-slate-200) !important;
+  border-radius: 14px !important;
+  box-shadow: 0 14px 34px rgba(2, 6, 23, 0.10) !important;
+}
+.ant-picker-dropdown .ant-picker-header,
+.ant-picker-dropdown .ant-picker-content,
+.ant-picker-dropdown .ant-picker-content th,
+.ant-picker-dropdown .ant-picker-cell,
+.ant-picker-dropdown .ant-picker-footer {
+  background: var(--c-white) !important;
+  color: var(--c-0b1220) !important;
+}
+.ant-picker-dropdown .ant-picker-header button,
+.ant-picker-dropdown .ant-picker-header-view {
+  color: var(--c-0b1220) !important;
+}
+.ant-picker-dropdown .ant-picker-cell-in-view.ant-picker-cell-today .ant-picker-cell-inner::before {
+  border-color: var(--c-indigo-600) !important;
+}
+.ant-picker-dropdown .ant-picker-cell-in-view.ant-picker-cell-selected .ant-picker-cell-inner {
+  background: linear-gradient(135deg, var(--c-indigo-600), var(--c-sky-500)) !important;
+  color: var(--c-white) !important;
+}
+
+/* Dark theme overrides for DatePicker panel */
+[data-theme="black"] .ant-picker-dropdown .ant-picker-panel-container,
+[data-theme="black"] .ant-picker-dropdown .ant-picker-panel,
+[data-theme="black"] .ant-picker-dropdown .ant-picker-date-panel,
+[data-theme="black"] .ant-picker-dropdown .ant-picker-month-panel,
+[data-theme="black"] .ant-picker-dropdown .ant-picker-year-panel,
+[data-theme="black"] .ant-picker-dropdown .ant-picker-decade-panel {
+  background: var(--c-121620) !important;
+  border-color: var(--c-242a36) !important;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.55) !important;
+}
+[data-theme="black"] .ant-picker-dropdown .ant-picker-header,
+[data-theme="black"] .ant-picker-dropdown .ant-picker-content,
+[data-theme="black"] .ant-picker-dropdown .ant-picker-content th,
+[data-theme="black"] .ant-picker-dropdown .ant-picker-cell,
+[data-theme="black"] .ant-picker-dropdown .ant-picker-footer {
+  background: var(--c-121620) !important;
+  color: var(--c-e7ecf3) !important;
+}
+[data-theme="black"] .ant-picker-dropdown .ant-picker-header button,
+[data-theme="black"] .ant-picker-dropdown .ant-picker-header-view {
+  color: var(--c-e7ecf3) !important;
+}
+
+/* Radio */
+.alumni-registration .ant-radio-wrapper { color: var(--text) !important; }
+.alumni-registration .ant-radio-inner {
+  border-color: var(--border-strong) !important;
+  background: var(--surface) !important;
+}
+.alumni-registration .ant-radio-checked .ant-radio-inner {
+  background: var(--accent) !important;
+  border-color: var(--accent) !important;
+}
+.alumni-registration .ant-radio:hover .ant-radio-inner {
+  border-color: var(--accent) !important;
+}
+
+/* Checkbox */
+.alumni-registration .ant-checkbox-wrapper { color: var(--text) !important; }
+.alumni-registration .ant-checkbox-inner {
+  border-color: var(--border-strong) !important;
+  background: var(--surface) !important;
+  border-radius: 6px !important;
+}
+.alumni-registration .ant-checkbox-checked .ant-checkbox-inner {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2)) !important;
+  border-color: var(--accent) !important;
+}
+.alumni-registration .ant-checkbox:hover .ant-checkbox-inner {
+  border-color: var(--accent) !important;
+}
+
+/* Switch */
+.alumni-registration .ant-switch-checked {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2)) !important;
+}
+
+/* ============ Buttons ============ */
+.alumni-registration .ant-btn {
+  border-radius: 12px !important;
+  font-weight: 600 !important;
+  height: auto;
+  padding: 8px 18px;
+  transition: transform 0.2s var(--ease-smooth),
+              box-shadow 0.2s var(--ease-smooth),
+              border-color 0.2s, color 0.2s;
+}
+.alumni-registration .ant-btn-primary {
+  border: none !important;
+  color: var(--c-white) !important;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2)) !important;
+  box-shadow: 0 10px 24px var(--accent-ring) !important;
+  position: relative;
+  overflow: hidden;
+}
+.alumni-registration .ant-btn-primary::after {
+  content: ""; position: absolute; top: 0; left: 0;
+  width: 60%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.30), transparent);
+  animation: regShine 3.2s ease-in-out infinite;
+  pointer-events: none;
+}
+.alumni-registration .ant-btn-primary:hover,
+.alumni-registration .ant-btn-primary:focus {
+  transform: translateY(-1px);
+  color: var(--c-white) !important;
+  background: linear-gradient(135deg, var(--accent), var(--accent-3)) !important;
+}
+.alumni-registration .ant-btn-primary[disabled],
+.alumni-registration .ant-btn-primary[disabled]:hover {
+  background: linear-gradient(135deg, #9ca3af, var(--c-slate-400)) !important;
+  box-shadow: none !important;
+  color: var(--c-white) !important;
+  cursor: not-allowed;
+}
+.alumni-registration .ant-btn-primary[disabled]::after { display: none; }
+
+.alumni-registration .ant-btn-default {
+  background: var(--surface) !important;
+  border: 1px solid var(--border-strong) !important;
+  color: var(--text) !important;
+}
+.alumni-registration .ant-btn-default:hover {
+  color: var(--accent) !important;
+  border-color: var(--accent) !important;
+  background: var(--surface) !important;
+  transform: translateY(-1px);
+}
+.alumni-registration .ant-btn-link {
+  color: var(--accent) !important;
+  font-weight: 600 !important;
+}
+.alumni-registration .ant-btn-link:hover { color: var(--accent-2) !important; }
+.alumni-registration .ant-btn-dangerous.ant-btn-link {
+  color: var(--c-red-500) !important;
+}
+
+/* ============ Avatar / Profile Upload ============ */
+.avatar-upload-section {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+.avatar-upload { text-align: center; }
+.avatar-upload-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+}
+.avatar-uploader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 16px 0;
+}
+.avatar-uploader .ant-upload {
+  width: 128px !important;
+  height: 128px !important;
+  border-radius: 50% !important;
+  border: 2px dashed var(--border-strong) !important;
+  background: var(--surface-2) !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s var(--ease-smooth);
+}
+.avatar-uploader .ant-upload:hover {
+  border-color: var(--accent) !important;
+  background: var(--accent-soft) !important;
+  transform: scale(1.02);
+}
+.avatar-preview {
+  position: relative;
+  width: 100%; height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+}
+.avatar-preview img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+.avatar-edit-overlay {
+  position: absolute; inset: 0;
+  background: rgba(2, 6, 23, 0.6);
+  backdrop-filter: blur(2px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--c-white);
+  opacity: 0;
+  transition: opacity 0.3s var(--ease-smooth);
+  font-size: 12px;
+  gap: 4px;
+}
+.avatar-preview:hover .avatar-edit-overlay { opacity: 1; }
+
+.upload-button,
+.id-upload-button,
+.document-upload-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  transition: color 0.3s var(--ease-smooth);
+  font-size: 13px;
+  text-align: center;
+  padding: 8px;
+}
+.upload-button .anticon,
+.id-upload-button .anticon,
+.document-upload-button .anticon {
+  font-size: 22px;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+.avatar-uploader:hover .upload-button,
+.id-upload-button:hover,
+.profile-uploader:hover .document-upload-button { color: var(--accent); }
+
+.remove-photo-btn { margin-top: 8px; text-align: center; }
+.upload-hint {
+  display: block;
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--text-muted) !important;
+}
+
+/* ============ Documents ============ */
+.document-card {
+  margin-bottom: 16px;
+  background: var(--surface) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius-md) !important;
+  box-shadow: var(--shadow-xs);
+}
+.document-card .ant-card-body { padding: 16px !important; }
+
+.document-upload-section {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+.upload-instructions { flex: 1; color: var(--text-muted); }
+.upload-instructions ul {
+  margin: 8px 0;
+  padding-left: 18px;
+}
+.upload-instructions li {
+  font-size: 12.5px;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+  line-height: 1.55;
+}
+
+.upload-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.profile-uploader .ant-upload {
+  width: 150px !important;
+  height: 150px !important;
+  border: 2px dashed var(--border-strong) !important;
+  border-radius: 12px !important;
+  background: var(--surface-2) !important;
+  transition: all 0.3s var(--ease-smooth);
+}
+.profile-uploader .ant-upload:hover {
+  border-color: var(--accent) !important;
+  background: var(--accent-soft) !important;
+}
+
+.document-preview {
+  position: relative;
+  width: 100%; height: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+}
+.document-preview img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+.document-overlay {
+  position: absolute; inset: 0;
+  background: rgba(2, 6, 23, 0.6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--c-white);
+  opacity: 0;
+  transition: opacity 0.3s var(--ease-smooth);
+  font-size: 12px;
+  gap: 4px;
+}
+.document-preview:hover .document-overlay { opacity: 1; }

@@ -1,41 +1,43 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Typography } from "antd";
-import { getStorage } from "../../utils/helper";
 import logo from "~/assets/images/site-logo.png";
-import secureLocalStorage from "react-secure-storage";
 import { useAppTheme } from "~/hooks/useAppTheme";
+import { ROLES } from "~/config/roles";
+import { buildPageTitle } from "~/config/site";
+import { getUserRole } from "~/utils/session";
 
 const { Title, Text } = Typography;
 
 const MainPage = () => {
     useEffect(() => {
-        setTimeout(() => {
-            if (!getStorage("userRole")) {
+        const redirectTimer = setTimeout(() => {
+            if (!getUserRole()) {
                 // Not logged in yet — land on the public home page first
                 // (with its own Sign In / Sign Up buttons in the header)
                 // instead of dropping straight into the login form.
                 window.location = "/PublicHomePage";
             } else {
-                if (getStorage("userRole") === "admin") {
+                if (getUserRole() === ROLES.ADMIN) {
                     window.location = "/home";
                     return;
                 }
 
-                if (getStorage("userRole") === "alumni") {
+                if (getUserRole() === ROLES.ALUMNI) {
                     window.location = "/home";
                     return;
                 }
-                if (getStorage("userRole") === "department_head") {
+                if (getUserRole() === ROLES.DEPARTMENT_HEAD) {
                     window.location = "/department-dashboard";
                     return;
                 }
             }
         }, 3000);
+        return () => clearTimeout(redirectTimer);
     }, []);
 
 
     useEffect(() => {
-    document.title = "Loading | ATMS - Opol Community College";
+    document.title = buildPageTitle("Loading");
 }, []);
 
 ///Prevent Right-Click and Developer Tools///

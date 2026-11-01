@@ -107,14 +107,14 @@
 }
 
 .ph-page.light .pcon-card {
-  background: #ffffff;
-  border: 1px solid #edf0f5;
+  background: var(--c-white);
+  border: 1px solid var(--c-edf0f5);
   box-shadow: 0 10px 30px rgba(2, 6, 23, 0.05);
 }
 
 .ph-page.dark .pcon-card {
   background: rgba(18, 22, 32, 0.75);
-  border: 1px solid #242a36;
+  border: 1px solid var(--c-242a36);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
@@ -140,7 +140,7 @@
 }
 
 .pcon-required {
-  color: #ef4444;
+  color: var(--c-red-500);
   font-weight: 800;
 }
 
@@ -213,11 +213,11 @@
 }
 
 .ph-page.light .pcon-social {
-  border-top: 1px dashed #e6eaf1;
+  border-top: 1px dashed var(--c-e6eaf1);
 }
 
 .ph-page.dark .pcon-social {
-  border-top: 1px dashed #242a36;
+  border-top: 1px dashed var(--c-242a36);
 }
 
 .pcon-social {
@@ -237,12 +237,12 @@
   transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
 }
 
-.ph-page.light .pcon-social a { background: #f5f7fb; border: 1px solid #e6eaf1; }
-.ph-page.dark .pcon-social a { background: rgba(255, 255, 255, 0.05); border: 1px solid #242a36; }
+.ph-page.light .pcon-social a { background: var(--c-f5f7fb); border: 1px solid var(--c-e6eaf1); }
+.ph-page.dark .pcon-social a { background: rgba(255, 255, 255, 0.05); border: 1px solid var(--c-242a36); }
 
 .pcon-social a:hover {
   background: linear-gradient(135deg, var(--ph-accent), var(--ph-accent-2));
-  color: #fff;
+  color: var(--c-white);
   transform: translateY(-2px);
 }
 
@@ -271,7 +271,7 @@
   padding: 11px 14px;
   border-radius: var(--ph-radius-sm, 12px);
   background: rgba(239, 68, 68, 0.1);
-  color: #ef4444;
+  color: var(--c-red-500);
 }
 
 .pcon-field {
@@ -309,13 +309,13 @@
 .ph-page.light .pcon-field input,
 .ph-page.light .pcon-field textarea {
   background: #f9fafc;
-  border: 1px solid #e6eaf1;
+  border: 1px solid var(--c-e6eaf1);
 }
 
 .ph-page.dark .pcon-field input,
 .ph-page.dark .pcon-field textarea {
   background: rgba(255, 255, 255, 0.04);
-  border: 1px solid #242a36;
+  border: 1px solid var(--c-242a36);
 }
 
 .pcon-field input:focus,
@@ -326,7 +326,7 @@
 
 .pcon-field input.pcon-invalid,
 .pcon-field textarea.pcon-invalid {
-  border-color: #ef4444;
+  border-color: var(--c-red-500);
   box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.12);
 }
 
@@ -358,7 +358,7 @@
 
 .pcon-sent .anticon {
   font-size: 26px;
-  color: #0ea973;
+  color: var(--c-0ea973);
 }
 
 .pcon-sent strong {

@@ -1,0 +1,437 @@
+/* ---------- BLACK THEME: force white for "All Alumni" / "Conversations" tabs + sidebar text ---------- */
+[data-theme="black"] .conversations-sidebar,
+[data-theme="black"] .conversations-sidebar *,
+[data-theme="black"] .admin-tabs,
+[data-theme="black"] .admin-tabs *,
+[data-theme="black"] .tab-btn,
+[data-theme="black"] .tab-btn *,
+[data-theme="black"] .conversation-item h4,
+[data-theme="black"] .conversation-info h4,
+[data-theme="black"] .conversation-top h4,
+[data-theme="black"] .last-message,
+[data-theme="black"] .conversation-time,
+[data-theme="black"] .no-conversations,
+[data-theme="black"] .no-conversations *,
+[data-theme="black"] .search-box,
+[data-theme="black"] .search-box * {
+  color: var(--c-white) !important;
+}
+
+[data-theme="black"] .tab-btn {
+  background: var(--c-1a1f2b) !important;
+  border-color: #2a3140 !important;
+}
+[data-theme="black"] .tab-btn:hover {
+  border-color: var(--c-sky-500) !important;
+  background: rgba(14,165,233,0.10) !important;
+}
+[data-theme="black"] .tab-btn.active {
+  background: linear-gradient(135deg, var(--c-sky-500) 0%, var(--c-teal-500) 100%) !important;
+  border-color: transparent !important;
+  color: var(--c-white) !important;
+}
+
+/* Keep employment colors visible even with the wildcard white override */
+[data-theme="black"] .alumni-employment.employment-emp,
+[data-theme="black"] .alumni-employment.employment-emp *   { color: #4ade80 !important; }
+[data-theme="black"] .alumni-employment.employment-under,
+[data-theme="black"] .alumni-employment.employment-under * { color: #fb923c !important; }
+[data-theme="black"] .alumni-employment.employment-unemp,
+[data-theme="black"] .alumni-employment.employment-unemp * { color: var(--c-red-400) !important; }
+
+/* ---------- FAQ-style modern modal polish ---------- */
+
+/* Overlay: deeper blur + tinted glass */
+.modal-overlay,
+.message-action-modal-overlay,
+.delete-confirm-modal-overlay {
+  background: radial-gradient(800px 400px at 0% 0%, rgba(14,165,233,0.18), transparent 60%),
+              radial-gradient(800px 400px at 100% 100%, rgba(99,102,241,0.18), transparent 60%),
+              rgba(2,6,23,0.62) !important;
+  backdrop-filter: blur(10px) saturate(140%);
+  -webkit-backdrop-filter: blur(10px) saturate(140%);
+}
+
+/* Card: gradient border, soft glow, larger radius */
+.modal-content,
+.message-action-modal {
+  background:
+    linear-gradient(var(--m-surface), var(--m-surface)) padding-box,
+    linear-gradient(135deg, rgba(14,165,233,0.55), rgba(99,102,241,0.45), rgba(20,184,166,0.55)) border-box !important;
+  border: 1px solid transparent !important;
+  border-radius: 22px !important;
+  box-shadow: 0 28px 60px rgba(2,6,23,0.35), 0 0 0 1px rgba(14,165,233,0.10) inset !important;
+  padding: 26px !important;
+  overflow: hidden;
+  position: relative;
+}
+.modal-content::before,
+.message-action-modal::before {
+  content: "";
+  position: absolute;
+  inset: -40% -20% auto auto;
+  width: 280px; height: 280px;
+  background: radial-gradient(closest-side, rgba(14,165,233,0.22), transparent 70%);
+  filter: blur(20px);
+  pointer-events: none;
+  z-index: 0;
+}
+.modal-content > *,
+.message-action-modal > * { position: relative; z-index: 1; }
+
+/* Modal header */
+.modal-header {
+  padding-bottom: 12px;
+  margin-bottom: 14px !important;
+  border-bottom: 1px dashed var(--m-border);
+}
+.modal-header h3 {
+  background: linear-gradient(135deg, var(--c-sky-500) 0%, var(--c-indigo-500) 50%, var(--c-teal-500) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.01em;
+}
+.modal-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px; height: 38px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(14,165,233,0.18), rgba(99,102,241,0.18));
+  border: 1px solid rgba(14,165,233,0.30);
+  box-shadow: 0 6px 16px rgba(14,165,233,0.18);
+  font-size: 1.1rem !important;
+}
+
+/* Modal buttons */
+.modal-btn {
+  border-radius: 12px !important;
+  padding: 11px 20px !important;
+  letter-spacing: 0.01em;
+  transition: transform .15s var(--m-ease), box-shadow .15s var(--m-ease), background .15s;
+}
+.modal-btn:hover { transform: translateY(-1px); }
+.modal-btn.cancel {
+  background: var(--m-surface) !important;
+  border: 1px solid var(--m-border-strong) !important;
+}
+.modal-btn.danger {
+  background: linear-gradient(135deg, var(--c-red-500), var(--c-red-700)) !important;
+  border-color: transparent !important;
+  box-shadow: 0 10px 22px rgba(239,68,68,0.35) !important;
+}
+.modal-btn.warning {
+  background: linear-gradient(135deg, var(--c-amber-500), var(--c-amber-600)) !important;
+  border-color: transparent !important;
+  box-shadow: 0 10px 22px rgba(245,158,11,0.35) !important;
+}
+.modal-btn.success {
+  background: linear-gradient(135deg, var(--c-green-500), #15803d) !important;
+  border-color: transparent !important;
+  box-shadow: 0 10px 22px rgba(34,197,94,0.35) !important;
+}
+
+/* Reaction picker modal */
+.message-action-emoji-row {
+  background: linear-gradient(135deg, rgba(14,165,233,0.10), rgba(20,184,166,0.10)) !important;
+  border: 1px solid var(--m-accent-ring);
+  border-radius: 14px !important;
+  padding: 8px !important;
+}
+.message-action-btn {
+  border-radius: 12px !important;
+  font-weight: 700 !important;
+  transition: transform .15s var(--m-ease), background .15s;
+}
+.message-action-btn:hover { transform: translateY(-1px); }
+.message-action-btn.edit:hover {
+  background: linear-gradient(135deg, rgba(14,165,233,0.14), rgba(99,102,241,0.14)) !important;
+  border-color: var(--m-accent) !important;
+  color: #0369a1 !important;
+}
+.message-action-cancel {
+  border-radius: 12px !important;
+  padding: 11px !important;
+  background: var(--m-surface) !important;
+  border: 1px solid var(--m-border-strong) !important;
+  transition: background .15s;
+}
+.message-action-cancel:hover { background: var(--m-surface-2) !important; }
+
+/* Delete-confirm "black" modal: cyan-glass gradient frame */
+.delete-confirm-modal {
+  background: linear-gradient(180deg, var(--c-0b1220) 0%, #0f1a2e 100%) !important;
+  border: 1px solid rgba(14,165,233,0.35) !important;
+  border-radius: 22px !important;
+  box-shadow: 0 30px 70px rgba(2,6,23,0.65),
+              0 0 0 1px rgba(14,165,233,0.08) inset,
+              0 0 60px rgba(14,165,233,0.15) !important;
+  padding: 26px !important;
+  position: relative;
+  overflow: hidden;
+}
+.delete-confirm-modal::before {
+  content: "";
+  position: absolute;
+  inset: -40% -20% auto auto;
+  width: 320px; height: 320px;
+  background: radial-gradient(closest-side, rgba(14,165,233,0.30), transparent 70%);
+  filter: blur(22px);
+  pointer-events: none;
+}
+.delete-confirm-modal > * { position: relative; z-index: 1; }
+
+.delete-confirm-title {
+  background: linear-gradient(135deg, var(--c-sky-400) 0%, var(--c-indigo-300) 50%, #5eead4 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent !important;
+  letter-spacing: -0.01em;
+}
+.delete-confirm-preview {
+  background: rgba(255,255,255,0.05) !important;
+  border: 1px solid rgba(255,255,255,0.12) !important;
+  border-radius: 12px !important;
+}
+.delete-confirm-btn {
+  border-radius: 12px !important;
+  padding: 12px 14px !important;
+  letter-spacing: 0.02em;
+  transition: transform .15s var(--m-ease), box-shadow .15s var(--m-ease);
+}
+.delete-confirm-btn:hover { transform: translateY(-1px); }
+.delete-confirm-btn.delete {
+  background: linear-gradient(135deg, var(--c-red-500), var(--c-red-700)) !important;
+  box-shadow: 0 12px 26px rgba(239,68,68,0.45) !important;
+}
+.delete-confirm-btn.cancel {
+  background: rgba(255,255,255,0.10) !important;
+  border: 1px solid rgba(255,255,255,0.18) !important;
+}
+
+/* ---------- Sidebar header polish (FAQ vibe) ---------- */
+.conversations-header {
+  background:
+    linear-gradient(135deg, var(--c-0b1220) 0%, var(--c-sky-500) 60%, var(--c-teal-500) 100%) !important;
+}
+.conversations-header h2 {
+  background: linear-gradient(135deg, var(--c-white), #e0f2fe);
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; color: transparent !important;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.15);
+}
+
+/* Subtle gradient border on the conversations list cards on hover */
+.conversation-item:hover {
+  background: linear-gradient(135deg, rgba(14,165,233,0.10), rgba(20,184,166,0.10)) !important;
+  border-color: var(--m-accent) !important;
+}
+
+/* Make sure send button matches FAQ primary gradient */
+.send-btn {
+  background: linear-gradient(135deg, var(--c-sky-500) 0%, var(--c-indigo-500) 60%, var(--c-teal-500) 100%) !important;
+  box-shadow: 0 10px 22px rgba(14,165,233,0.35) !important;
+}
+/* =====================================================================
+   AdminAlumniMessages.css — FINAL OVERRIDE BLOCK
+   Append this to the very END of AdminAlumniMessages.css.
+   It supersedes every earlier .bulk-* / .tab-btn / .conversation-item
+   rule and fixes:
+     1. Oversized bulk-action panel
+     2. Overlapping "Conversations (2)" tab badge
+     3. Conversation item collisions at narrow widths
+     4. Sidebar overflow at 320–1200px
+     5. Color-coded, equal-sized bulk buttons
+     6. Production breakpoints @1200/992/768/576
+   ===================================================================== */
+
+/* ---------- Color tokens for bulk actions ---------- */
+.messages-container,
+.alumni-messages-container {
+  --bulk-primary:   var(--c-sky-500);   /* Read   - cyan   */
+  --bulk-archive:   #475569;   /* Archive- slate  */
+  --bulk-warn:      var(--c-amber-500);   /* Restrict-orange */
+  --bulk-danger:    var(--c-red-500);   /* Delete - red    */
+  --bulk-ghost:     var(--c-slate-500);   /* Cancel - neutral*/
+}
+
+/* ===================================================================
+   1. SIDEBAR — never overflow, scale 320 → desktop
+   =================================================================== */
+.conversations-sidebar {
+  width: clamp(280px, 28vw, 360px) !important;
+  min-width: 280px !important;
+  max-width: 100%;
+  overflow: hidden !important;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===================================================================
+   2. TABS — icon left, label center, badge right, no overlap
+   =================================================================== */
+.admin-tabs {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  gap: 6px !important;
+  padding: 10px 12px !important;
+  background: transparent;
+}
+
+.admin-tabs .tab-btn {
+  flex: 1 1 0 !important;
+  min-width: 0 !important;          /* allow shrink */
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  height: 36px !important;
+  padding: 0 8px !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  line-height: 1 !important;
+  border-radius: 10px !important;
+  border: 1px solid var(--m-border) !important;
+  background: var(--m-surface) !important;
+  color: var(--m-text-muted) !important;
+  cursor: pointer;
+  transition: transform .15s var(--m-ease),
+              border-color .2s var(--m-ease),
+              color .2s var(--m-ease),
+              background .2s var(--m-ease);
+  overflow: hidden;
+}
+
+.admin-tabs .tab-btn:hover {
+  transform: translateY(-1px);
+  border-color: var(--m-accent-ring) !important;
+  color: var(--m-text) !important;
+}
+
+.admin-tabs .tab-btn.active {
+  background: linear-gradient(135deg, var(--m-accent), var(--m-accent-2)) !important;
+  color: var(--c-white) !important;
+  border-color: transparent !important;
+  box-shadow: 0 6px 16px rgba(14,165,233,.25);
+}
+
+.tab-btn__icon  { flex: 0 0 auto; font-size: 13px; line-height: 1; }
+.tab-btn__label {
+  flex: 1 1 auto;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+}
+.tab-btn__count {
+  flex: 0 0 auto;
+  min-width: 20px;
+  height: 18px;
+  padding: 0 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10.5px;
+  font-weight: 700;
+  line-height: 1;
+  border-radius: 999px;
+  background: rgba(2,6,23,.08);
+  color: inherit;
+}
+.tab-btn.active .tab-btn__count {
+  background: rgba(255,255,255,.25);
+  color: var(--c-white);
+}
+
+/* ===================================================================
+   3. SELECT TOGGLE (entry pill before bulk mode)
+   =================================================================== */
+.select-toggle {
+  align-self: flex-start;
+  margin: 6px 12px 0 !important;
+  height: 30px;
+  padding: 0 12px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 999px;
+  border: 1px solid var(--m-border);
+  background: var(--m-surface);
+  color: var(--m-text-muted);
+  cursor: pointer;
+  transition: all .2s var(--m-ease);
+}
+.select-toggle:hover {
+  color: var(--m-text);
+  border-color: var(--m-accent);
+  transform: translateY(-1px);
+}
+
+/* ===================================================================
+   4. BULK TOOLBAR — compact, flex-wrap, fits sidebar width
+   =================================================================== */
+.bulk-toolbar {
+  flex: 0 0 auto;
+  margin: 8px 12px 0 !important;
+  padding: 10px !important;
+  border-radius: 14px !important;
+  background: linear-gradient(135deg,
+    color-mix(in oklab, var(--m-accent) 10%, var(--m-surface)),
+    color-mix(in oklab, var(--m-accent-2) 8%, var(--m-surface))) !important;
+  border: 1px solid var(--m-accent-ring) !important;
+  box-shadow: var(--m-shadow-sm);
+  display: none !important;          /* hidden by default */
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+.bulk-toolbar.is-active {
+  display: block !important;
+  animation: bulkToolbarIn .2s var(--m-ease);
+}
+@keyframes bulkToolbarIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.bulk-toolbar__row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  min-width: 0;
+}
+
+.bulk-toolbar__count {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  align-self: flex-start;
+  padding: 4px 10px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: .3px;
+  text-transform: uppercase;
+  color: var(--m-text);
+  background: var(--m-surface);
+  border: 1px solid var(--m-border);
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.bulk-toolbar__count-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--m-accent);
+  box-shadow: 0 0 0 3px var(--m-accent-soft);
+}
+
+.bulk-toolbar__actions {
+  display: flex !important;
+  flex-wrap: wrap !important;        /* KEY: wraps to fit sidebar */
+  gap: 6px !important;
+  width: 100%;
+  min-width: 0;
+}

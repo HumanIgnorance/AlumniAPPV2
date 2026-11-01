@@ -62,14 +62,14 @@
 }
 
 .ph-page.light .pp404-card {
-  background: #ffffff;
-  border: 1px solid #e6eaf1;
+  background: var(--c-white);
+  border: 1px solid var(--c-e6eaf1);
   box-shadow: 0 24px 60px rgba(2, 6, 23, 0.08);
 }
 
 .ph-page.dark .pp404-card {
   background: rgba(18, 22, 32, 0.85);
-  border: 1px solid #242a36;
+  border: 1px solid var(--c-242a36);
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
 }
 
@@ -129,15 +129,15 @@
 }
 
 .ph-page.light .pp404-path {
-  background: #f5f7fb;
-  border: 1px solid #e6eaf1;
+  background: var(--c-f5f7fb);
+  border: 1px solid var(--c-e6eaf1);
   color: #475569;
 }
 
 .ph-page.dark .pp404-path {
   background: rgba(255, 255, 255, 0.05);
-  border: 1px solid #242a36;
-  color: #cbd5e1;
+  border: 1px solid var(--c-242a36);
+  color: var(--c-slate-300);
 }
 
 .pp404-path code {

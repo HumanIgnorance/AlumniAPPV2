@@ -15,9 +15,6 @@ import {
     ThunderboltOutlined,
     DesktopOutlined,
     LinkOutlined,
-    EnvironmentOutlined,
-    MailOutlined,
-    PhoneOutlined,
     FacebookOutlined,
     TwitterOutlined,
     InstagramOutlined,
@@ -32,8 +29,12 @@ import usePreventInspect, { ZoomWarningModal } from "~/hooks/usePreventInspect";
 // Reuses every design token (--ph-accent, .ph-btn, .ph-card, .grad, etc.)
 // already defined for the public site, same import pattern as
 // PublicOccServicesPage.js / PublicEventsPage.js.
-import "./PublicHomePage.css";
+import "./PublicHomePage-styles";
 import "./InstallPwaPage.css";
+import useHeaderHeightVar from "~/hooks/useHeaderHeightVar";
+import useEventListener from "~/hooks/useEventListener";
+import { COLORS } from "~/config/theme";
+import { buildPageTitle } from "~/config/site";
 
 const { Title, Paragraph } = Typography;
 
@@ -55,47 +56,17 @@ const InstallPwaPage = () => {
     const headerRef = useRef(null);
 
     useEffect(() => {
-        document.title = "Install PWA | ATMS - Opol Community College";
+        document.title = buildPageTitle("Install PWA");
     }, []);
 
     // ============ Floating header shadow on scroll ============
-    useEffect(() => {
-        const onScroll = () => {
-            setScrolled(window.scrollY > 8);
-            setMobileNavOpen((open) => (open ? false : open));
-        };
-        window.addEventListener("scroll", onScroll);
-        return () => window.removeEventListener("scroll", onScroll);
-    }, []);
+    useEventListener("scroll", () => {
+        setScrolled(window.scrollY > 8);
+        setMobileNavOpen((open) => (open ? false : open));
+    });
 
     // ============ Keep --ph-header-h in sync with the real header ============
-    useEffect(() => {
-        const node = headerRef.current;
-        if (!node) return undefined;
-
-        const applyHeight = () => {
-            const height = node.offsetHeight;
-            if (height > 0) {
-                document.documentElement.style.setProperty("--ph-header-h", `${height}px`);
-            }
-        };
-
-        applyHeight();
-
-        let observer;
-        if (typeof ResizeObserver !== "undefined") {
-            observer = new ResizeObserver(applyHeight);
-            observer.observe(node);
-        }
-        window.addEventListener("resize", applyHeight);
-        window.addEventListener("orientationchange", applyHeight);
-
-        return () => {
-            if (observer) observer.disconnect();
-            window.removeEventListener("resize", applyHeight);
-            window.removeEventListener("orientationchange", applyHeight);
-        };
-    }, []);
+    useHeaderHeightVar(headerRef);
 
     const goHome = () => {
         window.location.href = "/";
@@ -130,10 +101,10 @@ const InstallPwaPage = () => {
                     <img src={logo} alt="OCC Alumni Logo" />
                     <div className="ph-brand-text">
                         <span className="ph-brand-title">
-                            <span style={{ color: "#003366", fontWeight: 900 }}>O</span>
-                            <span style={{ color: "#FFD700", fontWeight: 900 }}>C</span>
-                            <span style={{ color: "#CC0000", fontWeight: 900 }}>C</span>{" "}
-                            <span style={{ color: "#003366", fontWeight: 900 }}>Alumni</span>
+                            <span style={{ color: COLORS.c003366, fontWeight: 900 }}>O</span>
+                            <span style={{ color: COLORS.ffd700, fontWeight: 900 }}>C</span>
+                            <span style={{ color: COLORS.cc0000, fontWeight: 900 }}>C</span>{" "}
+                            <span style={{ color: COLORS.c003366, fontWeight: 900 }}>Alumni</span>
                         </span>
                         <span className="ph-brand-sub">Opol Community College</span>
                     </div>

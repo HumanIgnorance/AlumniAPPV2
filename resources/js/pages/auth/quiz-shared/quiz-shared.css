@@ -1,0 +1,160 @@
+/* ==========================================================================
+   Shared by AnswerQuizPage and ImageQuizPage.
+   Both pages define the same .quiz-* classes in their own stylesheets with
+   slightly different values; whichever loaded last won, so the header
+   changed depending on navigation order. These rules are scoped under
+   .quiz-page (higher specificity) so the result is identical and
+   deterministic. Values come from css/tokens.css only.
+   ========================================================================== */
+.quiz-page {
+    font-family: var(--font-sans);
+    color: var(--text);
+}
+
+/* ---------- Hero / header ---------- */
+.quiz-page .quiz-hero {
+    background:
+        linear-gradient(180deg, var(--surface), var(--surface)) padding-box,
+        linear-gradient(135deg, var(--accent-ring), var(--info-soft), var(--accent-ring)) border-box;
+}
+.quiz-page .quiz-hero__bg .blob-1 { background: var(--c-indigo-400); }
+.quiz-page .quiz-hero__bg .blob-2 { background: var(--c-violet-600); }
+.quiz-page .quiz-hero__bg .blob-3 { background: var(--c-sky-500); }
+
+.quiz-page .quiz-hero__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.quiz-page .quiz-hero__brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin-bottom: 14px;
+    text-align: left;
+}
+.quiz-page .quiz-hero__logo {
+    flex: 0 0 auto;
+}
+.quiz-page .quiz-hero__brand-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    min-width: 0;
+}
+.quiz-page .quiz-chip {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 6px;
+    line-height: 1.2;
+}
+.quiz-page .quiz-hero__eyebrow {
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-semibold);
+    line-height: var(--lh-snug);
+}
+.quiz-page .quiz-hero__title {
+    font-family: var(--font-sans);
+    font-weight: var(--fw-extrabold) !important;
+    line-height: var(--lh-tight) !important;
+    text-align: center;
+    margin: 4px 0 12px !important;
+}
+.quiz-page .quiz-hero__lead {
+    font-size: var(--fs-lg) !important;
+    line-height: var(--lh-body) !important;
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto 16px !important;
+}
+.quiz-page .quiz-hero__company {
+    justify-content: center;
+    text-align: center;
+    font-size: var(--fs-sm);
+}
+.quiz-page .quiz-hero__company span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+.quiz-page .quiz-hero__tags {
+    justify-content: center;
+    align-items: center;
+}
+.quiz-page .quiz-hero__tags .ant-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 32px;
+    line-height: 1.2;
+}
+.quiz-page .quiz-hero__tags .ant-tag .anticon {
+    margin: 0 !important;
+}
+/* Timer tag: the neutral .ant-tag rule above used to swallow antd's blue/red */
+.quiz-page .quiz-hero__tags .ant-tag.quiz-timer--ok {
+    background: var(--info-soft) !important;
+    border-color: transparent !important;
+    color: var(--info-text) !important;
+}
+.quiz-page .quiz-hero__tags .ant-tag.quiz-timer--warn {
+    background: var(--danger-soft) !important;
+    border-color: transparent !important;
+    color: var(--danger-text) !important;
+}
+.quiz-page .quiz-hero__tags .ant-tag.quiz-timer--ok .anticon,
+.quiz-page .quiz-hero__tags .ant-tag.quiz-timer--warn .anticon {
+    color: inherit;
+}
+
+@media (max-width: 560px) {
+    .quiz-page .quiz-hero {
+        padding: 40px 18px 30px;
+    }
+    .quiz-page .quiz-hero__brand {
+        flex-direction: column;
+        text-align: center;
+    }
+    .quiz-page .quiz-hero__brand-meta {
+        align-items: center;
+    }
+}
+
+/* ---------- Question header (QuizQuestionMeta) ---------- */
+.quiz-page .quiz-question-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 10px;
+    margin-bottom: 14px;
+}
+.quiz-q-pill,
+.quiz-q-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 28px;
+    padding: 0 14px;
+    border-radius: 999px;
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-bold);
+    line-height: 1;
+    white-space: nowrap;
+}
+.quiz-q-pill {
+    background: linear-gradient(135deg, var(--accent), var(--accent-3));
+    color: var(--text-on-accent);
+    box-shadow: 0 4px 12px var(--accent-ring);
+}
+.quiz-q-chip {
+    padding: 0 12px;
+    border: 1px solid var(--border);
+    background: var(--surface-2);
+    color: var(--text-muted);
+    font-weight: var(--fw-semibold);
+}
+.quiz-q-chip--danger  { background: var(--danger-soft);  color: var(--danger-text);  border-color: transparent; }
+.quiz-q-chip--warning { background: var(--warning-soft); color: var(--warning-text); border-color: transparent; }
+.quiz-q-chip--success { background: var(--success-soft); color: var(--success-text); border-color: transparent; }

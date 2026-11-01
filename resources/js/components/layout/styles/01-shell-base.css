@@ -1,0 +1,318 @@
+/* Shell: scroll lock, safe areas, sidebar logo, header title (split from layout/index.css; keep import order: see styles/index.js) */
+@media (min-width: 769px) {
+  #header {
+    height: 48px !important;
+    line-height: 48px !important;
+  }
+
+  #content {
+    height: calc(100vh - 48px) !important;
+  }
+
+  #sidebar-wrapper .ant-layout-sider {
+    font-size: 13px !important;
+  }
+
+  .sidebar-logo,
+  .logo img {
+    width: 48px !important;
+  }
+
+  .menu-icon {
+    font-size: 14px !important;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .ant-drawer-left .ant-drawer-content-wrapper {
+    max-width: 65vw !important;
+    /* was 55vw */
+    min-width: 250px !important;
+    /* was 200px */
+  }
+}
+
+@media (max-width: 480px) {
+  .ant-drawer-left .ant-drawer-content-wrapper {
+    max-width: 75vw !important;
+    /* was 65vw */
+  }
+}
+
+/* Make main layout fixed height with no body scroll */
+#main-layout {
+  height: 100vh !important;
+  min-height: 100vh !important;
+  max-height: 100vh !important;
+  overflow: hidden !important;
+  display: flex !important;
+}
+
+/* ===== HARD SCROLL LOCK (mobile, admin shell only) =====
+   Only #content is meant to scroll. If the outer document can also
+   scroll - even by a pixel, e.g. from safe-area padding pushing the
+   layout a hair past 100vh - mobile browsers treat that as page
+   scroll: they collapse/expand the address bar and move the WHOLE
+   page (header included) as one unit, which is exactly what made
+   the header "hide to the edge" and the footer ride up with it.
+   Locking html/body to the viewport removes that possibility, so
+   the browser chrome no longer has a reason to react to touch
+   scrolling and #header/footer simply never move.
+
+   Scoped to html.app-shell-active/body.app-shell-active - a class
+   MainLayout (index.js) adds only while it's mounted - so this never
+   touches the public pages (PublicHomePage, PublicEventsPage, etc.),
+   which don't use this shell and need normal document scrolling. A
+   bare "html, body" selector here previously locked scrolling
+   site-wide and broke scrolling on every public page.
+
+   LANDSCAPE NOTE: a rotated phone's viewport WIDTH can be well over
+   768px (iPhone XR = 896px, 14 Pro Max = 932px), so a plain
+   "max-width: 768px" check never matches it and the lock silently
+   turned off the moment the phone was rotated - the outer document
+   was free to scroll again, which is exactly what let the browser
+   chrome show/hide and drag the fixed sidebar sideways with it
+   (the "sidebar moves left and right" / black-gap bug). Phones in
+   landscape always have a short viewport HEIGHT (≤ ~430px on every
+   current iPhone), while tablets in landscape stay tall (iPad mini
+   landscape height is 768px), so "max-height: 500px" is what
+   reliably singles out phones here regardless of width. */
+@media (max-width: 768px), (orientation: landscape) and (max-height: 500px) {
+  html.app-shell-active,
+  body.app-shell-active {
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+    overscroll-behavior: none !important;
+    -webkit-overflow-scrolling: auto !important;
+  }
+}
+
+#content {
+  overscroll-behavior: contain !important;
+}
+
+/* Make site-layout fill remaining space */
+.site-layout {
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100vh !important;
+  overflow: hidden !important;
+}
+
+/* iOS installed-PWA fix: 100vh can exceed the visible safe area in
+   landscape on notched iPhones, causing content to sit under the
+   notch/home-indicator instead of being padded away from it. dvh
+   accounts for that. Falls back silently to 100vh everywhere else. */
+@supports (height: 100dvh) {
+  #main-layout,
+  .site-layout {
+    height: 100dvh !important;
+    min-height: 100dvh !important;
+    max-height: 100dvh !important;
+  }
+}
+
+/* Fix header height */
+#header {
+  flex-shrink: 0 !important;
+  height: 64px !important;
+  line-height: 64px !important;
+}
+
+/* ===== iOS SAFE AREA (notch + home indicator) =====
+   Reserves space around the physical notch/rounded corners in BOTH
+   orientations. env() returns 0 on Android/non-notched devices, so
+   this is a no-op there. */
+#header {
+  padding-left: env(safe-area-inset-left) !important;
+  padding-right: env(safe-area-inset-right) !important;
+  padding-top: env(safe-area-inset-top) !important;
+  box-sizing: border-box !important;
+}
+
+#content {
+  padding-left: env(safe-area-inset-left) !important;
+  padding-right: env(safe-area-inset-right) !important;
+}
+
+#sidebar-wrapper .ant-layout-sider {
+  padding-left: env(safe-area-inset-left) !important;
+  box-sizing: border-box !important;
+}
+
+/* Make only content area scrollable */
+#content {
+  flex: 1 !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  height: calc(100vh - 64px) !important;
+}
+
+/* Fix sidebar to not scroll */
+#sidebar-wrapper {
+  height: 100vh !important;
+  overflow: hidden !important;
+  position: sticky !important;
+  top: 0 !important;
+}
+
+#sidebar-wrapper .ant-layout-sider {
+  height: 100vh !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  position: fixed !important;
+  left: 0 !important;
+  top: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+/* ===== PIN THE LOGO, SCROLL ONLY THE MENU =====
+   .logo and the <Menu> are both plain children of the sider above,
+   which is the element that actually scrolls (overflow-y: auto).
+   That meant scrolling the menu dragged the logo along with it.
+   Making .logo sticky to the top of that same scroll container
+   keeps it pinned in place while the menu list scrolls underneath -
+   exactly like #header already behaves for the page as a whole. */
+#sidebar-wrapper .ant-layout-sider .logo {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 5 !important;
+  flex-shrink: 0 !important;
+  width: 100% !important;
+  background: var(--surface, var(--c-white)) !important;
+  /* Padding (not margin) on purpose: this box's own vertical spacing
+     used to come from the *image's* margin-top/bottom (10px auto,
+     see the "FIX LOGO SIZE" rule below). A child's vertical margin
+     collapses straight through a plain block parent with no padding/
+     border, which meant this sticky box's real top edge sat ~10px
+     lower than where "top: 0" locks it - so on scroll you'd see the
+     logo drift up that ~10px before it actually caught and stuck.
+     Padding never collapses, so moving the spacing here removes that
+     drift entirely; the logo is pinned from the very first pixel of
+     scroll. */
+  padding: 10px 0 !important;
+}
+
+/* The menu is the only part that should scroll. Descendant selector
+   (not a direct-child ">") on purpose - it still works no matter
+   whether antd renders the menu as a direct child of the sider or
+   wraps it in an inner div, since position: sticky above only cares
+   about the nearest scrolling ancestor, not direct parentage. */
+#sidebar-wrapper .ant-layout-sider .ant-menu {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  overflow-x: hidden !important;
+}
+
+/* dvh fallback for the sidebar - kept as a separate block placed
+   right after so it wins the cascade over the plain 100vh above.
+   #main-layout/.site-layout already got this same dvh treatment
+   near the top of the file; the sidebar was missing it, which left
+   it sized against the OLD static viewport while the rest of the
+   shell resized against the live one as Safari's toolbar hid/showed
+   - that mismatch is part of what made the sidebar visibly drift. */
+@supports (height: 100dvh) {
+  #sidebar-wrapper,
+  #sidebar-wrapper .ant-layout-sider {
+    height: 100dvh !important;
+  }
+}
+
+/* ===== FIX LOGO SIZE =====*/
+.sidebar-logo {
+  width: 55px !important;
+  height: auto !important;
+  margin: 10px auto !important;
+  display: block !important;
+}
+
+/* .logo img: vertical spacing now lives on the sticky .logo
+   container's padding (see above) instead of margin here, so the
+   two don't stack and so the image's margin can't collapse through
+   its sticky parent. Horizontal auto margin stays, for centering. */
+.logo img {
+  width: 55px !important;
+  height: auto !important;
+  margin: 0 auto !important;
+  display: block !important;
+}
+
+/* ===== FIX HEADER TITLE OVERLAP ===== */
+/* Fixed header row layout to prevent title overlap */
+.row-header {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  width: 100% !important;
+  align-items: center !important;
+  /* Added padding to prevent dropdown from touching edge */
+  padding: 0 16px !important;
+}
+
+.first {
+  flex: 1 !important;
+  min-width: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  overflow: hidden !important;
+}
+
+/* Title text - RESPONSIVE FIX */
+.first .ant-typography {
+  display: block !important;
+  max-width: 100% !important;
+}
+
+/* Desktop only - truncate text */
+
+/* Mobile - show full text */
+@media (max-width: 1000px) {
+
+  .first .ant-typography {
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    font-size: clamp(9px, 2.5vw, 14px) !important;
+    line-height: 1.3 !important;
+    word-break: break-word !important;
+    text-align: left !important;
+    display: inline-block !important;
+  }
+
+  .row-header {
+    flex-wrap: wrap !important;
+    gap: 4px !important;
+  }
+}
+
+
+
+/* Fixed second column to stay at right edge properly */
+.second {
+  flex: 0 0 auto !important;
+  width: auto !important;
+  display: flex !important;
+  justify-content: flex-end !important;
+  align-items: center !important;
+  margin-left: auto !important;
+  /* Added min-width to ensure icons don't get squished */
+  min-width: fit-content !important;
+  padding-right: 8px !important;
+}
+
+.second .ant-space {
+  gap: 8px !important;
+}
+
+/* ===== FIX DROPDOWN Z-INDEX ===== */
+/* Lowered z-index so dropdowns appear BELOW modals (modals use z-index ~1000) */
+.ant-dropdown,
+.ant-dropdown-menu,
+.notification-dropdown {
+  z-index: 999 !important;
+}

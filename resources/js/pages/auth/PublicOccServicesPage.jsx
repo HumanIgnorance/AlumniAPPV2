@@ -2,7 +2,6 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import { Typography } from "antd";
 import {
-    HomeOutlined,
     SunOutlined,
     MoonOutlined,
     MenuOutlined,
@@ -13,9 +12,6 @@ import {
     SolutionOutlined,
     AppstoreOutlined,
     TeamOutlined,
-    EnvironmentOutlined,
-    MailOutlined,
-    PhoneOutlined,
     FacebookOutlined,
     TwitterOutlined,
     InstagramOutlined,
@@ -28,8 +24,13 @@ import usePreventInspect, { ZoomWarningModal } from "~/hooks/usePreventInspect";
 // already defined for the public site so this page looks like part of
 // the same site instead of a bolt-on screen — same import pattern as
 // PublicEventsPage.js / PublicJobPostsPage.js / PublicPages404.js.
-import "./PublicHomePage.css";
+import "./PublicHomePage-styles";
 import "./PublicOccServicesPage.css";
+import scrollToSettled from "~/utils/scrollToSettled";
+import useHeaderHeightVar from "~/hooks/useHeaderHeightVar";
+import useEventListener from "~/hooks/useEventListener";
+import { COLORS } from "~/config/theme";
+import { buildPageTitle } from "~/config/site";
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -157,50 +158,6 @@ const checkSystemReachable = async (url) => {
 // the same name in PublicEventsPage.js / PublicAnnouncementsPage.js —
 // kept in sync with both.
 // ============================================================
-const scrollToSettled = (getTarget) => {
-    let cancelled = false;
-    let lastHeight = -1;
-    let stableCount = 0;
-    let attempts = 0;
-    const MAX_ATTEMPTS = 30; // ~2.7s ceiling at 90ms/tick, just in case
-    const STABLE_TICKS_NEEDED = 3;
-
-    const stop = () => {
-        cancelled = true;
-        window.removeEventListener("wheel", stop);
-        window.removeEventListener("touchmove", stop);
-        window.removeEventListener("keydown", stop);
-    };
-    window.addEventListener("wheel", stop, { passive: true });
-    window.addEventListener("touchmove", stop, { passive: true });
-    window.addEventListener("keydown", stop);
-
-    const tick = () => {
-        if (cancelled) return;
-        const el = getTarget();
-        if (!el) return stop();
-
-        el.scrollIntoView({ behavior: "auto", block: "start" });
-
-        const currentHeight = document.body.scrollHeight;
-        if (currentHeight === lastHeight) {
-            stableCount += 1;
-        } else {
-            stableCount = 0;
-            lastHeight = currentHeight;
-        }
-
-        attempts += 1;
-        if (stableCount >= STABLE_TICKS_NEEDED || attempts >= MAX_ATTEMPTS) {
-            return stop();
-        }
-        setTimeout(tick, 90);
-    };
-
-    tick();
-    return stop;
-};
-
 const PublicOccServicesPage = () => {
     const { theme: currentTheme, toggleTheme } = useAppTheme();
     const isDark = currentTheme === "black";
@@ -222,7 +179,7 @@ const PublicOccServicesPage = () => {
     const stopSettleScrollRef = useRef(null);
 
     useEffect(() => {
-        document.title = "OCC Services | ATMS - Opol Community College";
+        document.title = buildPageTitle("OCC Services");
     }, []);
 
     // ============ Check each system's reachability ============
@@ -252,46 +209,16 @@ const PublicOccServicesPage = () => {
     // Also closes the mobile nav panel on scroll, same safety net as
     // PublicHomePage.js — see that file's comment for the full
     // rationale.
-    useEffect(() => {
-        const onScroll = () => {
-            setScrolled(window.scrollY > 8);
-            setMobileNavOpen((open) => (open ? false : open));
-        };
-        window.addEventListener("scroll", onScroll);
-        return () => window.removeEventListener("scroll", onScroll);
-    }, []);
+    useEventListener("scroll", () => {
+        setScrolled(window.scrollY > 8);
+        setMobileNavOpen((open) => (open ? false : open));
+    });
 
     // ============ Keep --ph-header-h in sync with the real header ============
     // Same measured-height pattern as PublicHomePage.js, so page content
     // padding lines up exactly with this page's own header instead of
     // relying on the CSS fallback value.
-    useEffect(() => {
-        const node = headerRef.current;
-        if (!node) return undefined;
-
-        const applyHeight = () => {
-            const height = node.offsetHeight;
-            if (height > 0) {
-                document.documentElement.style.setProperty("--ph-header-h", `${height}px`);
-            }
-        };
-
-        applyHeight();
-
-        let observer;
-        if (typeof ResizeObserver !== "undefined") {
-            observer = new ResizeObserver(applyHeight);
-            observer.observe(node);
-        }
-        window.addEventListener("resize", applyHeight);
-        window.addEventListener("orientationchange", applyHeight);
-
-        return () => {
-            if (observer) observer.disconnect();
-            window.removeEventListener("resize", applyHeight);
-            window.removeEventListener("orientationchange", applyHeight);
-        };
-    }, []);
+    useHeaderHeightVar(headerRef);
 
     // ============ Deep link: ?system=<id> ============
     // The header's "OCC Services" dropdown on the Home page sends
@@ -365,10 +292,10 @@ const PublicOccServicesPage = () => {
                     <img src={logo} alt="OCC Alumni Logo" />
                     <div className="ph-brand-text">
                         <span className="ph-brand-title">
-                            <span style={{ color: "#003366", fontWeight: 900 }}>O</span>
-                            <span style={{ color: "#FFD700", fontWeight: 900 }}>C</span>
-                            <span style={{ color: "#CC0000", fontWeight: 900 }}>C</span>{" "}
-                            <span style={{ color: "#003366", fontWeight: 900 }}>Alumni</span>
+                            <span style={{ color: COLORS.c003366, fontWeight: 900 }}>O</span>
+                            <span style={{ color: COLORS.ffd700, fontWeight: 900 }}>C</span>
+                            <span style={{ color: COLORS.cc0000, fontWeight: 900 }}>C</span>{" "}
+                            <span style={{ color: COLORS.c003366, fontWeight: 900 }}>Alumni</span>
                         </span>
                         <span className="ph-brand-sub">Opol Community College</span>
                     </div>

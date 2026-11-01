@@ -45,7 +45,7 @@
 }
 
 [data-theme="black"] .settings-menu__btn {
-    color: #60a5fa;
+    color: var(--c-blue-400);
 }
 
 /* Dropdown panel */
@@ -89,7 +89,7 @@
     border-radius: 10px;
     border: none;
     background: transparent;
-    color: #1f2937;
+    color: var(--c-gray-800);
     font-size: 14px;
     font-weight: 500;
     cursor: pointer;
@@ -115,12 +115,12 @@
 }
 
 [data-theme="black"] .settings-menu__item {
-    color: #e5e7eb;
+    color: var(--c-gray-200);
 }
 
 [data-theme="black"] .settings-menu__item:hover,
 [data-theme="black"] .settings-menu__item:focus-visible {
-    color: #60a5fa;
+    color: var(--c-blue-400);
 }
 
 @media (max-width: 720px) {
