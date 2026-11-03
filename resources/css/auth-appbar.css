@@ -13,12 +13,13 @@
    and the theme / settings button is pinned to the same spot (42px, centred in
    the 60px) on every page. Change --auth-bar-h to resize the bar everywhere.
 
-   Portrait phones only; every other screen keeps its existing header.
+   Shown on portrait phones AND on tablet / laptop / desktop (>= 768px wide).
+   Landscape phones (narrower than 768px) keep their existing layout.
    ========================================================================== */
 
 .auth-appbar { display: none; }
 
-@media (max-width: 767px) and (orientation: portrait) {
+@media (max-width: 767px) and (orientation: portrait), (min-width: 768px) {
     html {
         --auth-bar-h: 60px;
         --auth-bar-btn: 42px;
@@ -120,6 +121,30 @@
 }
 
 /* very small phones (iPhone SE 1st gen, 320px Androids) */
+/* ---- tablet / laptop / desktop: a slightly roomier bar, and the split Login
+   screen (which is exactly 100vh) gives the bar its height back to the form. ---- */
+@media (min-width: 768px) {
+    html {
+        --auth-bar-h: 64px;
+        --auth-bar-gap: 28px;
+    }
+    #app .auth-appbar__brand img { width: 42px; height: 42px; }
+    #app .auth-appbar__name { font-size: 16px; }
+
+    html.has-auth-appbar #app .login-page {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        height: 100dvh;
+    }
+    html.has-auth-appbar #app .login-page > .auth-appbar { flex: 0 0 auto; }
+    html.has-auth-appbar #app .login-page > .login-shell {
+        flex: 1 1 auto;
+        min-height: 0;
+        height: auto;
+    }
+}
+
 @media (max-width: 360px) and (orientation: portrait) {
     #app .auth-appbar__name { font-size: 13.5px; }
     #app .auth-appbar__brand img { width: 34px; height: 34px; }
