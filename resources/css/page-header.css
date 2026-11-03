@@ -128,7 +128,7 @@
 /* order: brand, title, then actions/stats on the same row; description below */
 #app :is(.ae-hero__brand, .gal-hero__brand, .fb-hero__brand, .faq-hero__brand, .about-hero__brand, .quiz-hero__brand, .dashboard-hero__brand) { order: 1; }
 #app :is(.ae-hero__title, .gal-hero__title, .fb-hero__title, .faq-hero__title, .about-hero__title, .quiz-hero__title,
-         .dashboard-hero__title, .dh-hero__title, .qm-hero__title, .dh-header-title) { order: 2; flex: 0 1 auto !important; min-width: 0; }
+         .dashboard-hero__title, .dh-hero__title, .qm-hero__title, .dh-header-title) { order: 2; flex: 1 1 180px !important; min-width: 0; }
 #app :is(.gal-hero__actions, .ae-hero__stats, .fb-hero__stats, .qm-hero__stats, .gal-hero__stats, .about-hero__cta, .quiz-hero__company) { order: 3; }
 #app :is(.gal-hero__actions, .dashboard-hero__controls, .dh-hero__actions, .qm-hero__actions, .about-hero__cta, .dh-header-select) {
     display: flex !important;
@@ -209,4 +209,198 @@
     }
     #app :is(.dashboard-hero__select, .dashboard-hero__select .ant-select-selector) { width: 100% !important; }
     #app :is(.ae-stat, .gal-stat-card, .fb-stat, .qm-stat) { flex: 1 1 calc(50% - 8px); }
+}
+
+
+/* ==========================================================
+   UNIFIED HEADER LAYER  (theme-aware + consistent alignment)
+   ----------------------------------------------------------
+   Why this exists: several headers (Audit Log, Feedback, Alumni,
+   Announcements, Job Posts, Dashboard, Questions, Department...)
+   hard-coded LIGHT colors in per-page CSS, and their dark-mode
+   overrides lived in other lazily-loaded page files - so opening
+   e.g. Audit Log first left a white header in dark mode.
+
+   This block lives in the entry bundle (always loaded) and re-points
+   every header's local colour variables at the global theme tokens
+   (--surface, --border, --text ...), which switch automatically with
+   <html data-theme="black">. Add a new page header? Just add its
+   class to the lists below.
+   ========================================================== */
+
+/* ---------- A. Colours: ONE source for every header (light + dark) ---------- */
+#app :is(.ae-hero, .fb-hero, .qm-hero, .dashboard-hero, .dashboard-header-card,
+         .gal-hero, .faq-hero, .about-hero, .quiz-hero, .hp-hero) {
+    /* per-page variable families all resolve to the global tokens */
+    --ae-surface: var(--surface);   --ae-border: var(--border);
+    --ae-text: var(--text);         --ae-text-muted: var(--text-muted);
+    --ae-shadow-sm: var(--shadow-sm); --ae-shadow-md: var(--shadow-md);
+    --fb-surface: var(--surface);   --fb-border: var(--border);
+    --fb-text: var(--text);         --fb-text-muted: var(--text-muted);
+    --fb-shadow-sm: var(--shadow-sm); --fb-shadow-md: var(--shadow-md);
+    --qm-surface: var(--surface);   --qm-surface-2: var(--surface-2);
+    --qm-border: var(--border);     --qm-text: var(--text);
+    --qm-text-muted: var(--text-muted);
+    --qm-shadow-sm: var(--shadow-sm); --qm-shadow-md: var(--shadow-md);
+    --dh-surface: var(--surface);   --dh-border: var(--border);
+    --dh-border-strong: var(--border-strong);
+    --dh-text: var(--text);         --dh-text-muted: var(--text-muted);
+    --dh-shadow-sm: var(--shadow-sm); --dh-shadow-md: var(--shadow-md);
+    box-shadow: var(--shadow-md);
+}
+
+/* Titles / descriptions: always readable on the header surface */
+#app :is(.ae-hero__title, .gal-hero__title, .fb-hero__title, .faq-hero__title, .about-hero__title,
+         .quiz-hero__title, .dashboard-hero__title, .dh-hero__title, .qm-hero__title, .dh-header-title) {
+    color: var(--text) !important;
+}
+#app :is(.ae-hero__lead, .gal-hero__lead, .fb-hero__lead, .faq-hero__lead, .about-hero__lead,
+         .quiz-hero__lead, .dashboard-hero__lead, .dh-hero__lead, .qm-hero__lead, .dh-header-sub) {
+    color: var(--text-muted) !important;
+}
+
+/* Gradient word in the title keeps its gradient (not overridden by the colour above) */
+#app :is(.ae-hero, .fb-hero, .gal-hero, .faq-hero, .about-hero, .dashboard-hero, .qm-hero) .grad-text {
+    -webkit-text-fill-color: transparent !important;
+    color: transparent !important;
+}
+
+/* Logo tile + stat tiles use the elevated surface in both themes */
+#app :is(.ae-hero__logo, .gal-hero__logo, .fb-hero__logo, .faq-hero__logo, .about-hero__logo,
+         .quiz-hero__logo, .dashboard-hero__logo) {
+    background: var(--surface-2) !important;
+    border: 1px solid var(--border);
+}
+#app :is(.ae-stat, .fb-stat, .qm-stat, .gal-stat-card) {
+    background: var(--surface-2) !important;
+    border: 1px solid var(--border) !important;
+    box-shadow: none !important;
+}
+#app :is(.ae-stat, .fb-stat, .qm-stat, .gal-stat-card):hover {
+    border-color: var(--accent-ring) !important;
+}
+#app :is(.ae-stat__value, .fb-stat__value, .qm-stat__value,
+         .gal-stat-card .ant-statistic-content, .gal-stat-card .ant-statistic-content-value) {
+    color: var(--text) !important;
+}
+#app :is(.ae-stat__label, .fb-stat__label, .qm-stat__label, .gal-stat-label,
+         .gal-stat-card .ant-statistic-title) {
+    color: var(--text-muted) !important;
+}
+
+/* Dark mode: surfaces, dotted grids and glow blobs */
+html[data-theme="black"] #app :is(.ae-hero, .fb-hero) {
+    background:
+        linear-gradient(180deg, var(--surface), var(--surface)) padding-box,
+        linear-gradient(135deg, rgba(14, 165, 233, 0.55), rgba(99, 102, 241, 0.45), rgba(20, 184, 166, 0.55)) border-box !important;
+}
+html[data-theme="black"] #app .fb-hero {
+    background:
+        linear-gradient(180deg, var(--surface), var(--surface)) padding-box,
+        linear-gradient(135deg, rgba(239, 68, 68, 0.55), rgba(99, 102, 241, 0.45), rgba(245, 158, 11, 0.55)) border-box !important;
+}
+html[data-theme="black"] #app :is(.qm-hero, .dashboard-hero, .dashboard-header-card, .about-hero) {
+    background:
+        radial-gradient(900px 380px at -10% -20%, rgba(99, 102, 241, 0.20), transparent 60%),
+        radial-gradient(700px 320px at 110% 0%, rgba(14, 165, 233, 0.20), transparent 60%),
+        var(--surface) !important;
+    border-color: var(--border) !important;
+}
+html[data-theme="black"] #app :is(.ae-hero, .fb-hero, .gal-hero, .faq-hero) .dot-grid {
+    background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px) !important;
+}
+html[data-theme="black"] #app :is(.ae-hero, .fb-hero, .gal-hero, .faq-hero, .about-hero,
+                                   .dashboard-hero, .qm-hero, .dashboard-header-card) :is(.blob, .orb, .gal-blob) {
+    opacity: 0.3;
+}
+
+/* Tags/chips: same pill look everywhere */
+#app :is(.ae-hero, .gal-hero, .fb-hero, .faq-hero, .about-hero, .quiz-hero, .dashboard-hero, .dh-hero, .qm-hero, .dashboard-header-card)
+    :is(.ae-chip, .ant-tag, .dh-header-chip) {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 4px;
+    height: 24px;
+    line-height: 22px !important;
+    border-radius: 999px !important;
+    white-space: nowrap;
+}
+
+/* ---------- B. Alignment: identical skeleton on every page ----------
+   Row 1:  [logo + chip]  [Title ............]  [actions / stats]
+   Row 2:  description (full width, same left edge as the logo)
+   --------------------------------------------------------------- */
+#app :is(.ae-hero__content, .gal-hero__content, .fb-hero__content, .faq-hero__content, .about-hero__content,
+         .quiz-hero__content, .dh-hero__content, .qm-hero__content, .dashboard-hero__content,
+         .dashboard-header-card .dh-header-row) {
+    align-items: center !important;
+    min-height: 44px;
+    row-gap: 6px !important;
+    column-gap: 14px !important;
+}
+/* every header's title sits on the same baseline as logo and actions */
+#app :is(.ae-hero__title, .gal-hero__title, .fb-hero__title, .faq-hero__title, .about-hero__title,
+         .quiz-hero__title, .dashboard-hero__title, .dh-hero__title, .qm-hero__title, .dh-header-title) {
+    align-self: center !important;
+    font-weight: 800 !important;
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
+/* description starts at the left edge, never centred */
+#app :is(.ae-hero__lead, .gal-hero__lead, .fb-hero__lead, .faq-hero__lead, .about-hero__lead,
+         .quiz-hero__lead, .dashboard-hero__lead, .dh-hero__lead, .qm-hero__lead, .dh-header-sub) {
+    text-align: left !important;
+    margin-top: 2px !important;
+}
+/* right-hand cluster (buttons, selects, stats): same height, vertically centred */
+#app :is(.gal-hero__actions, .dashboard-hero__controls, .dh-hero__actions, .qm-hero__actions,
+         .about-hero__cta, .dh-header-select, .ae-hero__stats, .fb-hero__stats,
+         .qm-hero__stats, .gal-hero__stats) {
+    align-items: center !important;
+    align-self: center !important;
+    margin-left: auto !important;
+}
+#app :is(.gal-hero__actions, .dashboard-hero__controls, .dh-hero__actions, .qm-hero__actions, .about-hero__cta, .dh-header-select)
+    :is(.ant-btn, .ant-select-selector) {
+    height: 34px !important;
+    min-height: 34px !important;
+    display: inline-flex;
+    align-items: center;
+    font-size: 13px !important;
+    border-radius: 10px !important;
+}
+#app :is(.dashboard-hero__controls, .dh-header-select) .ant-select-selection-item,
+#app :is(.dashboard-hero__controls, .dh-header-select) .ant-select-selection-placeholder {
+    line-height: 32px !important;
+}
+#app :is(.gal-hero__actions, .dashboard-hero__controls, .dh-hero__actions, .qm-hero__actions, .about-hero__cta) .ant-btn .anticon {
+    font-size: 14px;
+}
+/* stat tiles: same size & internal alignment on all pages */
+#app :is(.ae-stat, .fb-stat, .qm-stat, .gal-stat-card) {
+    display: inline-flex !important;
+    align-items: center !important;
+    min-height: 46px;
+}
+#app :is(.ae-stat__body, .fb-stat__body, .qm-stat__body) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: left;
+}
+
+/* ---------- C. Phones: stack cleanly, left aligned ---------- */
+@media (max-width: 767px) {
+    #app :is(.ae-hero__brand, .gal-hero__brand, .fb-hero__brand, .faq-hero__brand, .about-hero__brand,
+             .quiz-hero__brand, .dashboard-hero__brand) { flex-direction: row !important; }
+    #app :is(.ae-hero__brand-meta, .fb-hero__brand-meta, .gal-hero__brand-meta, .faq-hero__brand-meta,
+             .about-hero__brand-meta, .dashboard-hero__brand-meta) { align-items: center !important; }
+    #app :is(.ae-hero__title, .gal-hero__title, .fb-hero__title, .faq-hero__title, .about-hero__title,
+             .quiz-hero__title, .dashboard-hero__title, .dh-hero__title, .qm-hero__title, .dh-header-title) {
+        flex: 1 1 100% !important;
+        font-size: 20px !important;
+    }
+    #app :is(.gal-hero__actions, .dashboard-hero__controls, .dh-hero__actions, .qm-hero__actions,
+             .about-hero__cta, .dh-header-select) { width: 100% !important; margin-left: 0 !important; }
+    #app :is(.gal-hero__actions, .dashboard-hero__controls, .dh-hero__actions, .qm-hero__actions) .ant-btn { flex: 1 1 auto; }
 }

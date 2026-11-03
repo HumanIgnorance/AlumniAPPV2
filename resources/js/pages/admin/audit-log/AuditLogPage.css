@@ -223,3 +223,23 @@
         padding: 12px;
     }
 }
+
+/* ============ Dark theme (self-contained, so it works even when no
+   other admin page CSS has been loaded yet) ============ */
+[data-theme="black"] .ae-hero {
+  --ae-surface: var(--surface);
+  --ae-border: var(--border);
+  --ae-text: var(--text);
+  --ae-text-muted: var(--text-muted);
+  --ae-accent-soft: rgba(14, 165, 233, 0.16);
+}
+[data-theme="black"] .ae-stat { background: var(--surface-2); border-color: var(--border); }
+[data-theme="black"] .ae-hero__logo { background: var(--surface-2); }
+[data-theme="black"] .audit-filters-card,
+[data-theme="black"] .audit-table-card {
+  background: var(--surface);
+  border-color: var(--border);
+  box-shadow: var(--shadow-sm);
+}
+[data-theme="black"] .audit-filters-card .ant-card-body,
+[data-theme="black"] .audit-table-card .ant-card-body { background: transparent; }

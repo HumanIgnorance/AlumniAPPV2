@@ -103,6 +103,7 @@ export default function LayoutHeader() {
                         }}
                     >
                         <span
+                            className="hdr-title-navy"
                             style={{
                                 color: COLORS.c003366,
                                 fontWeight: 900,
@@ -119,6 +120,7 @@ export default function LayoutHeader() {
                             ALUMNI
                         </span>{" "}
                         <span
+                            className="hdr-title-red"
                             style={{
                                 color: COLORS.cc0000,
                                 fontWeight: 900,
@@ -127,6 +129,7 @@ export default function LayoutHeader() {
                             ASSOCIATION
                         </span>{" "}
                         <span
+                            className="hdr-title-navy"
                             style={{
                                 color: COLORS.c003366,
                                 fontWeight: 900,

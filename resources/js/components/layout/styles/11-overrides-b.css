@@ -168,3 +168,139 @@
     left: max(0px, env(safe-area-inset-left)) !important;
   }
 }
+
+/* =========================================================
+   DARK MODE — header brand title contrast
+   "ATMS |" and "- OCC" were navy (#003366) and "ASSOCIATION"
+   dark red on a near-black header, so they were hard to read.
+   ========================================================= */
+html[data-theme="black"] #header .hdr-title-navy { color: var(--c-blue-400) !important; }
+html[data-theme="black"] #header .hdr-title-red  { color: var(--c-red-400) !important; }
+
+/* =========================================================
+   PHONE IN LANDSCAPE (iPhone XR 896x414, 11, 12, 13, 14, 15...)
+   Fixes: sidebar logo/icons clipped by the camera inset, a tall
+   header + footer leaving almost no room for content, menu items
+   cut off at the bottom, and the floating scroll orb covering the
+   footer. Last in the cascade on purpose.
+   ========================================================= */
+@media (orientation: landscape) and (max-height: 500px) {
+  /* 1. Sidebar: keep its full 80px usable width and ADD the camera
+        inset on top, instead of the inset eating into the 80px. */
+  #sidebar-wrapper {
+    width: calc(80px + env(safe-area-inset-left)) !important;
+    min-width: calc(80px + env(safe-area-inset-left)) !important;
+    flex: 0 0 calc(80px + env(safe-area-inset-left)) !important;
+  }
+  #sidebar-wrapper .ant-layout-sider,
+  #sidebar-wrapper .ant-layout-sider-collapsed {
+    width: calc(80px + env(safe-area-inset-left)) !important;
+    min-width: calc(80px + env(safe-area-inset-left)) !important;
+    max-width: calc(80px + env(safe-area-inset-left)) !important;
+    flex: 0 0 calc(80px + env(safe-area-inset-left)) !important;
+    padding-left: env(safe-area-inset-left) !important;
+    padding-bottom: calc(env(safe-area-inset-bottom) + 12px) !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+  #sidebar-wrapper .ant-layout-sider-children { width: 100% !important; }
+
+  /* logo: fits inside the 80px area, centred, and smaller so more
+     menu items stay visible */
+  #sidebar-wrapper .ant-layout-sider .logo {
+    padding: 6px 0 !important;
+    display: flex !important;
+    justify-content: center !important;
+  }
+  #sidebar-wrapper .ant-layout-sider .logo a { display: flex; justify-content: center; }
+  #sidebar-wrapper .ant-layout-sider .logo img,
+  #sidebar-wrapper .ant-layout-sider .logo img.sidebar-logo {
+    width: 40px !important;
+    max-width: 100% !important;
+    height: auto !important;
+    margin: 0 auto !important;
+    object-fit: contain;
+  }
+
+  /* compact, fully reachable menu */
+  #sidebar-wrapper .ant-layout-sider .ant-menu {
+    width: 100% !important;
+    padding-bottom: 8px;
+  }
+  #sidebar-wrapper .ant-layout-sider .ant-menu-item,
+  #sidebar-wrapper .ant-layout-sider .ant-menu-submenu-title {
+    height: 40px !important;
+    min-height: 40px !important;
+    line-height: 40px !important;
+    margin: 2px 0 !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  /* 2. The sidebar now clears the camera, so header/content/footer only
+        need a normal left gutter; the RIGHT keeps its own inset for
+        when the phone is rotated the other way. */
+  #header,
+  #content,
+  .ant-layout-footer.app-footer {
+    padding-left: 12px !important;
+    padding-right: max(12px, env(safe-area-inset-right)) !important;
+  }
+
+  /* 3. Slim header: more room for the page */
+  #header {
+    height: 48px !important;
+    min-height: 48px !important;
+    line-height: 48px !important;
+    padding-top: 0 !important;
+  }
+  #header .ant-typography { font-size: 15px !important; line-height: 1.2 !important; white-space: nowrap; }
+  #header .second { flex: 0 0 auto !important; min-width: 0 !important; padding-right: 0 !important; }
+  #header .btn-notification { width: 34px !important; height: 34px !important; min-height: 34px !important; }
+  #header .second .ant-btn,
+  #header .second .ant-dropdown-trigger { height: 34px !important; min-height: 34px !important; }
+  #header .second .ant-avatar { width: 26px !important; height: 26px !important; line-height: 26px !important; }
+
+  /* content gets all remaining height (no fixed calc that ignores the footer) */
+  #content {
+    height: auto !important;
+    min-height: 0 !important;
+    flex: 1 1 0 !important;
+  }
+  #content .alumni-dashboard-container,
+  #content .audit-log-container,
+  #content [class*="-container"] { padding-left: 12px; padding-right: 12px; }
+
+  /* 4. Footer: one slim line (links/dots/separators hidden), still
+        above the home-indicator bar */
+  .ant-layout-footer.app-footer {
+    padding-top: 4px !important;
+    padding-bottom: calc(4px + env(safe-area-inset-bottom)) !important;
+  }
+  .app-footer-inner { gap: 0 8px !important; flex-wrap: nowrap !important; justify-content: center !important; }
+  .app-footer-links,
+  .app-footer-sep,
+  .app-footer-dot { display: none !important; }
+  .app-footer-inner .app-footer-credits,
+  .app-footer-inner .app-footer-copy {
+    font-size: 11px !important;
+    white-space: nowrap !important;
+  }
+
+  /* 5. Floating scroll orb: smaller, and lifted so it never covers the footer */
+  .scroll-orb-wrap {
+    right: max(12px, env(safe-area-inset-right)) !important;
+    bottom: calc(52px + env(safe-area-inset-bottom)) !important;
+    transform: scale(0.55);
+    transform-origin: bottom right;
+  }
+
+  /* 6. Page headers (hero cards) a bit tighter in landscape */
+  #app :is(.ae-hero, .gal-hero, .fb-hero, .faq-hero, .about-hero, .dashboard-hero, .qm-hero, .dashboard-header-card) {
+    padding: 10px 14px !important;
+    margin-bottom: 10px !important;
+  }
+}
