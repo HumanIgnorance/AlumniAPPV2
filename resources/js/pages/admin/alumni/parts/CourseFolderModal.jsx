@@ -31,7 +31,7 @@ import {
     getEmploymentStatusTag,
     getStatusIcon,
 } from "~/pages/admin/alumni/parts/alumniListHelpers";
-import { exportElementToPdf } from "~/utils/exportPdf";
+import { exportTableReport, slugifyForFile } from "~/utils/pdfReport";
 
 const { Option } = Select;
 const { Title, Text } = Typography;
@@ -94,12 +94,42 @@ export const CourseFolderModal = ({
     const handleActualPrint = async () => {
         setIsGeneratingPdf(true);
         try {
-            const courseLabel = course?.name
-                ? course.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")
-                : "course";
-            await exportElementToPdf("printable-area", {
-                filename: `alumni-list-${courseLabel}.pdf`,
-            });
+            const courseLabel = slugifyForFile(course?.name, "course");
+            const count = (id) =>
+                filteredCourseAlumni.filter((a) => a.employment_status_id === id).length;
+            await exportTableReport(
+                {
+                    logoUrl: logo,
+                    title: "Alumni Directory Report",
+                    subtitle: `${course.code} - ${course.name}`,
+                    subtitleColor: course.color,
+                    generatedText: `Generated on: ${moment().format("MMMM DD, YYYY")}`,
+                    stats: [
+                        { label: "Total Alumni", value: filteredCourseAlumni.length, color: COLORS.black },
+                        { label: "Employed", value: count(1), color: COLORS.antdGreen },
+                        { label: "Unemployed", value: count(2), color: COLORS.antdRed },
+                        { label: "Under Employed", value: count(3), color: COLORS.antdGold },
+                    ],
+                    columns: [
+                        { header: "No.", width: 11 },
+                        { header: "Name" },
+                        { header: "Grad. Year", width: 20 },
+                        { header: "Employment Status", width: 30 },
+                        { header: "Company" },
+                        { header: "Position", width: 38 },
+                    ],
+                    rows: filteredCourseAlumni.map((a, i) => [
+                        i + 1,
+                        `${a.first_name || ""} ${a.last_name || ""}`.trim(),
+                        a.graduation_year,
+                        a?.employment_status?.status_name,
+                        a.current_company,
+                        a.job_title,
+                    ]),
+                    footerText: "Official document generated from the Alumni Management System",
+                },
+                `alumni-list-${courseLabel}.pdf`,
+            );
         } catch (err) {
             console.error("Failed to generate PDF:", err);
             message.error("Failed to generate PDF. Please try again.");

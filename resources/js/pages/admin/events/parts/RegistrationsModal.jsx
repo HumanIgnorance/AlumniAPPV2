@@ -5,7 +5,7 @@ import moment from "moment";
 import logo from "~/assets/images/OCC_LOGO.png";
 import { COLORS } from "~/config/theme";
 import axiosConfig from "~/utils/axiosConfig";
-import { exportElementToPdf } from "~/utils/exportPdf";
+import { exportTableReport, slugifyForFile } from "~/utils/pdfReport";
 
 const { Text, Title } = Typography;
 
@@ -48,12 +48,54 @@ export const RegistrationsModal = ({ event, visible, onClose }) => {
     const handleActualPrint = async () => {
         setIsGeneratingPdf(true);
         try {
-            const eventLabel = event?.title
-                ? event.title.toLowerCase().replace(/[^a-z0-9]+/g, "-")
-                : "event";
-            await exportElementToPdf("printable-area", {
-                filename: `event-registrations-${eventLabel}.pdf`,
-            });
+            const eventLabel = slugifyForFile(event?.title, "event");
+            const capacity = event?.capacity || 0;
+            await exportTableReport(
+                {
+                    logoUrl: logo,
+                    title: "Event Registration List",
+                    subtitle: event?.title,
+                    subtitleColor: "#4f46e5",
+                    generatedText: `Generated on: ${moment().format("MMMM DD, YYYY")}`,
+                    info: [
+                        { label: "Date", value: moment(event?.date).format("MMMM DD, YYYY") },
+                        { label: "Location", value: event?.location },
+                        {
+                            label: "Time",
+                            value: `${moment(event?.start_time, "HH:mm").format("hh:mm A")} - ${moment(event?.end_time, "HH:mm").format("hh:mm A")}`,
+                        },
+                        { label: "Organizer", value: event?.organizer },
+                    ],
+                    stats: [
+                        { label: "Total Registered", value: registrations.length, color: "#4f46e5" },
+                        {
+                            label: `Spots Remaining (Capacity: ${event?.capacity ?? "N/A"})`,
+                            value: capacity - registrations.length,
+                            color: registrations.length >= capacity ? "#ef4444" : "#22c55e",
+                        },
+                    ],
+                    columns: [
+                        { header: "No.", width: 11 },
+                        { header: "Check", width: 16, align: "center", kind: "checkbox" },
+                        { header: "Name" },
+                        { header: "Contact Number", width: 32 },
+                        { header: "Batch Year", width: 20 },
+                        { header: "Registration Date", width: 34 },
+                        { header: "Signature", width: 36, kind: "blank" },
+                    ],
+                    rows: registrations.map((r, i) => [
+                        i + 1,
+                        "",
+                        r.alumni?.name,
+                        r.alumni?.contact_number,
+                        r.alumni?.batch_year,
+                        moment(r.registration_date || r.created_at).format("MMM DD, YYYY hh:mm A"),
+                        "",
+                    ]),
+                    footerText: "Alumni Events Management System",
+                },
+                `event-registrations-${eventLabel}.pdf`,
+            );
         } catch (err) {
             console.error("Failed to generate PDF:", err);
             message.error("Failed to generate PDF. Please try again.");

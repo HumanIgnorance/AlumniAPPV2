@@ -24,7 +24,7 @@ import {
     List,
     Table,
 } from "antd";
-import { exportElementToPdf } from "~/utils/exportPdf";
+import { exportTableReport, slugifyForFile } from "~/utils/pdfReport";
 import { COLORS } from "~/config/theme";
 import AlumniAvatar from "~/components/shared/AlumniAvatar";
 import logo from "~/assets/images/OCC_LOGO.png";
@@ -114,15 +114,43 @@ export const CourseFolderModal = ({ visible, onCancel, course, alumni }) => {
     const handleActualPrint = async () => {
         setIsGeneratingPdf(true);
         try {
-            const courseLabel =
-                course?.name || course?.course_name
-                    ? (course.name || course.course_name)
-                          .toLowerCase()
-                          .replace(/[^a-z0-9]+/g, "-")
-                    : "course";
-            await exportElementToPdf("printable-area", {
-                filename: `department-report-${courseLabel}.pdf`,
-            });
+            const courseLabel = slugifyForFile(course?.name || course?.course_name, "course");
+            const statusMap = { 1: "Employed", 2: "Unemployed", 3: "Under Employed" };
+            const count = (id) =>
+                filteredCourseAlumni.filter((a) => a.employment_status_id === id).length;
+            await exportTableReport(
+                {
+                    logoUrl: logo,
+                    title: "Alumni Directory Report",
+                    subtitle: `${course.code} - ${course.name || course.course_name}`,
+                    subtitleColor: course.color,
+                    generatedText: `Generated on: ${moment().format("MMMM DD, YYYY")}`,
+                    stats: [
+                        { label: "Total Alumni", value: filteredCourseAlumni.length, color: "#000000" },
+                        { label: "Employed", value: count(1), color: "#52c41a" },
+                        { label: "Unemployed", value: count(2), color: "#ff4d4f" },
+                        { label: "Under Employed", value: count(3), color: "#faad14" },
+                    ],
+                    columns: [
+                        { header: "No.", width: 11 },
+                        { header: "Name" },
+                        { header: "Grad. Year", width: 20 },
+                        { header: "Employment Status", width: 30 },
+                        { header: "Company" },
+                        { header: "Position", width: 38 },
+                    ],
+                    rows: filteredCourseAlumni.map((a, i) => [
+                        i + 1,
+                        `${a.first_name || ""} ${a.last_name || ""}`.trim(),
+                        a.graduation_year,
+                        statusMap[a.employment_status_id],
+                        a.current_company,
+                        a.job_title,
+                    ]),
+                    footerText: "Official document generated from the Alumni Management System",
+                },
+                `department-report-${courseLabel}.pdf`,
+            );
         } catch (err) {
             console.error("Failed to generate PDF:", err);
             message.error("Failed to generate PDF. Please try again.");
