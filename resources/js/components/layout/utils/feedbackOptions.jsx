@@ -7,38 +7,6 @@ import {
     StopOutlined,
 } from "@ant-design/icons";
 
-//  Prevent Right-Click and Developer Tools///
-//   useEffect(() => {
-//   const disableContextMenu = (e) => {
-//     e.preventDefault();
-//   };
-
-//   document.addEventListener("contextmenu", disableContextMenu);
-
-//   return () => {
-//     document.removeEventListener("contextmenu", disableContextMenu);
-//   };
-// }, []);
-
-// useEffect(() => {
-//   const handleKeyDown = (e) => {
-//     if (
-//       e.key === "F12" ||
-//       (e.ctrlKey && e.shiftKey && ["I", "J", "C"].includes(e.key)) ||
-//       (e.ctrlKey && e.key === "u")
-//     ) {
-//       e.preventDefault();
-//       return false;
-//     }
-//   };
-
-//   document.addEventListener("keydown", handleKeyDown);
-
-//   return () => {
-//     document.removeEventListener("keydown", handleKeyDown);
-//   };
-// }, []);
-
 export const FEEDBACK_AREAS = [
     { value: "gallery", label: "Photo Library" },
     { value: "dashboard", label: "Dashboard" },

@@ -3,6 +3,7 @@
  * CSS that used to be compiled separately by mix.sass() is now imported
  * here so Vite bundles and injects it.
  */
+import "./utils/devtoolsGuard"; // hide the UI while DevTools is open (runs before React mounts)
 import "../css/tokens.css"; // design tokens (color palette) — load first
 import "../css/page-header.css";
 import "../css/auth-mobile-app.css"; // portrait-phone app look for Login / Forgot / Reset / Register

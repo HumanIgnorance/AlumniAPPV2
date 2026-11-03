@@ -49,13 +49,17 @@
 
     <link rel="icon" href="{{ asset('favicon.ico') }}?v={{ $faviconV }}" sizes="any">
 
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ $logo }}?v={{ $faviconV }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/favicon-32.png') }}?v={{ $faviconV }}">
 
-    <link rel="icon" type="image/png" sizes="192x192" href="{{ $logo }}?v={{ $faviconV }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/favicon-16.png') }}?v={{ $faviconV }}">
+
+    <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('images/icon-192.png') }}?v={{ $faviconV }}">
 
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}?v={{ $faviconV }}">
 
-    <link rel="apple-touch-icon" href="{{ $logo }}?v={{ $faviconV }}">
+    {{-- iOS home-screen icon: the white 180x180 tile with the padded shield (same as SCLF).
+         A transparent logo here is what made the icon look cropped / on black. --}}
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/apple-touch-icon.png') }}?v={{ $faviconV }}">
 
     <!-- Open Graph -->
 
@@ -103,7 +107,15 @@
 
     <meta name="mobile-web-app-capable" content="yes">
 
-    <link rel="manifest" href="{{ route('pwa.manifest') }}">
+    <meta name="msapplication-TileColor" content="#01215f">
+
+    <meta name="msapplication-TileImage" content="{{ asset('images/icon-192.png') }}">
+
+    <meta name="format-detection" content="telephone=no">
+
+    {{-- use-credentials: the manifest varies with the "atms-theme" cookie, and browsers
+         fetch manifests WITHOUT cookies unless this is set. --}}
+    <link rel="manifest" href="{{ route('pwa.manifest') }}" crossorigin="use-credentials">
 
     <!-- Structured Data -->
 

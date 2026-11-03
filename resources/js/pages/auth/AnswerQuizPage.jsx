@@ -1,4 +1,5 @@
 import "./AnswerQuizPage.css";
+import AuthAppBar from "~/components/shared/AuthAppBar";
 import "./quiz-shared/quiz-shared.css"; // unified header/question styles
 import { Card, Skeleton, Modal, Button } from "antd";
 import {
@@ -73,6 +74,7 @@ function AnswerQuizPage() {
                     </div>
                 )}
 
+                <AuthAppBar />
                 <div className="page-theme-toggle">
                     <button
                         type="button"

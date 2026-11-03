@@ -18,6 +18,14 @@ import {
 } from "./routes";
 import { getAntdTheme } from "~/config/antdTheme";
 import { useAppTheme } from "~/hooks/useAppTheme";
+import "~/utils/pwaInstall"; // start listening for the browser's install event before React mounts
+import { registerServiceWorker } from "~/utils/registerServiceWorker";
+import InstallPrompt from "~/components/shared/InstallPrompt";
+import OfflineNotice from "~/components/shared/OfflineNotice";
+import UpdateNotice from "~/components/shared/UpdateNotice";
+
+// Offline app shell + update flow (public/sw.js). Registering never asks for permission.
+registerServiceWorker();
 
 const NonAuthmiddleware = ({
     component: Component,
@@ -75,6 +83,11 @@ function Main() {
                 renderEmpty={() => <Empty description="No Data" />}
             >
                 <Router>
+                    {/* App-like extras shared with the SCLF app: offline banner,
+                        "new version" pop-up and the install-to-home-screen banner. */}
+                    <OfflineNotice />
+                    <UpdateNotice />
+                    <InstallPrompt />
                     {/* Pages are lazy-loaded (see routes/lazyPages.js) */}
                     <Suspense fallback={<PageFallback />}>
                     <Switch>

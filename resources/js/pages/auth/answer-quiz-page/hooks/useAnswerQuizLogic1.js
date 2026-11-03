@@ -1,4 +1,5 @@
 import useTakeQuiz from "~/hooks/useTakeQuiz";
+import { INSPECT_PROTECTION_ENABLED } from "~/config/inspect";
 import { useState, useRef, useEffect } from "react";
 import { buildPageTitle } from "~/config/site";
 import secureLocalStorage from "react-secure-storage";
@@ -53,6 +54,8 @@ export default function useAnswerQuizLogic1() {
 
     //  Prevent //
     useEffect(() => {
+        if (!INSPECT_PROTECTION_ENABLED) return undefined;
+
         const disableContextMenu = (e) => {
             e.preventDefault();
         };
@@ -65,6 +68,8 @@ export default function useAnswerQuizLogic1() {
     }, []);
 
     useEffect(() => {
+        if (!INSPECT_PROTECTION_ENABLED) return undefined;
+
         const handleKeyDown = (e) => {
             if (
                 e.key === "F12" ||

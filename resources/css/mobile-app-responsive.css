@@ -1,0 +1,149 @@
+/* ==========================================================================
+   MOBILE APP — signed-in screens (Home, Dashboard, Alumni, Events, Messages …)
+   --------------------------------------------------------------------------
+   Goal: the same, comfortable result on every phone an alumnus might have —
+   iPhone SE / 12 mini (320–375px), standard iPhones (390–430px), small and large
+   Androids (360–412px), Samsung foldables (~280px folded) — in the browser AND in
+   the installed app.
+
+   Everything is scoped to html.app-shell-active (set only while the signed-in
+   shell is mounted) and to phone widths, so desktop, laptop and tablet keep their
+   current design and the public pages are untouched.
+
+   What it does (all additive; no page logic changes):
+     1. nothing can push the page sideways (long words, wide images, tables)
+     2. real tap targets (44px) and no iOS zoom-on-focus
+     3. tables scroll inside themselves instead of breaking the layout
+     4. pop-ups, drop-downs, date pickers and the menu drawer fit narrow screens
+     5. iOS notch / home-indicator safe areas, Android gesture bar
+     6. no grey tap flash, no double-tap zoom delay, smooth momentum scrolling
+   ========================================================================== */
+
+@media (max-width: 768px) {
+
+    /* ---------- 0. base ---------- */
+    html.app-shell-active {
+        -webkit-text-size-adjust: 100%;
+        text-size-adjust: 100%;
+        -webkit-tap-highlight-color: transparent;
+    }
+    html.app-shell-active :is(a, button, [role="button"], .ant-btn, .ant-menu-item, .ant-select-selector, .ant-tabs-tab) {
+        touch-action: manipulation;           /* no 300ms double-tap-zoom delay */
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    /* ---------- 1. nothing pushes the page sideways ---------- */
+    html.app-shell-active #content {
+        overflow-x: hidden !important;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior: contain;
+        scroll-padding-bottom: 24px;
+    }
+    html.app-shell-active #content :is(img, video, canvas, svg, iframe) { max-width: 100%; }
+    html.app-shell-active #content :is(img, video) { height: auto; }
+    html.app-shell-active #content :is(h1, h2, h3, h4, h5, p, li, td, th, label, .ant-typography) {
+        overflow-wrap: anywhere;              /* long emails / names / links wrap */
+    }
+    html.app-shell-active #content pre,
+    html.app-shell-active #content code { white-space: pre-wrap; word-break: break-word; }
+    html.app-shell-active #content .ant-row { margin-left: 0 !important; margin-right: 0 !important; }
+
+    /* ---------- 2. tap targets ---------- */
+    html.app-shell-active :is(.ant-btn:not(.ant-btn-sm):not(.ant-btn-icon-only), .ant-segmented-item-label) { min-height: 40px; }
+    html.app-shell-active .ant-btn-icon-only:not(.ant-btn-sm) { min-width: 40px; min-height: 40px; }
+    html.app-shell-active :is(.ant-input, .ant-input-affix-wrapper, .ant-picker, .ant-input-number):not(.ant-input-sm):not(.ant-input-affix-wrapper-sm):not(.ant-picker-small) { min-height: 44px; }
+    html.app-shell-active .ant-select:not(.ant-select-sm) .ant-select-selector { min-height: 44px; align-items: center; }
+    html.app-shell-active :is(.ant-checkbox-inner, .ant-radio-inner) { width: 20px; height: 20px; }
+    html.app-shell-active :is(.ant-input, .ant-input-number-input, .ant-picker-input > input, textarea, select) { font-size: 16px !important; } /* stops iOS zoom */
+
+    /* ---------- 3. tables scroll inside themselves ---------- */
+    html.app-shell-active #content :is(.ant-table-wrapper, .ant-table-container) { max-width: 100%; }
+    html.app-shell-active #content .ant-table-content,
+    html.app-shell-active #content .ant-table-body {
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
+    }
+    html.app-shell-active #content .ant-table-thead > tr > th,
+    html.app-shell-active #content .ant-table-tbody > tr > td { padding: 10px 10px !important; white-space: nowrap; }
+    html.app-shell-active #content .ant-table-pagination { flex-wrap: wrap; justify-content: center; gap: 6px 0; }
+
+    /* ---------- 4. pop-ups, drop-downs, pickers, drawer ---------- */
+    html.app-shell-active .ant-modal {
+        max-width: calc(100vw - 24px) !important;
+        width: calc(100vw - 24px) !important;
+        margin: 0 auto !important;
+        top: max(12px, env(safe-area-inset-top)) !important;
+        padding-bottom: 12px;
+    }
+    html.app-shell-active .ant-modal-wrap { overflow-y: auto; -webkit-overflow-scrolling: touch; }
+    html.app-shell-active .ant-modal-body { max-height: calc(100dvh - 160px); overflow-y: auto; overflow-x: hidden; }
+    html.app-shell-active .ant-modal-footer { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
+    html.app-shell-active .ant-modal-footer .ant-btn { margin: 0 !important; flex: 1 1 120px; }
+
+    html.app-shell-active :is(.ant-dropdown, .ant-popover, .ant-select-dropdown, .ant-tooltip) { max-width: calc(100vw - 16px); }
+    html.app-shell-active .ant-popover-inner-content { max-width: calc(100vw - 32px); overflow-wrap: anywhere; }
+    html.app-shell-active .ant-picker-dropdown .ant-picker-panel-container { max-width: calc(100vw - 16px); overflow-x: auto; }
+    html.app-shell-active .ant-picker-dropdown :is(.ant-picker-date-panel, .ant-picker-month-panel, .ant-picker-year-panel) { width: min(280px, calc(100vw - 32px)); }
+    html.app-shell-active .ant-picker-dropdown .ant-picker-panels { flex-direction: column; }   /* range pickers: stack the two months */
+
+    html.app-shell-active .ant-drawer-content-wrapper { max-width: 92vw; }
+    html.app-shell-active .ant-drawer-header { padding-top: calc(12px + env(safe-area-inset-top)) !important; }
+    html.app-shell-active .ant-drawer-body { padding-bottom: 0; -webkit-overflow-scrolling: touch; }
+    html.app-shell-active .ant-drawer-footer { padding: 0 !important; border-top: 0 !important; }
+    html.app-shell-active .ant-drawer-footer .app-footer { padding-bottom: calc(10px + env(safe-area-inset-bottom)) !important; }
+
+    html.app-shell-active .ant-message { top: calc(env(safe-area-inset-top) + 8px) !important; }
+    html.app-shell-active .ant-notification { max-width: calc(100vw - 16px); margin-right: 8px !important; }
+    html.app-shell-active .ant-notification-notice { width: auto !important; max-width: calc(100vw - 16px); }
+
+    html.app-shell-active .ant-tabs-nav { margin-bottom: 12px; }
+    html.app-shell-active .ant-tabs-nav-wrap { -webkit-overflow-scrolling: touch; }
+
+    /* ---------- 5. safe areas ---------- */
+    html.app-shell-active #content {
+        padding-left: env(safe-area-inset-left) !important;
+        padding-right: env(safe-area-inset-right) !important;
+    }
+    html.app-shell-active.has-bottom-nav #content { padding-bottom: 12px; }
+
+    /* ---------- 6. page headers + cards stay inside the screen ---------- */
+    html.app-shell-active #content :is(.ant-card, .ant-statistic, .ant-descriptions) { max-width: 100%; }
+    html.app-shell-active #content .ant-card-body { padding: 14px !important; }
+    html.app-shell-active #content .ant-card-head { padding: 0 14px !important; min-height: 48px; }
+    html.app-shell-active #content .ant-card-head-wrapper { flex-wrap: wrap; gap: 6px; }
+    html.app-shell-active #content .ant-card-extra { margin-left: 0; padding: 8px 0; }
+    html.app-shell-active #content .ant-descriptions-item-label,
+    html.app-shell-active #content .ant-descriptions-item-content { padding: 8px 10px !important; }
+    html.app-shell-active #content .ant-form-item { margin-bottom: 16px; }
+    html.app-shell-active #content .ant-form-item-label { padding-bottom: 6px; }
+    html.app-shell-active #content .ant-form-vertical .ant-form-item-label > label { height: auto; }
+    html.app-shell-active #content .ant-space { max-width: 100%; }
+    html.app-shell-active #content .ant-space-horizontal.ant-space-wrap { row-gap: 8px !important; }
+}
+
+/* ---------- compact phones: 320–374px (iPhone SE / mini, small Androids) ---------- */
+@media (max-width: 374px) {
+    html.app-shell-active #content .ant-card-body { padding: 12px !important; }
+    html.app-shell-active .ant-modal { width: calc(100vw - 16px) !important; max-width: calc(100vw - 16px) !important; }
+    html.app-shell-active #content :is(h1, .ant-typography h1) { font-size: 22px !important; }
+    html.app-shell-active #content :is(h2, .ant-typography h2) { font-size: 19px !important; }
+    html.app-shell-active #content .ant-table-thead > tr > th,
+    html.app-shell-active #content .ant-table-tbody > tr > td { padding: 8px 8px !important; font-size: 13px; }
+}
+
+/* ---------- large phones & small tablets in portrait: don't let text lines run too wide ---------- */
+@media (min-width: 560px) and (max-width: 768px) {
+    html.app-shell-active .ant-modal { max-width: 520px !important; width: calc(100vw - 48px) !important; }
+}
+
+/* ---------- rotated phones (short screens) ---------- */
+@media (orientation: landscape) and (max-height: 500px) {
+    html.app-shell-active .ant-modal { top: 8px !important; }
+    html.app-shell-active .ant-modal-body { max-height: calc(100dvh - 120px); }
+    html.app-shell-active .ant-drawer-content-wrapper { max-width: 60vw; }
+}
+
+/* ---------- Android: respect the system gesture bar when installed ---------- */
+@media (display-mode: standalone) {
+    html.app-shell-active #content { scroll-behavior: auto; }
+}

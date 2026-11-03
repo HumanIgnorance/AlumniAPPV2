@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import logoMini from "~/assets/images/site-logo.png";
 import { useLayoutContext } from "~/components/layout/LayoutContext";
 import SideMenu from "~/components/layout/parts/SideMenu";
+import LayoutFooter from "~/components/layout/parts/LayoutFooter";
 
 const { Sider } = Layout;
 
@@ -78,7 +79,8 @@ export default function SidebarNav() {
             closable={false}
             onClose={toggleDrawer}
             visible={drawerVisible}
-            width={isMobile ? "55%" : 280}
+            width="min(86vw, 320px)"
+            footer={<LayoutFooter />}
             bodyStyle={{ padding: 0 }}
         >
             <SideMenu />

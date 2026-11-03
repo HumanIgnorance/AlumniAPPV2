@@ -1,5 +1,6 @@
 "use client"
 import { useEffect, useState, useRef } from "react"
+import { INSPECT_PROTECTION_ENABLED } from "~/config/inspect";
 import {
   Card,
   Row,
@@ -24,6 +25,7 @@ import {
   MoonOutlined,
 } from "@ant-design/icons"
 import logo from "~/assets/images/OCC_LOGO.png"
+import AuthAppBar from "~/components/shared/AuthAppBar"
 import { useAppTheme } from "~/hooks/useAppTheme"
 import ScrollProgressOrb from "../ScrollProgress/ScrollProgressOrb"
 import "./AboutPage.css"
@@ -46,6 +48,8 @@ const AboutPublicPage = () => {
 
           //  Prevent //
       useEffect(() => {
+      if (!INSPECT_PROTECTION_ENABLED) return undefined;
+
       const disableContextMenu = (e) => {
         e.preventDefault();
       };
@@ -58,6 +62,8 @@ const AboutPublicPage = () => {
     }, []);
 
     useEffect(() => {
+      if (!INSPECT_PROTECTION_ENABLED) return undefined;
+
       const handleKeyDown = (e) => {
         if (
           e.key === "F12" ||
@@ -104,6 +110,7 @@ const AboutPublicPage = () => {
   
   return (
     <>
+      <AuthAppBar />
       <div className="page-theme-toggle">
         <button
           type="button"
@@ -415,4 +422,4 @@ const AboutPublicPage = () => {
     </>
   )
 }
-export default AboutPublicPage
+export default AboutPublicPage

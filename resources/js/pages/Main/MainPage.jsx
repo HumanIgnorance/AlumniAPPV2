@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { INSPECT_PROTECTION_ENABLED } from "~/config/inspect";
 import { Typography } from "antd";
 import logo from "~/assets/images/site-logo.png";
 import { useAppTheme } from "~/hooks/useAppTheme";
@@ -42,6 +43,8 @@ const MainPage = () => {
 
 ///Prevent Right-Click and Developer Tools///
       useEffect(() => {
+      if (!INSPECT_PROTECTION_ENABLED) return undefined;
+
       const disableContextMenu = (e) => {
         e.preventDefault();
       };
@@ -54,6 +57,8 @@ const MainPage = () => {
     }, []);
     
     useEffect(() => {
+      if (!INSPECT_PROTECTION_ENABLED) return undefined;
+
       const handleKeyDown = (e) => {
         if (
           e.key === "F12" ||
@@ -340,4 +345,4 @@ const MainPage = () => {
     );
 };
 
-export default React.memo(MainPage);
+export default React.memo(MainPage);

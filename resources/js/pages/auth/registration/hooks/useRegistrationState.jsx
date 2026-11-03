@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { INSPECT_PROTECTION_ENABLED } from "~/config/inspect";
 import {
     BookOutlined,
     FileImageOutlined,
@@ -98,6 +99,8 @@ export default function useRegistrationState() {
 
     //  Prevent //
     useEffect(() => {
+        if (!INSPECT_PROTECTION_ENABLED) return undefined;
+
         const disableContextMenu = (e) => {
             e.preventDefault();
         };
@@ -110,6 +113,8 @@ export default function useRegistrationState() {
     }, []);
 
     useEffect(() => {
+        if (!INSPECT_PROTECTION_ENABLED) return undefined;
+
         const handleKeyDown = (e) => {
             if (
                 e.key === "F12" ||

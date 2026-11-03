@@ -1,4 +1,5 @@
 import "./ImageQuizPage.css";
+import AuthAppBar from "~/components/shared/AuthAppBar";
 import "./quiz-shared/quiz-shared.css"; // unified header/question styles
 import {
     Modal,
@@ -786,6 +787,7 @@ function ImageQuizPage() {
                 }`}
             >
                 {offlineBannerNode}
+                <AuthAppBar />
                 <div className="page-theme-toggle">
                     <button
                         type="button"

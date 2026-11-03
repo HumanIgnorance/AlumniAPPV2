@@ -7,6 +7,7 @@ import useLayoutController from "./hooks/useLayoutController";
 import SidebarNav from "./parts/SidebarNav";
 import LayoutHeader from "./parts/LayoutHeader";
 import LayoutFooter from "./parts/LayoutFooter";
+import MobileBottomNav from "./parts/MobileBottomNav";
 import SettingsModal from "./parts/SettingsModal";
 import AllNotificationsModal from "./parts/AllNotificationsModal";
 import EventRegistrationsModal from "./parts/EventRegistrationsModal";
@@ -41,7 +42,8 @@ const MainLayout = ({ children }) => {
                 <Layout className="site-layout">
                     <LayoutHeader />
                     <Content id="content">{children}</Content>
-                    <LayoutFooter />
+                    {/* Phones: the bottom tab bar takes the footer's place (footer links live in the menu drawer) */}
+                    {ctx.isMobile ? <MobileBottomNav /> : <LayoutFooter />}
                 </Layout>
 
                 <SettingsModal />
