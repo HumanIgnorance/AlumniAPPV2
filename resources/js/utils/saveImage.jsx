@@ -439,7 +439,16 @@ export async function saveImages(items, { onProgress } = {}) {
 
     for (let i = 0; i < list.length; i++) {
         try {
-            const blob = await getImageBlob(list[i].url);
+            let blob;
+            try {
+                blob = await getImageBlob(list[i].url);
+            } catch (primaryErr) {
+                // The /download endpoint failed (500, not logged in, ...):
+                // fall back to the plain public /storage/ image URL.
+                if (!list[i].fallbackUrl || primaryErr?.code === "auth") throw primaryErr;
+                console.warn("Primary download failed, using fallback:", primaryErr);
+                blob = await getImageBlob(list[i].fallbackUrl);
+            }
             const urlName = knownExt(urlBaseName(list[i].url)) ? urlBaseName(list[i].url) : "";
             files.push(
                 toFile(blob, buildFileName(list[i].filename || urlName, blob, `photo-${i + 1}`)),

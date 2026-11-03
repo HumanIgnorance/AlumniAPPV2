@@ -13,6 +13,8 @@ export default function useGalleryDownloads({
 }) {
     const downloadItem = (gallery, i) => ({
         url: `${BASE_URL}api/galleries/${gallery.id}/download?index=${i}`,
+        // Same photo straight from /storage/ if the download endpoint errors.
+        fallbackUrl: getGalleryImages(gallery)[i],
         filename: `${gallery.title || "photo"}-${i + 1}`,
     });
 

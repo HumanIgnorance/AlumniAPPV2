@@ -46,7 +46,9 @@ class SecurityHeaders
         $style = ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'];
         $font = ["'self'", 'https://fonts.gstatic.com'];
         $img = ["'self'", 'data:', 'blob:'];
-        $connect = ["'self'"];
+        // Weather widget (open-meteo) and Cloudflare analytics beacon injected by the host.
+        $connect = ["'self'", 'https://api.open-meteo.com', 'https://cloudflareinsights.com'];
+        $script[] = 'https://static.cloudflareinsights.com';
 
         // Local dev only: the Vite dev server serves modules/assets from its own origin,
         // pushes HMR over a websocket, and the React Refresh preamble is an inline script.
