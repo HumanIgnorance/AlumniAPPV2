@@ -68,6 +68,7 @@
     }
     #app .auth-appbar__brand img {
         width: 40px; height: 40px; flex: 0 0 auto; object-fit: contain;
+        margin: 0 !important; padding: 0 !important; /* login page gives <img> a bottom margin that clipped the logo */
     }
     #app .auth-appbar__text { display: block; min-width: 0; }
     #app .auth-appbar__name,

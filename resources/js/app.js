@@ -12,6 +12,7 @@ import "../css/mobile-app-responsive.css"; // signed-in screens: all iPhones + A
 import "../css/page-theme-toggle.css"; // shared floating theme toggle // compact page headers (all pages inside the login)
 import "../sass/app.scss";
 import "../sass/safe-area-global.css";
+import "../css/input-clean.css"; // one clean border per field (no inner ring inside Password / Bio / Select / Date)
 
 import "./bootstrap";
 import "./Main";

@@ -1,0 +1,90 @@
+/* ==========================================================================
+   CLEAN FIELDS - one border per field, everywhere
+   --------------------------------------------------------------------------
+   Ant Design draws the border and the focus glow on the WRAPPER of Password,
+   textarea-with-counter (Personal Bio), number, date and select fields. Some page
+   rules (e.g. `.registration-form .ant-input:focus`) also matched the <input>
+   INSIDE the wrapper, so a second rounded border / glow appeared inside the first.
+
+   This stops the inner element from ever drawing its own border, glow or outline.
+   The wrapper keeps the single clean border and focus ring, exactly like the
+   plain First Name / Email fields. Applies app-wide (also inside pop-ups).
+   ========================================================================== */
+.ant-input-affix-wrapper > input.ant-input.ant-input,
+.ant-input-affix-wrapper > input.ant-input.ant-input:hover,
+.ant-input-affix-wrapper > input.ant-input.ant-input:focus,
+.ant-input-affix-wrapper > input.ant-input.ant-input:focus-visible,
+.ant-input-affix-wrapper > input.ant-input.ant-input:active,
+.ant-input-affix-wrapper > textarea.ant-input.ant-input,
+.ant-input-affix-wrapper > textarea.ant-input.ant-input:hover,
+.ant-input-affix-wrapper > textarea.ant-input.ant-input:focus,
+.ant-input-affix-wrapper > textarea.ant-input.ant-input:focus-visible,
+.ant-input-affix-wrapper > textarea.ant-input.ant-input:active,
+.ant-input-textarea-affix-wrapper > textarea.ant-input.ant-input,
+.ant-input-textarea-affix-wrapper > textarea.ant-input.ant-input:hover,
+.ant-input-textarea-affix-wrapper > textarea.ant-input.ant-input:focus,
+.ant-input-textarea-affix-wrapper > textarea.ant-input.ant-input:focus-visible,
+.ant-input-textarea-affix-wrapper > textarea.ant-input.ant-input:active,
+.ant-input-password input.ant-input.ant-input,
+.ant-input-password input.ant-input.ant-input:hover,
+.ant-input-password input.ant-input.ant-input:focus,
+.ant-input-password input.ant-input.ant-input:focus-visible,
+.ant-input-password input.ant-input.ant-input:active,
+.ant-input-number-input,
+.ant-input-number-input:hover,
+.ant-input-number-input:focus,
+.ant-input-number-input:focus-visible,
+.ant-input-number-input:active,
+.ant-picker-input > input,
+.ant-picker-input > input:hover,
+.ant-picker-input > input:focus,
+.ant-picker-input > input:focus-visible,
+.ant-picker-input > input:active,
+.ant-select-selection-search-input,
+.ant-select-selection-search-input:hover,
+.ant-select-selection-search-input:focus,
+.ant-select-selection-search-input:focus-visible,
+.ant-select-selection-search-input:active,
+#app .ant-input-affix-wrapper > input.ant-input.ant-input,
+#app .ant-input-affix-wrapper > input.ant-input.ant-input:hover,
+#app .ant-input-affix-wrapper > input.ant-input.ant-input:focus,
+#app .ant-input-affix-wrapper > input.ant-input.ant-input:focus-visible,
+#app .ant-input-affix-wrapper > input.ant-input.ant-input:active,
+#app .ant-input-affix-wrapper > textarea.ant-input.ant-input,
+#app .ant-input-affix-wrapper > textarea.ant-input.ant-input:hover,
+#app .ant-input-affix-wrapper > textarea.ant-input.ant-input:focus,
+#app .ant-input-affix-wrapper > textarea.ant-input.ant-input:focus-visible,
+#app .ant-input-affix-wrapper > textarea.ant-input.ant-input:active,
+#app .ant-input-textarea-affix-wrapper > textarea.ant-input.ant-input,
+#app .ant-input-textarea-affix-wrapper > textarea.ant-input.ant-input:hover,
+#app .ant-input-textarea-affix-wrapper > textarea.ant-input.ant-input:focus,
+#app .ant-input-textarea-affix-wrapper > textarea.ant-input.ant-input:focus-visible,
+#app .ant-input-textarea-affix-wrapper > textarea.ant-input.ant-input:active,
+#app .ant-input-password input.ant-input.ant-input,
+#app .ant-input-password input.ant-input.ant-input:hover,
+#app .ant-input-password input.ant-input.ant-input:focus,
+#app .ant-input-password input.ant-input.ant-input:focus-visible,
+#app .ant-input-password input.ant-input.ant-input:active,
+#app .ant-input-number-input,
+#app .ant-input-number-input:hover,
+#app .ant-input-number-input:focus,
+#app .ant-input-number-input:focus-visible,
+#app .ant-input-number-input:active,
+#app .ant-picker-input > input,
+#app .ant-picker-input > input:hover,
+#app .ant-picker-input > input:focus,
+#app .ant-picker-input > input:focus-visible,
+#app .ant-picker-input > input:active,
+#app .ant-select-selection-search-input,
+#app .ant-select-selection-search-input:hover,
+#app .ant-select-selection-search-input:focus,
+#app .ant-select-selection-search-input:focus-visible,
+#app .ant-select-selection-search-input:active {
+    box-shadow: none !important;
+    outline: none !important;
+    border-color: transparent !important;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.ant-input-textarea-affix-wrapper > textarea.ant-input { resize: none; }
