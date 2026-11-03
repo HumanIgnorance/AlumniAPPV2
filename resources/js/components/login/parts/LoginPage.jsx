@@ -6,6 +6,7 @@ import {
     TeamOutlined,
     ThunderboltOutlined,
 } from "@ant-design/icons";
+import logo from "~/assets/images/site-logo.png";
 import { useLoginContext } from "~/components/login/LoginContext";
 import FindUserForm from "~/components/login/parts/FindUserForm";
 import ForgotPasswordForm from "~/components/login/parts/ForgotPasswordForm";
@@ -29,6 +30,16 @@ export default function LoginPage() {
             <div className="login-page__rive" aria-hidden="true">
                 {/* <DragBgRiveComponent /> */}
             </div>
+            {/* Portrait-phone app bar (hidden on desktop / tablet / landscape via CSS) */}
+            <header className="auth-appbar">
+                <a href="/PublicHomePage" className="auth-appbar__brand">
+                    <img src={logo || "/placeholder.svg"} alt="OCC Alumni Logo" />
+                    <span>
+                        <span className="auth-appbar__name">ATMS | Alumni Association</span>
+                        <span className="auth-appbar__sub">Opol Community College</span>
+                    </span>
+                </a>
+            </header>
             <div className="login-shell">
                 {/* ============ LEFT: BRAND PANEL ============ */}
                 <aside className="login-brand">
@@ -211,6 +222,10 @@ export default function LoginPage() {
                     {currentView === "reset-password" && <ResetPasswordForm />}
                 </section>
             </div>
+            <p className="auth-legal">
+                Authorized users only. By continuing you agree to the ATMS Terms of
+                Service and Privacy Policy.
+            </p>
         </div>
     );
 }

@@ -2,6 +2,7 @@
 
 import React from "react";
 import "./AlumniRegistration-styles";
+import logo from "~/assets/images/site-logo.png";
 import ScrollProgressOrb from "../admin/ScrollProgress/ScrollProgressOrb";
 import { RegistrationProvider } from "./registration/RegistrationContext";
 import useRegistrationController from "./registration/hooks/useRegistrationController";
@@ -24,6 +25,16 @@ const AlumniRegistration = () => {
         <RegistrationProvider value={ctx}>
             <div className="alumni-registration">
                 <ScrollProgressOrb />
+                {/* Portrait-phone app bar (hidden on desktop / tablet / landscape via CSS) */}
+                <header className="auth-appbar">
+                    <a href="/PublicHomePage" className="auth-appbar__brand">
+                        <img src={logo || "/placeholder.svg"} alt="OCC Alumni Logo" />
+                        <span>
+                            <span className="auth-appbar__name">ATMS | Alumni Association</span>
+                            <span className="auth-appbar__sub">Opol Community College</span>
+                        </span>
+                    </a>
+                </header>
                 <RegistrationThemeToggle />
                 <RegistrationCard />
                 <RegistrationPreview />

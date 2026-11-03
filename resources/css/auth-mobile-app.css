@@ -1,0 +1,469 @@
+/* ==========================================================================
+   AUTH — MOBILE APP UI  (phones in PORTRAIT only)
+   --------------------------------------------------------------------------
+   Same look as the SCLF app's mobile sign-in:
+     • sticky app bar on top  (logo + name on the left, theme/settings right)
+     • no boxed card — the form sits directly on the screen
+     • big left-aligned title + subtitle, status pill
+     • numbered rows (01, 02 …) with filled 52px rounded inputs
+     • 54px gradient button, centred footer links
+     • legal line pinned to the bottom
+   Covers: Login, Forgot password, Find account, Reset password, Register.
+
+   ONLY the look changes. No logic, routes, validation or API calls are
+   touched. Desktop, tablets and landscape phones keep their current design
+   because every rule lives inside the media query below.
+   Prefixed with #app so it wins over the per-page stylesheets, which load
+   lazily and in any order.
+   ========================================================================== */
+
+/* hidden everywhere except portrait phones */
+.auth-appbar,
+.auth-legal { display: none; }
+
+@media (max-width: 767px) and (orientation: portrait) {
+
+    /* ---------- 0. palette + page background (light / dark) ---------- */
+    #app :is(.login-page, .alumni-registration) {
+        --am-accent: #2563eb;
+        --am-accent-2: #38bdf8;
+        --am-accent-3: #1d4ed8;
+        --am-text: #0a1a3a;
+        --am-muted: rgba(10, 26, 58, 0.72);
+        --am-input-bg: #ffffff;
+        --am-input-border: #cfe0fa;
+        --am-badge-bg: rgba(37, 99, 235, 0.12);
+        --am-appbar-bg: rgba(240, 246, 255, 0.78);
+        --am-appbar-border: rgba(37, 99, 235, 0.10);
+        --am-soft: rgba(37, 99, 235, 0.06);
+        --am-soft-border: rgba(37, 99, 235, 0.16);
+        color: var(--am-text);
+        background:
+            radial-gradient(120% 55% at 50% -8%, rgba(37, 99, 235, 0.16), transparent 62%),
+            radial-gradient(100% 45% at 50% 112%, rgba(56, 189, 248, 0.20), transparent 62%),
+            linear-gradient(180deg, #f5f9ff 0%, #e8f1ff 100%) !important;
+    }
+    html[data-theme="black"] #app :is(.login-page, .alumni-registration) {
+        --am-accent: #60a5fa;
+        --am-accent-3: #3b82f6;
+        --am-text: #e6efff;
+        --am-muted: rgba(230, 239, 255, 0.72);
+        --am-input-bg: rgba(96, 165, 250, 0.07);
+        --am-input-border: rgba(96, 165, 250, 0.24);
+        --am-badge-bg: rgba(96, 165, 250, 0.16);
+        --am-appbar-bg: rgba(3, 12, 31, 0.62);
+        --am-appbar-border: rgba(96, 165, 250, 0.14);
+        --am-soft: rgba(96, 165, 250, 0.08);
+        --am-soft-border: rgba(96, 165, 250, 0.22);
+        background:
+            radial-gradient(ellipse 85% 75% at 50% 50%, #030c1f 38%, #0a2d6e 100%),
+            #030c1f !important;
+    }
+
+    /* ---------- 1. App bar ---------- */
+    #app .auth-appbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        position: sticky;
+        top: 0;
+        z-index: 5;
+        width: 100%;
+        min-height: 64px;
+        padding: calc(env(safe-area-inset-top, 0px) + 10px) 18px 10px;
+        padding-right: 72px; /* room for the floating theme / settings button */
+        background: var(--am-appbar-bg);
+        border-bottom: 1px solid var(--am-appbar-border);
+        -webkit-backdrop-filter: blur(14px);
+        backdrop-filter: blur(14px);
+    }
+    #app .auth-appbar__brand {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        min-width: 0;
+        color: inherit;
+        text-decoration: none;
+    }
+    #app .auth-appbar__brand img { width: 42px; height: 42px; object-fit: contain; flex-shrink: 0; }
+    #app .auth-appbar__name {
+        display: block;
+        font-size: 15px; font-weight: 800; line-height: 1.2; letter-spacing: 0.01em;
+        color: var(--am-text);
+    }
+    #app .auth-appbar__sub {
+        display: block; margin-top: 2px;
+        font-size: 10px; font-weight: 600; line-height: 1.2;
+        text-transform: uppercase; letter-spacing: 0.09em;
+        color: var(--am-muted);
+    }
+
+    /* theme / settings button sits inside the bar (top-right) */
+    #app .settings-menu,
+    #app .page-theme-toggle {
+        top: calc(env(safe-area-inset-top, 0px) + 11px) !important;
+        right: 18px !important;
+    }
+    #app .settings-menu__btn,
+    #app .page-theme-toggle__btn {
+        width: 42px !important; height: 42px !important;
+        border-radius: 14px !important;
+        background: #fff !important;
+        border: 1px solid #cfe0fa !important;
+        color: #1d4ed8 !important;
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.10) !important;
+    }
+    html[data-theme="black"] #app :is(.settings-menu__btn, .page-theme-toggle__btn) {
+        background: rgba(96, 165, 250, 0.12) !important;
+        border-color: rgba(96, 165, 250, 0.28) !important;
+        color: #bfdbfe !important;
+        box-shadow: none !important;
+    }
+
+    /* the "rotate your phone / request desktop site" notice is for the old
+       tiny-form layout; the portrait app layout no longer needs it */
+    #app .mobile-notice-overlay { display: none !important; }
+
+    /* ---------- 2. LOGIN / FORGOT / FIND / RESET — page skeleton ---------- */
+    #app .login-page {
+        position: fixed; inset: 0;
+        display: flex; flex-direction: column;
+        height: 100dvh !important; max-height: 100dvh !important;
+        overflow-x: hidden; overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch;
+        opacity: 1 !important; transform: none !important;
+    }
+    #app .login-page__rive { display: none !important; }
+    #app .login-shell {
+        display: flex !important; flex-direction: column;
+        flex: 1 1 auto; width: 100%;
+        height: auto !important; max-height: none !important;
+        overflow: visible !important;
+        background: transparent !important;
+    }
+    #app .login-brand { display: none !important; }
+    #app .login-form-panel {
+        flex: 1 1 auto;
+        display: flex !important; flex-direction: column; align-items: stretch; justify-content: center;
+        width: 100%; height: auto !important;
+        padding: 0 22px !important;
+        background: transparent !important;
+        overflow: visible !important;
+    }
+
+    /* no boxed card: the form sits on the screen */
+    #app .login-card {
+        width: 100%; max-width: 440px; max-height: none !important;
+        margin: auto; padding: 8px 0 0 !important;
+        background: transparent !important; border: none !important;
+        box-shadow: none !important; border-radius: 0 !important;
+        overflow: visible !important;
+        counter-reset: amrow;
+        animation: none !important;
+    }
+    #app .login-card::before, #app .login-card::after { display: none !important; }
+    #app .mobile-landscape-logo,
+    #app .login-card__logo { display: none !important; }
+
+    /* ---------- header: pill + big title + subtitle ---------- */
+    #app .login-card__header { text-align: left !important; margin: 14px 0 6px !important; padding: 0 !important; }
+    #app .login-card__chip {
+        display: inline-flex; align-items: center; gap: 6px;
+        margin: 0 0 12px !important; padding: 4px 11px !important;
+        border-radius: 999px !important;
+        font-size: 10.5px !important; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
+        background: rgba(22, 163, 74, 0.12) !important;
+        border: none !important;
+        color: #16a34a !important;
+    }
+    html[data-theme="black"] #app .login-card__chip { background: rgba(74, 222, 128, 0.14) !important; color: #4ade80 !important; }
+    #app .login-card__title {
+        margin: 0 0 8px !important;
+        font-size: 28px !important; line-height: 1.2 !important; font-weight: 800; letter-spacing: -0.01em;
+        color: var(--am-text) !important;
+    }
+    #app .login-card__subtitle {
+        display: block !important; margin: 0 !important;
+        font-size: 14px !important; line-height: 1.55 !important;
+        color: var(--am-muted) !important; opacity: 1;
+    }
+
+    /* ---------- numbered rows (01, 02 …) ---------- */
+    #app .login-card .ant-form-item:has(.login-input),
+    #app .login-card div:has(> label.login-label) {
+        counter-increment: amrow;
+        position: relative;
+        padding-left: 36px;
+        margin-bottom: 14px !important;
+    }
+    #app .login-card .ant-form-item:has(.login-input)::before,
+    #app .login-card div:has(> label.login-label)::before {
+        content: counter(amrow, decimal-leading-zero);
+        position: absolute; left: 0; top: 0;
+        width: 24px; height: 24px;
+        display: inline-flex; align-items: center; justify-content: center;
+        border-radius: 8px;
+        font-family: "SFMono-Regular", "JetBrains Mono", "Courier New", monospace;
+        font-size: 10.5px; font-weight: 700;
+        background: var(--am-badge-bg); color: var(--am-accent);
+    }
+    #app .login-card .ant-form-item { margin-bottom: 14px !important; }
+    #app .login-card .ant-form-item-label { padding: 0 0 8px !important; }
+    #app .login-card .ant-form-item-label > label,
+    #app .login-card .login-label {
+        display: block; height: auto !important;
+        margin: 0 0 8px !important; padding: 0;
+        font-size: 11.5px !important; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
+        color: var(--am-muted) !important;
+    }
+    #app .login-card .ant-form-item-label > label::after { display: none !important; }
+    #app .login-card .login-label .req { color: #ef4444; }
+    #app .login-card .ant-form-item-explain-error { font-size: 12px; margin-top: 6px; }
+
+    /* filled 52px inputs (16px font stops iOS zoom-on-focus) */
+    #app .login-card .login-input.ant-input,
+    #app .login-card .login-input.ant-input-affix-wrapper {
+        height: 52px; min-height: 52px;
+        padding: 0 16px !important;
+        font-size: 16px !important;
+        border-radius: 14px !important;
+        background: var(--am-input-bg) !important;
+        border: 1.5px solid var(--am-input-border) !important;
+        box-shadow: none !important;
+        color: var(--am-text) !important;
+        display: flex; align-items: center;
+    }
+    #app .login-card .login-input.ant-input { display: block; }
+    #app .login-card .login-input .ant-input {
+        height: auto; padding: 0 !important; font-size: 16px !important;
+        background: transparent !important; border: none !important; box-shadow: none !important;
+        color: var(--am-text) !important;
+    }
+    #app .login-card .login-input.ant-input:focus,
+    #app .login-card .login-input.ant-input-affix-wrapper-focused,
+    #app .login-card .login-input.ant-input-affix-wrapper:focus-within {
+        border-color: var(--am-accent) !important;
+        box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.16) !important;
+    }
+    #app .login-card .login-input .ant-input-prefix { margin-right: 10px; color: var(--am-accent); }
+    #app .login-card .login-input .ant-input-suffix { margin-left: 8px; }
+    #app .login-card .login-input .ant-input-password-icon,
+    #app .login-card .login-input .ant-input-suffix .anticon {
+        font-size: 18px; padding: 8px; margin: -8px; /* 34px+ tap target */
+    }
+    #app .login-card .login-input input::placeholder { opacity: 0.4; }
+
+    /* checkbox + forgot link row */
+    #app .login-card .ant-checkbox-wrapper { font-size: 13.5px; }
+    #app .login-card .ant-checkbox-inner { width: 19px; height: 19px; border-radius: 6px; }
+    #app .login-card .login-link { font-size: 13.5px; font-weight: 700; color: var(--am-accent) !important; }
+
+    /* buttons: 54px, rounded 16, gradient */
+    #app .login-card .login-btn-primary {
+        width: 100%; height: auto !important; min-height: 54px;
+        padding: 12px 16px !important; margin-top: 10px;
+        border: none !important; border-radius: 16px !important;
+        font-size: 15px !important; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase;
+        color: #fff !important;
+        background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 55%, #0ea5e9 130%) !important;
+        box-shadow: 0 12px 26px rgba(29, 78, 216, 0.34) !important;
+        display: inline-flex; align-items: center; justify-content: center;
+        -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+    }
+    #app .login-card .login-btn-primary::after { display: none !important; }
+    #app .login-card .login-btn-primary:active { transform: translateY(1px); }
+    #app .login-card .login-btn-primary.is-disabled,
+    #app .login-card .login-btn-primary[disabled] { opacity: 0.55; box-shadow: none !important; }
+    #app .login-card .login-btn-ghost {
+        width: 100%; height: auto !important; min-height: 54px;
+        padding: 12px 16px !important; border-radius: 16px !important;
+        font-size: 14px !important; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em;
+        background: transparent !important;
+        border: 1.5px solid var(--am-input-border) !important;
+        color: var(--am-text) !important;
+    }
+
+    /* footer links, centred like SCLF's card footer */
+    #app .login-card .login-divider { display: none !important; }
+    #app .login-card .login-divider-row {
+        justify-content: center; margin-top: 18px;
+    }
+    #app .login-card .login-back-home-inline { font-size: 13.5px; }
+    #app .login-card .login-register-text {
+        text-align: center; margin: 16px 0 0 !important;
+        font-size: 14px !important; color: var(--am-text);
+    }
+
+    /* alerts, tips, info/success boxes, strength + requirement cards */
+    #app .login-card .login-alert,
+    #app .login-card .ant-alert {
+        border-radius: 12px !important; font-size: 12.5px; line-height: 1.55;
+        margin-bottom: 14px !important;
+    }
+    #app .login-card :is(.login-tip, .login-info-box, .login-success-box, .login-req-card) {
+        border-radius: 14px !important;
+        background: var(--am-soft) !important;
+        border: 1px solid var(--am-soft-border) !important;
+        margin-top: 14px;
+    }
+    #app .login-card .login-req-grid { grid-template-columns: 1fr 1fr; gap: 5px 10px; }
+    #app .login-card .login-strength { margin-top: 10px; }
+
+    /* legal line pinned to the bottom of the screen */
+    #app .auth-legal {
+        display: block;
+        width: 100%; max-width: 440px; margin: 0 auto;
+        padding: 18px 22px calc(env(safe-area-inset-bottom, 0px) + 16px);
+        text-align: center;
+        font-size: 11px; line-height: 1.55;
+        color: var(--am-muted); opacity: 0.8;
+    }
+
+    /* ---------- 3. REGISTER ---------- */
+    #app .alumni-registration {
+        display: flex !important; flex-direction: column; align-items: stretch; justify-content: flex-start;
+        min-height: 100dvh; padding: 0 0 calc(env(safe-area-inset-bottom, 0px) + 24px) !important;
+        z-index: 1;
+    }
+    #app .registration-card {
+        width: 100%; max-width: 440px; margin: 0 auto !important;
+        background: transparent !important; border: none !important;
+        box-shadow: none !important; border-radius: 0 !important;
+        animation: none !important; overflow: visible;
+        color: var(--am-text) !important;
+    }
+    #app .registration-card .ant-card-body { padding: 14px 22px 8px !important; background: transparent !important; }
+
+    /* the app bar already shows logo + name, so drop the big company hero */
+    #app .registration-card .company-header { display: none !important; }
+    #app .back-to-login-section { margin: 0 0 6px; }
+    #app .back-to-login-btn {
+        height: 44px; padding: 0 !important; font-size: 14px; font-weight: 700;
+        color: var(--am-accent) !important;
+    }
+
+    #app .registration-header { text-align: left !important; padding: 0 !important; margin: 4px 0 0 !important; }
+    #app .registration-header h3,
+    #app .registration-header h3.ant-typography {
+        font-size: 28px !important; line-height: 1.2 !important; font-weight: 800;
+        letter-spacing: -0.01em; margin: 0 0 8px !important; color: var(--am-text) !important;
+    }
+    #app .registration-header .ant-typography-secondary,
+    #app .registration-header .ant-typography {
+        font-size: 14px; line-height: 1.55; color: var(--am-muted) !important;
+    }
+    #app .registration-card .ant-divider { margin: 14px 0 !important; border-color: var(--am-appbar-border) !important; }
+
+    /* progress + steps -> compact folder-tab row */
+    #app .progress-section { margin: 0 0 4px; }
+    #app .progress-section .ant-progress-inner,
+    #app .progress-section .ant-progress-bg { border-radius: 999px; }
+    #app .registration-steps,
+    #app .registration-steps.ant-steps-vertical {
+        display: flex !important; flex-direction: row !important; gap: 4px; margin: 14px 0 4px !important;
+    }
+    #app .registration-steps .ant-steps-item {
+        flex: 1 1 0 !important; min-width: 0; margin: 0 !important; padding: 0 !important; overflow: visible;
+    }
+    #app .registration-steps .ant-steps-item-container {
+        display: flex !important; flex-direction: column; align-items: center; text-align: center;
+    }
+    #app .registration-steps .ant-steps-item-tail { display: none !important; }
+    #app .registration-steps .ant-steps-item-icon {
+        margin: 0 !important; width: 34px !important; height: 34px !important;
+        line-height: 32px !important; font-size: 14px;
+    }
+    #app .registration-steps .ant-steps-item-content {
+        display: block !important; width: 100%; min-height: 0 !important; margin: 5px 0 0 !important; text-align: center;
+    }
+    #app .registration-steps .ant-steps-item-title {
+        padding: 0 !important; font-size: 9.5px !important; line-height: 1.25 !important;
+        font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;
+        white-space: normal; word-break: break-word;
+    }
+    #app .registration-steps .ant-steps-item-title::after { display: none !important; }
+
+    /* every column becomes one full-width row */
+    #app .registration-form .ant-row > .ant-col { flex: 0 0 100% !important; max-width: 100% !important; }
+    #app .registration-form .ant-form-item { margin-bottom: 16px !important; }
+    #app .registration-form .ant-form-item-label { padding: 0 0 8px !important; }
+    #app .registration-form .ant-form-item-label > label {
+        height: auto !important;
+        font-size: 11.5px !important; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
+        color: var(--am-muted) !important;
+    }
+    #app .registration-form .ant-form-item-label > label::after { display: none !important; }
+
+    /* filled 52px fields */
+    #app .registration-form :is(.ant-input-affix-wrapper, .ant-picker, .ant-input-number),
+    #app .registration-form input.ant-input,
+    #app .registration-form .ant-select:not(.ant-select-customize-input) .ant-select-selector {
+        min-height: 52px; font-size: 16px !important;
+        border-radius: 14px !important;
+        background: var(--am-input-bg) !important;
+        border: 1.5px solid var(--am-input-border) !important;
+        box-shadow: none !important;
+        color: var(--am-text) !important;
+    }
+    #app .registration-form :is(.ant-input-affix-wrapper, .ant-picker) { padding: 0 16px !important; display: flex; align-items: center; }
+    #app .registration-form input.ant-input { padding: 0 16px !important; }
+    #app .registration-form .ant-input-affix-wrapper input.ant-input {
+        padding: 0 !important; min-height: 0; background: transparent !important; border: none !important;
+    }
+    #app .registration-form .ant-input-number { width: 100%; }
+    #app .registration-form .ant-input-number-input { height: 49px; font-size: 16px; }
+    #app .registration-form .ant-picker { width: 100%; }
+    #app .registration-form .ant-picker-input > input { font-size: 16px !important; }
+    #app .registration-form .ant-select { width: 100%; }
+    #app .registration-form .ant-select-single .ant-select-selector { height: 52px !important; padding: 0 16px !important; }
+    #app .registration-form .ant-select-single .ant-select-selection-item,
+    #app .registration-form .ant-select-single .ant-select-selection-placeholder { line-height: 49px !important; font-size: 16px; }
+    #app .registration-form .ant-select-multiple .ant-select-selector { height: auto !important; min-height: 52px; padding: 6px 12px !important; }
+    #app .registration-form textarea.ant-input {
+        min-height: 104px; padding: 12px 16px !important; line-height: 1.5;
+    }
+    #app .registration-form :is(.ant-input:focus, .ant-input-affix-wrapper-focused, .ant-picker-focused,
+                                .ant-select-focused .ant-select-selector, .ant-input-number-focused) {
+        border-color: var(--am-accent) !important;
+        box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.16) !important;
+    }
+    #app .registration-form .ant-radio-wrapper,
+    #app .registration-form .ant-checkbox-wrapper { font-size: 14px; }
+    #app .registration-form .ant-checkbox-inner { width: 19px; height: 19px; border-radius: 6px; }
+
+    /* navigation buttons: full width, stacked, primary on top */
+    #app .navigation-buttons { width: 100%; }
+    #app .navigation-buttons .ant-space {
+        width: 100%; display: flex !important; flex-direction: column-reverse; gap: 10px !important;
+    }
+    #app .navigation-buttons .ant-space-item { width: 100%; margin: 0 !important; }
+    #app .navigation-buttons .ant-btn {
+        width: 100%; height: auto !important; min-height: 54px;
+        padding: 12px 16px !important; border-radius: 16px !important;
+        font-size: 15px !important; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase;
+        display: inline-flex; align-items: center; justify-content: center;
+    }
+    #app .navigation-buttons .ant-btn-primary {
+        border: none !important; color: #fff !important;
+        background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 55%, #0ea5e9 130%) !important;
+        box-shadow: 0 12px 26px rgba(29, 78, 216, 0.34) !important;
+    }
+    #app .navigation-buttons .ant-btn-primary[disabled] { opacity: 0.55; box-shadow: none !important; }
+    #app .navigation-buttons .ant-btn:not(.ant-btn-primary) {
+        background: transparent !important;
+        border: 1.5px solid var(--am-input-border) !important;
+        color: var(--am-text) !important;
+    }
+
+    #app .registration-footer,
+    #app .registration-footer .ant-typography {
+        text-align: center; font-size: 11px !important; color: var(--am-muted) !important;
+    }
+
+    /* floating scroll orb: smaller, so it does not cover the fields */
+    #app .alumni-registration .scroll-orb-wrap {
+        transform: scale(0.55); transform-origin: bottom right;
+        right: 12px !important; bottom: calc(env(safe-area-inset-bottom, 0px) + 12px) !important;
+    }
+}
