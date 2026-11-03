@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Tooltip } from "antd";
 import { COLORS } from "~/config/theme";
 import { useIsTouchDevice } from "~/hooks/useIsTouchDevice";
+import { saveImage, prefetchImage } from "~/utils/saveImage";
 
 // ============================================================
 // ======= GALLERY-STYLE PHOTO LIGHTBOX (like galleryPage.js) =
@@ -29,6 +30,11 @@ export const GalleryPhotoLightbox = ({
         setFlipY(false);
     }, [currentIndex, visible]);
 
+    // Load the open photo in the background so Save is instant (iOS needs that).
+    useEffect(() => {
+        if (visible && images[idx]) prefetchImage(images[idx]);
+    }, [visible, idx, images]);
+
     if (!visible || images.length === 0) return null;
 
     const handlePrev = () => {
@@ -52,11 +58,10 @@ export const GalleryPhotoLightbox = ({
     const handleDownload = () => {
         const url = images[idx];
         if (!url) return;
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = `photo_${idx + 1}.jpg`;
-        a.target = "_blank";
-        a.click();
+        saveImage({
+            url,
+            filename: `${title || "photo"}-${idx + 1}`,
+        });
     };
 
     const imgTransform = [

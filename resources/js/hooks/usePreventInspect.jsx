@@ -91,6 +91,8 @@ export default function usePreventInspect() {
         if (!INSPECT_PROTECTION_ENABLED) return undefined;
 
         const disableContextMenu = (e) => {
+            // Never block the "Save photo" dialog (iPad long-press etc.).
+            if (e.target?.closest?.(".save-image-sheet, [data-allow-save]")) return;
             if (window.innerWidth >= DESKTOP_MIN_WIDTH) {
                 e.preventDefault();
             }

@@ -1,5 +1,5 @@
 import { useCallback, useEffect } from "react";
-import { message } from "antd";
+import { saveImage } from "~/utils/saveImage";
 import avatarGuidance from "~/assets/images/avatar_guidance.png";
 import { COLORS } from "~/config/theme";
 import useCourses from "~/hooks/useCourses";
@@ -85,58 +85,18 @@ export default function useMessageFormatters({
     // HELPER FUNCTION TO GET IMAGE URL
     // ============================
 
-    const downloadImage = async (imagePath) => {
-        if (!imagePath) return;
+    const downloadImage = (imagePath) => {
+        if (!imagePath) return undefined;
 
-        // imagePath from the lightbox is already a fully-resolved URL.
-        // For raw storage paths passed from other call sites, resolve first.
-        const imageUrl =
-            imagePath.startsWith("http://") ||
-            imagePath.startsWith("https://") ||
-            imagePath.startsWith("blob:") ||
-            imagePath.startsWith("data:")
-                ? imagePath
-                : getImageUrl(imagePath);
+        // The lightbox passes a resolved URL; other call sites may pass a raw
+        // storage path, so resolve those first.
+        const imageUrl = /^(https?:|blob:|data:)/.test(imagePath)
+            ? imagePath
+            : getImageUrl(imagePath);
+        if (!imageUrl) return undefined;
 
-        if (!imageUrl) return;
-
-        // Derive a sensible filename (strip query strings).
-        const rawName =
-            imageUrl.split("?")[0].split("/").pop() || "alumni-image";
-        const fileName = decodeURIComponent(rawName) || "alumni-image";
-
-        try {
-            // Fetch as blob so the browser honours the `download` attribute
-            // regardless of cross-origin restrictions. Credentials are included
-            // so Laravel auth middleware allows the request.
-            const response = await fetch(imageUrl, {
-                credentials: "include",
-            });
-
-            if (!response.ok) {
-                throw new Error(`Server responded with ${response.status}`);
-            }
-
-            const blob = await response.blob();
-            const blobUrl = URL.createObjectURL(blob);
-
-            const link = document.createElement("a");
-            link.href = blobUrl;
-            link.download = fileName;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-
-            // Release the object URL after the download dialog fires.
-            setTimeout(() => URL.revokeObjectURL(blobUrl), 10_000);
-        } catch (err) {
-            console.error("Image download failed:", err);
-            // Fallback: open in a new tab so the user can save manually.
-            window.open(imageUrl, "_blank", "noopener,noreferrer");
-            message.warning(
-                "Could not download directly — opening in a new tab instead.",
-            );
-        }
+        // iPhone/iPad: share sheet ("Save Image"); Android/desktop: download.
+        return saveImage({ url: imageUrl, filename: "OCC-Alumni-message" });
     };
 
     const getEmploymentStatusLabel = useCallback(

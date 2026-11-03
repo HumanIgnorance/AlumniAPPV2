@@ -392,28 +392,53 @@ class GalleryController extends Controller
             ], 404);
         }
 
-        // Get image index (default to 0 for first image)
-        $imageIndex = $request->get('index', 0);
-        $imagePaths = $gallery->image_paths ?? [$gallery->image_path];
+        // Get image index (default to 0 for first image). Always an int so
+        // "1" / "abc" / "-1" from the query string can never mis-index.
+        $imageIndex = (int) $request->query('index', 0);
+        $imagePaths = array_values(array_filter(
+            is_array($gallery->image_paths) && count($gallery->image_paths)
+                ? $gallery->image_paths
+                : [$gallery->image_path]
+        ));
 
-        if ($imageIndex >= count($imagePaths)) {
+        if ($imageIndex < 0 || $imageIndex >= count($imagePaths)) {
             return response()->json([
                 'success' => false,
                 'message' => 'Image index out of range',
             ], 404);
         }
 
-        $filePath = storage_path('app/public/' . $imagePaths[$imageIndex]);
+        // Only ever read inside the public disk (blocks ../ tricks).
+        $root = realpath(storage_path('app/public'));
+        $filePath = $root ? realpath($root . DIRECTORY_SEPARATOR . $imagePaths[$imageIndex]) : false;
 
-        if (!file_exists($filePath)) {
+        if (!$filePath || strpos($filePath, $root . DIRECTORY_SEPARATOR) !== 0 || !is_file($filePath)) {
             return response()->json([
                 'success' => false,
                 'message' => 'File not found',
             ], 404);
         }
 
-        $filename = $gallery->title . '_' . ($imageIndex + 1) . '.' . pathinfo($imagePaths[$imageIndex], PATHINFO_EXTENSION);
-        return response()->download($filePath, $filename);
+        $extension = strtolower(pathinfo($filePath, PATHINFO_EXTENSION)) ?: 'jpg';
+        $mime = [
+            'jpg' => 'image/jpeg', 'jpeg' => 'image/jpeg', 'png' => 'image/png',
+            'gif' => 'image/gif', 'webp' => 'image/webp', 'heic' => 'image/heic',
+            'heif' => 'image/heif', 'avif' => 'image/avif', 'bmp' => 'image/bmp',
+        ][$extension] ?? (mime_content_type($filePath) ?: 'application/octet-stream');
+
+        // Titles can hold emoji, quotes, "/" or "%": any of those used to make
+        // Content-Disposition invalid (HTTP 500). Keep a safe ASCII fallback
+        // plus the real name via RFC 5987 filename*.
+        $title = trim(preg_replace('/[\\\/:*?"<>|%\x00-\x1F]+/u', ' ', (string) $gallery->title)) ?: 'photo';
+        $filename = mb_substr($title, 0, 80) . '_' . ($imageIndex + 1) . '.' . $extension;
+        $asciiName = trim(preg_replace('/[^A-Za-z0-9._-]+/', '_', \Illuminate\Support\Str::ascii($filename)), '_') ?: ('photo_' . ($imageIndex + 1) . '.' . $extension);
+
+        return response()->file($filePath, [
+            'Content-Type' => $mime,
+            'Content-Disposition' => 'attachment; filename="' . $asciiName . '"; filename*=UTF-8\'\'' . rawurlencode($filename),
+            'X-Content-Type-Options' => 'nosniff',
+            'Cache-Control' => 'private, max-age=300',
+        ]);
     }
 
     // Delete single image from gallery (admin only)

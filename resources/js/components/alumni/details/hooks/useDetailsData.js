@@ -6,6 +6,7 @@ import {
 import { employmentStatusOptions } from "~/config/alumniOptions";
 import { STATUS } from "~/config/status";
 import { COLORS } from "~/config/theme";
+import { saveImage } from "~/utils/saveImage";
 
 export default function useDetailsData({ previewData }) {
     // Safe data access with fallbacks
@@ -93,16 +94,9 @@ export default function useDetailsData({ previewData }) {
     };
 
     const downloadImage = (imageUrl) => {
-        if (!imageUrl) return;
-
-        const link = document.createElement("a");
-        link.href = imageUrl;
-        link.target = "_blank";
-        link.download = imageUrl.split("/").pop() || "image";
-
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        if (!imageUrl) return undefined;
+        const who = formatName() || "OCC-Alumni";
+        return saveImage({ url: imageUrl, filename: who });
     };
 
     const formatName = () => {

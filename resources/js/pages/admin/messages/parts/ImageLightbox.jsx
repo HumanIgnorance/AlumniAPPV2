@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { createPortal } from "react-dom";
 import { useMessagesContext } from "~/pages/admin/messages/MessagesContext";
+import { prefetchImage } from "~/utils/saveImage";
 
 export default function ImageLightbox() {
     const { lightboxImage, closeLightbox, isAdmin, downloadImage } =
         useMessagesContext();
+
+    useEffect(() => {
+        if (lightboxImage && isAdmin) prefetchImage(lightboxImage);
+    }, [lightboxImage, isAdmin]);
 
     return (
         lightboxImage &&

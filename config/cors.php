@@ -40,7 +40,8 @@ return [
     // automatically).
     'allowed_headers' => ['Content-Type', 'Accept', 'Authorization', 'X-Requested-With'],
 
-    'exposed_headers' => [],
+    // Lets the browser read the saved file name on downloads.
+    'exposed_headers' => ['Content-Disposition', 'Content-Length', 'Content-Type'],
 
     'max_age' => 0,
 

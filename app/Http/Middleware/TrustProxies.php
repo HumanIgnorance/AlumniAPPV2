@@ -12,7 +12,12 @@ class TrustProxies extends Middleware
      *
      * @var array<int, string>|string|null
      */
-    protected $proxies;
+    protected $proxies = '*';
+    // '*' = trust the platform's reverse proxy / load balancer (EthioDeploy,
+    // Nginx, Cloudflare...). Without it Laravel sees every request as plain
+    // HTTP, so asset()/route() build http:// image URLs on an https:// page.
+    // iPhone Safari blocks those as mixed content, so downloads fail with
+    // "could not reach the server".
 
     /**
      * The headers that should be used to detect proxies.
