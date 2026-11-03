@@ -3,6 +3,7 @@
 import React from "react";
 import "./AlumniRegistration-styles";
 import AuthAppBar from "~/components/shared/AuthAppBar";
+import { InspectGuard } from "~/hooks/usePreventInspect";
 import ScrollProgressOrb from "../admin/ScrollProgress/ScrollProgressOrb";
 import { RegistrationProvider } from "./registration/RegistrationContext";
 import useRegistrationController from "./registration/hooks/useRegistrationController";
@@ -27,6 +28,7 @@ const AlumniRegistration = () => {
                 <ScrollProgressOrb />
                 {/* Portrait-phone app bar: one shared component, identical on every auth page */}
                 <AuthAppBar />
+                <InspectGuard />
                 <RegistrationThemeToggle />
                 <RegistrationCard />
                 <RegistrationPreview />

@@ -1,5 +1,6 @@
 import "./AnswerQuizPage.css";
 import AuthAppBar from "~/components/shared/AuthAppBar";
+import { InspectGuard } from "~/hooks/usePreventInspect";
 import "./quiz-shared/quiz-shared.css"; // unified header/question styles
 import { Card, Skeleton, Modal, Button } from "antd";
 import {
@@ -35,6 +36,7 @@ function AnswerQuizPage() {
     if (isLoadingQuizzes) {
         return (
             <div className="quiz-page is-revealed">
+                <InspectGuard />
                 <section className="quiz-section" style={{ marginTop: 40 }}>
                     <Card className="quiz-card" bordered={false}>
                         <Skeleton.Input
@@ -75,6 +77,7 @@ function AnswerQuizPage() {
                 )}
 
                 <AuthAppBar />
+                <InspectGuard />
                 <div className="page-theme-toggle">
                     <button
                         type="button"

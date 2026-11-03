@@ -1,7 +1,6 @@
 "use client"
 
 import React, { useEffect, useMemo, useState } from "react"
-import { INSPECT_PROTECTION_ENABLED } from "~/config/inspect";
 import {
   Row, Col, Card, Input, Typography, Collapse, Tag, Button, Empty, Tooltip, Space, Badge,
 } from "antd"
@@ -12,6 +11,7 @@ import {
 } from "@ant-design/icons"
 import logo from "~/assets/images/OCC_LOGO.png"
 import AuthAppBar from "~/components/shared/AuthAppBar"
+import { InspectGuard } from "~/hooks/usePreventInspect";
 import { useAppTheme } from "~/hooks/useAppTheme"
 import ScrollProgressOrb from "../ScrollProgress/ScrollProgressOrb"
 import "./styles";
@@ -34,42 +34,6 @@ const FaqPublicPage = () => {
     return;
   }
 
-
-    //  Prevent //
-      useEffect(() => {
-      if (!INSPECT_PROTECTION_ENABLED) return undefined;
-
-      const disableContextMenu = (e) => {
-        e.preventDefault();
-      };
-
-      document.addEventListener("contextmenu", disableContextMenu);
-
-      return () => {
-        document.removeEventListener("contextmenu", disableContextMenu);
-      };
-    }, []);
-
-    useEffect(() => {
-      if (!INSPECT_PROTECTION_ENABLED) return undefined;
-
-      const handleKeyDown = (e) => {
-        if (
-          e.key === "F12" ||
-          (e.ctrlKey && e.shiftKey && ["I", "J", "C"].includes(e.key)) ||
-          (e.ctrlKey && e.key === "u")
-        ) {
-          e.preventDefault();
-          return false;
-        }
-      };
-
-      document.addEventListener("keydown", handleKeyDown);
-
-      return () => {
-        document.removeEventListener("keydown", handleKeyDown);
-      };
-    }, []);
 
   // ============ THEME SYNC FROM FORMLOGIN ============
   // Now backed by the shared useAppTheme hook (same cookie + secureLocalStorage
@@ -126,6 +90,7 @@ const FaqPublicPage = () => {
   return (
     <>
       <AuthAppBar />
+      <InspectGuard />
       <div className="page-theme-toggle">
         <button
           type="button"

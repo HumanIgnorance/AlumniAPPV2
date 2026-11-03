@@ -1,5 +1,6 @@
 import "./ImageQuizPage.css";
 import AuthAppBar from "~/components/shared/AuthAppBar";
+import { InspectGuard } from "~/hooks/usePreventInspect";
 import "./quiz-shared/quiz-shared.css"; // unified header/question styles
 import {
     Modal,
@@ -433,6 +434,7 @@ function ImageQuizPage() {
     if (isLoadingQuizzes) {
         return (
             <div className="quiz-page is-revealed">
+                <InspectGuard />
                 {offlineBannerNode}
                 <section className="quiz-section" style={{ marginTop: 40 }}>
                     <Card className="quiz-card">
@@ -467,6 +469,7 @@ function ImageQuizPage() {
     if (!currentQuiz || !currentQuestion) {
         return (
             <div className="quiz-page is-revealed">
+                <InspectGuard />
                 {offlineBannerNode}
                 <section className="quiz-section" style={{ marginTop: 60 }}>
                     <Card className="quiz-card">
@@ -489,6 +492,7 @@ function ImageQuizPage() {
 
         return (
             <div className={`quiz-page ${revealed ? "is-revealed" : ""}`}>
+                <InspectGuard />
                 {offlineBannerNode}
                 <section className="quiz-section" style={{ marginTop: 40 }}>
                     <Card className="quiz-completion-card">
@@ -788,6 +792,7 @@ function ImageQuizPage() {
             >
                 {offlineBannerNode}
                 <AuthAppBar />
+                <InspectGuard />
                 <div className="page-theme-toggle">
                     <button
                         type="button"

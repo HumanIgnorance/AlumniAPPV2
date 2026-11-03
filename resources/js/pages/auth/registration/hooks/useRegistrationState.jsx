@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { INSPECT_PROTECTION_ENABLED } from "~/config/inspect";
 import {
     BookOutlined,
     FileImageOutlined,
@@ -95,42 +94,6 @@ export default function useRegistrationState() {
 
     useEffect(() => {
         document.title = buildPageTitle("Alumni Registration");
-    }, []);
-
-    //  Prevent //
-    useEffect(() => {
-        if (!INSPECT_PROTECTION_ENABLED) return undefined;
-
-        const disableContextMenu = (e) => {
-            e.preventDefault();
-        };
-
-        document.addEventListener("contextmenu", disableContextMenu);
-
-        return () => {
-            document.removeEventListener("contextmenu", disableContextMenu);
-        };
-    }, []);
-
-    useEffect(() => {
-        if (!INSPECT_PROTECTION_ENABLED) return undefined;
-
-        const handleKeyDown = (e) => {
-            if (
-                e.key === "F12" ||
-                (e.ctrlKey && e.shiftKey && ["I", "J", "C"].includes(e.key)) ||
-                (e.ctrlKey && e.key === "u")
-            ) {
-                e.preventDefault();
-                return false;
-            }
-        };
-
-        document.addEventListener("keydown", handleKeyDown);
-
-        return () => {
-            document.removeEventListener("keydown", handleKeyDown);
-        };
     }, []);
 
     return {

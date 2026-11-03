@@ -1,5 +1,4 @@
 import useTakeQuiz from "~/hooks/useTakeQuiz";
-import { INSPECT_PROTECTION_ENABLED } from "~/config/inspect";
 import { useState, useRef, useEffect } from "react";
 import { buildPageTitle } from "~/config/site";
 import { useAppTheme } from "~/hooks/useAppTheme";
@@ -41,42 +40,6 @@ export default function useImageQuizLogic1() {
 
     useEffect(() => {
         document.title = buildPageTitle("Image Quiz");
-    }, []);
-
-    //  Prevent //
-    useEffect(() => {
-        if (!INSPECT_PROTECTION_ENABLED) return undefined;
-
-        const disableContextMenu = (e) => {
-            e.preventDefault();
-        };
-
-        document.addEventListener("contextmenu", disableContextMenu);
-
-        return () => {
-            document.removeEventListener("contextmenu", disableContextMenu);
-        };
-    }, []);
-
-    useEffect(() => {
-        if (!INSPECT_PROTECTION_ENABLED) return undefined;
-
-        const handleKeyDown = (e) => {
-            if (
-                e.key === "F12" ||
-                (e.ctrlKey && e.shiftKey && ["I", "J", "C"].includes(e.key)) ||
-                (e.ctrlKey && e.key === "u")
-            ) {
-                e.preventDefault();
-                return false;
-            }
-        };
-
-        document.addEventListener("keydown", handleKeyDown);
-
-        return () => {
-            document.removeEventListener("keydown", handleKeyDown);
-        };
     }, []);
 
     // ============ THEME SYNC (shared with FormLogin) ============

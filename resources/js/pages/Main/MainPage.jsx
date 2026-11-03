@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { INSPECT_PROTECTION_ENABLED } from "~/config/inspect";
+import { InspectGuard } from "~/hooks/usePreventInspect";
 import { Typography } from "antd";
 import logo from "~/assets/images/site-logo.png";
 import { useAppTheme } from "~/hooks/useAppTheme";
@@ -41,42 +41,6 @@ const MainPage = () => {
     document.title = buildPageTitle("Loading");
 }, []);
 
-///Prevent Right-Click and Developer Tools///
-      useEffect(() => {
-      if (!INSPECT_PROTECTION_ENABLED) return undefined;
-
-      const disableContextMenu = (e) => {
-        e.preventDefault();
-      };
-    
-      document.addEventListener("contextmenu", disableContextMenu);
-    
-      return () => {
-        document.removeEventListener("contextmenu", disableContextMenu);
-      };
-    }, []);
-    
-    useEffect(() => {
-      if (!INSPECT_PROTECTION_ENABLED) return undefined;
-
-      const handleKeyDown = (e) => {
-        if (
-          e.key === "F12" ||
-          (e.ctrlKey && e.shiftKey && ["I", "J", "C"].includes(e.key)) ||
-          (e.ctrlKey && e.key === "u")
-        ) {
-          e.preventDefault();
-          return false;
-        }
-      };
-    
-      document.addEventListener("keydown", handleKeyDown);
-    
-      return () => {
-        document.removeEventListener("keydown", handleKeyDown);
-      };
-    }, []);
-    
     // ============ THEME SYNC (shared with FormLogin) ============
     // Uses the same useAppTheme hook as FormLogin so this page can never
     // drift out of sync with what was actually saved (cookie + secureLocalStorage
@@ -88,6 +52,7 @@ const MainPage = () => {
 
     return (
         <>
+            <InspectGuard />
             <style>{`
                 :root {
                     --mp-accent: #4f46e5;

@@ -248,3 +248,15 @@ export function ZoomWarningModal({ open, onClose }) {
         </Modal>
     );
 }
+
+// ============================================================
+// InspectGuard - ONE line for any page: <InspectGuard />
+// Turns on the full guard (right-click, F12 / Ctrl+Shift+I/J/C, Ctrl+U,
+// Ctrl+S, zoom lock) and renders the zoom warning popup. Does nothing
+// when VITE_ENABLE_INSPECT_PROTECTION=false. Use it instead of pasting
+// effect blocks into pages.
+// ============================================================
+export function InspectGuard() {
+    const { zoomModalOpen, closeZoomModal } = usePreventInspect();
+    return <ZoomWarningModal open={zoomModalOpen} onClose={closeZoomModal} />;
+}
