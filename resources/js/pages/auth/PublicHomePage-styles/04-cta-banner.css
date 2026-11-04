@@ -552,18 +552,25 @@
   .ph-footer-social a { width: 44px; height: 44px; }
 
   .ph-footer-bottom { overflow-wrap: anywhere; }
+
+  /* BIGGER OCCAA seal on phones (desktop watermark untouched) */
+  .ph-footer-social-row { align-items: center; }
+  .ph-footer .ph-footer-seal--inline {
+    width: clamp(130px, 40vw, 190px);
+    opacity: 0.95;
+  }
 }
 
 /* very narrow phones (iPhone SE / 320px Androids) */
 @media (max-width: 359px) {
-  .ph-footer .ph-footer-seal--inline { width: 72px; }
+  .ph-footer .ph-footer-seal--inline { width: 110px; }
   .ph-footer-social-row { gap: 10px; }
 }
 
 /* landscape phones: keep it compact */
 @media (max-width: 900px) and (orientation: landscape) {
   .ph-footer { padding-bottom: calc(24px + env(safe-area-inset-bottom)); }
-  .ph-footer .ph-footer-seal--inline { width: 72px; }
+  .ph-footer .ph-footer-seal--inline { width: 100px; }
 }
 
 /* iOS/Android text never auto-inflates, images never overflow */
