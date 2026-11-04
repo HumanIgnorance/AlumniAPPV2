@@ -488,3 +488,85 @@
 [data-theme="black"] .zoom-warning-modal .ant-modal-mask {
     background: rgba(0, 0, 0, 0.65) !important;
 }
+
+
+/* ==========================================================================
+   FOOTER SEAL (white OCCAA logo, like the eGovPH footer) + PHONE POLISH
+   ========================================================================== */
+.ph-footer { position: relative; overflow: hidden; }
+.ph-footer-inner,
+.ph-footer-bottom { position: relative; z-index: 1; }
+
+.ph-footer .ph-footer-seal {
+  display: block;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  object-fit: contain;
+  /* white only — never tinted by the footer text-colour rule */
+  filter: none;
+}
+
+/* Desktop / large tablet: big faded watermark in the empty right side */
+.ph-footer .ph-footer-seal--mark {
+  position: absolute;
+  z-index: 0;
+  right: max(24px, calc((100vw - 1240px) / 2));
+  top: 50%;
+  transform: translateY(-58%);
+  width: clamp(190px, 20vw, 280px);
+  height: auto;
+  opacity: 0.16;
+}
+.ph-footer .ph-footer-seal--inline { display: none; }
+
+.ph-footer-social-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+/* Tablets + all phones: watermark off, seal sits beside the social icons */
+@media (max-width: 991px) {
+  .ph-footer .ph-footer-seal--mark { display: none; }
+  .ph-footer .ph-footer-seal--inline {
+    display: block;
+    flex: 0 0 auto;
+    width: clamp(84px, 24vw, 128px);
+    height: auto;
+    opacity: 0.85;
+    margin-left: auto;
+  }
+}
+
+/* Phones: app-like comfort */
+@media (max-width: 767px) {
+  /* the floating scroll % orb (bottom-right) used to cover the credit line */
+  .ph-footer { padding-bottom: calc(88px + env(safe-area-inset-bottom)); }
+
+  /* comfortable 44px touch targets in the footer */
+  .ph-footer-links button,
+  .ph-footer-links a { min-height: 44px; display: inline-flex; align-items: center; }
+  .ph-footer-social a { width: 44px; height: 44px; }
+
+  .ph-footer-bottom { overflow-wrap: anywhere; }
+}
+
+/* very narrow phones (iPhone SE / 320px Androids) */
+@media (max-width: 359px) {
+  .ph-footer .ph-footer-seal--inline { width: 72px; }
+  .ph-footer-social-row { gap: 10px; }
+}
+
+/* landscape phones: keep it compact */
+@media (max-width: 900px) and (orientation: landscape) {
+  .ph-footer { padding-bottom: calc(24px + env(safe-area-inset-bottom)); }
+  .ph-footer .ph-footer-seal--inline { width: 72px; }
+}
+
+/* iOS/Android text never auto-inflates, images never overflow */
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+.ph-page img { max-width: 100%; }
+.ph-footer a, .ph-footer button { -webkit-tap-highlight-color: transparent; }
