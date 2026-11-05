@@ -118,6 +118,26 @@
 
     /* Quiz / FAQ / About pages: their content starts under the bar */
     html.has-auth-appbar #app .quiz-page > .auth-appbar { margin-bottom: 8px; }
+
+    /* Quiz pages: keep the header fixed at the top while scrolling.
+       position: sticky stops working when an ancestor has overflow:hidden
+       (makes it a scroll container) or a transform. The quiz wrapper had both,
+       so the bar scrolled away. `clip` still hides sideways overflow but does
+       NOT create a scroll container, and the fade-in transform is cleared. */
+    html.has-auth-appbar #app .quiz-page.quiz-page {
+        overflow-x: visible !important;
+        overflow-x: clip !important;
+        overflow-y: visible !important;
+        transform: none !important;
+        will-change: auto !important;
+        contain: none !important;
+    }
+    html.has-auth-appbar #app .quiz-page.quiz-page > .auth-appbar {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
 }
 
 /* very small phones (iPhone SE 1st gen, 320px Androids) */
