@@ -404,3 +404,167 @@ html[data-theme="black"] #app :is(.ae-hero, .fb-hero, .gal-hero, .faq-hero, .abo
              .about-hero__cta, .dh-header-select) { width: 100% !important; margin-left: 0 !important; }
     #app :is(.gal-hero__actions, .dashboard-hero__controls, .dh-hero__actions, .qm-hero__actions) .ant-btn { flex: 1 1 auto; }
 }
+
+
+/* ==========================================================
+   FAQ + ABOUT HEADERS  -  fixed reading order & clean phone layout
+   ----------------------------------------------------------
+   Problem: .about-hero__stats, .faq-search and .faq-pills had no
+   `order`, so inside the flex header they jumped ABOVE the logo and
+   title; the "N matches" badge was forced visible by the generic
+   .ant-tag rule and sat on top of the search text.
+
+   Order (all screens):
+     1 logo + chip   2 title   3 description (FAQ)
+     4 About buttons / FAQ search   5 About stats / FAQ category pills
+   Works for the public (no-layout) and in-app (layout) pages, since
+   both use the same class names.
+   ========================================================== */
+#app :is(.faq-hero__brand, .about-hero__brand) { order: 1; }
+#app :is(.faq-hero__title, .about-hero__title) { order: 2; }
+#app .faq-hero__lead { order: 3; }
+#app :is(.about-hero__cta, .faq-search) { order: 4; }
+#app :is(.about-hero__stats, .faq-pills) { order: 5; }
+
+/* About: stat tiles -> tidy grid under the buttons */
+#app .about-hero__stats {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px !important;
+    flex: 1 1 100%;
+    width: 100% !important;
+    margin: 6px 0 0 !important;
+    justify-content: stretch !important;
+}
+#app .about-hero__stats > .ant-col {
+    flex: none !important;
+    width: auto !important;
+    max-width: none !important;
+    padding: 0 !important;
+    min-width: 0;
+}
+#app .about-hero__stats > .ant-col { display: flex; }
+#app .about-hero__stats .stat-card {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 10px 12px;
+    gap: 10px;
+    transform: none;
+}
+#app .about-hero__stats .stat-icon { font-size: 18px; padding: 8px; flex: 0 0 auto; }
+#app .about-hero__stats .stat-card > div { min-width: 0; }
+#app .about-hero__stats .stat-value { font-size: 16px; line-height: 1.15; }
+#app .about-hero__stats .stat-label {
+    display: block;
+    font-size: 11.5px;
+    line-height: 1.25;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* FAQ: search + category pills fill the header width, left aligned */
+#app .faq-search {
+    flex: 1 1 100%;
+    width: 100%;
+    max-width: 640px;
+    margin: 0 !important;
+}
+#app .faq-pills {
+    flex: 1 1 100%;
+    justify-content: flex-start;
+    margin: 0 !important;
+}
+
+/* ---------- Phones ---------- */
+@media (max-width: 767px) {
+    #app :is(.faq-hero__content, .about-hero__content) { gap: 10px 12px !important; }
+
+    #app :is(.faq-hero__brand, .about-hero__brand) { flex: 1 1 100%; flex-wrap: wrap; }
+    #app :is(.faq-hero__title, .about-hero__title) {
+        font-size: clamp(21px, 6.2vw, 26px) !important;
+        line-height: 1.2 !important;
+    }
+    #app .faq-hero__lead {
+        -webkit-line-clamp: 3;
+        font-size: 13px !important;
+        line-height: 1.5 !important;
+    }
+
+    /* About: 1 big primary button + 2 secondary side by side */
+    #app .about-hero__cta {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px !important;
+        width: 100% !important;
+        margin: 0 !important;
+    }
+    #app .about-hero__cta > .ant-space-item { margin: 0 !important; min-width: 0; }
+    #app .about-hero__cta > .ant-space-item:first-child { grid-column: 1 / -1; }
+    #app .about-hero__cta .ant-btn {
+        width: 100%;
+        height: 42px !important;
+        min-height: 42px !important;
+        justify-content: center;
+        padding: 0 10px !important;
+        font-size: 13px !important;
+    }
+    #app .about-hero__stats { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 2px !important; }
+
+    /* FAQ: search on its own line, badge tucked underneath */
+    #app .faq-search {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        max-width: none;
+    }
+    #app .faq-search__input.ant-input-affix-wrapper { padding: 8px 14px !important; }
+    #app .faq-hero .faq-search__hint {
+        position: static !important;
+        transform: none !important;
+        right: auto !important;
+        align-self: flex-start;
+    }
+    /* FAQ: one swipeable row of category pills (no messy centred wrap) */
+    #app .faq-pills {
+        flex: 0 0 calc(100% + 2 * var(--pg-hdr-pad-x));
+        width: calc(100% + 2 * var(--pg-hdr-pad-x));
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        gap: 8px;
+        margin: 0 calc(-1 * var(--pg-hdr-pad-x)) !important;
+        padding: 2px var(--pg-hdr-pad-x) 6px;
+        scroll-snap-type: x proximity;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+    #app .faq-pills::-webkit-scrollbar { display: none; }
+    #app .faq-pill {
+        flex: 0 0 auto;
+        white-space: nowrap;
+        scroll-snap-align: start;
+        padding: 7px 12px;
+        font-size: 12.5px;
+    }
+    #app .faq-pill:hover { transform: none; }
+}
+
+/* Small phones (iPhone SE / mini, 360px Androids) */
+@media (max-width: 380px) {
+    #app .about-hero__stats { gap: 8px !important; }
+    #app .about-hero__stats .stat-card { padding: 8px 10px; gap: 8px; }
+    #app .about-hero__stats .stat-icon { font-size: 15px; padding: 6px; }
+    #app .about-hero__stats .stat-value { font-size: 14px; }
+    #app .about-hero__stats .stat-label { font-size: 10.5px; }
+    #app .about-hero__cta .ant-btn { font-size: 12px !important; padding: 0 6px !important; }
+    #app :is(.faq-hero__brand, .about-hero__brand) .ant-tag { font-size: 10px !important; padding: 0 6px !important; }
+}
+
+/* Notched phones / installed PWA: keep content clear of the safe areas */
+@supports (padding: max(0px)) {
+    #app :is(.faq-page, .about-page) {
+        padding-left: max(12px, env(safe-area-inset-left));
+        padding-right: max(12px, env(safe-area-inset-right));
+        padding-bottom: calc(24px + env(safe-area-inset-bottom));
+    }
+}

@@ -12,6 +12,7 @@ import {
     SolutionOutlined,
     AppstoreOutlined,
     TeamOutlined,
+    SearchOutlined,
     FacebookOutlined,
     TwitterOutlined,
     InstagramOutlined,
@@ -95,6 +96,16 @@ const OCC_SYSTEMS = [
         domain: "alumni.occph.com",
         description:
             "The OCC Alumni Association platform — reconnect with batchmates, and browse events, job posts, and the gallery.",
+    },
+    {
+        id: "sclf",
+        name: "SCLF — Smart Campus Lost & Found",
+        tag: "Students & Staff",
+        icon: <SearchOutlined />,
+        url: "https://sclfapp.ethiodeploy.app",
+        domain: "sclfapp.ethiodeploy.app",
+        description:
+            "Lost something on campus, or found something that isn't yours? Report, search, and claim lost or found items at Opol Community College.",
     },
 ];
 
@@ -375,7 +386,8 @@ const PublicOccServicesPage = () => {
                     <Paragraph className="occsvc-intro-lead">
                         Opol Community College runs a few different online systems —
                         one for the school itself, one for entrance exams, one for
-                        enrolled students, and one for alumni. They all carry the
+                        enrolled students, one for alumni, and one for lost and found.
+                        They all carry the
                         same OCC mark because they're all part of the same campus;
                         this page is just a directory so you always land on the
                         right one.

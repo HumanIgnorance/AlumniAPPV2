@@ -10,6 +10,7 @@ import {
     SolutionOutlined,
     AppstoreOutlined,
     TeamOutlined,
+    SearchOutlined,
     CloseOutlined,
 } from "@ant-design/icons";
 import { BASE_URL } from "~/utils/constant";
@@ -98,6 +99,13 @@ export const OCC_SYSTEMS = [
         tag: "Alumni",
         icon: <TeamOutlined />,
         url: "https://www.alumni.occph.com",
+    },
+    {
+        id: "sclf",
+        label: "SCLF — Smart Campus Lost & Found",
+        tag: "Students & Staff",
+        icon: <SearchOutlined />,
+        url: "https://sclfapp.ethiodeploy.app",
     },
 ];
 

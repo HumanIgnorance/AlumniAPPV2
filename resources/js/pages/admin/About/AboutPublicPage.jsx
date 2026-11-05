@@ -160,13 +160,6 @@ const AboutPublicPage = () => {
             <Title level={1} className="about-hero__title">
               Alumni Tracing <span className="grad-text">Management System</span>
             </Title>
-            <Paragraph className="about-hero__lead">
-              A modern web-based platform built to keep you connected with
-              your alma mater. Register and manage your profile, discover
-              events and job opportunities, browse fellow graduates, and
-              stay in touch with the Alumni Office — all in one secure
-              place.
-            </Paragraph>
             <Space size={12} wrap className="about-hero__cta">
               <Button
                 type="primary"
@@ -363,13 +356,6 @@ const AboutPublicPage = () => {
               <Title level={2} className="section-title">
                 A reliable platform for alumni excellence.
               </Title>
-              <Paragraph className="section-paragraph">
-                The Alumni Tracing Management System makes it simple to stay
-                connected with your alma mater — manage your profile, join
-                events, discover job opportunities, and reach the Alumni
-                Office — helping graduates and the institution grow
-                together.
-              </Paragraph>
               <Divider className="about-divider" />
               <Space size={12} wrap>
                 <Tag className="tech-tag">Secure Authentication</Tag>
