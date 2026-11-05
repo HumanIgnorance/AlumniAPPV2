@@ -914,4 +914,47 @@ export const alumniDetailsCss = `
                     border-color: #050810;
                     box-shadow: 0 0 0 2px rgba(250,204,21,0.40);
                 }
+
+                /* ===== Preview drawer header + footer (all phone sizes) ===== */
+                .preview-drawer .ant-drawer-header {
+                    padding: 12px 16px;
+                    padding-top: calc(12px + env(safe-area-inset-top, 0px));
+                }
+                .preview-drawer .ant-drawer-header-title {
+                    min-width: 0;
+                    flex: 1 1 auto;
+                }
+                .preview-drawer .ant-drawer-title {
+                    min-width: 0;
+                    flex: 1 1 auto;
+                }
+                .preview-drawer-title {
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    min-width: 0;
+                }
+                .preview-drawer-title-text {
+                    min-width: 0;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
+                .preview-drawer .ant-drawer-extra {
+                    flex: 0 0 auto;
+                }
+                .preview-drawer .ant-drawer-footer {
+                    border-top: 1px solid var(--border);
+                }
+                .preview-drawer-footer {
+                    display: flex;
+                    gap: 10px;
+                    padding: 10px 16px;
+                    padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+                }
+                .preview-drawer-footer .ant-btn {
+                    flex: 1 1 0;
+                    min-width: 0;
+                    white-space: normal;
+                }
 `;

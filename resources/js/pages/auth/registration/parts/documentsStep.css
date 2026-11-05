@@ -1,0 +1,29 @@
+/* Uploaded Documents list: never squeeze the title into a thin column. */
+.uploaded-docs-list .uploaded-doc-item {
+    flex-wrap: wrap;
+    row-gap: 10px;
+    align-items: flex-start;
+}
+.uploaded-docs-list .uploaded-doc-item .ant-list-item-meta {
+    flex: 1 1 220px;
+    min-width: 0;
+}
+.uploaded-docs-list .uploaded-doc-item .ant-list-item-meta-content {
+    min-width: 0;
+}
+.uploaded-docs-list .uploaded-doc-item .ant-list-item-meta-title,
+.uploaded-docs-list .uploaded-doc-item .ant-list-item-meta-description {
+    overflow-wrap: anywhere;
+    word-break: normal;
+}
+.uploaded-docs-list .uploaded-doc-item .ant-list-item-action {
+    margin-inline-start: 0;
+    flex: 0 0 auto;
+}
+@media (max-width: 576px) {
+    .uploaded-docs-list .uploaded-doc-item .ant-list-item-action {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+    }
+}
