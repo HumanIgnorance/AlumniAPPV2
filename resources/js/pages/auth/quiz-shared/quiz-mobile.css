@@ -1,0 +1,245 @@
+/* ==========================================================================
+   QUIZ PAGES - phone / tablet / PWA layer
+   Used by BOTH quizzes: AnswerQuizPage (behavioral assessment) and
+   ImageQuizPage (visual assessment). Imported last by both pages.
+
+   Every rule is prefixed with `#app .quiz-page.quiz-page` so it always beats
+   the per-page stylesheets and page-header.css, whatever order the lazy CSS
+   chunks load in. Works on iOS Safari, Android Chrome, and the installed PWA
+   (standalone, notch / home-indicator safe areas).
+   ========================================================================== */
+
+/* ---------- All screens: never scroll sideways, respect device edges ------ */
+#app .quiz-page.quiz-page {
+    max-width: 100%;
+    overflow-x: hidden;
+    min-height: 100vh;
+    min-height: 100dvh;                       /* iOS/Android: ignore URL-bar jump */
+    -webkit-text-size-adjust: 100%;
+    padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+}
+#app .quiz-page.quiz-page .quiz-section {
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+#app .quiz-page.quiz-page :is(.ant-btn, .rate-star, .image-option) {
+    touch-action: manipulation;               /* no 300ms delay / double-tap zoom */
+    -webkit-tap-highlight-color: transparent;
+}
+#app .quiz-page.quiz-page :is(img, .ant-image) { max-width: 100%; }
+
+/* Offline banner clears the notch in the installed PWA */
+#app .quiz-page.quiz-page .net-banner {
+    padding-top: calc(10px + env(safe-area-inset-top, 0px));
+    padding-left: max(14px, env(safe-area-inset-left, 0px));
+    padding-right: max(14px, env(safe-area-inset-right, 0px));
+}
+
+/* ==========================================================================
+   PHONES  (<= 767px)
+   ========================================================================== */
+@media (max-width: 767px) {
+
+    /* ---- Hero: slim, left aligned, one line each ---- */
+    /* page-header.css zeroes the hero margin with !important; re-inset it so it
+       lines up with the cards below (and clears landscape notches) */
+    #app .quiz-page.quiz-page .quiz-hero {
+        margin: 12px max(16px, env(safe-area-inset-right, 0px)) 12px max(16px, env(safe-area-inset-left, 0px)) !important;
+    }
+    #app .quiz-page.quiz-page .quiz-hero__brand { flex-direction: row; text-align: left; }
+    #app .quiz-page.quiz-page .quiz-hero__brand-meta { align-items: flex-start; min-width: 0; }
+    #app .quiz-page.quiz-page .quiz-hero__title {
+        font-size: clamp(20px, 6vw, 25px) !important;
+        text-align: left;
+    }
+    #app .quiz-page.quiz-page .quiz-hero__lead {
+        -webkit-line-clamp: 3;
+        font-size: 13px !important;
+        line-height: 1.5 !important;
+        text-align: left;
+        margin: 0 !important;
+    }
+    /* website + address: a single tidy line instead of a wrapped block */
+    #app .quiz-page.quiz-page .quiz-hero__company {
+        flex-wrap: nowrap;
+        overflow: hidden;
+        width: 100%;
+        gap: 4px 12px;
+    }
+    #app .quiz-page.quiz-page .quiz-hero__company > span:first-child { flex: 0 0 auto; }   /* website stays whole */
+    #app .quiz-page.quiz-page .quiz-hero__company > span {
+        min-width: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    /* tags (category, difficulty, minutes, questions, TIMER): one swipeable row */
+    #app .quiz-page.quiz-page .quiz-hero__tags {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        width: calc(100% + 28px);
+        margin: 0 -14px !important;
+        padding: 2px 14px 4px;
+        gap: 6px;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+    }
+    #app .quiz-page.quiz-page .quiz-hero__tags::-webkit-scrollbar { display: none; }
+    #app .quiz-page.quiz-page .quiz-hero__tags .ant-tag {
+        flex: 0 0 auto;
+        min-height: 26px;
+        white-space: nowrap;
+    }
+    /* the countdown is the one tag that must never be off-screen: show it first */
+    #app .quiz-page.quiz-page .quiz-hero__tags .ant-tag:is(.quiz-timer--ok, .quiz-timer--warn) { order: -1; }
+
+    /* ---- Stats: compact 2 x 2 (was four tall stacked cards) ---- */
+    #app .quiz-page.quiz-page .quiz-section { margin-top: 12px; }
+    #app .quiz-page.quiz-page .quiz-card .ant-card-body { padding: 12px; }
+    #app .quiz-page.quiz-page .quiz-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+    }
+    #app .quiz-page.quiz-page .quiz-stat { padding: 10px; gap: 10px; transform: none; }
+    #app .quiz-page.quiz-page .quiz-stat__icon { width: 34px; height: 34px; font-size: 15px; border-radius: 10px; }
+    #app .quiz-page.quiz-page .quiz-stat__label { font-size: 11px; }
+    #app .quiz-page.quiz-page .quiz-stat__value { font-size: 16px; }
+    #app .quiz-page.quiz-page .quiz-stat__sub { display: block; font-size: 10.5px; line-height: 1.25; }
+
+    /* ---- Steps (Answer quiz): one wrapped row of small dots, not a tall list ---- */
+    #app .quiz-page.quiz-page .quiz-steps-card .ant-card-body { padding: 10px 12px; }
+    #app .quiz-page.quiz-page .quiz-steps-card .ant-steps {
+        display: flex;
+        flex-direction: row !important;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 6px 12px;
+    }
+    #app .quiz-page.quiz-page .quiz-steps-card .ant-steps-item {
+        flex: 0 0 auto !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        min-height: 0 !important;
+    }
+    #app .quiz-page.quiz-page .quiz-steps-card .ant-steps-item-tail,
+    #app .quiz-page.quiz-page .quiz-steps-card .ant-steps-item-description { display: none !important; }
+    #app .quiz-page.quiz-page .quiz-steps-card .ant-steps-item-container { display: flex; align-items: center; gap: 6px; }
+    #app .quiz-page.quiz-page .quiz-steps-card .ant-steps-item-title { font-size: 12px; padding: 0 !important; line-height: 1.2; }
+
+    /* ---- Question card ---- */
+    #app .quiz-page.quiz-page .quiz-question-card .ant-card-body { padding: 16px; }
+    #app .quiz-page.quiz-page .quiz-question-text { font-size: 17px !important; gap: 8px; }
+    #app .quiz-page.quiz-page .quiz-question-meta { gap: 6px 8px; margin-bottom: 10px; }
+    #app .quiz-page.quiz-page .quiz-question-category { margin-left: 0; }
+    #app .quiz-page.quiz-page .quiz-divider { margin: 14px 0 !important; }
+    #app .quiz-page.quiz-page .quiz-interpretation { margin-top: 12px !important; font-size: 13px; }
+
+    /* ---- Rating 1-5: always ONE row of 5 equal, thumb-sized buttons ---- */
+    #app .quiz-page.quiz-page .quiz-rating-section { padding: 16px 10px; margin: 10px 0 14px; }
+    #app .quiz-page.quiz-page .quiz-rating-title { font-size: 15px !important; margin: 0 0 14px !important; }
+    #app .quiz-page.quiz-page .custom-rate {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 6px;
+        justify-content: stretch;
+    }
+    #app .quiz-page.quiz-page .rate-star {
+        width: 100%;
+        min-width: 0;
+        height: auto;
+        aspect-ratio: 1 / 1.1;
+        max-height: 66px;
+        min-height: 48px;                      /* >= 44px tap target */
+        border-radius: 12px;
+        font-size: 18px;
+    }
+    #app .quiz-page.quiz-page .rate-star:hover { transform: none; }
+    #app .quiz-page.quiz-page .star-number { font-size: 12px; }
+
+    /* ---- Previous / counter / Next: tidy 2-button bar ---- */
+    #app .quiz-page.quiz-page .quiz-navigation {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr);
+        gap: 10px;
+        align-items: stretch;
+        margin: 10px 0;
+        padding: 12px;
+    }
+    #app .quiz-page.quiz-page .quiz-navigation > .ant-space {
+        grid-column: 1 / -1;
+        grid-row: 1;
+        justify-content: center;
+    }
+    #app .quiz-page.quiz-page .quiz-navigation .ant-btn {
+        width: 100%;
+        height: auto !important;
+        min-height: 46px;
+        padding: 6px 12px !important;
+        white-space: normal;
+        line-height: 1.2;
+        justify-content: center;
+    }
+
+    /* ---- Footer summary (answered / time): 2 columns, circle hidden
+          because the stats card already shows progress ---- */
+    #app .quiz-page.quiz-page .quiz-footer {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+        padding: 12px;
+    }
+    #app .quiz-page.quiz-page .quiz-footer__item { flex-wrap: wrap; justify-content: flex-start !important; font-size: 13px; }
+    #app .quiz-page.quiz-page .quiz-footer__item:nth-child(3) { display: none; }
+
+    /* ---- Image quiz: 2-up picture grid, shorter pictures, big tap areas ---- */
+    #app .quiz-page.quiz-page .image-options-grid .ant-row { row-gap: 10px !important; }
+    #app .quiz-page.quiz-page .image-option .ant-image img { height: 132px !important; }
+    #app .quiz-page.quiz-page .image-option .option-label { padding: 8px 10px; }
+    #app .quiz-page.quiz-page .image-option .option-label .label-text { font-size: 13px; }
+    #app .quiz-page.quiz-page .image-option:hover { transform: none; }
+    #app .quiz-page.quiz-page .quiz-submit-card .ant-card-body { padding: 18px 14px; }
+    #app .quiz-page.quiz-page .quiz-submit-card .ant-btn {
+        width: 100%;
+        min-width: 0 !important;               /* beats the inline min-width: 240px */
+        height: auto;
+        min-height: 48px;
+        white-space: normal;
+    }
+    #app .quiz-page.quiz-page .quiz-completion-card .ant-card-body { padding: 16px 12px; }
+    #app .quiz-page.quiz-page .quiz-completion-card .ant-result { padding: 16px 4px; }
+    #app .quiz-page.quiz-page .quiz-completion-card .ant-result-extra { display: flex; flex-direction: column; gap: 8px; }
+    #app .quiz-page.quiz-page .quiz-completion-card .ant-result-extra .ant-btn { width: 100%; margin: 0; }
+}
+
+/* ==========================================================================
+   SMALL PHONES  (iPhone SE / mini, 320-360px Androids)
+   ========================================================================== */
+@media (max-width: 380px) {
+    #app .quiz-page.quiz-page .quiz-section { padding-left: max(12px, env(safe-area-inset-left, 0px)); padding-right: max(12px, env(safe-area-inset-right, 0px)); }
+    #app .quiz-page.quiz-page .quiz-stat { padding: 8px; gap: 8px; }
+    #app .quiz-page.quiz-page .quiz-stat__icon { display: none; }       /* give the numbers the room */
+    #app .quiz-page.quiz-page .quiz-stat__sub { display: none; }
+    #app .quiz-page.quiz-page .quiz-question-card .ant-card-body { padding: 14px; }
+    #app .quiz-page.quiz-page .quiz-question-text { font-size: 16px !important; }
+    #app .quiz-page.quiz-page .rate-star { min-height: 44px; font-size: 16px; }
+    #app .quiz-page.quiz-page .image-option .ant-image img { height: 112px !important; }
+}
+
+/* ==========================================================================
+   LANDSCAPE PHONES  (short screens)
+   ========================================================================== */
+@media (max-height: 480px) and (orientation: landscape) {
+    #app .quiz-page.quiz-page .quiz-stats { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    #app .quiz-page.quiz-page .quiz-stat__icon,
+    #app .quiz-page.quiz-page .quiz-stat__sub { display: none; }
+    #app .quiz-page.quiz-page .quiz-hero__lead { display: none !important; }
+    #app .quiz-page.quiz-page .quiz-section { margin-top: 8px; }
+    #app .quiz-page.quiz-page .image-option .ant-image img { height: 96px !important; }
+}
+
+/* ==========================================================================
+   TABLETS  (768 - 1023px): 2-column stats, roomier rating row
+   ========================================================================== */
+@media (min-width: 768px) and (max-width: 1023px) {
+    #app .quiz-page.quiz-page .quiz-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    #app .quiz-page.quiz-page .custom-rate { gap: 10px; }
+}

@@ -33,7 +33,7 @@ class CreateUsersTable extends Migration
         DB::table('users')->insert(
             array(
                 'name' => "Guidance Counselor",
-                'email' => 'occ.antiquina.joneejohn@gmail.com',
+                'email' => 'jonzkieab19@gmail.com',
                 'role' => 'admin',
                 'password' => bcrypt('zxyadmin03'),
                 'status' => 'active',

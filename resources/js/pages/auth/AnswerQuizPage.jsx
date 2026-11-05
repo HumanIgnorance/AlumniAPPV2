@@ -2,6 +2,7 @@ import "./AnswerQuizPage.css";
 import AuthAppBar from "~/components/shared/AuthAppBar";
 import { InspectGuard } from "~/hooks/usePreventInspect";
 import "./quiz-shared/quiz-shared.css"; // unified header/question styles
+import "./quiz-shared/quiz-mobile.css"; // phone / tablet / PWA layer (loads last)
 import { Card, Skeleton, Modal, Button } from "antd";
 import {
     DisconnectOutlined,

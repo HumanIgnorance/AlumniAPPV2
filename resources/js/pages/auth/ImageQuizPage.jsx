@@ -2,21 +2,22 @@ import "./ImageQuizPage.css";
 import AuthAppBar from "~/components/shared/AuthAppBar";
 import { InspectGuard } from "~/hooks/usePreventInspect";
 import "./quiz-shared/quiz-shared.css"; // unified header/question styles
+import "./quiz-shared/quiz-mobile.css"; // phone / tablet / PWA layer (loads last)
 import {
     Modal,
     Space,
     Progress,
     Row,
     Col,
-    Statistic,
     Card,
     Skeleton,
     Result,
     Tag,
     Button,
-    Divider,
     Image,
     Alert,
+    Collapse,
+    message,
 } from "antd";
 import {
     ExclamationCircleOutlined,
@@ -40,7 +41,6 @@ import {
     getThemedModalProps,
     Text,
     STORAGE_KEY,
-    Title,
 } from "~/pages/auth/image-quiz-page/parts/imageQuizShared";
 import { ImageQuizProvider } from "~/pages/auth/image-quiz-page/ImageQuizContext";
 import useImageQuizController from "~/pages/auth/image-quiz-page/hooks/useImageQuizController";
@@ -276,91 +276,11 @@ function ImageQuizPage() {
                         } catch (_) {}
                         setIsQuizCompleted(true);
 
-                        Modal.success({
-                            ...getThemedModalProps(currentTheme),
-                            title: (
-                                <Space>
-                                    <CheckCircleOutlined
-                                        style={{ color: COLORS.antdGreen }}
-                                    />
-                                    <span>Assessment Complete! 🎉</span>
-                                </Space>
-                            ),
-                            content: (
-                                <div style={{ padding: "10px 0" }}>
-                                    <p style={{ marginBottom: 12 }}>
-                                        Thank you for completing the assessment.
-                                        Your personality profile has been
-                                        analyzed successfully.
-                                    </p>
-                                    <div
-                                        style={{
-                                            background:
-                                                currentTheme === "black"
-                                                    ? COLORS.c1f1f1f
-                                                    : COLORS.f6ffed,
-                                            padding: "12px",
-                                            borderRadius: "6px",
-                                            border:
-                                                currentTheme === "black"
-                                                    ? "1px solid #434343"
-                                                    : "1px solid #b7eb8f",
-                                            color:
-                                                currentTheme === "black"
-                                                    ? "#e6e6e6"
-                                                    : COLORS.black,
-                                        }}
-                                    >
-                                        <Row gutter={16}>
-                                            <Col span={8}>
-                                                <Statistic
-                                                    title="Time Spent"
-                                                    value={formatTime(
-                                                        timeSpent,
-                                                    )}
-                                                    prefix={
-                                                        <ClockCircleOutlined />
-                                                    }
-                                                    valueStyle={{
-                                                        fontSize: "14px",
-                                                        color: COLORS.antdBlue,
-                                                    }}
-                                                />
-                                            </Col>
-                                            <Col span={8}>
-                                                <Statistic
-                                                    title="Questions Answered"
-                                                    value={
-                                                        Object.keys(answers)
-                                                            .length
-                                                    }
-                                                    suffix={`/ ${completionStatus.total}`}
-                                                    valueStyle={{
-                                                        fontSize: "14px",
-                                                        color: COLORS.antdGreen,
-                                                    }}
-                                                />
-                                            </Col>
-                                            <Col span={8}>
-                                                <Statistic
-                                                    title="Quiz Type"
-                                                    value="ABCD"
-                                                    valueStyle={{
-                                                        fontSize: "14px",
-                                                        color: COLORS.violet600,
-                                                    }}
-                                                />
-                                            </Col>
-                                        </Row>
-                                    </div>
-                                </div>
-                            ),
-                            okText: "Back to Home",
-                            onOk: () => (window.location.href = "/"),
-                            centered: true,
-                            style: { borderRadius: "12px" },
-                            width: 500,
-                        });
+                        // The results page below is the confirmation. No second
+                        // modal and no forced redirect: the user stays on their
+                        // results until they choose to leave.
+                        message.success("Assessment submitted successfully!");
+                        window.scrollTo({ top: 0, behavior: "smooth" });
                     } else {
                         throw new Error(
                             response.data.message || "Submission failed",
@@ -489,11 +409,17 @@ function ImageQuizPage() {
     if (isQuizCompleted) {
         const completionStatus = getCompletionStatus();
         const personality = getPersonalityTraits();
+        const answeredPct = completionStatus.total
+            ? Math.round(
+                  (completionStatus.answered / completionStatus.total) * 100,
+              )
+            : 0;
 
         return (
             <div className={`quiz-page ${revealed ? "is-revealed" : ""}`}>
                 <InspectGuard />
                 {offlineBannerNode}
+                <AuthAppBar />
                 <section className="quiz-section" style={{ marginTop: 40 }}>
                     <Card className="quiz-completion-card">
                         <Result
@@ -503,35 +429,36 @@ function ImageQuizPage() {
                                 />
                             }
                             status="success"
-                            title="Visual Assessment Complete!"
+                            title="Assessment Submitted!"
                             subTitle={
-                                <Space direction="vertical">
+                                <Space direction="vertical" size={8}>
                                     <Text>
-                                        Your personality profile has been
-                                        analyzed through your visual
-                                        preferences.
+                                        Thank you! Your answers have been saved.
+                                        Here is a quick summary of the images
+                                        you picked.
                                     </Text>
                                     <Tag
                                         color={personality.color}
                                         icon={<StarOutlined />}
                                     >
-                                        {personality.level} Personality
+                                        You are an {personality.level}
                                     </Tag>
+                                    <Text type="secondary">
+                                        {personality.description}
+                                    </Text>
                                 </Space>
                             }
                             extra={[
                                 <Button
-                                    key="another"
-                                    onClick={() => window.location.reload()}
-                                >
-                                    Retake Assessment
-                                </Button>,
-                                <Button
                                     key="home"
                                     type="primary"
+                                    size="large"
                                     className="btn-primary-grad"
+                                    onClick={() =>
+                                        (window.location.href = "/")
+                                    }
                                 >
-                                    View Detailed Analysis
+                                    Back to Home
                                 </Button>,
                             ]}
                         >
@@ -541,42 +468,18 @@ function ImageQuizPage() {
                             >
                                 <div className="quiz-stat">
                                     <span className="quiz-stat__icon">
-                                        <EyeOutlined />
-                                    </span>
-                                    <div>
-                                        <Text className="quiz-stat__label">
-                                            Personality Type
-                                        </Text>
-                                        <Text
-                                            className="quiz-stat__value"
-                                            style={{ color: personality.color }}
-                                        >
-                                            {personality.level}
-                                        </Text>
-                                        <Text className="quiz-stat__sub">
-                                            {personality.description}
-                                        </Text>
-                                    </div>
-                                </div>
-                                <div className="quiz-stat">
-                                    <span className="quiz-stat__icon">
                                         <CheckCircleOutlined />
                                     </span>
                                     <div>
                                         <Text className="quiz-stat__label">
-                                            Completion Rate
+                                            Questions Answered
                                         </Text>
                                         <Text className="quiz-stat__value">
-                                            {(
-                                                (completionStatus.answered /
-                                                    completionStatus.total) *
-                                                100
-                                            ).toFixed(0)}
-                                            %
+                                            {completionStatus.answered} of{" "}
+                                            {completionStatus.total}
                                         </Text>
                                         <Text className="quiz-stat__sub">
-                                            {completionStatus.answered} of{" "}
-                                            {completionStatus.total} questions
+                                            {answeredPct}% complete
                                         </Text>
                                     </div>
                                 </div>
@@ -591,186 +494,142 @@ function ImageQuizPage() {
                                         <Text className="quiz-stat__value">
                                             {formatTime(timeSpent)}
                                         </Text>
-                                        <Text className="quiz-stat__sub">
-                                            Estimated:{" "}
-                                            {currentQuiz.estimatedTime} min
-                                        </Text>
                                     </div>
                                 </div>
                             </div>
 
-                            <Divider className="quiz-divider" />
+                            <Alert
+                                style={{ marginTop: 16, borderRadius: 12 }}
+                                type="info"
+                                showIcon
+                                message="This is just for fun"
+                                description="There are no right or wrong answers. This summary only reflects the images you chose and cannot be changed after submission."
+                            />
 
-                            <div>
-                                <Title
-                                    level={3}
-                                    style={{
-                                        textAlign: "center",
-                                        marginBottom: 24,
-                                    }}
-                                >
-                                    🎨 Your Visual Preferences Analysis
-                                </Title>
-                                <Row gutter={[16, 16]}>
-                                    {currentQuiz.questions.map(
-                                        (question, index) => {
-                                            const selectedOption =
-                                                question.options.find(
-                                                    (opt) =>
-                                                        opt.id ===
-                                                        answers[question.id],
-                                                );
-                                            return (
-                                                <Col
-                                                    xs={24}
-                                                    lg={12}
-                                                    key={question.id}
-                                                >
-                                                    <Card
-                                                        className="quiz-card"
-                                                        size="small"
-                                                        style={{
-                                                            borderLeft: `4px solid ${personality.color}`,
-                                                            height: "100%",
-                                                        }}
-                                                    >
-                                                        <Space
-                                                            direction="vertical"
-                                                            style={{
-                                                                width: "100%",
-                                                            }}
-                                                        >
-                                                            <div
-                                                                style={{
-                                                                    display:
-                                                                        "flex",
-                                                                    justifyContent:
-                                                                        "space-between",
-                                                                    alignItems:
-                                                                        "flex-start",
-                                                                }}
+                            {/* Details are optional: collapsed so they never overwhelm */}
+                            <Collapse
+                                ghost
+                                style={{ marginTop: 16 }}
+                                items={[
+                                    {
+                                        key: "choices",
+                                        label: "See the images you chose",
+                                        children: (
+                                            <Row gutter={[16, 16]}>
+                                                {currentQuiz.questions.map(
+                                                    (question, index) => {
+                                                        const selectedOption =
+                                                            question.options.find(
+                                                                (opt) =>
+                                                                    opt.id ===
+                                                                    answers[
+                                                                        question
+                                                                            .id
+                                                                    ],
+                                                            );
+                                                        return (
+                                                            <Col
+                                                                xs={24}
+                                                                lg={12}
+                                                                key={question.id}
                                                             >
-                                                                <Text
-                                                                    strong
+                                                                <Card
+                                                                    className="quiz-card"
+                                                                    size="small"
                                                                     style={{
-                                                                        flex: 1,
+                                                                        borderLeft: `4px solid ${personality.color}`,
+                                                                        height: "100%",
                                                                     }}
                                                                 >
-                                                                    Q{index + 1}
-                                                                    :{" "}
-                                                                    {
-                                                                        question.question
-                                                                    }
-                                                                </Text>
-                                                                <Space>
-                                                                    {question.required && (
-                                                                        <Tag color="red">
-                                                                            Required
-                                                                        </Tag>
-                                                                    )}
-                                                                    <Tag color="blue">
-                                                                        {
-                                                                            question.category
-                                                                        }
-                                                                    </Tag>
-                                                                </Space>
-                                                            </div>
-
-                                                            {selectedOption && (
-                                                                <div
-                                                                    style={{
-                                                                        marginTop: 8,
-                                                                        padding: 12,
-                                                                        background:
-                                                                            "var(--surface-2)",
-                                                                        borderRadius: 8,
-                                                                        border: "1px solid var(--border)",
-                                                                    }}
-                                                                >
-                                                                    <Row
-                                                                        gutter={
-                                                                            16
-                                                                        }
-                                                                        align="middle"
+                                                                    <Space
+                                                                        direction="vertical"
+                                                                        style={{
+                                                                            width: "100%",
+                                                                        }}
                                                                     >
-                                                                        <Col
-                                                                            xs={
-                                                                                24
+                                                                        <Text strong>
+                                                                            {index +
+                                                                                1}
+                                                                            .{" "}
+                                                                            {
+                                                                                question.question
                                                                             }
-                                                                            sm={
-                                                                                8
-                                                                            }
-                                                                        >
-                                                                            <Image
-                                                                                src={
-                                                                                    selectedOption.image
+                                                                        </Text>
+                                                                        {selectedOption ? (
+                                                                            <Row
+                                                                                gutter={
+                                                                                    12
                                                                                 }
-                                                                                alt={`Selected option ${selectedOption.label}`}
-                                                                                width="100%"
-                                                                                height={
-                                                                                    60
-                                                                                }
-                                                                                style={{
-                                                                                    objectFit:
-                                                                                        "cover",
-                                                                                    borderRadius: 6,
-                                                                                }}
-                                                                                preview={{
-                                                                                    mask: (
-                                                                                        <EyeOutlined />
-                                                                                    ),
-                                                                                }}
-                                                                            />
-                                                                        </Col>
-                                                                        <Col
-                                                                            xs={
-                                                                                24
-                                                                            }
-                                                                            sm={
-                                                                                16
-                                                                            }
-                                                                        >
-                                                                            <Text
-                                                                                strong
+                                                                                align="middle"
                                                                             >
-                                                                                Option{" "}
-                                                                                {
-                                                                                    selectedOption.label
-                                                                                }
-                                                                            </Text>
-                                                                            <br />
+                                                                                <Col
+                                                                                    xs={
+                                                                                        24
+                                                                                    }
+                                                                                    sm={
+                                                                                        8
+                                                                                    }
+                                                                                >
+                                                                                    <Image
+                                                                                        src={
+                                                                                            selectedOption.image
+                                                                                        }
+                                                                                        alt={`Your choice for question ${index + 1}`}
+                                                                                        width="100%"
+                                                                                        height={
+                                                                                            60
+                                                                                        }
+                                                                                        style={{
+                                                                                            objectFit:
+                                                                                                "cover",
+                                                                                            borderRadius: 6,
+                                                                                        }}
+                                                                                        preview={{
+                                                                                            mask: (
+                                                                                                <EyeOutlined />
+                                                                                            ),
+                                                                                        }}
+                                                                                    />
+                                                                                </Col>
+                                                                                <Col
+                                                                                    xs={
+                                                                                        24
+                                                                                    }
+                                                                                    sm={
+                                                                                        16
+                                                                                    }
+                                                                                >
+                                                                                    <Text
+                                                                                        type="secondary"
+                                                                                        style={{
+                                                                                            fontSize: 13,
+                                                                                        }}
+                                                                                    >
+                                                                                        {
+                                                                                            selectedOption.interpretation
+                                                                                        }
+                                                                                    </Text>
+                                                                                </Col>
+                                                                            </Row>
+                                                                        ) : (
                                                                             <Text
                                                                                 type="secondary"
-                                                                                style={{
-                                                                                    fontSize:
-                                                                                        "13px",
-                                                                                }}
+                                                                                italic
                                                                             >
-                                                                                {
-                                                                                    selectedOption.interpretation
-                                                                                }
+                                                                                Skipped
                                                                             </Text>
-                                                                        </Col>
-                                                                    </Row>
-                                                                </div>
-                                                            )}
-
-                                                            {!selectedOption && (
-                                                                <Text
-                                                                    type="secondary"
-                                                                    italic
-                                                                >
-                                                                    Not answered
-                                                                </Text>
-                                                            )}
-                                                        </Space>
-                                                    </Card>
-                                                </Col>
-                                            );
-                                        },
-                                    )}
-                                </Row>
-                            </div>
+                                                                        )}
+                                                                    </Space>
+                                                                </Card>
+                                                            </Col>
+                                                        );
+                                                    },
+                                                )}
+                                            </Row>
+                                        ),
+                                    },
+                                ]}
+                            />
                         </Result>
                     </Card>
                 </section>
