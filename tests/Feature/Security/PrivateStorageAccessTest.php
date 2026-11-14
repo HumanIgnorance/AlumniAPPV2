@@ -325,6 +325,31 @@ class PrivateStorageAccessTest extends TestCase
     public function test_confidential_downloads_send_no_store_and_nosniff_headers(): void
     {
         $admin = User::factory()->admin()->create();
+        $alumni = Alumni::factory()->create();
+        $document = AlumniDocument::create([
+            'alumni_id' => $alumni->id,
+            'document_type' => 'transcript',
+            'file_path' => 'alumni/documents/transcript.pdf',
+            'file_name' => 'transcript.pdf',
+            'status' => 'approved',
+        ]);
+        Storage::disk('private')->put('alumni/documents/transcript.pdf', 'bytes');
+
+        Passport::actingAs($admin);
+
+        $response = $this->get("/api/alumni-documents/{$document->id}/download");
+
+        $response->assertStatus(200);
+        $response->assertHeader('X-Content-Type-Options', 'nosniff');
+        $this->assertStringContainsString('no-store', $response->headers->get('Cache-Control'));
+    }
+
+    // Profile photos are deliberately NOT no-store: they render in bulk
+    // (lists, chat, notifications) and no-store caused 429 storms. They are
+    // still authorized per request and may only be cached privately.
+    public function test_profile_image_is_cached_privately_and_sends_nosniff(): void
+    {
+        $admin = User::factory()->admin()->create();
         $alumni = Alumni::factory()->create(['profile_image' => 'alumni/profile-images/x.jpg']);
         Storage::disk('private')->put('alumni/profile-images/x.jpg', 'bytes');
 
@@ -334,6 +359,9 @@ class PrivateStorageAccessTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertHeader('X-Content-Type-Options', 'nosniff');
-        $this->assertStringContainsString('no-store', $response->headers->get('Cache-Control'));
+
+        $cacheControl = $response->headers->get('Cache-Control');
+        $this->assertStringContainsString('private', $cacheControl);
+        $this->assertStringNotContainsString('public', $cacheControl);
     }
 }

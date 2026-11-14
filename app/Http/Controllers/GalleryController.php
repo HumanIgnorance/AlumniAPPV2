@@ -406,20 +406,21 @@ class GalleryController extends Controller
                 return response()->json(['success' => false, 'message' => 'Image index out of range'], 404);
             }
 
-            // Only ever read inside the public disk (blocks ../ tricks).
-            $root = realpath(storage_path('app/public'));
-            $filePath = $root ? realpath($root . DIRECTORY_SEPARATOR . $imagePaths[$imageIndex]) : false;
+            // Read through the public disk (works for local folders and the
+            // database driver). Reject traversal attempts.
+            $relativePath = (string) $imagePaths[$imageIndex];
+            $disk = Storage::disk('public');
 
-            if (!$filePath || strpos($filePath, $root . DIRECTORY_SEPARATOR) !== 0 || !is_file($filePath)) {
+            if (str_contains($relativePath, '..') || !$disk->exists($relativePath)) {
                 \Log::warning('Gallery download: file missing on disk', [
                     'gallery_id' => $id,
                     'index' => $imageIndex,
-                    'path' => $imagePaths[$imageIndex],
+                    'path' => $relativePath,
                 ]);
                 return response()->json(['success' => false, 'message' => 'File not found'], 404);
             }
 
-            $extension = strtolower(pathinfo($filePath, PATHINFO_EXTENSION)) ?: 'jpg';
+            $extension = strtolower(pathinfo($relativePath, PATHINFO_EXTENSION)) ?: 'jpg';
             $mime = [
                 'jpg' => 'image/jpeg', 'jpeg' => 'image/jpeg', 'png' => 'image/png',
                 'gif' => 'image/gif', 'webp' => 'image/webp', 'heic' => 'image/heic',
@@ -433,7 +434,7 @@ class GalleryController extends Controller
             $title = trim(preg_replace('/\s+/', '_', $title), '_') ?: 'photo';
             $asciiName = substr($title, 0, 80) . '_' . ($imageIndex + 1) . '.' . $extension;
 
-            return response()->file($filePath, [
+            return response($disk->get($relativePath), 200, [
                 'Content-Type' => $mime,
                 'Content-Disposition' => 'attachment; filename="' . $asciiName . '"',
                 'X-Content-Type-Options' => 'nosniff',

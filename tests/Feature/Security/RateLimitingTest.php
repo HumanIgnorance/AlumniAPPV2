@@ -102,9 +102,10 @@ class RateLimitingTest extends TestCase
         $response->assertStatus(429);
     }
 
-    public function test_password_reset_is_rate_limited_after_five_attempts(): void
+    // Limiter is 10/hour per email+IP (RouteServiceProvider 'password-reset').
+    public function test_password_reset_is_rate_limited_after_ten_attempts(): void
     {
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 10; $i++) {
             $response = $this->postJson('/api/password/find-account', [
                 'email' => 'nobody@example.test',
             ]);

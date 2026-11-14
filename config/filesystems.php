@@ -35,23 +35,25 @@ return [
             'root' => storage_path('app'),
         ],
 
-        'public' => [
+        // FILES_IN_DB=true stores uploads in the database (survives redeploys).
+        // Leave it unset for local development to keep using real folders.
+        'public' => env('FILES_IN_DB', false) ? [
+            'driver' => 'database',
+            'name' => 'public',
+            'url' => env('APP_URL') . '/storage',
+            'visibility' => 'public',
+        ] : [
             'driver' => 'local',
             'root' => storage_path('app/public'),
             'url' => env('APP_URL') . '/storage',
             'visibility' => 'public',
         ],
 
-        // Phase 2 — private storage. Root sits outside storage/app/public
-        // (which is the only directory symlinked into public/), so files
-        // written here can never be served directly by Apache/Nginx or
-        // reached via a guessed /storage/... URL. Deliberately has no
-        // 'url' key: any code that tries Storage::disk('private')->url()
-        // will throw rather than silently leak a public link. All access
-        // must go through an authenticated, policy-checked controller
-        // action (see AlumniDocumentController, JobApplicationController,
-        // MessagingController).
-        'private' => [
+        'private' => env('FILES_IN_DB', false) ? [
+            'driver' => 'database',
+            'name' => 'private',
+            'visibility' => 'private',
+        ] : [
             'driver' => 'local',
             'root' => storage_path('app/private'),
             'visibility' => 'private',

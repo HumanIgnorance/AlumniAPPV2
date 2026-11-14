@@ -54,25 +54,39 @@ Route::get('/email/verify/{id}/{hash}', [EmailVerificationController::class, 've
 // straight out of storage/app/public so images still display.
 // Only the `public` disk is exposed; the `private` disk is untouched.
 // ---------------------------------------------------------------------
-Route::get('/storage/{path}', function (string $path) {
-    $root = realpath(storage_path('app/public'));
-    $file = $root ? realpath($root . DIRECTORY_SEPARATOR . $path) : false;
-
-    // Block traversal (../), missing files and anything outside the public disk.
-    if (!$file || strpos($file, $root . DIRECTORY_SEPARATOR) !== 0 || !is_file($file)) {
+Route::get('/storage/{path}', function (\Illuminate\Http\Request $request, string $path) {
+    // Block traversal (../) and anything that is not a plain relative path.
+    if (str_contains($path, '..') || str_contains($path, "\0")) {
         abort(404);
     }
 
     // Never serve executable/script files, even if one ever lands in storage.
-    $ext = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+    $ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));
     if (in_array($ext, ['php', 'phtml', 'phar', 'html', 'htm', 'js', 'svg'], true)) {
         abort(404);
     }
 
-    return response()->file($file, [
+    // Reads through the `public` disk, so it works for both real folders
+    // and the database driver (FILES_IN_DB=true).
+    $disk = \Illuminate\Support\Facades\Storage::disk('public');
+    if (!$disk->exists($path)) {
+        abort(404);
+    }
+
+    $headers = [
         'Cache-Control' => 'public, max-age=86400',
         'X-Content-Type-Options' => 'nosniff',
-    ]);
+        'ETag' => '"' . md5($path . '|' . $disk->size($path) . '|' . $disk->lastModified($path)) . '"',
+    ];
+
+    // Conditional request: answer 304 without loading the file contents.
+    if ($request->headers->get('If-None-Match') === $headers['ETag']) {
+        return response('', 304, $headers);
+    }
+
+    $headers['Content-Type'] = $disk->mimeType($path) ?: 'application/octet-stream';
+
+    return response($disk->get($path), 200, $headers);
 })->where('path', '.+')->name('storage.fallback');
 
 // Catch-all SPA route — now passes through SpaController so the server

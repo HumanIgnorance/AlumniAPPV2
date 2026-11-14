@@ -13,7 +13,11 @@ use App\Observers\EmploymentStatusObserver;
 use App\Observers\EventObserver;
 use App\Observers\GalleryObserver;
 use App\Support\Vite;
+use App\Support\Storage\DatabaseFlysystemAdapter;
+use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Storage;
+use League\Flysystem\Filesystem;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
@@ -36,6 +40,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // 'database' filesystem driver: stores uploads in the stored_files
+        // table so they survive redeploys (see config/filesystems.php).
+        Storage::extend('database', function ($app, array $config) {
+            $adapter = new DatabaseFlysystemAdapter($config['name'] ?? 'default', $config['url'] ?? null);
+
+            return new FilesystemAdapter(new Filesystem($adapter, $config));
+        });
+
         // Generated asset()/route() URLs must match the https page that is
         // actually open, otherwise iOS/Android block image downloads as
         // mixed content. Works even if the proxy headers are missing.
