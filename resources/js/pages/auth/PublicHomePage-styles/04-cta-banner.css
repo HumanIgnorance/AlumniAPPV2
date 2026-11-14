@@ -567,10 +567,28 @@
   .ph-footer-social-row { gap: 10px; }
 }
 
-/* landscape phones: keep it compact */
-@media (max-width: 900px) and (orientation: landscape) {
+/* landscape phones: the screen is wide but short (~360-430px tall), so the
+   old fixed 100px seal looked tiny. Size it from the viewport HEIGHT instead,
+   and bring back the big watermark when there is room on the right. */
+@media (max-height: 520px) and (orientation: landscape) {
   .ph-footer { padding-bottom: calc(24px + env(safe-area-inset-bottom)); }
-  .ph-footer .ph-footer-seal--inline { width: 100px; }
+  .ph-footer .ph-footer-seal--inline {
+    display: block;
+    width: clamp(130px, 48vh, 200px);
+    opacity: 0.95;
+  }
+  .ph-footer .ph-footer-seal--mark { display: none; }
+}
+
+/* wide landscape phones/tablets (>=800px): large faded watermark on the right */
+@media (min-width: 800px) and (max-height: 520px) and (orientation: landscape) {
+  .ph-footer .ph-footer-seal--inline { display: none; }
+  .ph-footer .ph-footer-seal--mark {
+    display: block;
+    right: max(16px, env(safe-area-inset-right));
+    width: clamp(170px, 62vh, 260px);
+    opacity: 0.2;
+  }
 }
 
 /* iOS/Android text never auto-inflates, images never overflow */

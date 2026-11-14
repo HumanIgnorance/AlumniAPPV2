@@ -19,6 +19,7 @@ import {
     ReloadOutlined,
 } from "@ant-design/icons";
 import logo from "~/assets/images/site-logo.png";
+import sealWhite from "~/assets/images/occaa-logo-white.png";
 import { useAppTheme } from "~/hooks/useAppTheme";
 import usePreventInspect, { ZoomWarningModal } from "~/hooks/usePreventInspect";
 // Reuses every design token (--ph-accent, .ph-btn, .ph-card, .grad, etc.)
@@ -486,6 +487,15 @@ const PublicOccServicesPage = () => {
 
             {/* ============ FOOTER ============ */}
             <footer className="ph-footer">
+                <img
+                    className="ph-footer-seal ph-footer-seal--mark"
+                    src={sealWhite}
+                    alt=""
+                    aria-hidden="true"
+                    draggable="false"
+                    loading="lazy"
+                    decoding="async"
+                />
                 <div className="ph-footer-inner">
                     <div className="ph-footer-brand-col">
                         <div className="ph-footer-brand">
@@ -497,10 +507,21 @@ const PublicOccServicesPage = () => {
                             lifelong relationships with the institution, and supporting
                             the next generation of OCCians.
                         </Paragraph>
-                        <div className="ph-footer-social">
-                            <a href="#" aria-label="Facebook"><FacebookOutlined /></a>
-                            <a href="#" aria-label="Twitter"><TwitterOutlined /></a>
-                            <a href="#" aria-label="Instagram"><InstagramOutlined /></a>
+                        <div className="ph-footer-social-row">
+                            <div className="ph-footer-social">
+                                <a href="#" aria-label="Facebook"><FacebookOutlined /></a>
+                                <a href="#" aria-label="Twitter"><TwitterOutlined /></a>
+                                <a href="#" aria-label="Instagram"><InstagramOutlined /></a>
+                            </div>
+                            <img
+                                className="ph-footer-seal ph-footer-seal--inline"
+                                src={sealWhite}
+                                alt=""
+                                aria-hidden="true"
+                                draggable="false"
+                                loading="lazy"
+                                decoding="async"
+                            />
                         </div>
                     </div>
 
