@@ -603,7 +603,7 @@ useEffect(() => {
                         hoverable
                         onClick={() => handleOpenCourseFolder(course)}
                         style={{
-                          borderLeft: `4px solid ${course.color}`,
+                          border: `1.5px solid ${course.color}`,
                           cursor: "pointer",
                         }}
                       >
@@ -882,7 +882,7 @@ useEffect(() => {
               <Card
                 style={{
                   marginBottom: 16,
-                  borderLeft: "4px solid #1890ff",
+                  border: "1.5px solid #1890ff",
                   background: "#f0f9ff",
                 }}
                 bodyStyle={{ padding: "10px 16px" }}

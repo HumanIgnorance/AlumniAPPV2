@@ -2,33 +2,39 @@
 
 /* Custom colors for different guideline types */
 .health-guideline {
-    border-left: 3px solid var(--c-antd-red);
-    padding-left: 8px;
+    border: 1.5px solid var(--c-antd-red);
+    border-radius: 8px;
+    padding: 6px 10px;
 }
 
 .security-guideline {
-    border-left: 3px solid var(--c-antd-blue);
-    padding-left: 8px;
+    border: 1.5px solid var(--c-antd-blue);
+    border-radius: 8px;
+    padding: 6px 10px;
 }
 
 .accessibility-guideline {
-    border-left: 3px solid var(--c-antd-purple);
-    padding-left: 8px;
+    border: 1.5px solid var(--c-antd-purple);
+    border-radius: 8px;
+    padding: 6px 10px;
 }
 
 .conduct-guideline {
-    border-left: 3px solid var(--c-antd-orange);
-    padding-left: 8px;
+    border: 1.5px solid var(--c-antd-orange);
+    border-radius: 8px;
+    padding: 6px 10px;
 }
 
 .emergency-guideline {
-    border-left: 3px solid var(--c-fa541c);
-    padding-left: 8px;
+    border: 1.5px solid var(--c-fa541c);
+    border-radius: 8px;
+    padding: 6px 10px;
 }
 
 .prohibited-guideline {
-    border-left: 3px solid var(--c-f5222d);
-    padding-left: 8px;
+    border: 1.5px solid var(--c-f5222d);
+    border-radius: 8px;
+    padding: 6px 10px;
 }
 
 /* ==================================================

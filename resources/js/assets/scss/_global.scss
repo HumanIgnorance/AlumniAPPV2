@@ -1127,8 +1127,9 @@ ul.top-menu li {
 }
 
 .with-border {
-    border-left: 3px solid #1890ff;
-    padding-left: 16px;
+    border: 1.5px solid #1890ff;
+    border-radius: 8px;
+    padding: 8px 16px;
     margin-bottom: 24px;
 }
 
@@ -2292,7 +2293,8 @@ cons .dashboard-container {
 }
 
 .user-answer-section {
-    border-left: 3px solid #1890ff;
+    border: 1.5px solid #1890ff;
+    border-radius: 8px;
 }
 
 .choices-preview .ant-card {

@@ -123,22 +123,22 @@
 }
 
 .stat-card-total {
-  border-left: 5px solid var(--c-antd-blue);
+  border: 1.5px solid var(--c-antd-blue);
   background: linear-gradient(135deg, var(--c-white) 0%, var(--c-e6f7ff) 100%);
 }
 
 .stat-card-pending {
-  border-left: 5px solid var(--c-antd-gold);
+  border: 1.5px solid var(--c-antd-gold);
   background: linear-gradient(135deg, var(--c-white) 0%, var(--c-fffbe6) 100%);
 }
 
 .stat-card-approved {
-  border-left: 5px solid var(--c-antd-green);
+  border: 1.5px solid var(--c-antd-green);
   background: linear-gradient(135deg, var(--c-white) 0%, var(--c-f6ffed) 100%);
 }
 
 .stat-card-expired {
-  border-left: 5px solid var(--c-antd-red);
+  border: 1.5px solid var(--c-antd-red);
   background: linear-gradient(135deg, var(--c-white) 0%, #fff2f0 100%);
 }
 

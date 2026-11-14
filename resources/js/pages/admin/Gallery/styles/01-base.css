@@ -345,39 +345,18 @@
   overflow: hidden;
 }
 
-.gal-stat-card::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 4px;
-  border-radius: 0 4px 4px 0;
-  background: var(--accent);
-  transition: width 0.3s var(--ease-smooth);
-}
+/* solid colored outline (no side stripe) */
+.gal-stat-card { --gal-stat-accent: var(--accent); border: 1.5px solid var(--gal-stat-accent); }
 
 .gal-stat-card:hover {
   transform: translateY(-3px);
   box-shadow: var(--shadow-md);
-  border-color: var(--accent-ring);
+  border-color: var(--gal-stat-accent);
 }
 
-.gal-stat-card:hover::before {
-  width: 6px;
-}
-
-.gal-stat-card.stat-total::before {
-  background: var(--accent);
-}
-
-.gal-stat-card.stat-size::before {
-  background: var(--accent-2);
-}
-
-.gal-stat-card.stat-month::before {
-  background: var(--accent-3);
-}
+.gal-stat-card.stat-total { --gal-stat-accent: var(--accent); }
+.gal-stat-card.stat-size  { --gal-stat-accent: var(--accent-2); }
+.gal-stat-card.stat-month { --gal-stat-accent: var(--accent-3); }
 
 .gal-stat-icon {
   width: 44px;

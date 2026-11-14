@@ -356,7 +356,7 @@
 .dh-dept-card {
   position: relative;
   background: var(--dh-surface);
-  border: 1px solid var(--dh-border);
+  border: 1.5px solid var(--dh-dept-accent, var(--c-slate-400));
   border-radius: 14px;
   padding: 16px;
   transition: transform 0.25s var(--dh-ease-spring),
@@ -367,18 +367,10 @@
   flex-direction: column;
   overflow: hidden;
 }
-.dh-dept-card::before {
-  content: "";
-  position: absolute;
-  left: 0; top: 0; bottom: 0;
-  width: 4px;
-  background: var(--dh-dept-accent, var(--c-slate-400));
-  border-radius: 4px 0 0 4px;
-}
 .dh-dept-card:hover {
   transform: translateY(-3px);
   box-shadow: var(--dh-shadow-md);
-  border-color: var(--dh-accent-ring);
+  border-color: var(--dh-dept-accent, var(--c-slate-400));
 }
 .dh-dept-card.is-unassigned {
   background: linear-gradient(180deg, rgba(239,68,68,0.03), var(--dh-surface));

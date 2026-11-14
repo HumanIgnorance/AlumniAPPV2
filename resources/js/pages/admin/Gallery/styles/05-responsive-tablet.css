@@ -398,7 +398,7 @@
   margin-top: 6px;
   padding: 6px 10px;
   background: rgba(239, 68, 68, 0.08);
-  border-left: 3px solid var(--c-red-500);
+  border: 1.5px solid var(--c-red-500);
   border-radius: 6px;
   animation: galFadeUp 0.2s var(--ease-smooth) both;
 }

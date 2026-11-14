@@ -354,7 +354,7 @@
   background: var(--surface-2);
   padding: 14px 16px;
   border-radius: 10px;
-  border-left: 3px solid var(--accent);
+  border: 1.5px solid var(--accent);
 }
 
 /* Info card */

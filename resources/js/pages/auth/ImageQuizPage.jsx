@@ -537,7 +537,7 @@ function ImageQuizPage() {
                                                                     className="quiz-card"
                                                                     size="small"
                                                                     style={{
-                                                                        borderLeft: `4px solid ${personality.color}`,
+                                                                        border: `1.5px solid ${personality.color}`,
                                                                         height: "100%",
                                                                     }}
                                                                 >
