@@ -568,3 +568,116 @@ html[data-theme="black"] #app :is(.ae-hero, .fb-hero, .gal-hero, .faq-hero, .abo
         padding-bottom: calc(24px + env(safe-area-inset-bottom));
     }
 }
+
+/* ==========================================================
+   QUIZ MANAGEMENT HEADER  +  DASHBOARD CONTROLS  (alignment fixes)
+   ----------------------------------------------------------
+   Quiz: the header now uses the same parts, in the same order, as
+   Events / Announcements / Audit Log:
+     [logo][CHIP]  Title ........ [stats] [actions]
+     one-line description
+   Dashboard: the year Select and the Print button share one height
+   (the Select wrapper used to be 44px while its box was 34px, so
+   the box floated above the button).
+   ========================================================== */
+
+/* ---- Quiz: brand (logo + chip) ---- */
+#app .qm-hero__brand {
+    order: 1;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+#app .qm-hero__logo {
+    width: var(--pg-hdr-logo) !important;
+    height: var(--pg-hdr-logo) !important;
+    padding: 4px !important;
+    flex: 0 0 auto;
+    object-fit: contain;
+    border-radius: 10px !important;
+    background: var(--qm-surface);
+    box-shadow: var(--qm-shadow-sm);
+}
+#app .qm-hero__brand-meta {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    margin: 0 !important;
+}
+/* chip text styled like .ae-chip (bold, tracked, uppercase label) */
+#app .qm-hero .qm-chip {
+    font-weight: 700 !important;
+    letter-spacing: 0.08em;
+}
+
+/* ---- Quiz: stats + actions share the right-hand side ---- */
+#app .qm-hero__actions {
+    order: 3;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    margin-left: 0 !important;          /* stats already carry the auto margin */
+}
+#app .qm-hero__actions .ant-btn {
+    white-space: nowrap;
+}
+
+@media (max-width: 767px) {
+    #app .qm-hero__brand { flex: 0 0 auto; }
+    #app .qm-hero__stats { flex-wrap: nowrap !important; gap: 6px !important; }
+    #app .qm-hero__stats .qm-stat {
+        flex: 1 1 0 !important;
+        min-width: 0 !important;
+        padding: 6px 8px !important;
+        gap: 6px !important;
+    }
+    #app .qm-hero__actions {
+        width: 100% !important;
+        flex-direction: row !important;
+    }
+    #app .qm-hero__actions .ant-btn {
+        flex: 1 1 0 !important;
+        min-width: 0 !important;
+        padding: 0 8px !important;
+        height: 34px !important;
+    }
+}
+
+/* ---- Dashboard: Select + Print Preview on the same line/height ---- */
+#app .dashboard-hero__controls {
+    align-items: center !important;
+}
+#app .dashboard-hero__controls .dashboard-hero__select.ant-select {
+    height: 34px !important;
+    display: inline-flex;
+    align-items: center;
+}
+#app .dashboard-hero__controls .dashboard-hero__select .ant-select-selector {
+    height: 34px !important;
+    min-height: 34px !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    align-items: center !important;
+}
+#app .dashboard-hero__controls .dashboard-hero__select .ant-select-selection-item {
+    line-height: 32px !important;
+    padding-right: 24px;
+}
+#app .dashboard-hero__controls .dashboard-hero__select .ant-select-arrow {
+    top: 50%;
+    margin-top: -6px;
+}
+#app .dashboard-hero__controls .dashboard-hero__print-btn.ant-btn {
+    height: 34px !important;
+    min-height: 34px !important;
+    line-height: 1 !important;
+    padding: 0 16px !important;
+    margin: 0 !important;
+    transform: none;                     /* hover lift made it drift off the Select's baseline */
+    vertical-align: middle;
+}
+#app .dashboard-hero__controls .dashboard-hero__print-btn.ant-btn:hover,
+#app .dashboard-hero__controls .dashboard-hero__print-btn.ant-btn:focus {
+    transform: none;
+}

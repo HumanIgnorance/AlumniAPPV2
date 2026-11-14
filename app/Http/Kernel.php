@@ -14,6 +14,9 @@ class Kernel extends HttpKernel
      * @var array<int, class-string|string>
      */
     protected $middleware = [
+        // Must run BEFORE TrustProxies: swaps the host proxy's 10.0.0.x
+        // X-Forwarded-For for the real visitor IP (CF-Connecting-IP).
+        \App\Http\Middleware\UseCloudflareClientIp::class,
         \App\Http\Middleware\TrustProxies::class,
         \Fruitcake\Cors\HandleCors::class,
         // Phase 7 — runs on every request, web and API alike.

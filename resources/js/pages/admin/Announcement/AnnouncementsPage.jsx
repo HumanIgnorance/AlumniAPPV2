@@ -442,7 +442,7 @@ export default function AnnouncementPage() {
                                         {stats.total}
                                     </span>
                                     <span className="ae-stat__label">
-                                        Total Announcements
+                                        Total
                                     </span>
                                 </div>
                             </div>

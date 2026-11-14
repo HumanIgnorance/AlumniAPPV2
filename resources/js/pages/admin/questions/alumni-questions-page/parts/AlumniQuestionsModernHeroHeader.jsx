@@ -1,4 +1,5 @@
 import { Tag, Button } from "antd";
+import logo from "~/assets/images/OCC_LOGO.png";
 import {
     QuestionCircleOutlined,
     OrderedListOutlined,
@@ -25,53 +26,67 @@ export default function AlumniQuestionsModernHeroHeader() {
             </div>
 
             <div className="qm-hero__content">
-                <div className="qm-hero__left">
-                    <Tag className="qm-chip">
-                        <QuestionCircleOutlined /> Quiz Management
-                    </Tag>
-                    <Title level={2} className="qm-hero__title">
-                        Build, Manage & Track{" "}
-                        <span className="qm-grad-text">Quizzes</span>
-                    </Title>
-                    <Text className="qm-hero__lead">
-                        Create engaging quizzes, organize questions, and monitor
-                        results — all in one clean, professional workspace built
-                        for alumni engagement.
-                    </Text>
+                {/* Same order as every other admin header:
+                    logo + chip, title, stats / actions, description */}
+                <div className="qm-hero__brand">
+                    <img
+                        src={logo}
+                        alt="OCC Logo"
+                        className="qm-hero__logo"
+                    />
+                    <div className="qm-hero__brand-meta">
+                        <Tag
+                            className="qm-chip"
+                            icon={<QuestionCircleOutlined />}
+                        >
+                            QUIZ MANAGEMENT
+                        </Tag>
+                    </div>
+                </div>
 
-                    <div className="qm-hero__stats">
-                        <div className="qm-stat-card">
-                            <span className="qm-stat-icon qm-stat-icon--blue">
-                                <OrderedListOutlined />
+                <Title level={2} className="qm-hero__title">
+                    Build, Manage &amp; Track{" "}
+                    <span className="qm-grad-text">Quizzes</span>
+                </Title>
+
+                <div className="qm-hero__stats">
+                    <div className="qm-stat qm-stat-card">
+                        <span className="qm-stat__icon qm-stat-icon qm-stat-icon--blue">
+                            <OrderedListOutlined />
+                        </span>
+                        <div className="qm-stat__body qm-stat-meta">
+                            <span className="qm-stat__value qm-stat-value">
+                                {quizzes.length}
                             </span>
-                            <div className="qm-stat-meta">
-                                <span className="qm-stat-value">
-                                    {quizzes.length}
-                                </span>
-                                <span className="qm-stat-label">Quizzes</span>
-                            </div>
+                            <span className="qm-stat__label qm-stat-label">
+                                Quizzes
+                            </span>
                         </div>
-                        <div className="qm-stat-card">
-                            <span className="qm-stat-icon qm-stat-icon--green">
-                                <QuestionCircleOutlined />
+                    </div>
+                    <div className="qm-stat qm-stat-card">
+                        <span className="qm-stat__icon qm-stat-icon qm-stat-icon--green">
+                            <QuestionCircleOutlined />
+                        </span>
+                        <div className="qm-stat__body qm-stat-meta">
+                            <span className="qm-stat__value qm-stat-value">
+                                {questions.length}
                             </span>
-                            <div className="qm-stat-meta">
-                                <span className="qm-stat-value">
-                                    {questions.length}
-                                </span>
-                                <span className="qm-stat-label">Questions</span>
-                            </div>
+                            <span className="qm-stat__label qm-stat-label">
+                                Questions
+                            </span>
                         </div>
-                        <div className="qm-stat-card">
-                            <span className="qm-stat-icon qm-stat-icon--purple">
-                                <CheckSquareOutlined />
+                    </div>
+                    <div className="qm-stat qm-stat-card">
+                        <span className="qm-stat__icon qm-stat-icon qm-stat-icon--purple">
+                            <CheckSquareOutlined />
+                        </span>
+                        <div className="qm-stat__body qm-stat-meta">
+                            <span className="qm-stat__value qm-stat-value">
+                                {quizzes_result.length}
                             </span>
-                            <div className="qm-stat-meta">
-                                <span className="qm-stat-value">
-                                    {quizzes_result.length}
-                                </span>
-                                <span className="qm-stat-label">Results</span>
-                            </div>
+                            <span className="qm-stat__label qm-stat-label">
+                                Results
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -81,7 +96,6 @@ export default function AlumniQuestionsModernHeroHeader() {
                         className="qm-btn-primary"
                         icon={<PlusOutlined />}
                         onClick={() => openQuizDrawer()}
-                        size="large"
                     >
                         Create New Quiz
                     </Button>
@@ -89,11 +103,16 @@ export default function AlumniQuestionsModernHeroHeader() {
                         className="qm-btn-primary"
                         icon={<PlusOutlined />}
                         onClick={() => showModal()}
-                        size="large"
                     >
                         Add Question
                     </Button>
                 </div>
+
+                <Text className="qm-hero__lead">
+                    Create engaging quizzes, organize questions, and monitor
+                    results — all in one clean, professional workspace built
+                    for alumni engagement.
+                </Text>
             </div>
         </div>
     );
