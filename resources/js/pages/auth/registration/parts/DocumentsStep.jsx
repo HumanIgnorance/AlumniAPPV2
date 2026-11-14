@@ -7,7 +7,6 @@ import {
 } from "@ant-design/icons";
 import {
     Alert,
-    Button,
     Card,
     Col,
     Divider,
@@ -21,6 +20,7 @@ import {
     Typography,
     Upload,
 } from "antd";
+import Button from "~/components/shared/AsyncButton";
 import moment from "moment";
 import { ID_TYPES } from "~/config/alumniOptions";
 import { useRegistrationContext } from "~/pages/auth/registration/RegistrationContext";

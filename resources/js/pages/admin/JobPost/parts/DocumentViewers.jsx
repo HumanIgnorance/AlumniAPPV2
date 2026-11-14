@@ -10,7 +10,8 @@ import {
     LinkOutlined,
     PictureOutlined,
 } from "@ant-design/icons";
-import { Button, Card, Modal, Space, Spin, Tooltip, Typography } from "antd";
+import { Card, Modal, Space, Spin, Tooltip, Typography } from "antd";
+import Button from "~/components/shared/AsyncButton";
 import { COLORS } from "~/config/theme";
 import { GalleryPhotoLightbox } from "~/pages/admin/JobPost/parts/GalleryPhotoLightbox";
 import { getIdTypeLabel } from "~/pages/admin/JobPost/parts/jobPostHelpers";

@@ -1,4 +1,5 @@
-import { Modal, Space, Button, Alert } from "antd";
+import { Modal, Space, Alert } from "antd";
+import Button from "~/components/shared/AsyncButton";
 import { MessageOutlined } from "@ant-design/icons";
 import {
     Text,

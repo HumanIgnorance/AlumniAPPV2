@@ -25,7 +25,8 @@
  * ─────────────────────────────────────────────────────────────
  */
 
-import { Modal, Button, Space, Typography, Divider, Alert } from "antd";
+import { Modal, Space, Typography, Divider, Alert } from "antd";
+import Button from "~/components/shared/AsyncButton";
 import {
     SafetyCertificateOutlined,
     IdcardOutlined,

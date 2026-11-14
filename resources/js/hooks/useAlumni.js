@@ -23,6 +23,10 @@ export default function useAlumni(options = {}) {
         // queryClient.setQueryData (AlumniList.js), so a fairly short
         // staleTime keeps the rest of the row data reasonably fresh too.
         staleTime: 30000,
+        // Live list: new registrations / verification changes appear without
+        // a manual refresh (pauses automatically while the tab is hidden).
+        refetchInterval: 30000,
+        refetchOnWindowFocus: true,
         // GET /alumni is role:admin-gated on the backend. Callers that
         // render for both admins and alumni (e.g. the shared /home page)
         // must pass { enabled: isAdmin } or every alumni visiting that

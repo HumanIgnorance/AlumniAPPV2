@@ -12,7 +12,6 @@ import {
     WarningOutlined,
 } from "@ant-design/icons";
 import {
-    Button,
     Card,
     Col,
     Divider,
@@ -26,6 +25,7 @@ import {
     Tooltip,
     Typography,
 } from "antd";
+import Button from "~/components/shared/AsyncButton";
 import moment from "moment";
 import { ROLES } from "~/config/roles";
 import { STATUS } from "~/config/status";

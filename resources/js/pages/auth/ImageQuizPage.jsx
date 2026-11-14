@@ -13,12 +13,12 @@ import {
     Skeleton,
     Result,
     Tag,
-    Button,
     Image,
     Alert,
     Collapse,
     message,
 } from "antd";
+import Button from "~/components/shared/AsyncButton";
 import {
     ExclamationCircleOutlined,
     ThunderboltOutlined,

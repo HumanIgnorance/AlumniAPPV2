@@ -18,7 +18,6 @@ import {
 import {
     Alert,
     Avatar,
-    Button,
     Card,
     Col,
     Divider,
@@ -33,6 +32,7 @@ import {
     Typography,
     Upload,
 } from "antd";
+import Button from "~/components/shared/AsyncButton";
 import { ROLES } from "~/config/roles";
 import { COLORS } from "~/config/theme";
 import { useJobPostContext } from "~/pages/admin/JobPost/JobPostContext";

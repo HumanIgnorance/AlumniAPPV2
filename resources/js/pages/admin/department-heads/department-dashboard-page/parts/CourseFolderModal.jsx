@@ -14,7 +14,6 @@ import {
     message,
     Modal,
     Space,
-    Button,
     Row,
     Col,
     Input,
@@ -24,6 +23,7 @@ import {
     List,
     Table,
 } from "antd";
+import Button from "~/components/shared/AsyncButton";
 import { exportTableReport, slugifyForFile } from "~/utils/pdfReport";
 import { COLORS } from "~/config/theme";
 import AlumniAvatar from "~/components/shared/AlumniAvatar";

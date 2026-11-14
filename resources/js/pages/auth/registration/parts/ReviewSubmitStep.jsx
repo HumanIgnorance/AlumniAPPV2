@@ -2,7 +2,6 @@ import React from "react";
 import { CheckCircleOutlined, EyeOutlined } from "@ant-design/icons";
 import {
     Alert,
-    Button,
     Checkbox,
     Col,
     Divider,
@@ -11,6 +10,7 @@ import {
     Space,
     Typography,
 } from "antd";
+import Button from "~/components/shared/AsyncButton";
 import { COLORS } from "~/config/theme";
 import { useRegistrationContext } from "~/pages/auth/registration/RegistrationContext";
 

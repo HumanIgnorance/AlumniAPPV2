@@ -18,45 +18,81 @@ export default function useLayoutUser({ profile }) {
     // other page. Using the shared hook here closes that gap for good.
     const { theme: currentTheme, setTheme: handleThemeChange } = useAppTheme();
 
+    // Remember the last real profile picture per user, so after a refresh the
+    // header shows it immediately instead of the placeholder and then
+    // "blinking" over to the photo once /profile has loaded.
+    const avatarCacheKey = () => {
+        const uid = secureLocalStorage.getItem(STORAGE_KEYS.USER_ID);
+        return uid ? `${STORAGE_KEYS.AVATAR}:${uid}` : null;
+    };
+
     const [userData, setUserData] = useState(() => {
         const role = getUserRole();
+        let cachedAvatar = null;
+        try {
+            const key = avatarCacheKey();
+            const value = key ? secureLocalStorage.getItem(key) : null;
+            if (typeof value === "string" && value) cachedAvatar = value;
+        } catch (e) {
+            /* ignore unreadable cache */
+        }
         return {
             name: secureLocalStorage.getItem(STORAGE_KEYS.NAME) || "User Name",
             email: secureLocalStorage.getItem(STORAGE_KEYS.EMAIL) || "",
             avatar:
                 role === ROLES.DEPARTMENT_HEAD
                     ? getDepartmentHeadAvatar()
-                    : avatarGuidance,
+                    : cachedAvatar || avatarGuidance,
             role: role || "user",
         };
     });
 
     useEffect(() => {
-        if (profile?.alumni) {
-            const fullName = `${profile.alumni.first_name || "User"} ${profile.alumni.last_name || "Name"}`;
+        if (!profile?.alumni) return;
 
-            setUserData((prev) => ({
+        const fullName = `${profile.alumni.first_name || "User"} ${profile.alumni.last_name || "Name"}`;
+        const nextEmail = profile.alumni.email;
+        const nextAvatar = profile.alumni.profile_image_url;
+
+        // Functional update that returns the SAME object when nothing changed,
+        // so a background profile refetch never re-renders the header.
+        setUserData((prev) => {
+            const next = {
                 ...prev,
                 name: fullName,
-                email: profile.alumni.email || prev.email,
-                avatar: profile.alumni.profile_image_url || prev.avatar,
-            }));
+                email: nextEmail || prev.email,
+                avatar: nextAvatar || prev.avatar,
+            };
+            return next.name === prev.name &&
+                next.email === prev.email &&
+                next.avatar === prev.avatar
+                ? prev
+                : next;
+        });
 
-            secureLocalStorage.setItem(STORAGE_KEYS.NAME, fullName);
-            secureLocalStorage.setItem(
-                STORAGE_KEYS.EMAIL,
-                profile.alumni.email || "",
-            );
+        secureLocalStorage.setItem(STORAGE_KEYS.NAME, fullName);
+        secureLocalStorage.setItem(STORAGE_KEYS.EMAIL, nextEmail || "");
+        try {
+            const key = avatarCacheKey();
+            if (key && nextAvatar) secureLocalStorage.setItem(key, nextAvatar);
+        } catch (e) {
+            /* storage full / blocked — not critical */
         }
-    }, [profile]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [
+        profile?.alumni?.first_name,
+        profile?.alumni?.last_name,
+        profile?.alumni?.email,
+        profile?.alumni?.profile_image_url,
+    ]);
 
     useEffect(() => {
         const role = getUserRole();
         if (role === ROLES.DEPARTMENT_HEAD) {
-            setUserData((prev) => ({
-                ...prev,
-                avatar: getDepartmentHeadAvatar(),
-            }));
+            const avatar = getDepartmentHeadAvatar();
+            setUserData((prev) =>
+                prev.avatar === avatar ? prev : { ...prev, avatar },
+            );
         }
     }, []);
 

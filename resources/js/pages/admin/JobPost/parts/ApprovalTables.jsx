@@ -9,7 +9,6 @@ import {
     StopOutlined,
 } from "@ant-design/icons";
 import {
-    Button,
     Card,
     Empty,
     Space,
@@ -18,6 +17,7 @@ import {
     Tooltip,
     Typography,
 } from "antd";
+import Button from "~/components/shared/AsyncButton";
 import moment from "moment";
 import { getJobTypeTag } from "~/pages/admin/JobPost/parts/jobPostHelpers";
 import { CreatorInfo } from "~/pages/admin/JobPost/parts/PersonInfo";

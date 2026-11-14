@@ -2,7 +2,6 @@ import React from "react";
 import { TeamOutlined } from "@ant-design/icons";
 import {
     Badge,
-    Button,
     Col,
     List,
     Modal,
@@ -11,6 +10,7 @@ import {
     Spin,
     Typography,
 } from "antd";
+import Button from "~/components/shared/AsyncButton";
 import { useLayoutContext } from "~/components/layout/LayoutContext";
 import { COLORS } from "~/config/theme";
 

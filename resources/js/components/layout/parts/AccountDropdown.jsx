@@ -11,7 +11,8 @@ import {
     SunOutlined,
     TeamOutlined,
 } from "@ant-design/icons";
-import { Avatar, Badge, Menu, Select, Space, Typography } from "antd";
+import { Badge, Menu, Select, Space, Typography } from "antd";
+import HeaderAvatar from "~/components/layout/parts/HeaderAvatar";
 import { Link } from "react-router-dom";
 import { useLayoutContext } from "~/components/layout/LayoutContext";
 import { themeOptions } from "~/components/layout/utils/layoutConstants";
@@ -133,7 +134,7 @@ export default function AccountDropdown() {
                         : "1px solid #f0f0f0",
                 }}
             >
-                <Avatar
+                <HeaderAvatar
                     size={64}
                     src={userData.avatar}
                     style={{

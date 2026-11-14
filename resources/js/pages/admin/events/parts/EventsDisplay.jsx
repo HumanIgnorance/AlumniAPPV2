@@ -1,5 +1,6 @@
 import React from "react";
-import { Button, Card, Col, Row, Typography } from "antd";
+import { Card, Col, Row, Typography } from "antd";
+import Button from "~/components/shared/AsyncButton";
 import { ROLES } from "~/config/roles";
 import { useEventsContext } from "~/pages/admin/events/EventsContext";
 import { EventCard } from "~/pages/admin/events/parts/EventCard";

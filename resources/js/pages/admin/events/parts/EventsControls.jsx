@@ -1,6 +1,7 @@
 import React from "react";
 import { PlusOutlined, SearchOutlined } from "@ant-design/icons";
-import { Button, Card, Input, Select, Tag } from "antd";
+import { Card, Input, Select, Tag } from "antd";
+import Button from "~/components/shared/AsyncButton";
 import { ROLES } from "~/config/roles";
 import { useEventsContext } from "~/pages/admin/events/EventsContext";
 import {

@@ -1,6 +1,7 @@
 import React from "react";
 import { BankOutlined, CloseOutlined } from "@ant-design/icons";
-import { Button, Drawer, Grid, Row, Space } from "antd";
+import { Drawer, Grid, Row, Space } from "antd";
+import Button from "~/components/shared/AsyncButton";
 import { useAlumniDetailsContext } from "~/components/alumni/details/AlumniDetailsContext";
 import { companyInfo } from "~/components/alumni/details/detailsConstants";
 import ConfidentialNotice from "~/components/alumni/details/parts/ConfidentialNotice";

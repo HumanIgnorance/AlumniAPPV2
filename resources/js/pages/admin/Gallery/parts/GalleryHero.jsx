@@ -7,7 +7,8 @@ import {
     PictureOutlined,
     SelectOutlined,
 } from "@ant-design/icons";
-import { Button, Col, Row, Statistic, Tag, Typography } from "antd";
+import { Col, Row, Statistic, Tag, Typography } from "antd";
+import Button from "~/components/shared/AsyncButton";
 import logo from "~/assets/images/OCC_LOGO.png";
 import { useGalleryContext } from "~/pages/admin/Gallery/GalleryContext";
 

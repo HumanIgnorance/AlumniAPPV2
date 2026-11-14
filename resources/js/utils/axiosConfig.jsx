@@ -3,10 +3,15 @@ import axios from "axios";
 import secureLocalStorage from "react-secure-storage";
 import { useLoadingStore } from "~/states/loadingState";
 import { BASE_URL } from "./constant";
+import { queryClient } from "./queryClient";
+import { requestTracker } from "./requestTracker";
 
 // =========================================
 // AXIOS INSTANCE
 // =========================================
+const DEFAULT_TIMEOUT_MS = 30000;
+const UPLOAD_TIMEOUT_MS = 180000;
+
 const instance = axios.create({
     baseURL: BASE_URL + "api/",
     // Phase 6: browser now authenticates via an HttpOnly auth_token
@@ -14,6 +19,11 @@ const instance = axios.create({
     // this JS ever reads or attaches itself — withCredentials makes
     // axios include that cookie automatically on every request.
     withCredentials: true,
+    // A request that never answers used to hang forever (spinner + stale
+    // screen until the user refreshed). Fail after 30 s so the retry / error
+    // toast below can kick in. Uploads (FormData) get a longer limit in the
+    // request interceptor.
+    timeout: DEFAULT_TIMEOUT_MS,
 });
 
 // =========================================
@@ -195,12 +205,92 @@ const describeError = (error, statusCode) => {
     }
 };
 
+
+// =========================================
+// REQUEST TRACKING, RETRY & CACHE REFRESH
+// =========================================
+const isMutation = (config) =>
+    !["get", "head", "options"].includes(
+        String(config?.method || "get").toLowerCase()
+    );
+
+// Background / housekeeping calls: never show button spinners for them and
+// never refetch every list because of them.
+const BACKGROUND_URL = /heartbeat|presence|typing|logout|device-token|mark-?(as-)?read|online-statuses/i;
+const isBackground = (config) =>
+    !!config?.silent || BACKGROUND_URL.test(String(config?.url || ""));
+
+// After ANY successful save/delete, mark every cached query stale so the
+// lists on screen refetch right away (batched, so a burst of saves = 1 refresh).
+let invalidateTimer = null;
+const scheduleRefresh = () => {
+    clearTimeout(invalidateTimer);
+    invalidateTimer = setTimeout(() => {
+        // ["profile"] is excluded on purpose: it drives the header avatar and a
+        // refetch after every save made the header flicker. Code that really
+        // changes the profile invalidates ["profile"] itself.
+        queryClient.invalidateQueries({
+            predicate: (query) => query.queryKey?.[0] !== "profile",
+        });
+    }, 120);
+};
+
+// One automatic retry for idempotent GETs that failed because of a network
+// blip, a timeout or a temporary 502/503/504 — the common "took forever then
+// failed, had to refresh" case.
+const RETRY_DELAY_MS = 600;
+const shouldRetryRequest = (error) => {
+    const config = error?.config;
+    if (!config || isMutation(config) || config.noRetry) return false;
+    if ((config.__retryCount || 0) >= 1) return false;
+    if (axios.isCancel(error)) return false;
+    if (!error.response) return true; // network error / timeout
+    return [502, 503, 504].includes(error.response.status);
+};
+
+const finishTracking = (config) => {
+    if (config && config.__trackId) {
+        requestTracker.end(config.__trackId);
+        config.__trackId = null;
+    }
+};
+
+// =========================================
+// REQUEST INTERCEPTOR
+// =========================================
+instance.interceptors.request.use((config) => {
+    // Uploads (documents, images) legitimately take longer than 30 s.
+    if (
+        typeof FormData !== "undefined" &&
+        config.data instanceof FormData &&
+        config.timeout === DEFAULT_TIMEOUT_MS
+    ) {
+        config.timeout = UPLOAD_TIMEOUT_MS;
+    }
+
+    // Lets <AsyncButton> show a spinner while its save/submit is in flight.
+    if (isMutation(config) && !isBackground(config) && !config.__trackId) {
+        config.__trackId = requestTracker.start();
+    }
+
+    return config;
+});
+
 // =========================================
 // RESPONSE INTERCEPTOR
 // =========================================
 instance.interceptors.response.use(
     (response) => {
         const loadingStore = useLoadingStore.getState();
+
+        finishTracking(response.config);
+        if (
+            isMutation(response.config) &&
+            !isBackground(response.config) &&
+            !response.config?.skipRefresh
+        ) {
+            scheduleRefresh();
+        }
 
         if (!response.config?.silent) {
             loadingStore?.hideLoading?.();
@@ -210,6 +300,18 @@ instance.interceptors.response.use(
     },
 
     (error) => {
+        // Transient GET failure → quietly try once more before showing any
+        // error (keeps the loading state on while retrying).
+        if (shouldRetryRequest(error)) {
+            const config = error.config;
+            config.__retryCount = (config.__retryCount || 0) + 1;
+            return new Promise((resolve) =>
+                setTimeout(resolve, RETRY_DELAY_MS)
+            ).then(() => instance(config));
+        }
+
+        finishTracking(error.config);
+
         const loadingStore = useLoadingStore.getState();
 
         if (!error.config?.silent) {

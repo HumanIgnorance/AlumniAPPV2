@@ -1,4 +1,5 @@
-import { Modal, Space, Button, message, Alert } from "antd";
+import { Modal, Space, message, Alert } from "antd";
+import Button from "~/components/shared/AsyncButton";
 import {
     MailFilled,
     CopyOutlined,

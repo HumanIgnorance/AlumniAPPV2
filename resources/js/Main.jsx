@@ -2,7 +2,8 @@ import "antd-css-utilities/utility.min.css";
 import { ConfigProvider, Empty, Spin } from "antd";
 import React, { Suspense, useEffect } from "react";
 import ReactDOM from "react-dom";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { QueryClientProvider } from "react-query";
+import { queryClient } from "~/utils/queryClient";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./assets/scss/app.scss";
 import NoLayout from "./components/NoLayout";
@@ -52,18 +53,6 @@ const PageFallback = () => (
         <Spin size="large" />
     </div>
 );
-
-const queryClient = new QueryClient({
-    defaultOptions: {
-        queries: {
-            refetchOnWindowFocus: false,
-            refetchOnMount: false,
-            refetchOnReconnect: false,
-            retry: false,
-            staleTime: 5 * 60 * 1000,
-        },
-    },
-});
 
 function Main() {
     useLoader();

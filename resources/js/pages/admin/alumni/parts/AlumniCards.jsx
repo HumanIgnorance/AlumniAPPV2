@@ -38,6 +38,18 @@ const { Title, Text, Paragraph } = Typography;
 
 // ============ END BULK STATUS UPDATE MODAL ============
 
+// One labelled row of the card: [icon] [label] [value] — columns line up
+// across every row so the card reads like a tidy form.
+const AlumniRow = ({ icon, label, children }) => (
+    <div className="alumni-row">
+        <span className="alumni-row-icon">{icon}</span>
+        <Text type="secondary" className="alumni-row-label">
+            {label}
+        </Text>
+        <div className="alumni-row-value">{children}</div>
+    </div>
+);
+
 export const AlumniCard = ({
     alumnus,
     handleView,
@@ -64,6 +76,29 @@ export const AlumniCard = ({
         e.stopPropagation();
         onSelectChange(alumnus.id, e.target.checked);
     };
+
+    // ---- display values (no dangling "•", no placeholder bio) ----
+    const fullName = [alumnus.first_name, alumnus.last_name, alumnus.suffix]
+        .filter(Boolean)
+        .join(" ");
+    const courseLabel =
+        alumnus.course?.course_code ||
+        (typeof alumnus.course === "string" ? alumnus.course : "") ||
+        alumnus.major ||
+        "";
+    const metaLine = [
+        courseLabel,
+        alumnus.graduation_year ? `Class of ${alumnus.graduation_year}` : "",
+    ]
+        .filter(Boolean)
+        .join(" • ");
+    // Only show the tag when the backend explicitly says "false".
+    const showUnverified = role === "admin" && alumnus.email_verified === false;
+    const skills = Array.isArray(alumnus?.technical_skills)
+        ? alumnus.technical_skills
+        : [];
+    const bio = (alumnus.bio || "").trim();
+    const hasBio = bio !== "" && !/^(none|n\/a|na|null|-+)$/i.test(bio);
 
     return (
         <Badge.Ribbon
@@ -112,72 +147,87 @@ export const AlumniCard = ({
                             />
                         </div>
                     )}
+
+                    {/* Header: avatar + (name / course · class / verify tag).
+                        Everything is vertically centred and the name never
+                        breaks in the middle of a word. */}
                     <div className="alumni-header">
-                        <Avatar size={64} src={alumnus.profile_image_url} />
+                        <Avatar
+                            size={56}
+                            src={alumnus.profile_image_url}
+                            icon={<UserOutlined />}
+                            className="alumni-avatar"
+                        />
                         <div className="alumni-basic-info">
-                            <Title level={4} className="alumni-name">
-                                {alumnus.first_name} {alumnus.last_name}
-                                {getStatusIcon(alumnus.status)}
-                            </Title>
-                            <Text type="secondary">
-                                {alumnus.major} • Class of{" "}
-                                {alumnus.graduation_year}
-                            </Text>
-
-                            {role === "admin" && alumnus.email_verified === false && (
-                                <div style={{ marginTop: 6 }}>
-                                    <Tag color="orange">Email not verified</Tag>
-                                </div>
+                            <div className="alumni-name-row">
+                                <Title
+                                    level={5}
+                                    className="alumni-name"
+                                    title={fullName}
+                                >
+                                    {fullName}
+                                </Title>
+                                <span className="alumni-status-icon">
+                                    {getStatusIcon(alumnus.status)}
+                                </span>
+                            </div>
+                            {metaLine && (
+                                <Text type="secondary" className="alumni-meta">
+                                    {metaLine}
+                                </Text>
                             )}
-
-                            {/* {role === "admin" && isRecentlyUpdated && (
-                <div style={{ marginTop: 8 }}>
-                  <Tag color="blue" icon={<BellOutlined />}>
-                    New Updated Information
-                  </Tag>
-                </div>
-              )} */}
+                            {showUnverified && (
+                                <Tag
+                                    color="orange"
+                                    className="alumni-verify-tag"
+                                >
+                                    Email not verified
+                                </Tag>
+                            )}
                         </div>
                     </div>
 
-                    <Divider />
+                    <Divider className="alumni-divider" />
 
-                    <div className="alumni-details">
-                        <div className="detail-item-alumini">
-                            <TeamOutlined />
-                            <Text strong>Employment:</Text>
+                    <div className="alumni-rows">
+                        <AlumniRow icon={<TeamOutlined />} label="Employment">
                             {getEmploymentStatusTag(
                                 alumnus?.employment_status?.status_name,
                             )}
-                        </div>
+                        </AlumniRow>
 
                         {alumnus.currentCompany && (
-                            <div className="detail-item-alumini">
-                                <UserOutlined />
+                            <AlumniRow icon={<UserOutlined />} label="Company">
                                 <Text>{alumnus.currentCompany}</Text>
-                                <Text type="secondary">
-                                    • {alumnus.position}
-                                </Text>
-                            </div>
+                                {alumnus.position && (
+                                    <Text type="secondary">
+                                        {" "}
+                                        • {alumnus.position}
+                                    </Text>
+                                )}
+                            </AlumniRow>
                         )}
 
-                        <div className="detail-item-alumini">
-                            <EnvironmentOutlined />
-                            <Text>{alumnus.address}</Text>
-                        </div>
+                        <AlumniRow
+                            icon={<EnvironmentOutlined />}
+                            label="Address"
+                        >
+                            <Text>{alumnus.address || "—"}</Text>
+                        </AlumniRow>
 
                         {alumnus.salary && (
-                            <div className="detail-item-alumini">
-                                <DollarOutlined />
+                            <AlumniRow icon={<DollarOutlined />} label="Salary">
                                 <Text strong>
                                     ${alumnus.salary.toLocaleString()}
                                 </Text>
-                                <Text type="secondary">/year</Text>
-                            </div>
+                                <Text type="secondary"> /year</Text>
+                            </AlumniRow>
                         )}
 
-                        <div className="detail-item-alumini">
-                            <CalendarOutlined />
+                        <AlumniRow
+                            icon={<CalendarOutlined />}
+                            label="Last active"
+                        >
                             <LastActiveIndicator
                                 lastActive={
                                     alumnus.last_active ||
@@ -186,41 +236,44 @@ export const AlumniCard = ({
                                 }
                                 isOnline={alumnus.is_online || false}
                             />
-                        </div>
+                        </AlumniRow>
 
                         {role === ROLES.ADMIN && alumnus.admin_notes && (
-                            <div className="detail-item-alumini">
-                                <ExclamationCircleOutlined />
+                            <AlumniRow
+                                icon={<ExclamationCircleOutlined />}
+                                label="Note"
+                            >
                                 <Text
                                     type="secondary"
                                     style={{ fontStyle: "italic" }}
                                 >
-                                    Note: {alumnus.admin_notes}
+                                    {alumnus.admin_notes}
                                 </Text>
-                            </div>
+                            </AlumniRow>
                         )}
                     </div>
 
-                    <div className="alumni-skills">
-                        {Array.isArray(alumnus?.technical_skills) &&
-                            alumnus?.technical_skills
-                                ?.slice(0, 4)
-                                .map((skill) => (
-                                    <Tag key={skill} className="skill-tag">
-                                        {skill}
-                                    </Tag>
-                                ))}
-                        {Array.isArray(alumnus?.technical_skills) &&
-                            alumnus?.technical_skills.length > 4 && (
+                    {skills.length > 0 && (
+                        <div className="alumni-skills">
+                            {skills.slice(0, 4).map((skill) => (
+                                <Tag key={skill} className="skill-tag">
+                                    {skill}
+                                </Tag>
+                            ))}
+                            {skills.length > 4 && (
                                 <Tag className="skill-tag">
-                                    +{alumnus?.technical_skills.length - 4} more
+                                    +{skills.length - 4} more
                                 </Tag>
                             )}
-                    </div>
+                        </div>
+                    )}
 
-                    <Paragraph ellipsis={{ rows: 2 }} className="alumni-bio">
-                        {alumnus.bio}
-                    </Paragraph>
+                    {/* Hidden when empty or a placeholder such as "None" */}
+                    {hasBio && (
+                        <Paragraph ellipsis={{ rows: 2 }} className="alumni-bio">
+                            {bio}
+                        </Paragraph>
+                    )}
                 </div>
             </Card>
         </Badge.Ribbon>

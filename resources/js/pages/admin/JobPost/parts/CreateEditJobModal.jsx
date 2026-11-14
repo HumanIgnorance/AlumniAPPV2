@@ -12,7 +12,6 @@ import {
 } from "@ant-design/icons";
 import {
     Alert,
-    Button,
     Col,
     Divider,
     Form,
@@ -27,6 +26,7 @@ import {
     Upload,
     message,
 } from "antd";
+import Button from "~/components/shared/AsyncButton";
 import moment from "moment";
 import { COLORS } from "~/config/theme";
 import { useJobPostContext } from "~/pages/admin/JobPost/JobPostContext";

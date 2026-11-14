@@ -1,4 +1,5 @@
-import { Card, Space, Button, Divider } from "antd";
+import { Card, Space, Divider } from "antd";
+import Button from "~/components/shared/AsyncButton";
 import { COLORS } from "~/config/theme";
 import {
     ThunderboltOutlined,

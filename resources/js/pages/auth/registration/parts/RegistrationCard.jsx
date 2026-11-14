@@ -7,7 +7,6 @@ import {
 } from "@ant-design/icons";
 import {
     Avatar,
-    Button,
     Card,
     Divider,
     Form,
@@ -17,6 +16,7 @@ import {
     Tag,
     Typography,
 } from "antd";
+import Button from "~/components/shared/AsyncButton";
 import { companyInfo } from "~/config/institution";
 import { COLORS } from "~/config/theme";
 import AcademicInfoStep from "~/pages/auth/registration/parts/AcademicInfoStep";

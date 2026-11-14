@@ -1,6 +1,7 @@
 import React from "react";
 import { FileOutlined, WarningOutlined } from "@ant-design/icons";
-import { Button, Modal, Space, Typography } from "antd";
+import { Modal, Space, Typography } from "antd";
+import Button from "~/components/shared/AsyncButton";
 import moment from "moment";
 import { COLORS } from "~/config/theme";
 import { useJobPostContext } from "~/pages/admin/JobPost/JobPostContext";

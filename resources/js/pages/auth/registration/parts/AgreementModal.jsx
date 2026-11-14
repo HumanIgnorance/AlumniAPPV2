@@ -1,6 +1,7 @@
 import React from "react";
 import { ExclamationCircleOutlined, WarningOutlined } from "@ant-design/icons";
-import { Alert, Button, Modal } from "antd";
+import { Alert, Modal } from "antd";
+import Button from "~/components/shared/AsyncButton";
 import { COLORS } from "~/config/theme";
 import { useRegistrationContext } from "~/pages/auth/registration/RegistrationContext";
 

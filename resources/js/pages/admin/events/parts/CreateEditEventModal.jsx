@@ -7,7 +7,6 @@ import {
     PlusOutlined,
 } from "@ant-design/icons";
 import {
-    Button,
     Col,
     DatePicker,
     Form,
@@ -22,6 +21,7 @@ import {
     Typography,
     Upload,
 } from "antd";
+import Button from "~/components/shared/AsyncButton";
 import dayjs from "dayjs";
 import { COLORS } from "~/config/theme";
 import { useEventsContext } from "~/pages/admin/events/EventsContext";

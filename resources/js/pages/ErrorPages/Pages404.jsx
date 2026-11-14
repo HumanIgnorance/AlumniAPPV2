@@ -48,7 +48,8 @@
 // export default Pages404;
 
 import React, { useEffect } from "react";
-import { Result, Button, Typography } from "antd";
+import { Result, Typography } from "antd";
+import Button from "~/components/shared/AsyncButton";
 import { Link } from "react-router-dom";
 import { useAppTheme } from "~/hooks/useAppTheme";
 import { COLORS } from "~/config/theme";

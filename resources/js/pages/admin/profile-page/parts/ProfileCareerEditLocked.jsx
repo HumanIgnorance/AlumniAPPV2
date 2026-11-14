@@ -1,4 +1,5 @@
-import { Modal, Button } from "antd";
+import { Modal } from "antd";
+import Button from "~/components/shared/AsyncButton";
 import { LockOutlined, ClockCircleOutlined } from "@ant-design/icons";
 import { COLORS } from "~/config/theme";
 import {

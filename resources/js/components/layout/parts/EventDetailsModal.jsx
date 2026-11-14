@@ -1,6 +1,7 @@
 import React from "react";
 import { CalendarOutlined, TeamOutlined } from "@ant-design/icons";
-import { Button, Col, Image, Modal, Row, Space, Spin, Typography } from "antd";
+import { Col, Image, Modal, Row, Space, Spin, Typography } from "antd";
+import Button from "~/components/shared/AsyncButton";
 import { useLayoutContext } from "~/components/layout/LayoutContext";
 import { formatEventTime } from "~/components/layout/utils/notificationUtils";
 import { COLORS } from "~/config/theme";

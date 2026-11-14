@@ -14,7 +14,6 @@ import {
     Avatar,
     Input,
     DatePicker,
-    Button,
     Tooltip,
     Empty,
     Drawer,
@@ -24,6 +23,7 @@ import {
     Spin,
     message,
 } from "antd";
+import Button from "~/components/shared/AsyncButton";
 import {
     CommentOutlined,
     SearchOutlined,

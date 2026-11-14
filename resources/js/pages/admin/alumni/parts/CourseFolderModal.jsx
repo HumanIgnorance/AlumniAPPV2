@@ -9,7 +9,6 @@ import {
 } from "@ant-design/icons";
 import {
     Avatar,
-    Button,
     Card,
     Col,
     Input,
@@ -24,6 +23,7 @@ import {
     Typography,
     message,
 } from "antd";
+import Button from "~/components/shared/AsyncButton";
 import moment from "moment";
 import logo from "~/assets/images/OCC_LOGO.png";
 import { COLORS } from "~/config/theme";

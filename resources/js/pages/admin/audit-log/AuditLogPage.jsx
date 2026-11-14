@@ -13,10 +13,10 @@ import {
     Avatar,
     Input,
     DatePicker,
-    Button,
     Tooltip,
     Empty,
 } from "antd";
+import Button from "~/components/shared/AsyncButton";
 import {
     FileSearchOutlined,
     LoginOutlined,

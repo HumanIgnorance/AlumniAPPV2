@@ -776,7 +776,17 @@ class AlumniRegistrationController extends Controller
         // values instead of silently falling back to the alumni row's
         // own updated_at (registration/edit time, unrelated to login
         // activity) on the frontend.
-        $query = Alumni::with(['documents', 'employmentStatus', 'user:id,last_active_at,is_online']);
+        // `email_verified_at` MUST be in this column list: the admin resource
+        // reads $user->hasVerifiedEmail() from it. It used to be left out, so
+        // the column always came back NULL and EVERY alumnus (even ones who
+        // verified their email) showed the "Email not verified" tag.
+        // `course` is loaded so the card can show the course code.
+        $query = Alumni::with([
+            'documents',
+            'employmentStatus',
+            'course',
+            'user:id,role,email_verified_at,last_active_at,is_online',
+        ]);
 
         // Search
         if ($request->has('search')) {

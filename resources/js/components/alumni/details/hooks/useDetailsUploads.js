@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { message } from "antd";
 import axios from "~/utils/axiosConfig";
 
@@ -10,6 +11,24 @@ export default function useDetailsUploads({
     setLocalProfileImage,
     previewData,
 }) {
+    // blob: preview URLs are only a fallback when the server sends no URL.
+    // They were never revoked, so every upload leaked the whole image in
+    // memory. Keep one per kind, revoke the replaced one and all on unmount.
+    const blobUrls = useRef({});
+    const makeBlobUrl = (kind, file) => {
+        const previous = blobUrls.current[kind];
+        if (previous) URL.revokeObjectURL(previous);
+        const url = URL.createObjectURL(file);
+        blobUrls.current[kind] = url;
+        return url;
+    };
+    useEffect(() => {
+        const urls = blobUrls.current;
+        return () => {
+            Object.values(urls).forEach((u) => URL.revokeObjectURL(u));
+        };
+    }, []);
+
     const handleUploadDocument = async (file, documentType) => {
         if (!alumniId) {
             message.error("Alumni ID not found");
@@ -39,7 +58,7 @@ export default function useDetailsUploads({
                 const newDocUrl =
                     response.data.file_url ||
                     response.data.data?.file_url ||
-                    URL.createObjectURL(file);
+                    makeBlobUrl(`doc:${documentType}`, file);
                 setLocalDocuments((prev) => {
                     const filtered = prev.filter(
                         (doc) =>
@@ -105,7 +124,7 @@ export default function useDetailsUploads({
                     response.data.data?.profile_image ||
                     response.data.profile_image_url ||
                     response.data.data?.profile_image_url ||
-                    URL.createObjectURL(file);
+                    makeBlobUrl("profile-image", file);
 
                 // Immediately update local state
                 setLocalProfileImage(newImageUrl);

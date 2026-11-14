@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { Alert, Button, Input } from "antd";
+import { Alert, Input } from "antd";
+import Button from "~/components/shared/AsyncButton";
 import { MailOutlined, ReloadOutlined } from "@ant-design/icons";
 import axios from "~/utils/axiosConfig";
 import "./VerifyEmailPanel.css";

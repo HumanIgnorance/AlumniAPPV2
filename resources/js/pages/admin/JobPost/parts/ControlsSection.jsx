@@ -1,5 +1,6 @@
 import { PlusOutlined, SearchOutlined } from "@ant-design/icons";
-import { Button, Card, Input, Select } from "antd";
+import { Card, Input, Select } from "antd";
+import Button from "~/components/shared/AsyncButton";
 import { ROLES } from "~/config/roles";
 import { COLORS } from "~/config/theme";
 import {

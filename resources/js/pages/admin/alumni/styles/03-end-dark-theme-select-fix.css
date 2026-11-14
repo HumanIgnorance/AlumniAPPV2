@@ -353,3 +353,104 @@
     max-height: 55vh;
   }
 }
+
+
+/* ============ ALUMNI CARD v2 — compact header, labelled aligned rows ============ */
+.alumni-card .ant-card-body { padding: 16px 18px 14px; }
+
+/* header: avatar + info, centred, no dead space above/below */
+.alumni-card .alumni-header {
+  display: flex;
+  flex-direction: row;          /* stays a row on phones too */
+  align-items: center;
+  text-align: left;
+  gap: 14px;
+  margin-bottom: 12px;
+}
+.alumni-card .alumni-avatar { flex: 0 0 auto; }
+
+.alumni-card .alumni-basic-info {
+  flex: 1 1 auto;
+  min-width: 0;                 /* lets long names wrap instead of overflowing */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+}
+
+.alumni-card .alumni-name-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  width: 100%;
+  min-width: 0;
+}
+
+/* name wraps on word boundaries (never "ANTIQUIN / A"), max 2 lines */
+.alumni-card .alumni-name {
+  display: -webkit-box !important;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0 !important;
+  font-size: 16px;
+  line-height: 1.3;
+  letter-spacing: 0.01em;
+  word-break: normal;
+  overflow-wrap: break-word;
+}
+.alumni-card .alumni-status-icon {
+  flex: 0 0 auto;
+  font-size: 18px;
+  line-height: 1.3;
+  display: inline-flex;
+  align-items: center;
+}
+
+.alumni-card .alumni-meta {
+  font-size: 13px;
+  line-height: 1.35;
+}
+.alumni-card .alumni-verify-tag {
+  margin: 3px 0 0;
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+.alumni-card .alumni-divider { margin: 0 0 12px; }
+
+/* labelled rows: [icon] [label] [value] — columns line up on every card */
+.alumni-card .alumni-rows { display: flex; flex-direction: column; gap: 9px; }
+.alumni-card .alumni-row {
+  display: grid;
+  grid-template-columns: 16px 84px minmax(0, 1fr);
+  column-gap: 8px;
+  align-items: center;
+  min-height: 24px;
+}
+.alumni-card .alumni-row-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--c-999999);
+  font-size: 14px;
+}
+.alumni-card .alumni-row-label { font-size: 13px; white-space: nowrap; }
+.alumni-card .alumni-row-value {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  line-height: 1.4;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 6px;
+}
+
+.alumni-card .alumni-skills { margin: 12px 0 0; }
+.alumni-card .alumni-bio { margin: 10px 0 0 !important; }
+
+@media (max-width: 360px) {
+  .alumni-card .alumni-row { grid-template-columns: 16px 74px minmax(0, 1fr); }
+}

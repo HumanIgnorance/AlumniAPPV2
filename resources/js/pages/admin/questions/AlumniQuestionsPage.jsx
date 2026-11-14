@@ -1,6 +1,7 @@
 import "~/pages/admin/questions/styles";
 import { Layout } from "~/components";
-import { Card, Tabs, Badge, Button, Table, Modal, Space } from "antd";
+import { Card, Tabs, Badge, Table, Modal, Space } from "antd";
+import Button from "~/components/shared/AsyncButton";
 import {
     OrderedListOutlined,
     UnorderedListOutlined,

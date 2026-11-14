@@ -1,6 +1,7 @@
 import React from "react";
 import { InfoCircleOutlined } from "@ant-design/icons";
-import { Button, Modal, Space } from "antd";
+import { Modal, Space } from "antd";
+import Button from "~/components/shared/AsyncButton";
 import { useEventsContext } from "~/pages/admin/events/EventsContext";
 
 export default function EventDraftPromptModal() {

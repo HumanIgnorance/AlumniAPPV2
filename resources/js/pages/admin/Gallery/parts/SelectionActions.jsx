@@ -4,7 +4,8 @@ import {
     DeleteOutlined,
     DownloadOutlined,
 } from "@ant-design/icons";
-import { Button, Card, Space, Typography } from "antd";
+import { Card, Space, Typography } from "antd";
+import Button from "~/components/shared/AsyncButton";
 import { useGalleryContext } from "~/pages/admin/Gallery/GalleryContext";
 
 const { Text } = Typography;

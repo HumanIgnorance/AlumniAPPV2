@@ -2,7 +2,6 @@ import logo from "~/assets/images/OCC_LOGO.png";
 import {
     Tag,
     Select,
-    Button,
     Row,
     Col,
     Card,
@@ -10,6 +9,7 @@ import {
     Progress,
     Rate,
 } from "antd";
+import Button from "~/components/shared/AsyncButton";
 import {
     CheckCircleOutlined,
     PrinterOutlined,

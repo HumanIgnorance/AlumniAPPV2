@@ -1,4 +1,5 @@
-import { Space, Input, Select, Card, Button, Table, Tooltip } from "antd";
+import { Space, Input, Select, Card, Table, Tooltip } from "antd";
+import Button from "~/components/shared/AsyncButton";
 import {
     SearchOutlined,
     QuestionCircleOutlined,

@@ -1,4 +1,5 @@
-import { Tag, Button } from "antd";
+import { Tag } from "antd";
+import Button from "~/components/shared/AsyncButton";
 import logo from "~/assets/images/OCC_LOGO.png";
 import {
     QuestionCircleOutlined,

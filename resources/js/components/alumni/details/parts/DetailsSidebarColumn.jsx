@@ -13,7 +13,8 @@ import {
     UploadOutlined,
     UserOutlined,
 } from "@ant-design/icons";
-import { Button, Card, Col, Typography, Upload } from "antd";
+import { Card, Col, Typography, Upload } from "antd";
+import Button from "~/components/shared/AsyncButton";
 import moment from "moment";
 import { useAlumniDetailsContext } from "~/components/alumni/details/AlumniDetailsContext";
 import { ID_TYPES } from "~/config/alumniOptions";

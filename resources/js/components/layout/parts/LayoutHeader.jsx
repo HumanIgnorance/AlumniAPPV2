@@ -5,9 +5,7 @@ import {
     MenuUnfoldOutlined,
 } from "@ant-design/icons";
 import {
-    Avatar,
     Badge,
-    Button,
     Col,
     Dropdown,
     Layout,
@@ -15,6 +13,8 @@ import {
     Space,
     Typography,
 } from "antd";
+import Button from "~/components/shared/AsyncButton";
+import HeaderAvatar from "~/components/layout/parts/HeaderAvatar";
 import { useLayoutContext } from "~/components/layout/LayoutContext";
 import AccountDropdown from "~/components/layout/parts/AccountDropdown";
 import NotificationsDropdown from "~/components/layout/parts/NotificationsDropdown";
@@ -227,7 +227,7 @@ export default function LayoutHeader() {
                                     background: "#667eea40",
                                 }}
                             >
-                                <Avatar
+                                <HeaderAvatar
                                     size={24}
                                     src={userData.avatar}
                                     style={{

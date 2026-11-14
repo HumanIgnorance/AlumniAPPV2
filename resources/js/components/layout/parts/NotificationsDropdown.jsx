@@ -4,7 +4,8 @@ import {
     EyeInvisibleOutlined,
     SettingOutlined,
 } from "@ant-design/icons";
-import { Button, List, Space, Spin, Tooltip, Typography } from "antd";
+import { List, Space, Spin, Tooltip, Typography } from "antd";
+import Button from "~/components/shared/AsyncButton";
 import { useLayoutContext } from "~/components/layout/LayoutContext";
 import NotificationItem from "~/components/layout/parts/NotificationItem";
 import { NOTIFICATION_CATEGORIES } from "~/config/notificationCategories";

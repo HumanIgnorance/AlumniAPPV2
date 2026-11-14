@@ -52,7 +52,8 @@
 // export default Pages402;
 
 import React from "react";
-import { Result, Button, Typography } from "antd";
+import { Result, Typography } from "antd";
+import Button from "~/components/shared/AsyncButton";
 import { Layout } from "~/components";
 import { Link } from "react-router-dom";
 import { useAppTheme } from "~/hooks/useAppTheme";

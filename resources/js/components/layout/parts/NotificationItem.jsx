@@ -10,13 +10,13 @@ import {
 import {
     Avatar,
     Badge,
-    Button,
     Image,
     List,
     Space,
     Tag,
     Typography,
 } from "antd";
+import Button from "~/components/shared/AsyncButton";
 import avatarGuidance from "~/assets/images/avatar_guidance.png";
 import avatarBEED from "~/assets/images/beed-logo.png";
 import avatarBSBA from "~/assets/images/bsba-logo.png";

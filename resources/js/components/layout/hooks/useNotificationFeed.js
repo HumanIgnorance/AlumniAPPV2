@@ -91,9 +91,21 @@ export default function useNotificationFeed({
         return counts;
     };
 
+    const initialLoadDoneRef = useRef(false);
+    const isMountedRef = useRef(true);
+    useEffect(() => {
+        isMountedRef.current = true;
+        return () => {
+            isMountedRef.current = false;
+        };
+    }, []);
+
     const fetchNotifications = async () => {
         try {
-            setIsLoading(true);
+            // Only the very first load shows the bell spinner. The 30 s
+            // background polls used to flip isLoading true/false every time,
+            // which re-rendered the whole layout and made the header flicker.
+            if (!initialLoadDoneRef.current) setIsLoading(true);
             const response = await axiosConfig.get(
                 `/notifications?page=1&per_page=${perPage}`,
                 {
@@ -186,7 +198,8 @@ export default function useNotificationFeed({
         } catch (error) {
             console.error("Failed to fetch notifications:", error);
         } finally {
-            setIsLoading(false);
+            initialLoadDoneRef.current = true;
+            if (isMountedRef.current) setIsLoading(false);
         }
     };
 

@@ -2,7 +2,6 @@ import {
     Modal,
     Space,
     Badge,
-    Button,
     Card,
     Tag,
     List,
@@ -12,6 +11,7 @@ import {
     Image,
     Statistic,
 } from "antd";
+import Button from "~/components/shared/AsyncButton";
 import { COLORS } from "~/config/theme";
 import { Text } from "~/pages/admin/questions/alumni-questions-page/parts/alumniQuestionsShared";
 import { useAlumniQuestionsContext } from "~/pages/admin/questions/alumni-questions-page/AlumniQuestionsContext";

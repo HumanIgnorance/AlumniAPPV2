@@ -8,8 +8,8 @@ import {
     Row,
     Col,
     Upload,
-    Button,
 } from "antd";
+import Button from "~/components/shared/AsyncButton";
 import {
     PictureOutlined,
     DeleteOutlined,

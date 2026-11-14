@@ -3,7 +3,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import {
-    Button,
     Input,
     Select,
     Tag,
@@ -21,6 +20,7 @@ import {
     Alert,
     Space,
 } from "antd";
+import Button from "~/components/shared/AsyncButton";
 import {
     PlusOutlined,
     EditOutlined,

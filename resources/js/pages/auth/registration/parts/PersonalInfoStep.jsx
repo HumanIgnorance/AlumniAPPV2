@@ -8,7 +8,6 @@ import {
     WarningOutlined,
 } from "@ant-design/icons";
 import {
-    Button,
     Col,
     DatePicker,
     Divider,
@@ -20,6 +19,7 @@ import {
     Typography,
     Upload,
 } from "antd";
+import Button from "~/components/shared/AsyncButton";
 import dayjs from "dayjs";
 import { useRegistrationContext } from "~/pages/auth/registration/RegistrationContext";
 import axios from "~/utils/axiosConfig";

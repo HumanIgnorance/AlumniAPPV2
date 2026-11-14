@@ -5,9 +5,9 @@ import {
     Alert,
     Divider,
     Space,
-    Button,
     Progress,
 } from "antd";
+import Button from "~/components/shared/AsyncButton";
 import {
     ExclamationCircleOutlined,
     QuestionCircleOutlined,

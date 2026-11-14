@@ -1,4 +1,5 @@
-import { Card, Badge, Button, Spin } from "antd";
+import { Card, Badge, Spin } from "antd";
+import Button from "~/components/shared/AsyncButton";
 import {
     CalendarOutlined,
     ArrowRightOutlined,

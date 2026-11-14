@@ -9,7 +9,8 @@ import {
     TeamOutlined,
     WarningOutlined,
 } from "@ant-design/icons";
-import { Button, Card, Space, Tabs, Typography } from "antd";
+import { Card, Space, Tabs, Typography } from "antd";
+import Button from "~/components/shared/AsyncButton";
 import { ROLES } from "~/config/roles";
 import { COLORS } from "~/config/theme";
 import { useJobPostContext } from "~/pages/admin/JobPost/JobPostContext";

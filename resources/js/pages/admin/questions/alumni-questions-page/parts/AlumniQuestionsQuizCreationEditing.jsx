@@ -2,13 +2,13 @@ import {
     Drawer,
     Space,
     Tag,
-    Button,
     Card,
     Input,
     Select,
     Empty,
     Table,
 } from "antd";
+import Button from "~/components/shared/AsyncButton";
 import {
     SearchOutlined,
     MenuOutlined,

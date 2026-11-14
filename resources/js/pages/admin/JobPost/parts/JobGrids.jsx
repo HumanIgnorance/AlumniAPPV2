@@ -15,7 +15,6 @@ import {
 } from "@ant-design/icons";
 import {
     Badge,
-    Button,
     Card,
     Col,
     Empty,
@@ -26,6 +25,7 @@ import {
     Tooltip,
     Typography,
 } from "antd";
+import Button from "~/components/shared/AsyncButton";
 import moment from "moment";
 import { STATUS } from "~/config/status";
 import { COLORS } from "~/config/theme";

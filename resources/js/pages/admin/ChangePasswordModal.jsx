@@ -3,7 +3,6 @@ import {
     Drawer,
     Form,
     Input,
-    Button,
     Typography,
     Card,
     Space,
@@ -12,6 +11,7 @@ import {
     Row,
     Col,
 } from "antd";
+import Button from "~/components/shared/AsyncButton";
 import {
     LockOutlined,
     EyeInvisibleOutlined,

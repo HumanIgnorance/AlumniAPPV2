@@ -9,7 +9,8 @@ import {
     SafetyCertificateOutlined,
     TrophyOutlined,
 } from "@ant-design/icons";
-import { Button, Divider, Modal, Space, Typography } from "antd";
+import { Divider, Modal, Space, Typography } from "antd";
+import Button from "~/components/shared/AsyncButton";
 import { COLORS } from "~/config/theme";
 import { useRegistrationContext } from "~/pages/auth/registration/RegistrationContext";
 

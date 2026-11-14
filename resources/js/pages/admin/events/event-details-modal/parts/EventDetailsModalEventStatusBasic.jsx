@@ -1,4 +1,5 @@
-import { Card, Space, Tag, Divider, Row, Col, Progress, Button } from "antd";
+import { Card, Space, Tag, Divider, Row, Col, Progress } from "antd";
+import Button from "~/components/shared/AsyncButton";
 import {
     getEventTypeConfig,
     getCategoryLabel,

@@ -1,5 +1,6 @@
 import axiosConfig from "~/utils/axiosConfig";
-import { message, Tag, Space, Tooltip, Button, Popconfirm } from "antd";
+import { message, Tag, Space, Tooltip, Popconfirm } from "antd";
+import Button from "~/components/shared/AsyncButton";
 import {
     EyeOutlined,
     EditOutlined,

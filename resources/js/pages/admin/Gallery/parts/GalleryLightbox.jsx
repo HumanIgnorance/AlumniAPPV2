@@ -10,7 +10,8 @@ import {
     ZoomInOutlined,
     ZoomOutOutlined,
 } from "@ant-design/icons";
-import { Button, Image, Space, Tooltip } from "antd";
+import { Image, Space, Tooltip } from "antd";
+import Button from "~/components/shared/AsyncButton";
 import { useGalleryContext } from "~/pages/admin/Gallery/GalleryContext";
 
 export default function GalleryLightbox() {

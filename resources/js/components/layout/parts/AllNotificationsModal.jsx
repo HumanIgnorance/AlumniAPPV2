@@ -10,7 +10,6 @@ import {
 import {
     Avatar,
     Badge,
-    Button,
     Empty,
     Image,
     List,
@@ -23,6 +22,7 @@ import {
     Tooltip,
     Typography,
 } from "antd";
+import Button from "~/components/shared/AsyncButton";
 import { useLayoutContext } from "~/components/layout/LayoutContext";
 import {
     getCategoryInfo,

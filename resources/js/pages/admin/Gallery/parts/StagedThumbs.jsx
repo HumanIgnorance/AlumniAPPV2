@@ -1,6 +1,7 @@
 import React from "react";
 import { CloseOutlined, EyeOutlined } from "@ant-design/icons";
-import { Button, Image, Tooltip } from "antd";
+import { Image, Tooltip } from "antd";
+import Button from "~/components/shared/AsyncButton";
 import { COLORS } from "~/config/theme";
 import { useGalleryContext } from "~/pages/admin/Gallery/GalleryContext";
 

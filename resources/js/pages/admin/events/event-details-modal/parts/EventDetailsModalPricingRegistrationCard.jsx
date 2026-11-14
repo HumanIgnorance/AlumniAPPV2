@@ -1,4 +1,5 @@
-import { Card, Tag, Space, Button, Divider, Avatar, Tooltip } from "antd";
+import { Card, Tag, Space, Divider, Avatar, Tooltip } from "antd";
+import Button from "~/components/shared/AsyncButton";
 import { ROLES } from "~/config/roles";
 import {
     CheckCircleOutlined,

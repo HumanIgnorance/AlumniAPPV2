@@ -77,6 +77,7 @@ function startGuard() {
     };
 
     const check = () => {
+        if (document.hidden) return; // nothing to guard while the tab is in the background
         if (dockedOpen()) show();
         else hide();
     };
