@@ -1,6 +1,7 @@
 import React from "react";
 import { WarningOutlined } from "@ant-design/icons";
-import { Modal, Space } from "antd";
+import { Space } from "antd";
+import Modal from "~/components/shared/AppModal";
 import Button from "~/components/shared/AsyncButton";
 import { useEventsContext } from "~/pages/admin/events/EventsContext";
 

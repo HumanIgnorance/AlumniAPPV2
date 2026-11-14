@@ -1,6 +1,7 @@
 import "./AlumniDashboard.css";
 import { Layout } from "~/components";
-import { Modal, Card, Row, Col, Spin } from "antd";
+import { Card, Row, Col, Spin } from "antd";
+import Modal from "~/components/shared/AppModal";
 import Button from "~/components/shared/AsyncButton";
 import { FilePdfOutlined } from "@ant-design/icons";
 import { COLORS } from "~/config/theme";

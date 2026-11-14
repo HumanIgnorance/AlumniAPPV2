@@ -1,6 +1,7 @@
 import React from "react";
 import { CloudUploadOutlined, PictureOutlined } from "@ant-design/icons";
-import { DatePicker, Form, Input, Modal, Space, Upload } from "antd";
+import { DatePicker, Form, Input, Space, Upload } from "antd";
+import Modal from "~/components/shared/AppModal";
 import Button from "~/components/shared/AsyncButton";
 import { useGalleryContext } from "~/pages/admin/Gallery/GalleryContext";
 import { MAX_IMAGES_PER_UPLOAD } from "~/pages/admin/Gallery/galleryHelpers";

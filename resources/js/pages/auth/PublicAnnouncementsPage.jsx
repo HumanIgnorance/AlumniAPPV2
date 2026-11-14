@@ -1,6 +1,7 @@
 "use client"
 import { useState, useEffect, useRef, useCallback } from "react";
-import { Typography, Row, Col, Empty, Select, Modal } from "antd";
+import { Typography, Row, Col, Empty, Select } from "antd";
+import Modal from "~/components/shared/AppModal";
 import {
     NotificationOutlined,
     CalendarOutlined,

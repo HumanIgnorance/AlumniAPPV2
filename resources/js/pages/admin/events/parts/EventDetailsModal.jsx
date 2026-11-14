@@ -1,4 +1,5 @@
-import { Menu, Modal, Dropdown, Row, Col, Card, Tag } from "antd";
+import { Menu, Dropdown, Row, Col, Card, Tag } from "antd";
+import Modal from "~/components/shared/AppModal";
 import Button from "~/components/shared/AsyncButton";
 import {
     EditOutlined,

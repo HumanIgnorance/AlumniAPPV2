@@ -12,7 +12,6 @@ import {
 import {
     Tag,
     message,
-    Modal,
     Space,
     Row,
     Col,
@@ -23,6 +22,7 @@ import {
     List,
     Table,
 } from "antd";
+import Modal from "~/components/shared/AppModal";
 import Button from "~/components/shared/AsyncButton";
 import { exportTableReport, slugifyForFile } from "~/utils/pdfReport";
 import { COLORS } from "~/config/theme";

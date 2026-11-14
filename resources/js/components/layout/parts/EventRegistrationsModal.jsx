@@ -4,12 +4,12 @@ import {
     Badge,
     Col,
     List,
-    Modal,
     Row,
     Space,
     Spin,
     Typography,
 } from "antd";
+import Modal from "~/components/shared/AppModal";
 import Button from "~/components/shared/AsyncButton";
 import { useLayoutContext } from "~/components/layout/LayoutContext";
 import { COLORS } from "~/config/theme";

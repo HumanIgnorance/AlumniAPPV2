@@ -4,7 +4,6 @@ import { InspectGuard } from "~/hooks/usePreventInspect";
 import "./quiz-shared/quiz-shared.css"; // unified header/question styles
 import "./quiz-shared/quiz-mobile.css"; // phone / tablet / PWA layer (loads last)
 import {
-    Modal,
     Space,
     Progress,
     Row,
@@ -18,6 +17,7 @@ import {
     Collapse,
     message,
 } from "antd";
+import Modal from "~/components/shared/AppModal";
 import Button from "~/components/shared/AsyncButton";
 import {
     ExclamationCircleOutlined,

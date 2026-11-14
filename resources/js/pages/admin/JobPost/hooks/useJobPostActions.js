@@ -1,5 +1,6 @@
 import { useCallback } from "react";
-import { Modal, message } from "antd";
+import { message } from "antd";
+import Modal from "~/components/shared/AppModal";
 import moment from "moment";
 import {
     buildImageUrl,

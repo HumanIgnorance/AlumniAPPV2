@@ -1,5 +1,4 @@
 import {
-    Modal,
     Space,
     Badge,
     Card,
@@ -9,6 +8,7 @@ import {
     Col,
     Image,
 } from "antd";
+import Modal from "~/components/shared/AppModal";
 import Button from "~/components/shared/AsyncButton";
 import { COLORS } from "~/config/theme";
 import { FullscreenOutlined } from "@ant-design/icons";

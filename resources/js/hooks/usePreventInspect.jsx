@@ -44,7 +44,7 @@
 // edits and nothing left commented out in the page components.
 // ============================================================
 import { useEffect, useState, useCallback } from "react";
-import { Modal } from "antd";
+import Modal from "~/components/shared/AppModal";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { COLORS } from "~/config/theme";
 

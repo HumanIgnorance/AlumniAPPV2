@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Modal, message } from "antd";
+import { message } from "antd";
+import Modal from "~/components/shared/AppModal";
 import VerifyEmailModal from "~/components/shared/VerifyEmailModal";
 
 export const OPEN_VERIFY_EMAIL_EVENT = "atms:verify-email";

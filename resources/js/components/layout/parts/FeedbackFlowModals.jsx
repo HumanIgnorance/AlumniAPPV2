@@ -8,12 +8,12 @@ import {
 } from "@ant-design/icons";
 import {
     Input,
-    Modal,
     Select,
     Typography,
     Upload,
     message,
 } from "antd";
+import Modal from "~/components/shared/AppModal";
 import Button from "~/components/shared/AsyncButton";
 import logoMini from "~/assets/images/site-logo.png";
 import { useLayoutContext } from "~/components/layout/LayoutContext";

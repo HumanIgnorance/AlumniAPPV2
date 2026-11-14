@@ -16,7 +16,6 @@ import {
     List,
     Tabs,
     Badge,
-    Modal,
     Form,
     Tooltip,
     Statistic,
@@ -24,6 +23,7 @@ import {
     Table,
     Checkbox,
 } from "antd";
+import Modal from "~/components/shared/AppModal";
 import Button from "~/components/shared/AsyncButton";import {
   SearchOutlined,
   EyeOutlined,

@@ -1,6 +1,6 @@
 import React from "react";
 import { CloseCircleFilled } from "@ant-design/icons";
-import { Modal } from "antd";
+import Modal from "~/components/shared/AppModal";
 import { useLoginContext } from "~/components/login/LoginContext";
 import { COLORS } from "~/config/theme";
 

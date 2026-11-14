@@ -12,7 +12,6 @@ import {
     Divider,
     Image,
     List,
-    Modal,
     Row,
     Space,
     Tag,
@@ -20,6 +19,7 @@ import {
     Typography,
     Upload,
 } from "antd";
+import Modal from "~/components/shared/AppModal";
 import Button from "~/components/shared/AsyncButton";
 import moment from "moment";
 import { ID_TYPES } from "~/config/alumniOptions";

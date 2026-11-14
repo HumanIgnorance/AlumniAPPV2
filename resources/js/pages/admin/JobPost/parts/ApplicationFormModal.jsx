@@ -23,7 +23,6 @@ import {
     Divider,
     Form,
     Input,
-    Modal,
     Row,
     Select,
     Space,
@@ -32,6 +31,7 @@ import {
     Typography,
     Upload,
 } from "antd";
+import Modal from "~/components/shared/AppModal";
 import Button from "~/components/shared/AsyncButton";
 import { ROLES } from "~/config/roles";
 import { COLORS } from "~/config/theme";

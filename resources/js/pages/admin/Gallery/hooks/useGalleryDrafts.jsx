@@ -4,7 +4,7 @@ import {
     DeleteOutlined,
     ExclamationCircleOutlined,
 } from "@ant-design/icons";
-import { Modal } from "antd";
+import Modal from "~/components/shared/AppModal";
 import dayjs from "dayjs";
 import {
     GALLERY_EDIT_DRAFT_KEY,

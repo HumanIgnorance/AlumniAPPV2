@@ -20,7 +20,8 @@
 //   page's own origin before fetching, with retries and clear errors.
 // ============================================================
 import React from "react";
-import { Modal, message } from "antd";
+import { message } from "antd";
+import Modal from "~/components/shared/AppModal";
 
 const MSG_KEY = "save-image";
 const SHEET_CHUNK = 25; // photos per iOS share sheet

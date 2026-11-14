@@ -4,7 +4,8 @@ import {
     ExclamationCircleOutlined,
     EyeOutlined,
 } from "@ant-design/icons";
-import { Image, Modal, Space, Tooltip, Typography } from "antd";
+import { Image, Space, Tooltip, Typography } from "antd";
+import Modal from "~/components/shared/AppModal";
 import { COLORS } from "~/config/theme";
 import { useGalleryContext } from "~/pages/admin/Gallery/GalleryContext";
 

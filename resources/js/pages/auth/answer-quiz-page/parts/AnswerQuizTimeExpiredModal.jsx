@@ -1,4 +1,4 @@
-import { Modal } from "antd";
+import Modal from "~/components/shared/AppModal";
 import { ClockCircleOutlined, LogoutOutlined } from "@ant-design/icons";
 import { getThemedModalProps } from "~/pages/auth/answer-quiz-page/parts/answerQuizShared";
 import { useAnswerQuizContext } from "~/pages/auth/answer-quiz-page/AnswerQuizContext";

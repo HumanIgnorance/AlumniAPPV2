@@ -1,5 +1,4 @@
 import {
-    Modal,
     Space,
     Badge,
     Card,
@@ -11,6 +10,7 @@ import {
     Image,
     Statistic,
 } from "antd";
+import Modal from "~/components/shared/AppModal";
 import Button from "~/components/shared/AsyncButton";
 import { COLORS } from "~/config/theme";
 import { Text } from "~/pages/admin/questions/alumni-questions-page/parts/alumniQuestionsShared";

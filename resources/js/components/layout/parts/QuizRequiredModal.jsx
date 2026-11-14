@@ -1,6 +1,6 @@
 import React from "react";
 import { LogoutOutlined } from "@ant-design/icons";
-import { Modal } from "antd";
+import Modal from "~/components/shared/AppModal";
 import Button from "~/components/shared/AsyncButton";
 import { useLayoutContext } from "~/components/layout/LayoutContext";
 import { logout } from "~/components/layout/utils/sessionActions";

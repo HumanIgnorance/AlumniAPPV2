@@ -1,6 +1,7 @@
 import React from "react";
 import { WarningOutlined } from "@ant-design/icons";
-import { Alert, Modal, Space, Tag, Typography } from "antd";
+import { Alert, Space, Tag, Typography } from "antd";
+import Modal from "~/components/shared/AppModal";
 import { COLORS } from "~/config/theme";
 import { useJobPostContext } from "~/pages/admin/JobPost/JobPostContext";
 

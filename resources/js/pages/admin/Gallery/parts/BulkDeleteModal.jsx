@@ -4,7 +4,8 @@ import {
     ExclamationCircleOutlined,
     EyeOutlined,
 } from "@ant-design/icons";
-import { Image, Modal, Space, Typography } from "antd";
+import { Image, Space, Typography } from "antd";
+import Modal from "~/components/shared/AppModal";
 import { useGalleryContext } from "~/pages/admin/Gallery/GalleryContext";
 
 const { Text } = Typography;

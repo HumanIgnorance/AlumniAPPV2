@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal } from "antd";
+import Modal from "~/components/shared/AppModal";
 import VerifyEmailPanel from "./VerifyEmailPanel";
 
 /** Pop-up wrapper used by the login screen and the registration success flow. */

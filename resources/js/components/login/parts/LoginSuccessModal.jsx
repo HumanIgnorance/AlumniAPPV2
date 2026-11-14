@@ -1,6 +1,6 @@
 import React from "react";
 import { CheckCircleFilled, RocketOutlined } from "@ant-design/icons";
-import { Modal } from "antd";
+import Modal from "~/components/shared/AppModal";
 import { Button } from "~/components/index";
 import logo from "~/assets/images/site-logo.png";
 import { useLoginContext } from "~/components/login/LoginContext";

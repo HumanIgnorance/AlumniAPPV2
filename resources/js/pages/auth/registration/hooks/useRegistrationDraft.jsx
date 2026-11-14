@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { WarningOutlined } from "@ant-design/icons";
-import { Modal } from "antd";
+import Modal from "~/components/shared/AppModal";
 import dayjs from "dayjs";
 import moment from "moment";
 import secureLocalStorage from "react-secure-storage";

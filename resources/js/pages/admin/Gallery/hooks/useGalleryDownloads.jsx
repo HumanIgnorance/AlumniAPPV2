@@ -1,5 +1,6 @@
 import { DownloadOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
-import { Modal, message } from "antd";
+import { message } from "antd";
+import Modal from "~/components/shared/AppModal";
 import { saveImages } from "~/utils/saveImage";
 import { BASE_URL } from "~/utils/constant";
 

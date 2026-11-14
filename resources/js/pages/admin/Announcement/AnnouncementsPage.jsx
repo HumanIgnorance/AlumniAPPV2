@@ -7,7 +7,6 @@ import {
     Select,
     Tag,
     Typography,
-    Modal,
     Form,
     Switch,
     DatePicker,
@@ -20,6 +19,7 @@ import {
     Alert,
     Space,
 } from "antd";
+import Modal from "~/components/shared/AppModal";
 import Button from "~/components/shared/AsyncButton";
 import {
     PlusOutlined,

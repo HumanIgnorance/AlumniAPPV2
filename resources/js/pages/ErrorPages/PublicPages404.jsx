@@ -1,7 +1,8 @@
 "use client"
 import React, { useEffect, useState, useCallback } from "react";
 import { INSPECT_PROTECTION_ENABLED } from "~/config/inspect";
-import { Typography, Modal } from "antd";
+import { Typography } from "antd";
+import Modal from "~/components/shared/AppModal";
 import {
     HomeOutlined,
     SunOutlined,

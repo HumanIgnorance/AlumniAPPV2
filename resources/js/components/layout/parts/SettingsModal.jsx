@@ -4,7 +4,8 @@ import {
     SettingOutlined,
     SoundOutlined,
 } from "@ant-design/icons";
-import { List, Modal, Space, Switch, Tag, Typography } from "antd";
+import { List, Space, Switch, Tag, Typography } from "antd";
+import Modal from "~/components/shared/AppModal";
 import Button from "~/components/shared/AsyncButton";
 import { useLayoutContext } from "~/components/layout/LayoutContext";
 import { DEFAULT_SETTINGS } from "~/components/layout/utils/layoutConstants";

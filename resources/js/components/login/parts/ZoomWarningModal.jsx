@@ -1,6 +1,6 @@
 import React from "react";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
-import { Modal } from "antd";
+import Modal from "~/components/shared/AppModal";
 import { Button } from "~/components/index";
 import { useLoginContext } from "~/components/login/LoginContext";
 import { COLORS } from "~/config/theme";

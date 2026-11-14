@@ -9,7 +9,8 @@ import {
     TrophyOutlined,
     UserOutlined,
 } from "@ant-design/icons";
-import { Alert, Divider, Modal, Space, Typography } from "antd";
+import { Alert, Divider, Space, Typography } from "antd";
+import Modal from "~/components/shared/AppModal";
 import Button from "~/components/shared/AsyncButton";
 import { COLORS } from "~/config/theme";
 import { useRegistrationContext } from "~/pages/auth/registration/RegistrationContext";

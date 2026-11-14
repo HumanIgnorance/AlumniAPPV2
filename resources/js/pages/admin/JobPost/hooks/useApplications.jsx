@@ -1,5 +1,6 @@
 import { useCallback } from "react";
-import { Modal, message } from "antd";
+import { message } from "antd";
+import Modal from "~/components/shared/AppModal";
 import { STATUS } from "~/config/status";
 import { COLORS } from "~/config/theme";
 import { getIdTypeLabel } from "~/pages/admin/JobPost/parts/jobPostHelpers";

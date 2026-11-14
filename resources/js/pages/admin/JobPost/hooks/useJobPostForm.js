@@ -1,5 +1,6 @@
 import { useCallback } from "react";
-import { Modal, Upload, message } from "antd";
+import { Upload, message } from "antd";
+import Modal from "~/components/shared/AppModal";
 import { ROLES } from "~/config/roles";
 import { VALID_ID_TYPES } from "~/pages/admin/JobPost/parts/jobPostConstants";
 import { clearJobPostDraft } from "~/pages/admin/JobPost/parts/jobPostStorage";

@@ -4,7 +4,8 @@ import {
     ClockCircleOutlined,
     CloseCircleOutlined,
 } from "@ant-design/icons";
-import { Form, Input, Modal, Select, Space, Tag, Typography } from "antd";
+import { Form, Input, Select, Space, Tag, Typography } from "antd";
+import Modal from "~/components/shared/AppModal";
 import { COLORS } from "~/config/theme";
 
 const { Option } = Select;

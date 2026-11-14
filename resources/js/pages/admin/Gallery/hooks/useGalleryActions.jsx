@@ -4,7 +4,8 @@ import {
     ExclamationCircleOutlined,
     WarningOutlined,
 } from "@ant-design/icons";
-import { Modal, message } from "antd";
+import { message } from "antd";
+import Modal from "~/components/shared/AppModal";
 import dayjs from "dayjs";
 import { COLORS } from "~/config/theme";
 import {

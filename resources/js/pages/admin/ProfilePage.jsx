@@ -4,7 +4,8 @@ import {
     AlumniDetails,
 } from "~/components";
 import { useEffect } from "react";
-import { Row, Col, Card, Descriptions, Modal, Spin } from "antd";
+import { Row, Col, Card, Descriptions, Spin } from "antd";
+import Modal from "~/components/shared/AppModal";
 import {
     MailOutlined,
     ApartmentOutlined,

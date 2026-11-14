@@ -13,7 +13,6 @@ import {
     Empty,
     Image,
     List,
-    Modal,
     Pagination,
     Popconfirm,
     Space,
@@ -22,6 +21,7 @@ import {
     Tooltip,
     Typography,
 } from "antd";
+import Modal from "~/components/shared/AppModal";
 import Button from "~/components/shared/AsyncButton";
 import { useLayoutContext } from "~/components/layout/LayoutContext";
 import {

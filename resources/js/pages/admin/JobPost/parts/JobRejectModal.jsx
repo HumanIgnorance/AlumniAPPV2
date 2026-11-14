@@ -1,6 +1,7 @@
 import React from "react";
 import { CloseCircleOutlined } from "@ant-design/icons";
-import { Alert, Input, Modal, Space, Typography } from "antd";
+import { Alert, Input, Space, Typography } from "antd";
+import Modal from "~/components/shared/AppModal";
 import { COLORS } from "~/config/theme";
 import { useJobPostContext } from "~/pages/admin/JobPost/JobPostContext";
 

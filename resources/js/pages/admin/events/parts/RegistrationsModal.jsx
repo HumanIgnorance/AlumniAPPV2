@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { FilePdfOutlined, PrinterOutlined, UsergroupAddOutlined } from "@ant-design/icons";
-import { Card, Col, Modal, Progress, Row, Space, Spin, Statistic, Table, Typography, message } from "antd";
+import { Card, Col, Progress, Row, Space, Spin, Statistic, Table, Typography, message } from "antd";
+import Modal from "~/components/shared/AppModal";
 import Button from "~/components/shared/AsyncButton";
 import moment from "moment";
 import logo from "~/assets/images/OCC_LOGO.png";

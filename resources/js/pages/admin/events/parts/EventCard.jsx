@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { CalendarOutlined, ClockCircleOutlined, DeleteOutlined, EditOutlined, EnvironmentOutlined, ExclamationCircleOutlined, EyeOutlined, MoreOutlined, TeamOutlined, UsergroupAddOutlined } from "@ant-design/icons";
-import { Avatar, Badge, Card, Carousel, Divider, Dropdown, Menu, Modal, Progress, Space, Tag, Tooltip, Typography, message } from "antd";
+import { Avatar, Badge, Card, Carousel, Divider, Dropdown, Menu, Progress, Space, Tag, Tooltip, Typography, message } from "antd";
+import Modal from "~/components/shared/AppModal";
 import moment from "moment";
 import { ROLES } from "~/config/roles";
 import { useIsTouchDevice } from "~/hooks/useIsTouchDevice";

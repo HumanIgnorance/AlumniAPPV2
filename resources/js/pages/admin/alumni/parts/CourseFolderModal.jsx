@@ -13,7 +13,6 @@ import {
     Col,
     Input,
     List,
-    Modal,
     Row,
     Select,
     Space,
@@ -23,6 +22,7 @@ import {
     Typography,
     message,
 } from "antd";
+import Modal from "~/components/shared/AppModal";
 import Button from "~/components/shared/AsyncButton";
 import moment from "moment";
 import logo from "~/assets/images/OCC_LOGO.png";

@@ -17,7 +17,6 @@ import {
     Form,
     Input,
     InputNumber,
-    Modal,
     Row,
     Select,
     Space,
@@ -26,6 +25,7 @@ import {
     Upload,
     message,
 } from "antd";
+import Modal from "~/components/shared/AppModal";
 import Button from "~/components/shared/AsyncButton";
 import moment from "moment";
 import { COLORS } from "~/config/theme";

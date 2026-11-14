@@ -1,4 +1,5 @@
-import { Modal, Badge, Tooltip } from "antd";
+import { Badge, Tooltip } from "antd";
+import Modal from "~/components/shared/AppModal";
 import {
     ExclamationCircleOutlined,
     FireOutlined,

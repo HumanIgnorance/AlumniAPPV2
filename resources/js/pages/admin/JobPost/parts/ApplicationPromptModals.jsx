@@ -1,6 +1,7 @@
 import React from "react";
 import { FileOutlined, WarningOutlined } from "@ant-design/icons";
-import { Modal, Space, Typography } from "antd";
+import { Space, Typography } from "antd";
+import Modal from "~/components/shared/AppModal";
 import Button from "~/components/shared/AsyncButton";
 import moment from "moment";
 import { COLORS } from "~/config/theme";

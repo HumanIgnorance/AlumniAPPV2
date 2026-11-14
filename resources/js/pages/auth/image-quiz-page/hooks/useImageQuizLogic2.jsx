@@ -1,5 +1,5 @@
 import { COLORS } from "~/config/theme";
-import { Modal } from "antd";
+import Modal from "~/components/shared/AppModal";
 import Button from "~/components/shared/AsyncButton";
 import {
     ReloadOutlined,

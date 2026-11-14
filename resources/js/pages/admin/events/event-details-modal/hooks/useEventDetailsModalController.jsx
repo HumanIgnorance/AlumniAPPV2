@@ -5,7 +5,8 @@ import dayjs from "dayjs";
 import { ROLES } from "~/config/roles";
 import axiosConfig from "~/utils/axiosConfig";
 import { STORAGE_KEYS } from "~/config/storageKeys";
-import { message, Modal } from "antd";
+import { message } from "antd";
+import Modal from "~/components/shared/AppModal";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 
 export default function useEventDetailsModalController({

@@ -1,4 +1,5 @@
-import { Modal, message } from "antd";
+import { message } from "antd";
+import Modal from "~/components/shared/AppModal";
 import secureLocalStorage from "react-secure-storage";
 import axios from "~/utils/axiosConfig";
 import { BASE_URL } from "~/utils/constant";
