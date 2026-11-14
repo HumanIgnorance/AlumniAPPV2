@@ -145,6 +145,9 @@ export default function useLoginState() {
 
     const [pendingModalOpen, setPendingModalOpen] = useState(false);
 
+    const [verifyModalOpen, setVerifyModalOpen] = useState(false);
+    const [verifyEmail, setVerifyEmail] = useState("");
+
     const [rejectedModalOpen, setRejectedModalOpen] = useState(false);
 
     const [rejectedNotes, setRejectedNotes] = useState("");
@@ -160,6 +163,10 @@ export default function useLoginState() {
     return {
         error,
         setPendingModalOpen,
+        verifyModalOpen,
+        setVerifyModalOpen,
+        verifyEmail,
+        setVerifyEmail,
         setRejectedNotes,
         setRejectedModalOpen,
         setLoginFormError,

@@ -1,0 +1,11 @@
+.vep { display: flex; flex-direction: column; gap: 14px; align-items: stretch; text-align: center; }
+.vep__icon { width: 56px; height: 56px; margin: 0 auto; border-radius: 16px; display: grid; place-items: center;
+    font-size: 26px; color: #fff; background: linear-gradient(135deg, #4f46e5, #0ea5e9); }
+.vep__lead { margin: 0; line-height: 1.55; overflow-wrap: anywhere; }
+.vep__otp { justify-content: center; }
+.vep__otp .ant-input { text-align: center; font-weight: 700; }
+.vep__alert { text-align: left; }
+.vep__resend { align-self: center; }
+.vep__hint { margin: 0; font-size: 12.5px; opacity: .7; }
+/* Phones: keep six boxes inside the screen */
+@media (max-width: 400px) { .vep__otp { gap: 4px; } .vep__otp .ant-input { padding-inline: 0; min-width: 0; } }

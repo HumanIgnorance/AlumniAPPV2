@@ -9,6 +9,7 @@ import ZoomWarningModal from "./login/parts/ZoomWarningModal";
 import PendingApprovalModal from "./login/parts/PendingApprovalModal";
 import RejectedAccountModal from "./login/parts/RejectedAccountModal";
 import LoginSuccessModal from "./login/parts/LoginSuccessModal";
+import VerifyEmailLoginModal from "./login/parts/VerifyEmailLoginModal";
 
 /**
  * Login screen (login, forgot password, find account, reset password).
@@ -25,6 +26,7 @@ const Formlogin = () => {
             <LoginPage />
             <ZoomWarningModal />
             <PendingApprovalModal />
+            <VerifyEmailLoginModal />
             <RejectedAccountModal />
             <LoginSuccessModal />
         </LoginProvider>

@@ -44,6 +44,57 @@ class AuthController extends Controller
             return response(['message' => 'Wrong password'], 403);
         }
 
+        // ---- Gate checks BEFORE any token or cookie is issued ----------------
+        // Previously the token + HttpOnly cookie were created first and the
+        // pending / rejected / inactive 403 was returned afterwards, so a
+        // blocked alumnus still received a working auth cookie. Everything
+        // that can refuse the login now runs first; messages are unchanged
+        // (the login page matches on them).
+        $alumni = null;
+
+        if ($user->role === 'alumni') {
+            // Self-registered alumni must prove they own the email address.
+            // Administrators and department heads (created by an admin) are
+            // exempt. Checked after the password so this cannot be used to
+            // probe which addresses are registered.
+            if (!$user->hasVerifiedEmail()) {
+                return response()->json([
+                    'success' => false,
+                    'code' => 'email_unverified',
+                    'email' => $user->email,
+                    'message' => 'Please verify your email address before signing in. Enter the 6-digit code we emailed you, or open the link in that email.'
+                ], 403);
+            }
+
+            $alumni = Alumni::where('user_id', $user->id)->firstOrFail();
+
+            if ($alumni->status === 'pending') {
+                $this->notifyAdminsAboutPendingAlumniLogin($alumni);
+
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Your alumni account is pending approval. Please wait for administrator approval. You will be notified via email once your account has been approved!'
+                ], 403);
+            }
+
+            if ($alumni->status === 'inactive') {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Your alumni account is inactive. Please contact administrator to reactivate your account.'
+                ], 403);
+            }
+
+            if ($alumni->status === 'rejected') {
+                // Frontend detects the "REJECTED::" prefix and pops up the
+                // Account Rejected modal with the admin notes.
+                $adminNotes = $alumni->admin_notes ?: 'No additional notes were provided by the administrator.';
+                return response()->json([
+                    'success' => false,
+                    'message' => 'REJECTED::' . $adminNotes,
+                ], 403);
+            }
+        }
+
         $loginData = array(
             'email' => $email,
             'password' => $password
@@ -102,35 +153,6 @@ class AuthController extends Controller
         }
 
         if ($user->role === 'alumni') {
-            $alumni = Alumni::where('user_id', $user->id)->firstOrFail();
-
-            if ($alumni->status === 'pending') {
-                $this->notifyAdminsAboutPendingAlumniLogin($alumni);
-                
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Your alumni account is pending approval. Please wait for administrator approval. You will be notified via email once your account has been approved!'
-                ], 403);
-            }
-
-            if ($alumni->status === 'inactive') {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Your alumni account is inactive. Please contact administrator to reactivate your account.'
-                ], 403);
-            }
-
-            if ($alumni->status === 'rejected') {
-                // Frontend (FormLogin.js) detects the "REJECTED::" prefix and
-                // pops up the Account Rejected modal, displaying the admin notes
-                // and instructing the alumni to contact the Administrator Office.
-                $adminNotes = $alumni->admin_notes ?: 'No additional notes were provided by the administrator.';
-                return response()->json([
-                    'success' => false,
-                    'message' => 'REJECTED::' . $adminNotes,
-                ], 403);
-            }
-
             $responseData['alumni_id'] = $alumni->id;
 
             $this->logAudit($request, $user, 'login', $alumni);

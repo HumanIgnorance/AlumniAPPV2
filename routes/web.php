@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PwaManifestController;
 use App\Http\Controllers\SpaController;
+use App\Http\Controllers\EmailVerificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +31,13 @@ use App\Http\Controllers\SpaController;
 // since Route::get('/{path?}', ...) would otherwise swallow
 // /manifest.json and return the app.blade.php view instead of JSON.
 Route::get('/manifest.json', PwaManifestController::class)->name('pwa.manifest');
+
+// Link from the verification email (signed + expiring). Must come before the
+// catch-all below. The name 'verification.verify' is what Laravel expects.
+Route::get('/email/verify/{id}/{hash}', [EmailVerificationController::class, 'verify'])
+    ->whereNumber('id')
+    ->middleware('throttle:10,1')
+    ->name('verification.verify');
 
 // ---------------------------------------------------------------------
 // Public file fallback: GET /storage/{path}

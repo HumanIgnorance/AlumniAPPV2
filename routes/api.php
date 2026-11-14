@@ -15,6 +15,7 @@ use App\Http\Controllers\MessagingController;
 use App\Http\Controllers\JobPostController;
 use App\Http\Controllers\JobApplicationController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\EmailVerificationController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\AnnouncementController;
@@ -33,6 +34,15 @@ Route::prefix('password')->middleware('throttle:password-reset')->group(function
     Route::post('/send-reset-link', [PasswordResetController::class, 'sendResetLink']);
     Route::post('/reset', [PasswordResetController::class, 'resetPassword']);
     Route::post('/verify-token', [PasswordResetController::class, 'verifyToken']);
+});
+
+// Email verification for newly registered alumni. Public on purpose: an
+// alumnus cannot sign in until an administrator approves the account, so the
+// address itself (plus the emailed code) is the proof. Throttled and
+// enumeration-safe — see EmailVerificationController.
+Route::prefix('email')->middleware('throttle:email-verification')->group(function () {
+    Route::post('/verify-code', [EmailVerificationController::class, 'verifyCode']);
+    Route::post('/resend', [EmailVerificationController::class, 'resend']);
 });
 
 //public route
@@ -81,7 +91,7 @@ Route::post('/contact', [PublicContactController::class, 'send'])
     ->middleware('throttle:public-contact');
 
 Route::group([
-    'middleware' => 'auth:api'
+    'middleware' => ['auth:api', 'email.verified']
 ], function () {
 
 // Gallery routes

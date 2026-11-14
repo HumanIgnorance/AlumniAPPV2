@@ -1,9 +1,13 @@
 import { useEffect, useState } from "react";
+import { message } from "antd";
 import { useAppTheme } from "~/hooks/useAppTheme";
 
 export default function useLoginStatus({
     error,
     setPendingModalOpen,
+    setVerifyModalOpen,
+    setVerifyEmail,
+    loginForm,
     setRejectedNotes,
     setRejectedModalOpen,
     setLoginFormError,
@@ -28,8 +32,28 @@ export default function useLoginStatus({
     const extractRejectedNotes = (msg) =>
         typeof msg === "string" ? msg.slice(REJECTED_PREFIX.length).trim() : "";
 
+    // Backend (AuthController@login) asks for email verification with a
+    // message containing "verify your email address".
+    const isEmailUnverified = (msg) =>
+        typeof msg === "string" && /verify your email address/i.test(msg);
+
+    // Result of clicking the link in the verification email: /login?verify=ok|invalid
+    useEffect(() => {
+        const flag = new URLSearchParams(window.location.search).get("verify");
+        if (flag === "ok") {
+            message.success("Email verified. Your registration now waits for administrator approval.", 6);
+        } else if (flag === "invalid") {
+            message.error("That verification link is invalid or has expired. Sign in to request a new email.", 6);
+        }
+    }, []);
+
     useEffect(() => {
         if (!error) return;
+        if (isEmailUnverified(error)) {
+            setVerifyEmail((loginForm && loginForm.getFieldValue("email")) || "");
+            setVerifyModalOpen(true);
+            return;
+        }
         if (isPendingApproval(error)) {
             setPendingModalOpen(true);
             return;

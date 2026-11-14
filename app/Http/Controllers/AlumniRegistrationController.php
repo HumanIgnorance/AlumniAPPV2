@@ -103,7 +103,9 @@ class AlumniRegistrationController extends Controller
                 'name' => $validated['first_name'] . ' ' . $validated['last_name'],
                 'email' => $validated['email'],
                 'password' => Hash::make($validated['password']),
-                'email_verified_at' => now(), 
+                // Left NULL on purpose: the alumnus must verify the email
+                // address (code or link) before they can ever sign in.
+                'email_verified_at' => null,
             ]);
 
             
@@ -235,10 +237,17 @@ class AlumniRegistrationController extends Controller
                 Log::error('Failed to send alumni registration confirmation email: ' . $emailException->getMessage());
             }
 
+            // Email verification: send the link + 6-digit code. Never fails
+            // the registration; the alumnus can press "Resend" on the screen.
+            $verificationSent = \App\Http\Controllers\EmailVerificationController::send($user);
+
             return response()->json([
                 'success' => true,
                 'message' => 'Alumni registration submitted successfully!',
                 'application_id' => $applicationId,
+                'email_verification_required' => true,
+                'verification_email_sent' => $verificationSent,
+                'email' => $user->email,
                 'data' => new \App\Http\Resources\Alumni\AlumniSelfResource($alumni->load(['documents', 'employmentStatus']))
             ], 201);
         } catch (\Exception $e) {
@@ -640,8 +649,18 @@ class AlumniRegistrationController extends Controller
     public function updateStatus(Request $request)
     {
         $alumni = Alumni::findOrFail($request->id);
-        
+
         $oldStatus = $alumni->status;
+
+        // An account cannot be approved before its owner proved the email
+        // address is theirs; otherwise nobody could receive the approval
+        // email or ever recover the password.
+        if ($request->status === 'approved' && $alumni->user && !$alumni->user->hasVerifiedEmail()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'This alumnus has not verified their email address yet. Approval is available after they verify.',
+            ], 422);
+        }
 
         $alumni->update([
             'status' => $request->status,

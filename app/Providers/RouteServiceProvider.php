@@ -108,6 +108,16 @@ class RouteServiceProvider extends ServiceProvider
             return Limit::perHour(5)->by($request->ip());
         });
 
+        // Public email-verification endpoints (code check + resend).
+        // Keyed by IP and, separately, by the target address so one inbox
+        // cannot be hammered from many IPs.
+        RateLimiter::for('email-verification', function (Request $request) {
+            return [
+                Limit::perMinute(10)->by('ev-ip|' . $request->ip()),
+                Limit::perHour(30)->by('ev-email|' . strtolower((string) $request->input('email'))),
+            ];
+        });
+
         // Authenticated password change.
         RateLimiter::for('change-password', function (Request $request) {
             return Limit::perHour(5)->by(optional($request->user())->id ?: $request->ip());

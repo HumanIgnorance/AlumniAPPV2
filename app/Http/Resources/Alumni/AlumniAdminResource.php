@@ -21,6 +21,10 @@ class AlumniAdminResource extends JsonResource
                 'admin_notes' => $this->admin_notes,
                 'is_messaging_restricted' => (bool) $this->is_messaging_restricted,
                 'agreement' => (bool) $this->agreement,
+                // Admin list shows an "Email not verified" tag and blocks approval until true.
+                'email_verified' => $this->relationLoaded('user') && $this->user
+                    ? $this->user->hasVerifiedEmail()
+                    : (bool) optional($this->user)->hasVerifiedEmail(),
 
                 // Real login/session presence, sourced from the linked
                 // users row (see AlumniRegistrationController@index's

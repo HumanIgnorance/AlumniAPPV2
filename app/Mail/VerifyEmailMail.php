@@ -1,0 +1,42 @@
+<?php
+
+namespace App\Mail;
+
+use Illuminate\Bus\Queueable;
+use Illuminate\Mail\Mailable;
+use Illuminate\Queue\SerializesModels;
+
+/**
+ * "Verify your email" message sent to a newly registered alumnus.
+ * Same shape as PasswordResetMail so it shares the OCC logo, header and footer.
+ */
+class VerifyEmailMail extends Mailable
+{
+    use Queueable, SerializesModels;
+
+    public $fullName;
+    public $verifyUrl;
+    public $userEmail;
+    public $code;
+
+    public function __construct(string $fullName, string $verifyUrl, string $email, ?string $code = null)
+    {
+        $this->fullName = $fullName;
+        $this->verifyUrl = $verifyUrl;
+        $this->userEmail = $email;
+        $this->code = $code;
+    }
+
+    public function build()
+    {
+        return $this->to($this->userEmail)
+            ->subject('Verify your email - OCC Alumni Association')
+            ->view('emails.verify-email')
+            ->with([
+                'fullName' => $this->fullName,
+                'verifyUrl' => $this->verifyUrl,
+                'email' => $this->userEmail,
+                'code' => $this->code,
+            ]);
+    }
+}

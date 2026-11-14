@@ -13,6 +13,7 @@ import RegistrationPreview from "./registration/parts/RegistrationPreview";
 import AgreementModal from "./registration/parts/AgreementModal";
 import PrivacyPolicyModal from "./registration/parts/PrivacyPolicyModal";
 import TermsOfServiceModal from "./registration/parts/TermsOfServiceModal";
+import VerifyEmailGate from "./registration/parts/VerifyEmailGate";
 
 /**
  * Alumni registration wizard (5 steps).
@@ -35,6 +36,7 @@ const AlumniRegistration = () => {
                 <AgreementModal />
                 <PrivacyPolicyModal />
                 <TermsOfServiceModal />
+                <VerifyEmailGate />
             </div>
         </RegistrationProvider>
     );

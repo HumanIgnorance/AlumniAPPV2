@@ -56,21 +56,11 @@ export default function PublicHomeFooter() {
                                 <InstagramOutlined />
                             </a>
                         </div>
-                        {/* Phones/tablets: the white OCCAA seal fills the empty
-                            space beside the social icons. */}
-                        <img
-                            className="ph-footer-seal ph-footer-seal--inline"
-                            src={sealWhite}
-                            alt=""
-                            aria-hidden="true"
-                            draggable="false"
-                            loading="lazy"
-                            decoding="async"
-                        />
                     </div>
                 </div>
 
-                <div>
+                <div className="ph-footer-links-col">
+                    <img className="ph-footer-seal ph-footer-seal--links" src={sealWhite} alt="" aria-hidden="true" draggable="false" loading="lazy" decoding="async" />
                     <div className="ph-footer-heading">Quick Links</div>
                     <div className="ph-footer-links">
                         <button onClick={scrollToTop}>Home</button>
@@ -97,7 +87,7 @@ export default function PublicHomeFooter() {
 
                 <div>
                     <div className="ph-footer-heading">ATMS</div>
-                    <div className="ph-footer-links">
+                    <div className="ph-footer-links ph-footer-links--stack">
                         <button onClick={() => goTo("/public-contact")}>
                             Contact Us
                         </button>
@@ -114,24 +104,25 @@ export default function PublicHomeFooter() {
             <div className="ph-footer-bottom">
                 <span>ATMS - All rights reserved.</span>
                 <span className="ph-footer-credit">
-                    <code className="ph-footer-tag">{"</>"}</code>
-                    Developed by{" "}
-                    <strong className="ph-footer-dev-name">
-                        {" "}
-                        <a
+                    <span className="ph-footer-credit-dev">
+                        <code className="ph-footer-tag">{"</>"}</code>
+                        <span>Developed by</span>
+                        <strong className="ph-footer-dev-name"><a
                             href="https://www.facebook.com/EphemeralKun/"
                             target="_blank"
                             rel="noopener noreferrer"
                         >
                             Antiquina, Jonee John R.
-                        </a>
-                    </strong>
-                    <span className="ph-footer-dot">•</span> Secure
-                    <span className="ph-footer-dot">•</span> Alumni Association
-                    <span className="ph-footer-dot">•</span> Events
-                    <span className="ph-footer-dot">•</span> © {"2025"} ATMS
-                    <span className="ph-footer-dot">•</span> Built with{" "}
-                    <span className="ph-footer-heart">❤️</span>
+                        </a></strong>
+                    </span>
+                    <span className="ph-footer-dot ph-footer-dot--group">•</span>
+                    <span className="ph-footer-credit-meta">
+                        <span>Secure</span><span className="ph-footer-dot">•</span><span>Alumni Association</span><span className="ph-footer-dot">•</span><span>Events</span>
+                    </span>
+                    <span className="ph-footer-dot ph-footer-dot--group">•</span>
+                    <span className="ph-footer-credit-meta">
+                        <span>© {"2025"} ATMS</span><span className="ph-footer-dot">•</span><span>Built with <span className="ph-footer-heart">❤️</span></span>
+                    </span>
                 </span>
             </div>
         </footer>

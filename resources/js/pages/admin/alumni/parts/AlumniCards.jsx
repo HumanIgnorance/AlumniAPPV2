@@ -124,6 +124,12 @@ export const AlumniCard = ({
                                 {alumnus.graduation_year}
                             </Text>
 
+                            {role === "admin" && alumnus.email_verified === false && (
+                                <div style={{ marginTop: 6 }}>
+                                    <Tag color="orange">Email not verified</Tag>
+                                </div>
+                            )}
+
                             {/* {role === "admin" && isRecentlyUpdated && (
                 <div style={{ marginTop: 8 }}>
                   <Tag color="blue" icon={<BellOutlined />}>

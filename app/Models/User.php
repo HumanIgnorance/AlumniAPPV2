@@ -3,12 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 use Carbon\Carbon;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -90,6 +91,37 @@ class User extends Authenticatable
     public function alumni()
     {
         return $this->hasOne(Alumni::class, 'user_id');
+    }
+
+    /**
+     * Email verification applies to self-registered alumni only.
+     * Administrators and department heads are created by an administrator,
+     * so they are treated as verified (and their rows are stamped verified
+     * when created / by the backfill migration).
+     */
+    public function mustVerifyEmail(): bool
+    {
+        return $this->role === 'alumni';
+    }
+
+    /**
+     * Override the framework default so the email carries our own template,
+     * the signed link AND the 6-digit code (see EmailVerificationCodeService).
+     * Called by EmailVerificationController::send().
+     */
+    public function sendEmailVerificationNotification()
+    {
+        $code = app(\App\Services\Auth\EmailVerificationCodeService::class)->issue($this);
+
+        $url = \Illuminate\Support\Facades\URL::temporarySignedRoute(
+            'verification.verify',
+            now()->addMinutes(\App\Services\Auth\EmailVerificationCodeService::TTL_MINUTES),
+            ['id' => $this->getKey(), 'hash' => sha1($this->getEmailForVerification())]
+        );
+
+        \Illuminate\Support\Facades\Mail::send(
+            new \App\Mail\VerifyEmailMail($this->name ?: 'Alumnus', $url, $this->email, $code)
+        );
     }
 
     public function alumniQuizzes()

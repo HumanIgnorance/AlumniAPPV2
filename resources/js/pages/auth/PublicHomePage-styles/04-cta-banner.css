@@ -491,104 +491,139 @@
 
 
 /* ==========================================================================
-   FOOTER SEAL (white OCCAA logo, like the eGovPH footer) + PHONE POLISH
+   FOOTER — OCCAA seal, link columns and credit line (all public pages)
+   --------------------------------------------------------------------------
+   • The seal is the same faded "watermark" look everywhere (opacity .2 on the
+     dark footer — grey, never bright white).
+   • Wide screens / landscape: seal sits top-right, top edge level with the
+     OCC Alumni Association brand row, so it lines up with the
+     "Connecting Opol Community College…" block.
+   • Phones (portrait): seal is big and vertically centred on the
+     "Quick Links / Home" block.
    ========================================================================== */
-.ph-footer { position: relative; overflow: hidden; }
+.ph-footer {
+  position: relative;
+  overflow: hidden;
+  --ph-fpt: 54px; /* footer top padding, used to align the seal */
+}
+@media (max-width: 1199px) { .ph-footer { --ph-fpt: 46px; } }
+@media (max-width: 767px)  { .ph-footer { --ph-fpt: 40px; } }
+@media (max-width: 374px)  { .ph-footer { --ph-fpt: 34px; } }
+
 .ph-footer-inner,
 .ph-footer-bottom { position: relative; z-index: 1; }
 
 .ph-footer .ph-footer-seal {
   display: block;
+  position: absolute;
+  z-index: 0;
+  height: auto;
+  object-fit: contain;
   pointer-events: none;
   user-select: none;
   -webkit-user-select: none;
   -webkit-touch-callout: none;
-  object-fit: contain;
-  /* white only — never tinted by the footer text-colour rule */
   filter: none;
+  opacity: 0.2;
 }
 
-/* Desktop / large tablet: big faded watermark in the empty right side */
+/* Wide / landscape watermark: top-right, level with the brand row */
 .ph-footer .ph-footer-seal--mark {
-  position: absolute;
-  z-index: 0;
   right: max(24px, calc((100vw - 1240px) / 2));
-  top: 50%;
-  transform: translateY(-58%);
+  top: var(--ph-fpt);
+  transform: none;
   width: clamp(190px, 20vw, 280px);
-  height: auto;
-  opacity: 0.16;
 }
-.ph-footer .ph-footer-seal--inline { display: none; }
+.ph-footer .ph-footer-seal--links { display: none; }
 
 .ph-footer-social-row {
   display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
+  align-items: center;
   gap: 16px;
 }
 
-/* Tablets + all phones: watermark off, seal sits beside the social icons */
-@media (max-width: 991px) {
-  .ph-footer .ph-footer-seal--mark { display: none; }
-  .ph-footer .ph-footer-seal--inline {
-    display: block;
-    flex: 0 0 auto;
-    width: clamp(84px, 24vw, 128px);
-    height: auto;
-    opacity: 0.85;
-    margin-left: auto;
+/* Quick Links column: anchor for the phone seal */
+.ph-footer-links-col { position: relative; }
+.ph-footer-links-col > .ph-footer-heading,
+.ph-footer-links-col > .ph-footer-links { position: relative; z-index: 1; }
+
+/* Tablets + landscape phones: smaller watermark, still top-right and
+   level with the brand / description block */
+@media (min-width: 768px) and (max-width: 991px) {
+  .ph-footer .ph-footer-seal--mark {
+    right: max(24px, env(safe-area-inset-right));
+    width: clamp(160px, 22vw, 230px);
+  }
+}
+@media (min-width: 768px) and (max-height: 520px) and (orientation: landscape) {
+  .ph-footer .ph-footer-seal--mark {
+    right: max(24px, env(safe-area-inset-right));
+    width: clamp(150px, 50vh, 230px);
   }
 }
 
-/* Phones: app-like comfort */
+/* ---------- Phones: single-column footer ---------- */
 @media (max-width: 767px) {
-  /* the floating scroll % orb (bottom-right) used to cover the credit line */
-  .ph-footer { padding-bottom: calc(88px + env(safe-area-inset-bottom)); }
+  /* big seal, centred on the Quick Links / Home block (not white-hot) */
+  .ph-footer .ph-footer-seal--mark { display: none; }
+  .ph-footer .ph-footer-seal--links {
+    display: block;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: clamp(170px, 56vw, 260px);
+  }
 
-  /* comfortable 44px touch targets in the footer */
+  /* No more empty band under the credit line: only the safe-area inset
+     (the scroll-% orb floats over the corner, the credit lines are short
+     enough to stay clear of it). */
+  .ph-footer { padding-bottom: calc(22px + env(safe-area-inset-bottom)); }
+
+  /* comfortable 44px touch targets */
   .ph-footer-links button,
   .ph-footer-links a { min-height: 44px; display: inline-flex; align-items: center; }
   .ph-footer-social a { width: 44px; height: 44px; }
 
-  .ph-footer-bottom { overflow-wrap: anywhere; }
+  /* ATMS: one tidy column, same rhythm as Quick Links */
+  .ph-footer-links--stack { grid-template-columns: 1fr; row-gap: 0; }
 
-  /* BIGGER OCCAA seal on phones (desktop watermark untouched) */
-  .ph-footer-social-row { align-items: center; }
-  .ph-footer .ph-footer-seal--inline {
-    width: clamp(130px, 40vw, 190px);
-    opacity: 0.95;
+  /* Heading -> links spacing consistent for every column */
+  .ph-footer-heading { margin-bottom: 6px; }
+
+  /* Bottom bar: label line, then grouped credit rows */
+  .ph-footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 26px;
+    padding-top: 16px;
   }
+  .ph-footer-credit {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    width: 100%;
+  }
+  .ph-footer-dot--group { display: none; }
 }
 
-/* very narrow phones (iPhone SE / 320px Androids) */
+/* very narrow phones */
 @media (max-width: 359px) {
-  .ph-footer .ph-footer-seal--inline { width: 110px; }
-  .ph-footer-social-row { gap: 10px; }
+  .ph-footer .ph-footer-seal--links { width: 150px; }
 }
 
-/* landscape phones: the screen is wide but short (~360-430px tall), so the
-   old fixed 100px seal looked tiny. Size it from the viewport HEIGHT instead,
-   and bring back the big watermark when there is room on the right. */
+/* Landscape phones short on height: keep the footer compact */
 @media (max-height: 520px) and (orientation: landscape) {
-  .ph-footer { padding-bottom: calc(24px + env(safe-area-inset-bottom)); }
-  .ph-footer .ph-footer-seal--inline {
-    display: block;
-    width: clamp(130px, 48vh, 200px);
-    opacity: 0.95;
-  }
-  .ph-footer .ph-footer-seal--mark { display: none; }
+  .ph-footer { padding-bottom: calc(22px + env(safe-area-inset-bottom)); }
 }
 
-/* wide landscape phones/tablets (>=800px): large faded watermark on the right */
-@media (min-width: 800px) and (max-height: 520px) and (orientation: landscape) {
-  .ph-footer .ph-footer-seal--inline { display: none; }
-  .ph-footer .ph-footer-seal--mark {
-    display: block;
-    right: max(16px, env(safe-area-inset-right));
-    width: clamp(170px, 62vh, 260px);
-    opacity: 0.2;
-  }
+/* Credit line building blocks (desktop: one wrapped row, phones: grouped rows) */
+.ph-footer-credit-dev,
+.ph-footer-credit-meta {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
 }
 
 /* iOS/Android text never auto-inflates, images never overflow */
