@@ -78,10 +78,11 @@ export default function SidebarNav() {
             placement="left"
             closable={false}
             onClose={toggleDrawer}
-            visible={drawerVisible}
+            open={drawerVisible}
             width="min(86vw, 320px)"
             footer={<LayoutFooter />}
-            bodyStyle={{ padding: 0 }}
+            styles={{ body: { padding: 0 } }}
+            rootClassName="app-nav-drawer"
         >
             <SideMenu />
         </Drawer>

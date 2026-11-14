@@ -39,6 +39,7 @@ export default function LayoutFooter() {
                 >
                     {" </> "}Developed by{" "}
                     <a
+                        className="app-footer-credit-link"
                         href="https://www.facebook.com/EphemeralKun/"
                         target="_blank"
                         rel="noopener noreferrer"
@@ -49,6 +50,7 @@ export default function LayoutFooter() {
                             WebkitBackgroundClip: "text",
                             color: "transparent",
                             textDecoration: "none",
+                            display: "inline-block",
                         }}
                         onMouseEnter={(e) =>
                             (e.target.style.textDecoration = "underline")

@@ -957,4 +957,35 @@ export const alumniDetailsCss = `
                     min-width: 0;
                     white-space: normal;
                 }
+
+                /* ===== Layout fix: no dead space under Close, any phone =====
+                   Before: .drawer-content (height:100% + overflow:auto) sat inside
+                   .ant-drawer-body (also overflow:auto). Percentage heights inside a
+                   flex child are unreliable on iOS Safari, so the two scrollers
+                   fought and left an empty band under the footer buttons. Now the
+                   drawer is a strict column: header / body (the ONLY scroller) /
+                   footer, and the home-indicator inset is added exactly once. */
+                /* antd 5.29 puts className="preview-drawer" on .ant-drawer-content,
+                   which is already a flex column (header / body / footer). */
+                .preview-drawer.ant-drawer-content {
+                    max-height: 100%;
+                }
+                .preview-drawer .ant-drawer-header {
+                    flex: 0 0 auto;
+                }
+                .preview-drawer .ant-drawer-body {
+                    flex: 1 1 auto;
+                    min-height: 0;
+                    overflow-y: auto;
+                    overscroll-behavior: contain;
+                    -webkit-overflow-scrolling: touch;
+                }
+                .preview-drawer .drawer-content {
+                    height: auto;
+                    overflow: visible;
+                }
+                .preview-drawer .ant-drawer-footer {
+                    flex: 0 0 auto;
+                    padding: 0;
+                }
 `;

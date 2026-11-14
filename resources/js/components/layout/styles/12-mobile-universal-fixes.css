@@ -1,0 +1,81 @@
+/* =====================================================================
+   12 - Mobile / PWA fixes for ALL phones (loaded last on purpose)
+   Scope: the mobile navigation drawer and the shell footer.
+   Every rule uses env() with a 0px fallback, so phones without a notch or
+   home indicator (most Androids, older iPhones) get exactly 0 extra space.
+   ===================================================================== */
+
+/* ---- 1. Drawer width: one source of truth ----------------------------
+   SidebarNav asks for min(86vw, 320px) but 01-shell-base.css forced
+   max-width 65vw / 75vw with !important, so the drawer was narrower than
+   designed and the developer-credit line overflowed. Match the JSX. */
+.app-nav-drawer.ant-drawer-left .ant-drawer-content-wrapper {
+  width: min(86vw, 320px) !important;
+  max-width: none !important;
+  min-width: min(250px, 86vw) !important;
+}
+
+/* ---- 2. Drawer is a strict column: header / scrolling menu / footer ---
+   antd 5.29 already makes .ant-drawer-content a flex column; we only make
+   sure the menu body is the single scroller and header/footer never shrink. */
+.app-nav-drawer .ant-drawer-content {
+  max-height: 100%;
+}
+
+.app-nav-drawer .ant-drawer-header {
+  flex: 0 0 auto;
+  padding-top: calc(12px + env(safe-area-inset-top, 0px)) !important;
+}
+
+.app-nav-drawer .ant-drawer-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.app-nav-drawer .ant-drawer-footer {
+  flex: 0 0 auto;
+  padding: 0 !important;
+}
+
+/* ---- 3. Developer credit inside the drawer ---------------------------
+   Was forced to one nowrap line that overflowed on narrow phones. Let it
+   wrap, and keep the author's name together as one block. */
+.app-nav-drawer .ant-layout-footer.app-footer {
+  padding: 10px 12px calc(10px + env(safe-area-inset-bottom, 0px)) !important;
+}
+
+.app-nav-drawer .app-footer-inner {
+  width: 100%;
+  justify-content: center;
+}
+
+.app-nav-drawer .app-footer-inner .app-footer-credits {
+  display: block !important;
+  max-width: 100%;
+  white-space: normal !important;
+  overflow-wrap: anywhere;
+  text-align: center;
+  font-size: 11px !important;
+  line-height: 1.45 !important;
+  text-wrap: balance;
+}
+
+.app-footer-credit-link {
+  display: inline-block;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+/* ---- 4. Footer keeps the home-indicator inset in portrait ------------
+   06-footer.css sets padding-bottom with env(safe-area-inset-bottom), but
+   the @media (max-width: 768px) rule right below it uses the padding
+   shorthand with !important and silently wiped it, so on iPhones (PWA) the
+   footer text sat under the home bar. Landscape is handled in 11-overrides-b. */
+@media (max-width: 768px) and (orientation: portrait) {
+  .ant-layout-footer.app-footer {
+    padding-bottom: calc(8px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+}
