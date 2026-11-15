@@ -1,7 +1,7 @@
 import { Typography, Select } from "antd";
 import { COLORS } from "~/config/theme";
 
-export const { Title, Text } = Typography;
+export const { Title, Text, Paragraph } = Typography;
 
 export const { Option } = Select;
 

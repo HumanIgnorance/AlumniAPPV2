@@ -87,6 +87,19 @@
     -webkit-overflow-scrolling: auto;
   }
 
+  /* Lock the document itself. overflow:hidden alone does not stop iOS from
+     panning the page up/down to reveal a focused field; a fixed body does. */
+  html.alumni-chat-active {
+    height: 100%;
+  }
+  body.alumni-chat-active {
+    position: fixed !important;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden !important;
+  }
+
   /* The chat = exactly the visible box (above the keyboard). */
   html.alumni-chat-active .alumni-messages-container {
     position: fixed !important;
@@ -400,3 +413,39 @@ html[data-theme="black"].alumni-chat-active .alumni-messages-container {
     max-height: 72px;
   }
 }
+
+
+/* ---------------------------------------------------------------------
+   D. IMAGE MESSAGES — solid outline instead of the coloured gradient
+   A bubble that carries a picture (admin chat and alumni chat, sent and
+   received) drops the gradient/filled background and gets a plain solid
+   border in the theme colour, so the photo itself is the focus.
+   --------------------------------------------------------------------- */
+.message-bubble.has-image,
+.alumni-message.has-image {
+  background: transparent !important;
+  background-image: none !important;
+  color: var(--m-text) !important;
+  border: 2px solid var(--m-border-strong) !important;
+  box-shadow: none !important;
+  padding: 6px !important;
+}
+.message-bubble.admin-bubble.has-image,
+.alumni-message.sent.has-image {
+  border-color: var(--m-accent) !important;
+}
+.message-bubble.has-image:hover { transform: none; }
+.message-bubble.has-image > p,
+.alumni-message.has-image > p {
+  padding: 4px 8px 2px;
+  color: var(--m-text) !important;
+}
+.message-bubble.has-image .message-image-container,
+.alumni-message.has-image .message-image-container {
+  margin-bottom: 0;
+  border-radius: 12px;
+}
+.message-bubble.has-image .message-image-container + p,
+.alumni-message.has-image .message-image-container + p { margin-top: 6px; }
+.message-bubble.has-image .message-meta,
+.alumni-message.has-image .message-meta { padding: 0 8px; }

@@ -30,6 +30,7 @@ export default function ApplicationPromptModals() {
     return (
         <>
             <Modal
+                rootClassName="job-post-overlay"
                 title={
                     <Space>
                         <WarningOutlined style={{ color: COLORS.antdGold }} />
@@ -76,6 +77,7 @@ export default function ApplicationPromptModals() {
             </Modal>
 
             <Modal
+                rootClassName="job-post-overlay"
                 title={
                     <Space>
                         <FileOutlined style={{ color: COLORS.antdBlue }} />

@@ -60,6 +60,7 @@ export default function CreateEditJobModal() {
 
     return (
         <Modal
+            rootClassName="job-post-overlay"
             title={
                 <Space size="middle" wrap>
                     <span>

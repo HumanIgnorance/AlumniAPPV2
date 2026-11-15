@@ -199,15 +199,18 @@
 }
 
 /* Typography - Dark Theme */
-[data-theme="black"] .ant-typography {
+[data-theme="black"] .job-post-page-container .ant-typography,
+[data-theme="black"] .job-post-overlay .ant-typography {
   color: var(--c-e0e0e0);
 }
 
-[data-theme="black"] .ant-typography.ant-typography-secondary {
+[data-theme="black"] .job-post-page-container .ant-typography.ant-typography-secondary,
+[data-theme="black"] .job-post-overlay .ant-typography.ant-typography-secondary {
   color: var(--c-888888) !important;
 }
 
-[data-theme="black"] .ant-typography strong {
+[data-theme="black"] .job-post-page-container .ant-typography strong,
+[data-theme="black"] .job-post-overlay .ant-typography strong {
   color: var(--c-white);
 }
 

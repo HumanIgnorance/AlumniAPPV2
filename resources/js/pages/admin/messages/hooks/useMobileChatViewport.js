@@ -65,6 +65,15 @@ export default function useMobileChatViewport(active, variant = "alumni") {
         let keyboardWasOpen = false;
         const timers = new Set();
 
+        // Full (keyboard-closed) height. Android Chrome / installed PWAs use
+        // `interactive-widget=resizes-content`, which shrinks innerHeight too,
+        // so "innerHeight - visualViewport.height" can never detect the
+        // keyboard there. Compare against the last height measured while no
+        // field was focused instead.
+        const isField = (el) =>
+            !!el && (el.tagName === "TEXTAREA" || el.tagName === "INPUT");
+        let baseHeight = Math.max(window.innerHeight, vv ? vv.height : 0);
+
         // "alumni-chat-active" drives the shared pinning rules; the admin chat
         // adds "admin-chat-active" for its own container (see 10-ui-upgrade.css).
         const activeClasses =
@@ -89,8 +98,13 @@ export default function useMobileChatViewport(active, variant = "alumni") {
             html.style.setProperty("--chat-vh", `${Math.round(height)}px`);
             html.style.setProperty("--chat-vt", `${Math.max(0, Math.round(top))}px`);
 
-            // Keyboard heuristic: the visible area is much shorter than the window.
-            const keyboardOpen = window.innerHeight - height > 120;
+            // Keyboard heuristic: a field is focused and the visible area is
+            // much shorter than the full (keyboard-closed) height.
+            const fieldFocused = isField(document.activeElement);
+            if (!fieldFocused) {
+                baseHeight = Math.max(height, window.innerHeight);
+            }
+            const keyboardOpen = fieldFocused && baseHeight - height > 120;
             html.classList.toggle("alumni-chat-kb", keyboardOpen);
 
             // iOS scrolls the page to reveal the focused field; put it back.
@@ -145,7 +159,14 @@ export default function useMobileChatViewport(active, variant = "alumni") {
         window.addEventListener("resize", schedule);
         window.addEventListener("orientationchange", settle);
         window.addEventListener("scroll", schedule, { passive: true });
-        document.addEventListener("focusin", settle);
+        // Focus: measure right now (no frame of delay), then keep re-measuring
+        // while the keyboard animates, so the pinned box never lags behind.
+        const onFocusIn = () => {
+            if (raf) window.cancelAnimationFrame(raf);
+            sync();
+            settle();
+        };
+        document.addEventListener("focusin", onFocusIn);
         document.addEventListener("focusout", settle);
         document.addEventListener("touchmove", onTouchMove, { passive: false });
 
@@ -159,7 +180,7 @@ export default function useMobileChatViewport(active, variant = "alumni") {
             window.removeEventListener("resize", schedule);
             window.removeEventListener("orientationchange", settle);
             window.removeEventListener("scroll", schedule);
-            document.removeEventListener("focusin", settle);
+            document.removeEventListener("focusin", onFocusIn);
             document.removeEventListener("focusout", settle);
             document.removeEventListener("touchmove", onTouchMove);
 

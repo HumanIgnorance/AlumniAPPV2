@@ -60,6 +60,7 @@ export default function JobDetailsDrawer() {
 
     return (
         <Drawer
+            rootClassName="job-post-overlay"
             title={
                 <Space>
                     <BankOutlined />

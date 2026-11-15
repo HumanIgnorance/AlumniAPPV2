@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import {
     useDepartmentHeadDashboard,
     useDepartmentHeadAlumni,
@@ -18,6 +18,10 @@ export default function useDepartmentDashboardLogic1() {
     const [previewData, setPreviewData] = useState(null);
 
     const [courseFolderVisible, setCourseFolderVisible] = useState(false);
+
+    // Alumni-list filters (search box + status chips above the table)
+    const [searchText, setSearchText] = useState("");
+    const [statusFilter, setStatusFilter] = useState("all");
     // Removed selectedCourse state, use course from dashboardData instead
 
     const [employmentTrend, setEmploymentTrend] = useState([]);
@@ -28,12 +32,39 @@ export default function useDepartmentDashboardLogic1() {
     const {
         data: dashboardData,
         isLoading,
+        isFetching,
+        dataUpdatedAt,
         refetch,
     } = useDepartmentHeadDashboard(year);
     const { data: alumniList = [] } = useDepartmentHeadAlumni();
 
     const alumni = dashboardData?.alumni || [];
     const course = dashboardData?.course;
+
+    const filteredAlumni = useMemo(() => {
+        const q = searchText.trim().toLowerCase();
+        return alumni.filter((a) => {
+            if (statusFilter === "follow-up") {
+                if (a.employment_status_id !== 2 && a.employment_status_id !== 3)
+                    return false;
+            } else if (
+                statusFilter !== "all" &&
+                a.employment_status_id !== statusFilter
+            ) {
+                return false;
+            }
+            if (!q) return true;
+            return [
+                a.first_name,
+                a.last_name,
+                a.current_company,
+                a.job_title,
+                a.graduation_year,
+            ]
+                .filter(Boolean)
+                .some((v) => String(v).toLowerCase().includes(q));
+        });
+    }, [alumni, searchText, statusFilter]);
 
     const departmentCourseFolder = course
         ? {
@@ -266,12 +297,17 @@ export default function useDepartmentDashboardLogic1() {
             student_id: values.student_id,
             graduation_year: values.graduation_year,
             enrollment_year: values.enrollment_year,
-            honors:
-                typeof values.honors === "string" && values.honors.trim() !== ""
-                    ? JSON.parse(values.honors)
-                    : Array.isArray(values.honors)
-                      ? values.honors
-                      : [],
+            honors: (() => {
+                if (Array.isArray(values.honors)) return values.honors;
+                if (typeof values.honors === "string" && values.honors.trim()) {
+                    try {
+                        return JSON.parse(values.honors);
+                    } catch {
+                        return [values.honors];
+                    }
+                }
+                return [];
+            })(),
             thesis_title: values.thesis_title,
             academic_achievements: values.academic_achievements,
             extracurricular: values.extracurricular,
@@ -348,6 +384,14 @@ export default function useDepartmentDashboardLogic1() {
         salaryProgression,
         topEmployers,
         isLoading,
+        isFetching,
+        dataUpdatedAt,
+        refetch,
+        searchText,
+        setSearchText,
+        statusFilter,
+        setStatusFilter,
+        filteredAlumni,
         alumni,
         course,
         departmentCourseFolder,

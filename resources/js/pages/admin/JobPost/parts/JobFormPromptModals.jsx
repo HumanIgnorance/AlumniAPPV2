@@ -35,6 +35,7 @@ export default function JobFormPromptModals() {
     return (
         <>
             <Modal
+                rootClassName="job-post-overlay"
                 title="Discard Changes?"
                 open={discardConfirmVisible}
                 onCancel={() => setDiscardConfirmVisible(false)}
@@ -51,6 +52,7 @@ export default function JobFormPromptModals() {
             </Modal>
 
             <Modal
+                rootClassName="job-post-overlay"
                 title="Unsaved Draft Found"
                 open={draftRestoreModalVisible}
                 onCancel={() => {
@@ -101,6 +103,7 @@ export default function JobFormPromptModals() {
             </Modal>
 
             <Modal
+                rootClassName="job-post-overlay"
                 title={
                     <Space>
                         <CheckCircleOutlined

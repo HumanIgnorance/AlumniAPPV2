@@ -1,4 +1,5 @@
 import "./DepartmentDashboard.css";
+import "./DepartmentHero.css";
 import { Spin } from "antd";
 import "~/styles/printPreview.css";
 import { Layout } from "~/components";
@@ -32,12 +33,7 @@ function DepartmentDashboardPage() {
     return (
         <DepartmentDashboardProvider value={ctx}>
             <Layout>
-                {/* Header */}
-                {/* Header — matches AlumniQuestionsPage hero */}
-                <div
-                    style={{ padding: "24px" }}
-                    className="department-dashboard"
-                >
+                <div className="department-dashboard dd-page">
                     <DepartmentDashboardHeaderCard />
 
                     <DepartmentDashboardCard />

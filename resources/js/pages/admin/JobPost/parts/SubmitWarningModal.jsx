@@ -21,6 +21,7 @@ export default function SubmitWarningModal() {
 
     return (
         <Modal
+            rootClassName="job-post-overlay"
             open={submitWarningModalVisible}
             title={
                 <Space>

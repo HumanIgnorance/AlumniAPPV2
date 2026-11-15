@@ -1,4 +1,5 @@
-import { Row, Col, Card, Progress, Table } from "antd";
+import { Row, Col, Card, Progress, Table, Input, Segmented, Grid, Empty } from "antd";
+import { SearchOutlined } from "@ant-design/icons";
 import {
     ResponsiveContainer,
     PieChart,
@@ -27,6 +28,11 @@ export default function DepartmentDashboardCharts() {
         course,
         columns,
         alumni,
+        filteredAlumni,
+        searchText,
+        setSearchText,
+        statusFilter,
+        setStatusFilter,
         isLoading,
         isModalVisible,
         setIsModalVisible,
@@ -34,15 +40,26 @@ export default function DepartmentDashboardCharts() {
         previewData,
     } = useDepartmentDashboardContext();
 
+    const screens = Grid.useBreakpoint();
+    const isPhone = !screens.md;
+
     return (
         <>
-            <Row gutter={[16, 16]} style={{ marginBottom: "24px" }}>
+            <Row gutter={[16, 16]} style={{ marginBottom: "16px" }}>
                 <Col xs={24} md={12}>
                     <Card
                         title="Overall Employment Status"
                         className="dashboard-card"
                     >
-                        <ResponsiveContainer width="100%" height={300}>
+                        {pieData.length === 0 ? (
+                            <div className="dd-chart-empty">
+                                <Empty
+                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                    description="No employment data yet"
+                                />
+                            </div>
+                        ) : (
+                        <ResponsiveContainer width="100%" height={isPhone ? 260 : 300}>
                             <PieChart>
                                 <Pie
                                     data={pieData}
@@ -52,8 +69,11 @@ export default function DepartmentDashboardCharts() {
                                     outerRadius={100}
                                     paddingAngle={5}
                                     dataKey="value"
-                                    label={({ name, percent }) =>
-                                        `${name} ${(percent * 100).toFixed(0)}%`
+                                    label={
+                                        isPhone
+                                            ? false
+                                            : ({ name, percent }) =>
+                                                  `${name} ${(percent * 100).toFixed(0)}%`
                                     }
                                 >
                                     {pieData.map((entry, index) => (
@@ -67,6 +87,7 @@ export default function DepartmentDashboardCharts() {
                                 <Legend />
                             </PieChart>
                         </ResponsiveContainer>
+                        )}
                     </Card>
                 </Col>
                 <Col xs={24} md={12}>
@@ -74,7 +95,7 @@ export default function DepartmentDashboardCharts() {
                 </Col>
             </Row>
 
-            <Row gutter={[16, 16]} style={{ marginBottom: "24px" }}>
+            <Row gutter={[16, 16]} style={{ marginBottom: "16px" }}>
                 <Col xs={24} md={12}>
                     <IndustryDistributionChart />
                 </Col>
@@ -83,13 +104,13 @@ export default function DepartmentDashboardCharts() {
                 </Col>
             </Row>
 
-            <Row gutter={[16, 16]} style={{ marginBottom: "24px" }}>
+            <Row gutter={[16, 16]} style={{ marginBottom: "16px" }}>
                 <Col xs={24} md={12}>
                     <Card title="Employment Rate" className="dashboard-card">
                         <div
                             style={{
                                 textAlign: "center",
-                                padding: "40px 0",
+                                padding: isPhone ? "12px 0" : "40px 0",
                             }}
                         >
                             <Progress
@@ -120,17 +141,54 @@ export default function DepartmentDashboardCharts() {
 
             {/* Alumni Table */}
             <Card
+                id="dd-alumni-list"
                 title={`${course?.course_code || "Department"} Alumni List`}
                 className="dashboard-card"
             >
+                <div className="dd-toolbar">
+                    <Input
+                        allowClear
+                        className="dd-toolbar__search"
+                        prefix={<SearchOutlined />}
+                        placeholder="Search name, company, position or year"
+                        value={searchText}
+                        onChange={(e) => setSearchText(e.target.value)}
+                    />
+                    <Segmented
+                        className="dd-toolbar__seg"
+                        value={statusFilter}
+                        onChange={setStatusFilter}
+                        options={[
+                            { label: "All", value: "all" },
+                            { label: "Employed", value: 1 },
+                            { label: "Unemployed", value: 2 },
+                            { label: "Under-employed", value: 3 },
+                            { label: "Needs follow-up", value: "follow-up" },
+                        ]}
+                    />
+                    <span className="dd-toolbar__count">
+                        Showing {filteredAlumni.length} of {alumni.length}
+                    </span>
+                </div>
                 <Table
                     columns={columns}
-                    dataSource={alumni}
+                    dataSource={filteredAlumni}
                     loading={isLoading}
                     rowKey="id"
+                    scroll={{ x: 720 }}
+                    size={isPhone ? "small" : "middle"}
+                    locale={{
+                        emptyText: (
+                            <Empty
+                                image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                description="No alumni match your search or filter"
+                            />
+                        ),
+                    }}
                     pagination={{
                         pageSize: 10,
-                        showSizeChanger: true,
+                        showSizeChanger: !isPhone,
+                        simple: isPhone,
                         showTotal: (total) => `Total ${total} alumni`,
                     }}
                 />

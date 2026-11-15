@@ -53,6 +53,7 @@ export const DocumentViewerModal = ({
 
     return (
         <Modal
+            rootClassName="job-post-overlay"
             open={visible}
             onCancel={onClose}
             footer={

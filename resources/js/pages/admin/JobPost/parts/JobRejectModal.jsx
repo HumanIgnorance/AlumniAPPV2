@@ -22,6 +22,7 @@ export default function JobRejectModal() {
 
     return (
         <Modal
+            rootClassName="job-post-overlay"
             title={
                 <Space>
                     <CloseCircleOutlined style={{ color: COLORS.antdRed }} />

@@ -1,6 +1,7 @@
 /* ============ Button Styles - Enhanced ============ */
 
-.ant-btn {
+.job-post-page-container .ant-btn,
+.job-post-overlay .ant-btn {
   border-radius: 10px;
   font-weight: 500;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -8,7 +9,8 @@
   overflow: hidden;
 }
 
-.ant-btn::before {
+.job-post-page-container .ant-btn::before,
+.job-post-overlay .ant-btn::before {
   content: '';
   position: absolute;
   top: 50%;
@@ -21,28 +23,33 @@
   transition: width 0.6s ease, height 0.6s ease;
 }
 
-.ant-btn:hover::before {
+.job-post-page-container .ant-btn:hover::before,
+.job-post-overlay .ant-btn:hover::before {
   width: 300px;
   height: 300px;
 }
 
-.ant-btn-primary {
+.job-post-page-container .ant-btn-primary,
+.job-post-overlay .ant-btn-primary {
   /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
   border: none;
   box-shadow: 0 4px 16px rgba(102, 126, 234, 0.35);
 }
 
-.ant-btn-primary:hover {
+.job-post-page-container .ant-btn-primary:hover,
+.job-post-overlay .ant-btn-primary:hover {
   /* background: linear-gradient(135deg, #5a6fd6 0%, #6a4190 100%); */
   transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(102, 126, 234, 0.45);
 }
 
-.ant-btn-text {
+.job-post-page-container .ant-btn-text,
+.job-post-overlay .ant-btn-text {
   border-radius: 8px;
 }
 
-.ant-btn-text:hover {
+.job-post-page-container .ant-btn-text:hover,
+.job-post-overlay .ant-btn-text:hover {
   background: rgba(102, 126, 234, 0.1);
   transform: scale(1.05);
 }
@@ -269,7 +276,7 @@
 }
 
 /* Hide default spin but keep smooth transitions */
-.ant-spin-nested-loading > .ant-spin {
+.job-post-page-container .ant-spin-nested-loading > .ant-spin {
   transition: opacity 0.3s ease;
 }
 

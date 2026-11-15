@@ -171,7 +171,7 @@ export default function AlumniMessagesView() {
                                     )}
 
                                     <div
-                                        className={`alumni-message ${isMyMessage ? "sent" : "received"} ${isEditing ? "editing" : ""}`}
+                                        className={`alumni-message ${isMyMessage ? "sent" : "received"} ${isEditing ? "editing" : ""} ${groupedItem.image_path || groupedItem.image_url ? "has-image" : ""}`}
                                         onDoubleClick={() =>
                                             !isEditing &&
                                             handleDoubleClick(groupedItem.id)
@@ -311,6 +311,9 @@ export default function AlumniMessagesView() {
                             }
                             disabled={isRestricted || sending}
                             className="alumni-message-input"
+                            rows={1}
+                            enterKeyHint="send"
+                            autoComplete="off"
                         />
 
                         <button

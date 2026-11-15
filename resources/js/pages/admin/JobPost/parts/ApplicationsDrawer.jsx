@@ -57,6 +57,7 @@ export default function ApplicationsDrawer() {
 
     return (
         <Drawer
+            rootClassName="job-post-overlay"
             title={
                 <Space>
                     <TeamOutlined />

@@ -369,13 +369,15 @@
 
 /* ============ Badge and Tag Styles - Enhanced ============ */
 
-.ant-badge-count {
+.job-post-page-container .ant-badge-count,
+.job-post-overlay .ant-badge-count {
   font-size: 10px;
   font-weight: 600;
   box-shadow: 0 2px 8px rgba(0,0,0,0.15);
 }
 
-.ant-tag {
+.job-post-page-container .ant-tag,
+.job-post-overlay .ant-tag {
   border-radius: 16px;
   font-size: 11px;
   padding: 4px 12px;
@@ -384,7 +386,8 @@
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.ant-tag:hover {
+.job-post-page-container .ant-tag:hover,
+.job-post-overlay .ant-tag:hover {
   transform: scale(1.05);
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }

@@ -177,7 +177,8 @@ export default function useMessagesApi({
             }
         } finally {
             setSending(false);
-            inputRef.current?.focus();
+            // preventScroll: a plain focus() makes iOS pan the whole page.
+            inputRef.current?.focus({ preventScroll: true });
         }
     };
 

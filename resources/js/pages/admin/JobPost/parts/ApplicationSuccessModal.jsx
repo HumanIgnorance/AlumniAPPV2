@@ -22,6 +22,7 @@ export default function ApplicationSuccessModal() {
 
     return (
         <Modal
+            rootClassName="job-post-overlay"
             open={applicationSuccessModalVisible}
             footer={null}
             onCancel={() => setApplicationSuccessModalVisible(false)}

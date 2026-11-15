@@ -242,5 +242,8 @@ export default function useEventsFilters({
         clearAllFilters,
         handleEditEvent,
         handleDeleteEvent,
+        // Was missing: AlumniEvents passes this as the details modal's onClose,
+        // so the X / Close / mobile close did nothing (onClose was undefined).
+        handleCloseDetails,
     };
 }

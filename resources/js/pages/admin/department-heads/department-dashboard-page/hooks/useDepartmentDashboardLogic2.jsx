@@ -1,4 +1,6 @@
-import { Card, List, Avatar, Tag, Space } from "antd";
+import { Card, List, Avatar, Tag, Space, Empty } from "antd";
+import { EyeOutlined } from "@ant-design/icons";
+import Button from "~/components/shared/AsyncButton";
 import {
     ResponsiveContainer,
     AreaChart,
@@ -29,10 +31,18 @@ export default function useDepartmentDashboardLogic2({
     salaryProgression,
     topEmployers,
     getEmploymentStatusTag,
+    handleView,
 }) {
+    const ChartEmpty = ({ text = "Not enough data yet" }) => (
+        <div className="dd-chart-empty">
+            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={text} />
+        </div>
+    );
+
     const EmploymentTrendChart = () => (
         <Card className="dashboard-card">
             <Title level={4}>Employment Trend (Last 6 Years)</Title>
+            {employmentTrend.length === 0 ? <ChartEmpty /> : (
             <ResponsiveContainer width="100%" height={300}>
                 <AreaChart data={employmentTrend}>
                     <CartesianGrid strokeDasharray="3 3" />
@@ -71,12 +81,14 @@ export default function useDepartmentDashboardLogic2({
                     />
                 </AreaChart>
             </ResponsiveContainer>
+            )}
         </Card>
     );
 
     const IndustryDistributionChart = () => (
         <Card className="dashboard-card">
             <Title level={4}>Industry Distribution</Title>
+            {industryDistribution.length === 0 ? <ChartEmpty text="No industry data yet" /> : (
             <ResponsiveContainer width="100%" height={300}>
                 <BarChart data={industryDistribution}>
                     <CartesianGrid strokeDasharray="3 3" />
@@ -102,12 +114,14 @@ export default function useDepartmentDashboardLogic2({
                     </Bar>
                 </BarChart>
             </ResponsiveContainer>
+            )}
         </Card>
     );
 
     const SalaryProgressionChart = () => (
         <Card className="dashboard-card">
             <Title level={4}>Average Salary Progression</Title>
+            {salaryProgression.length === 0 ? <ChartEmpty text="No salary data yet" /> : (
             <ResponsiveContainer width="100%" height={300}>
                 <LineChart data={salaryProgression}>
                     <CartesianGrid strokeDasharray="3 3" />
@@ -133,6 +147,7 @@ export default function useDepartmentDashboardLogic2({
                     />
                 </LineChart>
             </ResponsiveContainer>
+            )}
         </Card>
     );
 
@@ -212,12 +227,6 @@ export default function useDepartmentDashboardLogic2({
             key: "employment_status",
             render: (_, record) =>
                 getEmploymentStatusTag(record.employment_status_id),
-            filters: [
-                { text: "Employed", value: 1 },
-                { text: "Unemployed", value: 2 },
-                { text: "Under Employed", value: 3 },
-            ],
-            onFilter: (value, record) => record.employment_status_id === value,
         },
         {
             title: "Company",
@@ -230,6 +239,21 @@ export default function useDepartmentDashboardLogic2({
             dataIndex: "job_title",
             key: "job_title",
             render: (text) => text || "N/A",
+        },
+        {
+            title: "",
+            key: "actions",
+            fixed: "right",
+            width: 110,
+            render: (_, record) => (
+                <Button
+                    size="small"
+                    icon={<EyeOutlined />}
+                    onClick={() => handleView(record)}
+                >
+                    View
+                </Button>
+            ),
         },
     ];
 

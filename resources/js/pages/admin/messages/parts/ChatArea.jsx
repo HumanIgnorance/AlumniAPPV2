@@ -226,7 +226,7 @@ export default function ChatArea() {
                                             className={`message-row ${isAdminMessage ? "admin-side" : "alumni-side"}`}
                                         >
                                             <div
-                                                className={`message-bubble ${isAdminMessage ? "admin-bubble" : "alumni-bubble"} ${isEditing ? "editing" : ""}`}
+                                                className={`message-bubble ${isAdminMessage ? "admin-bubble" : "alumni-bubble"} ${isEditing ? "editing" : ""} ${groupedItem.image_path || groupedItem.image_url ? "has-image" : ""}`}
                                                 onDoubleClick={() =>
                                                     !isEditing &&
                                                     handleDoubleClick(

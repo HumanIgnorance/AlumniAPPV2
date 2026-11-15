@@ -1,65 +1,111 @@
-import { Card, Row, Col, Select } from "antd";
-import { CheckCircleOutlined } from "@ant-design/icons";
+import { Tag, Select } from "antd";
+import { CheckCircleOutlined, ReloadOutlined } from "@ant-design/icons";
+import Button from "~/components/shared/AsyncButton";
+import logo from "~/assets/images/OCC_LOGO.png";
 import {
     Title,
+    Paragraph,
     Text,
     Option,
 } from "~/pages/admin/department-heads/department-dashboard-page/parts/departmentDashboardShared";
 import { useDepartmentDashboardContext } from "~/pages/admin/department-heads/department-dashboard-page/DepartmentDashboardContext";
 
+/**
+ * Same header as the admin Dashboard and every other page
+ * (.dashboard-hero → sized/aligned by css/page-header.css):
+ *   [logo] [chip]   Title ............ [year filter] [refresh]
+ *   one-line description
+ */
 export default function DepartmentDashboardHeaderCard() {
-    const { course, year, setSelectedYear, graduationYears } =
-        useDepartmentDashboardContext();
+    const {
+        course,
+        year,
+        setSelectedYear,
+        graduationYears,
+        refetch,
+        isFetching,
+        dataUpdatedAt,
+    } = useDepartmentDashboardContext();
+
+    const code = course?.course_code;
+    const updated = dataUpdatedAt
+        ? new Date(dataUpdatedAt).toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+          })
+        : null;
 
     return (
-        <Card
-            className="dashboard-header-card"
-            bordered={false}
-            style={{ marginBottom: "24px" }}
-        >
-            <div className="dh-hero__bg" aria-hidden="true">
-                <span className="dh-orb dh-orb-1" />
-                <span className="dh-orb dh-orb-2" />
-                <span className="dh-orb dh-orb-3" />
-                <div className="dh-grid-overlay" />
+        <section className="dashboard-hero" aria-label="Department dashboard header">
+            <div className="dashboard-hero__bg" aria-hidden="true">
+                <span className="orb orb-1" />
+                <span className="orb orb-2" />
+                <span className="orb orb-3" />
+                <div className="grid-overlay" />
             </div>
 
-            <Row
-                justify="space-between"
-                align="middle"
-                gutter={[16, 16]}
-                className="dh-header-row"
-            >
-                <Col xs={24} md={16}>
-                    <span className="dh-header-chip">
-                        <CheckCircleOutlined /> Department Overview
-                    </span>
-                    <Title level={2} className="dh-header-title">
-                        Department <span className="dh-grad">Dashboard</span>
+            <div className="dashboard-hero__content">
+                <div className="dashboard-hero__left">
+                    <div className="dashboard-hero__brand">
+                        <img
+                            src={logo}
+                            alt="OCC Logo"
+                            className="dashboard-hero__logo"
+                        />
+                        <div className="dashboard-hero__brand-meta">
+                            <Tag
+                                className="dashboard-chip"
+                                icon={<CheckCircleOutlined />}
+                            >
+                                Department Head Dashboard
+                            </Tag>
+                            <Text className="dashboard-hero__eyebrow">
+                                Department Overview
+                            </Text>
+                        </div>
+                    </div>
+
+                    <Title level={2} className="dashboard-hero__title">
+                        {code ? `${code} ` : "Department "}
+                        <span className="grad-text">Dashboard</span>
                     </Title>
-                    <Text className="dh-header-sub">
-                        {course?.course_code
-                            ? `${course.course_code} — ${course.course_name}`
-                            : "Real-time alumni insights for your assigned department"}
-                    </Text>
-                </Col>
-                <Col xs={24} md={8} style={{ textAlign: "right" }}>
+
+                    <Paragraph className="dashboard-hero__lead">
+                        {course?.course_name
+                            ? `${course.course_name} — real-time alumni employment and career insights for your department.`
+                            : "Real-time alumni employment and career insights for your assigned department."}
+                    </Paragraph>
+                </div>
+
+                <div className="dashboard-hero__controls">
+                    {updated && (
+                        <span className="dh-updated">Updated {updated}</span>
+                    )}
                     <Select
-                        className="dh-header-select"
                         value={year}
                         onChange={setSelectedYear}
-                        style={{ width: 200 }}
-                        placeholder="Filter by Year"
+                        className="dashboard-hero__select"
+                        placeholder="Filter by graduation year"
+                        aria-label="Filter by graduation year"
                     >
-                        <Option value="all">All Years </Option>
+                        <Option value="all">All Years</Option>
                         {graduationYears.map((y) => (
                             <Option key={y} value={y}>
                                 {y}
                             </Option>
                         ))}
                     </Select>
-                </Col>
-            </Row>
-        </Card>
+                    <Button
+                        type="primary"
+                        icon={<ReloadOutlined />}
+                        loading={isFetching}
+                        onClick={() => refetch()}
+                        className="dashboard-hero__print-btn dashboard-hero__refresh"
+                    >
+                        Refresh
+                    </Button>
+                </div>
+            </div>
+        </section>
     );
 }

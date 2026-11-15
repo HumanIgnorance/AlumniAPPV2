@@ -65,6 +65,7 @@ export default function ApplicationFormModal() {
 
     return (
         <Modal
+            rootClassName="job-post-overlay"
             title={
                 <Space>
                     <SendOutlined />
