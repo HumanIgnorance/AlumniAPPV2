@@ -4,6 +4,9 @@
     $atmsTheme = in_array($atmsTheme, ['black', 'white']) ? $atmsTheme : 'white';
     $atmsHasThemeCookie = in_array(request()->cookie('atms-theme'), ['black', 'white'], true);
     $atmsThemeColor = $atmsTheme === 'black' ? '#0a0c12' : '#ffffff';
+    // PWA title bar / browser toolbar / status bar color (same as SCLF):
+    // navy on light themes, white on dark themes.
+    $atmsBarColor = $atmsTheme === 'black' ? '#ffffff' : '#01215f';
     $atmsBootBg = $atmsTheme === 'black' ? '#0a0c12' : '#f4f7fb';
     $atmsStatusBarStyle = $atmsTheme === 'black' ? 'black' : 'default';
     // cache-buster so browsers re-fetch the tab icon when site-logo.png changes
@@ -97,7 +100,8 @@
 
     <!-- Mobile / Pwa -->
 
-    <meta name="theme-color" content="{{ $atmsThemeColor }}">
+    <meta name="theme-color" content="{{ $atmsBarColor }}">
+
 
     <meta name="apple-mobile-web-app-capable" content="yes">
 

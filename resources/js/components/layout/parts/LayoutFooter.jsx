@@ -1,6 +1,7 @@
 import React from "react";
 import {
     CalendarOutlined,
+    CodeOutlined,
     SafetyCertificateOutlined,
     TeamOutlined,
 } from "@ant-design/icons";
@@ -37,29 +38,17 @@ export default function LayoutFooter() {
                                 : "#6c757d",
                     }}
                 >
-                    {" </> "}Developed by{" "}
+                    <span className="app-footer-credit-label">
+                        <CodeOutlined className="app-footer-credit-icon" />
+                        Developed by
+                    </span>
                     <a
                         className="app-footer-credit-link"
                         href="https://www.facebook.com/EphemeralKun/"
                         target="_blank"
                         rel="noopener noreferrer"
-                        style={{
-                            fontWeight: 600,
-                            background:
-                                "linear-gradient(90deg, #667eea, #764ba2)",
-                            WebkitBackgroundClip: "text",
-                            color: "transparent",
-                            textDecoration: "none",
-                            display: "inline-block",
-                        }}
-                        onMouseEnter={(e) =>
-                            (e.target.style.textDecoration = "underline")
-                        }
-                        onMouseLeave={(e) =>
-                            (e.target.style.textDecoration = "none")
-                        }
                     >
-                        {" </> "}Antiquina, Jonee John R.
+                        Antiquina, Jonee John R.
                     </a>
                 </Text>
 

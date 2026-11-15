@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import secureLocalStorage from "react-secure-storage";
-import { COLORS } from "~/config/theme";
 
 
 
@@ -10,10 +9,14 @@ const STORAGE_KEY = "app-theme";
 const COOKIE_KEY = "atms-theme";
 const COOKIE_MAX_AGE_DAYS = 365;
 
-// Keep these in sync with the --bg values in FormLogin.css
+// Browser toolbar / PWA title-bar / status-bar color, identical to SCLF:
+// navy on the light theme, white on the dark theme. (The page background
+// itself is still painted from the --bg tokens in FormLogin.css / theme.css.)
+// Keep in sync with $atmsBarColor in resources/views/app.blade.php and the
+// theme_color in the PWA manifest.
 const THEME_COLORS = {
-    white: COLORS.white,
-    black: COLORS.c0a0c12,
+    white: "#01215f",
+    black: "#ffffff",
 };
 
 function readCookie(name) {

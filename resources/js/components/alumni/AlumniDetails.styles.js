@@ -988,4 +988,26 @@ export const alumniDetailsCss = `
                     flex: 0 0 auto;
                     padding: 0;
                 }
+
+                /* ===== Beat the global drawer padding (css/app-modal.css) =====
+                   app-modal.css sets, with !important and specificity 0,2,1:
+                     .ant-drawer-body   -> padding: 16px 18px calc(16px + safe-bottom)
+                     .ant-drawer-footer -> padding: 12px 18px calc(12px + safe-bottom)
+                   Those stacked on top of .preview-drawer-footer's own padding,
+                   leaving ~90px of empty band under Close on iPhones. The root
+                   class below raises specificity so this drawer owns its spacing,
+                   and the home-indicator inset is applied exactly once (footer). */
+                html .preview-drawer-root .ant-drawer-body {
+                    padding: 0 !important;
+                }
+                html .preview-drawer-root .ant-drawer-footer {
+                    padding: 0 !important;
+                    border-top: 1px solid var(--border);
+                }
+                html .preview-drawer-root .preview-drawer-footer {
+                    padding: 10px 16px max(10px, env(safe-area-inset-bottom, 0px));
+                }
+                html .preview-drawer-root .ant-drawer-header {
+                    padding: calc(12px + env(safe-area-inset-top, 0px)) 16px 12px !important;
+                }
 `;

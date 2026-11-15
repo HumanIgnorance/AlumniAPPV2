@@ -60,6 +60,7 @@ export default function AlumniDetailsDrawer() {
             width="100%"
             height="100%"
             className="preview-drawer"
+            rootClassName="preview-drawer-root"
             placement="right"
             extra={!isMobile ? <Space>{actionButtons}</Space> : null}
             footer={
