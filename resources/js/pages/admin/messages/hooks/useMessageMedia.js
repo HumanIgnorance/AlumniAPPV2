@@ -1,5 +1,6 @@
 import { message } from "antd";
 import { BASE_URL } from "~/utils/constant";
+import { scrollWithin } from "~/utils/scrollInContent";
 
 export default function useMessageMedia({
     messagesEndRef,
@@ -46,11 +47,7 @@ export default function useMessageMedia({
         // and scrollIntoView jumps the whole page instead of staying inside the message area.
         if (isLandscapeMobile()) return;
         if (messagesEndRef.current) {
-            messagesEndRef.current.scrollIntoView({
-                behavior: "smooth",
-                block: "end",
-                inline: "nearest",
-            });
+            scrollWithin(messagesEndRef.current, { block: "end" });
         }
     };
 

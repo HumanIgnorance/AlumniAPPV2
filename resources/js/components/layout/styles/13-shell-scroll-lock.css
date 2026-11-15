@@ -1,0 +1,36 @@
+/* ==========================================================================
+   SHELL SCROLL LOCK  (signed-in pages only)
+
+   Only #content may scroll. The outer shell is pinned to the viewport so that
+   nothing - scrollIntoView(), focus(), the iOS keyboard, rubber-banding - can
+   push the header, sidebar or footer out of view.
+
+   Uses the .app-shell-root class that MainLayout puts on the outer <Layout>.
+   (Deliberately NOT #main-layout: legacy rules in assets/scss/_global.scss are
+   keyed to that id and would restyle the header/content.)
+
+   Applies on every screen size; the phone-only html/body lock lives in
+   01-shell-base.css and is switched on by html.app-shell-active.
+   ========================================================================== */
+.app-shell-root {
+  height: 100vh;
+  max-height: 100vh;
+  overflow: hidden;
+}
+@supports (height: 100dvh) {
+  .app-shell-root {
+    height: 100dvh;
+    max-height: 100dvh;
+  }
+}
+
+/* The flex column inside: header (fixed height) / content (scrolls) / footer */
+.app-shell-root > .site-layout {
+  min-height: 0;
+}
+.app-shell-root #content {
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}

@@ -1,5 +1,6 @@
 "use client"
 import { useEffect, useState, useRef } from "react"
+import { scrollToInContent } from "~/utils/scrollInContent"
 import {
     Card,
     Row,
@@ -42,10 +43,7 @@ const AboutPage = () => {
   }, [])
 
   const scrollToSection = (ref) => {
-    ref.current?.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    })
+    scrollToInContent(ref, { offset: 12 })
   }
   return (
     <Layout>

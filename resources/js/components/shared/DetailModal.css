@@ -1,0 +1,150 @@
+/* ==========================================================================
+   DETAIL MODAL — shared by every "open a card to read it" dialog.
+   Banner -> tags -> labelled facts -> body, always full width, no dead space.
+   Colors come from css/app-modal.css tokens so light + black themes both work.
+   ========================================================================== */
+.dm {
+  --dm-border: var(--am-border, #e6eaf1);
+  --dm-muted: var(--am-muted, #6b7280);
+  --dm-fg: var(--am-fg, #1f2937);
+  --dm-outline: #c7d2fe;
+  --dm-soft: rgba(79, 70, 229, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+  color: var(--dm-fg);
+}
+[data-theme="black"] .dm {
+  --dm-outline: rgba(129, 140, 248, 0.38);
+  --dm-soft: rgba(129, 140, 248, 0.14);
+}
+
+/* ---- media ---- */
+.dm-media {
+  width: 100%;
+  border: 1px solid var(--dm-outline);
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--dm-soft);
+}
+.dm-media--single .dm-img,
+.dm-media--single .ant-image {
+  display: block;
+  width: 100%;
+}
+.dm-media--single img {
+  display: block;
+  width: 100%;
+  max-height: 340px;
+  object-fit: cover;
+}
+.dm-media--grid {
+  display: grid;
+  gap: 8px;
+  padding: 8px;
+}
+.dm-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.dm-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.dm-media--grid .dm-img,
+.dm-media--grid .ant-image {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.dm-media--grid img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.dm-media--fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 96px;
+  font-size: 34px;
+  color: var(--ph-accent, #4f46e5);
+}
+
+/* ---- tags ---- */
+.dm-tags {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+.dm-tags .ant-tag { margin: 0; }
+
+/* ---- labelled facts: icon | LABEL / value, same grid everywhere ---- */
+.dm-facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 10px 16px;
+  margin: 0;
+  padding: 12px 14px;
+  border: 1px solid var(--dm-outline);
+  border-radius: 14px;
+}
+.dm-fact {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+.dm-fact-icon {
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9px;
+  font-size: 15px;
+  color: var(--ph-accent, #4f46e5);
+  background: var(--dm-soft);
+}
+.dm-fact-text { min-width: 0; }
+.dm-fact-text dt {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--dm-muted);
+  line-height: 1.3;
+}
+.dm-fact-text dd {
+  margin: 0;
+  font-size: 13.5px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--dm-fg);
+  overflow-wrap: anywhere;
+}
+
+/* ---- body text ---- */
+.dm-body {
+  font-size: 14.5px;
+  line-height: 1.65;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+  color: var(--dm-fg);
+}
+.dm-body > :first-child { margin-top: 0 !important; }
+.dm-body > :last-child { margin-bottom: 0 !important; }
+.dm-body p { margin: 0 0 10px; }
+
+/* ---- the dialog itself: header title wraps, no wasted top gap ---- */
+html .app-modal-root .dm-modal .ant-modal-title {
+  align-items: flex-start;
+  line-height: 1.3 !important;
+}
+
+@media (max-width: 575.98px) {
+  .dm-facts { grid-template-columns: 1fr; padding: 10px 12px; }
+  .dm-media--single img { max-height: 240px; }
+  .dm-cols-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}

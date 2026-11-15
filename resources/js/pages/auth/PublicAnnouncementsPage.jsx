@@ -1,7 +1,7 @@
 "use client"
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Typography, Row, Col, Empty, Select } from "antd";
-import Modal from "~/components/shared/AppModal";
+import { DetailModal, DetailBody } from "~/components/shared/DetailModal";
 import {
     NotificationOutlined,
     CalendarOutlined,
@@ -118,7 +118,7 @@ const AnnouncementCard = ({ item, onOpen, delayMs = 0 }) => {
             style={{ transitionDelay: `${delayMs}ms` }}
             onClick={() => onOpen(item)}
         >
-            <div className="pan-media">
+            <div className={`pan-media${image ? "" : " pan-media--empty"}`}>
                 {item.pinned && (
                     <span className="pan-pin-badge">
                         <PushpinFilled /> Pinned
@@ -484,38 +484,38 @@ const PublicAnnouncementsPage = () => {
             {/* ============ FOOTER ============ */}
             <PublicFooter goTo={goTo} />
 
-            {/* ============ DETAIL MODAL ============ */}
-            <Modal
+            {/* ============ DETAIL MODAL (shared layout) ============ */}
+            <DetailModal
                 open={!!detailItem}
-                onCancel={() => setDetailItem(null)}
-                footer={null}
+                onClose={() => setDetailItem(null)}
                 title={detailItem?.title}
-                centered
             >
                 {detailItem && (
-                    <div>
-                        {getAnnouncementImage(detailItem) ? (
-                            <img
-                                src={getAnnouncementImage(detailItem)}
-                                alt={detailItem.title}
-                                style={{ width: "100%", borderRadius: 12, marginBottom: 16 }}
-                                {...guardImageEvents}
-                            />
-                        ) : (
-                            <div
-                                className={`pan-media-empty pan-cat-${detailItem.category || "general"} pan-modal-media-empty`}
-                            >
-                                <NotificationOutlined />
-                            </div>
-                        )}
-                        <p style={{ opacity: 0.6, fontSize: 13, marginBottom: 12 }}>
-                            <CalendarOutlined />{" "}
-                            {formatDate(detailItem.publish_date || detailItem.created_at)}
-                        </p>
-                        <Paragraph>{stripHtml(detailItem.content)}</Paragraph>
-                    </div>
+                    <DetailBody
+                        images={[getAnnouncementImage(detailItem)]}
+                        alt={detailItem.title}
+                        imgProps={guardImageEvents}
+                        fallback={<NotificationOutlined />}
+                        tags={[
+                            <span key="pub" className="pan-badge is-published">
+                                <CheckCircleOutlined /> Published
+                            </span>,
+                            <span key="cat" className="pan-cat-tag">
+                                {ANNOUNCEMENT_CATEGORIES.find((c) => c.value === (detailItem.category || "general"))?.label || "General"}
+                            </span>,
+                        ]}
+                        meta={[
+                            {
+                                icon: <CalendarOutlined />,
+                                label: "Date",
+                                value: formatDate(detailItem.publish_date || detailItem.created_at),
+                            },
+                        ]}
+                    >
+                        {stripHtml(detailItem.content)}
+                    </DetailBody>
                 )}
-            </Modal>
+            </DetailModal>
 
             <ZoomWarningModal open={zoomModalOpen} onClose={closeZoomModal} />
         </div>

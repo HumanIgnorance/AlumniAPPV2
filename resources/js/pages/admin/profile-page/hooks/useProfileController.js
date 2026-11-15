@@ -4,6 +4,7 @@ import { message } from "antd";
 import moment from "moment";
 import axiosConfig from "~/utils/axiosConfig";
 import { CAREER_EDIT_LOCK_DAYS } from "~/pages/admin/profile-page/parts/profileShared";
+import { scrollToInContent } from "~/utils/scrollInContent";
 
 export default function useProfileController() {
     const { data: profile, loading, refetch } = useProfile();
@@ -170,11 +171,10 @@ export default function useProfileController() {
     const confirmEnterEditMode = () => {
         setCareerConfirmVisible(false);
         toggleEditMode();
+        // Scroll ONLY the #content pane. scrollIntoView() also scrolls the
+        // page itself on iPhone, which pushed the header + footer up.
         setTimeout(() => {
-            careerSectionRef.current?.scrollIntoView({
-                behavior: "smooth",
-                block: "start",
-            });
+            scrollToInContent(careerSectionRef, { offset: 16 });
         }, 250);
     };
     // ============ END CAREER LOCK HELPERS ============

@@ -1,0 +1,62 @@
+/* ==========================================================================
+   LOGIN FEATURE CARDS (Alumni Network / Career Boost / Secure Access / Live Analytics)
+
+   Same card language as the rest of the app (see css/card-system.css):
+     • one solid 1px outline (no glass blur, no dashed edge, no coloured top bar)
+     • height comes from the content only, every card the same width
+     • icon + title + text share one grid, so every card aligns identically
+   Loaded last in FormLogin-styles/index.js. The responsive size overrides in
+   06-rive-animation.css (short viewports, phones) still apply on top of this.
+   ========================================================================== */
+.login-brand__features .login-brand__feature {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    column-gap: 10px;
+    align-items: center;
+    align-content: center;
+    height: auto;
+    min-height: 0;
+    background: var(--surface);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    border: 1px solid var(--accent-ring);
+    border-radius: 12px;
+    box-shadow: none;
+}
+
+.login-brand__features .login-brand__feature:hover {
+    background: var(--surface);
+    border-color: var(--accent);
+    box-shadow: 0 6px 16px var(--accent-ring);
+}
+
+.login-brand__features .login-brand__feature .icon {
+    align-self: center;
+}
+
+.login-brand__features .login-brand__feature .meta {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    text-align: left;
+}
+
+.login-brand__features .login-brand__feature .meta strong {
+    margin: 0;
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+}
+
+.login-brand__features .login-brand__feature .meta span {
+    display: block;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+}
+
+[data-theme="black"] .login-brand__features .login-brand__feature {
+    background: var(--surface);
+}
+[data-theme="black"] .login-brand__features .login-brand__feature:hover {
+    background: var(--surface);
+}

@@ -6,6 +6,7 @@
 import "./utils/devtoolsGuard"; // hide the UI while DevTools is open (runs before React mounts)
 import "../css/tokens.css"; // design tokens (color palette) — load first
 import "../css/page-header.css";
+import "../css/card-system.css"; // ONE outlined, content-sized card look for every public page
 import "../css/auth-mobile-app.css"; // portrait-phone app look for Login / Forgot / Reset / Register
 import "../css/auth-appbar.css"; // ONE shared top bar (explicit height) for every signed-out phone screen
 import "../css/mobile-app-responsive.css"; // signed-in screens: all iPhones + Android sizes

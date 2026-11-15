@@ -21,6 +21,7 @@ import {
 } from "antd";
 import Modal from "~/components/shared/AppModal";
 import Button from "~/components/shared/AsyncButton";
+import { DetailModal, DetailBody } from "~/components/shared/DetailModal";
 import {
     PlusOutlined,
     EditOutlined,
@@ -800,55 +801,55 @@ export default function AnnouncementPage() {
                 </p>
             </Modal>
 
-            {/* Detail view (everyone) */}
-            <Modal
-                title={null}
+            {/* Detail view (everyone) — shared DetailModal layout */}
+            <DetailModal
                 open={!!detailAnnouncement}
-                onCancel={() => setDetailAnnouncement(null)}
-                footer={null}
-                width={640}
-                className="ann-modal ann-detail-modal"
+                onClose={() => setDetailAnnouncement(null)}
+                title={detailAnnouncement?.title}
+                className="ann-detail-modal"
             >
                 {detailAnnouncement && (
-                    <div className="ann-detail">
-                        <div className="ann-detail-tags">
-                            <Tag color={categoryMeta(detailAnnouncement.category).color}>
+                    <DetailBody
+                        preview
+                        images={detailAnnouncement.image_urls || []}
+                        alt={detailAnnouncement.title}
+                        fallback={<NotificationOutlined />}
+                        tags={[
+                            <Tag key="cat" color={categoryMeta(detailAnnouncement.category).color}>
                                 {categoryMeta(detailAnnouncement.category).label}
-                            </Tag>
-                            {detailAnnouncement.pinned && (
-                                <Tag icon={<PushpinOutlined />} color="gold">
+                            </Tag>,
+                            detailAnnouncement.pinned ? (
+                                <Tag key="pin" icon={<PushpinOutlined />} color="gold">
                                     Pinned
                                 </Tag>
-                            )}
-                        </div>
-                        <Title level={3}>{detailAnnouncement.title}</Title>
-                        <Text type="secondary">
-                            <CalendarOutlined />{" "}
-                            {dayjs(
-                                detailAnnouncement.publish_date || detailAnnouncement.created_at
-                            ).format("MMMM D, YYYY")}
-                        </Text>
-
-                        {detailAnnouncement.image_urls?.length > 0 ? (
-                            <div className="ann-detail-images">
-                                <Image.PreviewGroup>
-                                    {detailAnnouncement.image_urls.map((url, idx) => (
-                                        <Image key={idx} src={url} width={120} />
-                                    ))}
-                                </Image.PreviewGroup>
-                            </div>
-                        ) : (
-                            <div className={`ann-detail-placeholder ann-cat-${detailAnnouncement.category || "general"}`}>
-                                <NotificationOutlined />
-                            </div>
-                        )}
-
-                        <Paragraph className="ann-detail-content">
-                            {detailAnnouncement.content}
-                        </Paragraph>
-                    </div>
+                            ) : null,
+                        ].filter(Boolean)}
+                        meta={[
+                            {
+                                icon: <CalendarOutlined />,
+                                label: "Date",
+                                value: dayjs(
+                                    detailAnnouncement.publish_date || detailAnnouncement.created_at
+                                ).format("MMMM D, YYYY"),
+                            },
+                            {
+                                icon: <CheckCircleOutlined />,
+                                label: "Status",
+                                value: statusMeta(detailAnnouncement.status).label,
+                            },
+                            isAdmin
+                                ? {
+                                      icon: <EyeOutlined />,
+                                      label: "Views",
+                                      value: detailAnnouncement.views_count ?? 0,
+                                  }
+                                : null,
+                        ].filter(Boolean)}
+                    >
+                        {detailAnnouncement.content}
+                    </DetailBody>
                 )}
-            </Modal>
+            </DetailModal>
         </Layout>
     );
 }

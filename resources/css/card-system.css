@@ -1,0 +1,303 @@
+/* ==========================================================================
+   CARD SYSTEM — one card language for every PUBLIC page
+   (Home, Announcements, Events, Job Posts, Gallery, OCC Services, Credits, Contact, Install App)
+
+   Modeled on the Announcements card in the signed-in app:
+     • a solid 1px outline (indigo tint) — no dashed edges, no coloured top bar
+     • height comes from the CONTENT only: cards never stretch to match a
+       taller neighbour, so there is no dead space inside them
+     • every detail row uses the same grid:  [icon] value
+     • tags -> title -> text -> facts -> footer always sit in the same order,
+       with the same spacing, on every page
+
+   Specificity: every rule starts with  `html .ph-page:is(.light,.dark)`  so it
+   wins over each page's own CSS regardless of which lazy chunk loads last.
+   Imported from resources/js/app.js.
+   ========================================================================== */
+
+/* ---------- tokens ---------- */
+html .ph-page.light {
+  --cs-surface: #ffffff;
+  --cs-outline: #c7d2fe;
+  --cs-outline-hover: #818cf8;
+  --cs-divider: #e0e7ff;
+  --cs-soft: rgba(79, 70, 229, 0.08);
+  --cs-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
+  --cs-shadow-hover: 0 12px 28px rgba(79, 70, 229, 0.13);
+}
+html .ph-page.dark {
+  --cs-surface: rgba(18, 22, 32, 0.92);
+  --cs-outline: rgba(129, 140, 248, 0.38);
+  --cs-outline-hover: rgba(165, 161, 247, 0.75);
+  --cs-divider: rgba(129, 140, 248, 0.2);
+  --cs-soft: rgba(129, 140, 248, 0.14);
+  --cs-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+  --cs-shadow-hover: 0 12px 28px rgba(0, 0, 0, 0.5);
+}
+
+/* ---------- grids: rows size to their tallest card, cards size to themselves ---------- */
+html .ph-page .ant-row,
+html .ph-page .ph-grid,
+html .ph-page .occsvc-grid,
+html .ph-page .cred-team-grid,
+html .ph-page .cred-thanks-grid {
+  align-items: start;
+}
+
+/* ---------- the card ---------- */
+html .ph-page:is(.light, .dark) :is(
+  .ph-card, .pan-card, .pev-card, .pgal-card, .pjp-card,
+  .occsvc-card, .cred-card, .cred-thanks-card, .pcon-card,
+  .pwa-card, .pwa-step-card
+) {
+  background: var(--cs-surface);
+  border: 1px solid var(--cs-outline);
+  border-radius: 16px;
+  box-shadow: var(--cs-shadow);
+  height: auto;          /* content decides the height (was 100% = stretched) */
+  min-height: 0;
+  align-self: start;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+html .ph-page:is(.light, .dark) :is(
+  .ph-card, .pan-card, .pev-card, .pgal-card, .pjp-card, .occsvc-card, .cred-card
+):hover {
+  transform: translateY(-3px);
+  border-color: var(--cs-outline-hover);
+  box-shadow: var(--cs-shadow-hover);
+}
+/* the form card on Contact is not clickable: keep it still */
+html .ph-page:is(.light, .dark) .pcon-card:hover,
+html .ph-page:is(.light, .dark) .cred-thanks-card:hover {
+  transform: none;
+}
+/* OCC Services deep-link highlight (must stay visible on top of the outline) */
+html .ph-page:is(.light, .dark) .occsvc-card.occsvc-card-highlight {
+  border-color: var(--ph-accent);
+  box-shadow: 0 0 0 3px var(--cs-soft), var(--cs-shadow-hover);
+}
+
+/* ---------- padding / gaps (same rhythm on every card) ---------- */
+html .ph-page:is(.light, .dark) :is(.ph-card, .occsvc-card, .cred-card) {
+  padding: 18px;
+}
+html .ph-page:is(.light, .dark) :is(.ph-card, .cred-card) { gap: 14px; }
+html .ph-page:is(.light, .dark) .occsvc-card { gap: 12px; }
+html .ph-page:is(.light, .dark) :is(.pan-card, .pev-card, .pgal-card, .pjp-card) {
+  padding: 0;
+  gap: 0;
+}
+html .ph-page:is(.light, .dark) :is(
+  .pan-card-body, .pev-card-body, .pgal-card-body, .pjp-card-body
+) {
+  padding: 16px 18px 18px;
+  flex: 0 1 auto;        /* no growing => no empty band at the bottom */
+}
+
+/* ---------- media: image on top, a SLIM band when there is no image ---------- */
+html .ph-page:is(.light, .dark) :is(.pan-media, .pev-media, .pgal-media, .pjp-media) {
+  height: 160px;
+  border-bottom: 1px solid var(--cs-divider);
+}
+html .ph-page:is(.light, .dark) :is(
+  .pev-media-carousel .ant-carousel, .pev-media-carousel .slick-slider, .pev-media-carousel .slick-list,
+  .pev-media-carousel .slick-track, .pev-media-carousel .slick-slide > div, .pev-slide,
+  .pgal-media-carousel .ant-carousel, .pgal-media-carousel .slick-slider, .pgal-media-carousel .slick-list,
+  .pgal-media-carousel .slick-track, .pgal-media-carousel .slick-slide > div, .pgal-slide
+) {
+  height: 160px;
+}
+html .ph-page:is(.light, .dark) :is(
+  .pan-media--empty, .pev-media-empty, .pgal-media-empty, .pjp-media-empty
+) {
+  height: 84px;
+}
+html .ph-page:is(.light, .dark) :is(
+  .pan-media--empty, .pev-media-empty, .pgal-media-empty, .pjp-media-empty
+) .anticon {
+  font-size: 30px;
+}
+
+/* ---------- tags row ---------- */
+html .ph-page:is(.light, .dark) :is(.pan-card-tags, .pev-card-tags, .pjp-card-tags) {
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+/* ---------- title ---------- */
+html .ph-page:is(.light, .dark) :is(
+  .pan-card-title, .pev-card-title, .pgal-card-title, .pjp-card-title,
+  .occsvc-card-title, .cred-card-name
+) {
+  font-size: 17px !important;
+  font-weight: 800 !important;
+  line-height: 1.3 !important;
+  margin: 0 0 6px !important;
+  overflow-wrap: anywhere;
+}
+html .ph-page:is(.light, .dark) :is(.pan-card-title, .pev-card-title, .pgal-card-title, .pjp-card-title) {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ---------- description ---------- */
+html .ph-page:is(.light, .dark) :is(
+  .pan-card-desc, .pev-card-desc, .pjp-card-desc, .occsvc-card-desc, .cred-card-desc
+) {
+  font-size: 13.5px !important;
+  line-height: 1.55 !important;
+  margin: 0 0 12px !important;
+}
+/* last text block in a card has nothing under it: no trailing gap */
+html .ph-page:is(.light, .dark) :is(.occsvc-card-desc, .cred-card-desc):last-child {
+  margin-bottom: 0 !important;
+}
+
+/* ---------- facts: ALWAYS  [icon] value  on one grid ---------- */
+html .ph-page:is(.light, .dark) :is(.pev-card-facts, .pgal-card-facts, .pjp-card-facts) {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 12px;
+  margin: 0 0 12px;
+  border-top: 1px solid var(--cs-divider);   /* solid, not dashed */
+}
+html .ph-page:is(.light, .dark) :is(.pev-fact, .pgal-fact, .pjp-fact, .pjp-card-company) {
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr);
+  align-items: start;
+  column-gap: 10px;
+  font-size: 13px;
+  line-height: 1.45;
+  opacity: 0.9;
+}
+html .ph-page:is(.light, .dark) :is(.pev-fact, .pgal-fact, .pjp-fact, .pjp-card-company) .anticon {
+  justify-self: center;
+  margin-top: 2px;              /* optically centres the icon on the first text line */
+  font-size: 14px;
+  color: var(--ph-accent);
+}
+html .ph-page:is(.light, .dark) .pjp-card-company { margin-bottom: 10px; opacity: 1; }
+html .ph-page:is(.light, .dark) :is(.pev-fact span, .pgal-fact span, .pjp-fact span) { min-width: 0; overflow-wrap: anywhere; }
+
+/* ---------- footer: status text + actions ---------- */
+html .ph-page:is(.light, .dark) :is(.pev-card-footer, .pgal-card-footer, .pjp-card-footer) {
+  margin-top: 0;
+}
+html .ph-page:is(.light, .dark) :is(.pev-status-msg, .pgal-status-msg, .pjp-status-msg) {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 0 0 12px !important;
+  font-size: 12.5px !important;
+  line-height: 1.5;
+}
+html .ph-page:is(.light, .dark) :is(.pev-status-msg, .pgal-status-msg, .pjp-status-msg) .anticon {
+  flex: 0 0 auto;
+  margin-top: 3px;
+}
+html .ph-page:is(.light, .dark) :is(.pev-card-actions, .pgal-card-actions, .pjp-card-actions) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+html .ph-page:is(.light, .dark) :is(.pev-card-actions, .pgal-card-actions, .pjp-card-actions) .ph-btn {
+  flex: 1 1 0;
+  min-width: max-content;
+  justify-content: center;
+  min-height: 38px;
+  padding: 8px 14px;
+  font-size: 13.5px;
+}
+
+/* ---------- announcement footer: date left, "Read More" right ---------- */
+html .ph-page:is(.light, .dark) .pan-card-footer {
+  margin-top: 0;
+  padding-top: 12px;
+  border-top: 1px solid var(--cs-divider);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+html .ph-page:is(.light, .dark) .pan-card-date {
+  display: inline-grid;
+  grid-template-columns: 18px auto;
+  align-items: center;
+  column-gap: 8px;
+}
+html .ph-page:is(.light, .dark) .pan-card-date .anticon { justify-self: center; }
+
+/* ---------- home teaser cards (.ph-card: icon | text) ---------- */
+html .ph-page:is(.light, .dark) .ph-card-body { align-self: stretch; }
+html .ph-page:is(.light, .dark) .ph-card-foot {
+  margin-top: 0;
+  padding-top: 10px;
+  border-top: 1px solid var(--cs-divider);
+}
+html .ph-page:is(.light, .dark) .ph-card-desc { margin-bottom: 10px !important; }
+html .ph-page:is(.light, .dark) .ph-card-icon-wrap {
+  border: 1px solid var(--cs-divider);
+  background: var(--cs-soft);
+}
+
+/* ---------- OCC Services: logo tile + tag on one aligned row ---------- */
+html .ph-page:is(.light, .dark) .occsvc-card-top { align-items: center; margin-bottom: 2px; }
+html .ph-page:is(.light, .dark) .occsvc-card-logo-wrap {
+  width: 52px;
+  height: 52px;
+  border: 1px solid var(--cs-divider);
+  background: var(--cs-soft);
+}
+html .ph-page:is(.light, .dark) .occsvc-card-body { flex: 0 1 auto; }
+html .ph-page:is(.light, .dark) .occsvc-card-domain { margin-top: 0; }
+html .ph-page:is(.light, .dark) .occsvc-card-cta { margin-top: 2px; min-height: 40px; }
+
+/* ---------- Credits: avatar + text share one top line ---------- */
+html .ph-page:is(.light, .dark) .cred-card { align-items: flex-start; }
+html .ph-page:is(.light, .dark) .cred-avatar {
+  width: 88px;
+  height: 88px;
+  border: 1px solid var(--cs-outline);
+  box-shadow: none;
+}
+html .ph-page:is(.light, .dark) .cred-card-body { flex: 1 1 auto; align-self: flex-start; min-width: 0; }
+html .ph-page:is(.light, .dark) .cred-role-tag { margin-bottom: 8px; }
+html .ph-page:is(.light, .dark) .cred-thanks-card { padding: 16px 18px; }
+
+/* ---------- Contact form card (holds inputs + dropdowns: never clip them) ---------- */
+html .ph-page:is(.light, .dark) .pcon-card { padding: 22px; overflow: visible; }
+
+/* ---------- small screens ---------- */
+@media (max-width: 767px) {
+  html .ph-page:is(.light, .dark) :is(.pan-media, .pev-media, .pgal-media, .pjp-media) { height: 150px; }
+  html .ph-page:is(.light, .dark) :is(
+    .pev-media-carousel .ant-carousel, .pev-media-carousel .slick-slider, .pev-media-carousel .slick-list,
+    .pev-media-carousel .slick-track, .pev-media-carousel .slick-slide > div, .pev-slide,
+    .pgal-media-carousel .ant-carousel, .pgal-media-carousel .slick-slider, .pgal-media-carousel .slick-list,
+    .pgal-media-carousel .slick-track, .pgal-media-carousel .slick-slide > div, .pgal-slide
+  ) { height: 150px; }
+  html .ph-page:is(.light, .dark) :is(.pan-card-body, .pev-card-body, .pgal-card-body, .pjp-card-body) {
+    padding: 14px 16px 16px;
+  }
+  html .ph-page:is(.light, .dark) :is(.pev-card-actions, .pgal-card-actions, .pjp-card-actions) .ph-btn {
+    flex: 1 1 100%;
+  }
+  html .ph-page:is(.light, .dark) .ph-card { flex-direction: column; }
+  html .ph-page:is(.light, .dark) .ph-card-icon-wrap { width: 100%; height: 130px; }
+  html .ph-page:is(.light, .dark) .cred-card { flex-direction: column; align-items: center; text-align: center; }
+  html .ph-page:is(.light, .dark) .cred-card-body { align-self: stretch; }
+}
+@media (hover: none) {
+  html .ph-page:is(.light, .dark) :is(.ph-card, .pan-card, .pev-card, .pgal-card, .pjp-card, .occsvc-card, .cred-card):hover {
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html .ph-page:is(.light, .dark) :is(.ph-card, .pan-card, .pev-card, .pgal-card, .pjp-card, .occsvc-card, .cred-card) {
+    transition: none;
+  }
+}

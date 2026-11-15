@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { scrollWithin } from "~/utils/scrollInContent";
 import { message } from "antd";
 import secureLocalStorage from "react-secure-storage";
 
@@ -31,7 +32,7 @@ export default function useMessageSearch({
     // ---------------------------------------------------------------------------
     const scrollToMessageId = (id) => {
         const el = document.getElementById(`admin-msg-${id}`);
-        if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+        if (el) scrollWithin(el, { block: "center" });
     };
 
     useEffect(() => {
