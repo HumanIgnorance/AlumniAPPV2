@@ -34,29 +34,3 @@
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
 }
-
-/* ==========================================================================
-   NO SCROLLBAR, NO LAYOUT JUMP
-   The page-level scrollbar is already hidden on html/body (10-overrides-a.css),
-   but the signed-in shell scrolls inside #content (and the desktop sidebar), so
-   a classic scrollbar popped in the moment the page finished loading and
-   nudged everything sideways. Hiding it keeps scrolling (touch, wheel,
-   keyboard) intact and the layout width constant from first paint on every
-   phone, tablet and desktop browser.
-   ========================================================================== */
-.app-shell-root #content,
-#sidebar-wrapper .ant-layout-sider,
-.app-nav-drawer .ant-drawer-body,
-.preview-drawer-root .ant-drawer-body {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-.app-shell-root #content::-webkit-scrollbar,
-#sidebar-wrapper .ant-layout-sider::-webkit-scrollbar,
-.app-nav-drawer .ant-drawer-body::-webkit-scrollbar,
-.preview-drawer-root .ant-drawer-body::-webkit-scrollbar {
-  display: none;
-  width: 0;
-  height: 0;
-}

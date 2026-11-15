@@ -183,6 +183,10 @@ Route::delete('/galleries/{id}/image', [GalleryController::class, 'deleteImage']
         // (that route requires digits), but keeping it here for clarity.
         Route::get('/directory', [AlumniRegistrationController::class, 'directory']);
 
+        // Counts only (total / employed / unemployed) for the Home stat cards;
+        // open to every authenticated role since it exposes no personal data.
+        Route::get('/summary', [AlumniRegistrationController::class, 'summary']);
+
         // Ownership/role checks for a single record are enforced inside
         // the controller via AlumniPolicy (admin, the record owner, or a
         // department head scoped to the same course).

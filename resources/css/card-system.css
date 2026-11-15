@@ -79,10 +79,10 @@ html .ph-page:is(.light, .dark) .occsvc-card.occsvc-card-highlight {
 }
 
 /* ---------- padding / gaps (same rhythm on every card) ---------- */
-html .ph-page:is(.light, .dark) :is(.ph-card, .occsvc-card, .cred-card) {
+html .ph-page:is(.light, .dark) :is(.occsvc-card, .cred-card) {
   padding: 18px;
 }
-html .ph-page:is(.light, .dark) :is(.ph-card, .cred-card) { gap: 14px; }
+html .ph-page:is(.light, .dark) .cred-card { gap: 14px; }
 html .ph-page:is(.light, .dark) .occsvc-card { gap: 12px; }
 html .ph-page:is(.light, .dark) :is(.pan-card, .pev-card, .pgal-card, .pjp-card) {
   padding: 0;
@@ -231,17 +231,89 @@ html .ph-page:is(.light, .dark) .pan-card-date {
 }
 html .ph-page:is(.light, .dark) .pan-card-date .anticon { justify-self: center; }
 
-/* ---------- home teaser cards (.ph-card: icon | text) ---------- */
-html .ph-page:is(.light, .dark) .ph-card-body { align-self: stretch; }
-html .ph-page:is(.light, .dark) .ph-card-foot {
-  margin-top: 0;
-  padding-top: 10px;
-  border-top: 1px solid var(--cs-divider);
+/* ---------- Home cards: image fills the top edge-to-edge, text underneath ----------
+   Same layout as the Announcements card: banner touches the outline on the
+   top / left / right (no padding, no rounded inner box), then the content. */
+html .ph-page:is(.light, .dark) .ph-card {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 0;
+  gap: 0;
 }
-html .ph-page:is(.light, .dark) .ph-card-desc { margin-bottom: 10px !important; }
-html .ph-page:is(.light, .dark) .ph-card-icon-wrap {
-  border: 1px solid var(--cs-divider);
+html .ph-page:is(.light, .dark) .ph-card .ph-card-icon-wrap {
+  position: relative;
+  width: 100%;
+  height: 170px;
+  flex: 0 0 auto;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-bottom: 1px solid var(--cs-divider);
+  border-radius: 0;
   background: var(--cs-soft);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  color: var(--ph-accent);
+}
+html .ph-page:is(.light, .dark) .ph-card .ph-card-icon-wrap img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 0;
+}
+/* no photo -> slim icon band instead of a big empty block */
+html .ph-page:is(.light, .dark) .ph-card .ph-card-icon-wrap:not(:has(img)) { height: 84px; }
+
+html .ph-page:is(.light, .dark) .ph-card .ph-card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 0 1 auto;
+  align-self: stretch;
+  min-width: 0;
+  padding: 16px 18px 18px;
+}
+html .ph-page:is(.light, .dark) .ph-card .ph-card-title {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: 17px !important;
+  font-weight: 800 !important;
+  line-height: 1.3 !important;
+  margin: 0 0 6px !important;
+}
+html .ph-page:is(.light, .dark) .ph-card .ph-card-desc { margin: 0 0 10px !important; }
+html .ph-page:is(.light, .dark) .ph-card .ph-card-published { display: block; margin: 0 0 10px; }
+html .ph-page:is(.light, .dark) .ph-card .ph-job-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+html .ph-page:is(.light, .dark) .ph-card .ph-card-foot {
+  margin-top: 0;
+  padding-top: 12px;
+  border-top: 1px solid var(--cs-divider);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+/* ---------- Home gallery tiles: photo fills the whole tile, outlined like the cards ---------- */
+html .ph-page:is(.light, .dark) .ph-gallery-item {
+  border: 1px solid var(--cs-outline);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--cs-shadow);
+}
+html .ph-page:is(.light, .dark) .ph-gallery-item > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 /* ---------- OCC Services: logo tile + tag on one aligned row ---------- */
@@ -286,8 +358,8 @@ html .ph-page:is(.light, .dark) .pcon-card { padding: 22px; overflow: visible; }
   html .ph-page:is(.light, .dark) :is(.pev-card-actions, .pgal-card-actions, .pjp-card-actions) .ph-btn {
     flex: 1 1 100%;
   }
-  html .ph-page:is(.light, .dark) .ph-card { flex-direction: column; }
-  html .ph-page:is(.light, .dark) .ph-card-icon-wrap { width: 100%; height: 130px; }
+  html .ph-page:is(.light, .dark) .ph-card .ph-card-icon-wrap { height: 150px; }
+  html .ph-page:is(.light, .dark) .ph-card .ph-card-body { padding: 14px 16px 16px; }
   html .ph-page:is(.light, .dark) .cred-card { flex-direction: column; align-items: center; text-align: center; }
   html .ph-page:is(.light, .dark) .cred-card-body { align-self: stretch; }
 }

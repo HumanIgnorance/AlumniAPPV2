@@ -11,6 +11,7 @@ export default function useJobPostLoaders({
     setCurrentUser,
     setActiveTab,
     setInitialLoading,
+    initialLoading,
     userRole,
     fetchJobPosts,
     fetchPendingPosts,
@@ -39,15 +40,15 @@ export default function useJobPostLoaders({
     // ============ INITIAL DATA FETCH FOR BADGE COUNTS ============
     // Fetch all data on mount to display badge counts immediately
     useEffect(() => {
+        // Wait until the real role is known: userRole starts as "alumni", so an
+        // admin would otherwise fire the alumni requests first and race the
+        // real admin request.
+        if (initialLoading) return;
         try {
-            const token = getAuthToken();
-            if (!token) {
-                console.error(
-                    "No token available, skipping initial data fetch",
-                );
-                return;
-            }
-
+            // Auth is cookie/session based now (axiosConfig attaches it), and
+            // getAuthToken() is a stub that always returns null. The old
+            // "no token -> skip" guard therefore blocked EVERY fetch and left
+            // the Job Posts page empty for admin and alumni.
             // Fetch all data for badge counts regardless of active tab
             if (userRole === ROLES.ADMIN) {
                 fetchJobPosts();
@@ -63,17 +64,19 @@ export default function useJobPostLoaders({
         } catch (error) {
             console.error("Error in initial data fetch:", error);
         }
-    }, [userRole]);
+    }, [userRole, initialLoading]);
 
     // Polling mechanism for real-time updates - continues to update active tab
     useEffect(() => {
+        // Wait until the real role is known: userRole starts as "alumni", so an
+        // admin would otherwise fire the alumni requests first and race the
+        // real admin request.
+        if (initialLoading) return;
         try {
-            const token = getAuthToken();
-            if (!token) {
-                console.error("No token available, skipping data fetch");
-                return;
-            }
-
+            // Auth is cookie/session based now (axiosConfig attaches it), and
+            // getAuthToken() is a stub that always returns null. The old
+            // "no token -> skip" guard therefore blocked EVERY fetch and left
+            // the Job Posts page empty for admin and alumni.
             // ✅ FIX: guard against overlapping poll cycles. Without this,
             // if the backend is slow and a batch of requests takes longer
             // than the 10s interval to resolve, every tick queues ANOTHER
@@ -119,5 +122,5 @@ export default function useJobPostLoaders({
         } catch (error) {
             console.error("Error setting up polling:", error);
         }
-    }, [userRole]);
+    }, [userRole, initialLoading]);
 }

@@ -3,6 +3,7 @@ import secureLocalStorage from "react-secure-storage";
 import { ROLES } from "~/config/roles";
 import { STORAGE_KEYS } from "~/config/storageKeys";
 import useAlumni from "~/hooks/useAlumni";
+import useAlumniSummary from "~/hooks/useAlumniSummary";
 import useQuizResult from "~/hooks/useQuizResult";
 import { useLocation } from "react-router-dom";
 import React, { useMemo, useState, useEffect } from "react";
@@ -45,7 +46,20 @@ export default function useHomeController() {
     } = useQuizResult();
     const location = useLocation();
 
+    // Alumni accounts can't call GET /alumni (admin-only), which is why their
+    // Total Alumni card always read 0. They use the counts-only summary instead.
+    const { data: alumniSummary, isLoading: summaryLoading } = useAlumniSummary({
+        enabled: !isAdmin,
+    });
+
     const stats = React.useMemo(() => {
+        if (!isAdmin) {
+            return {
+                totalAlumni: alumniSummary?.total ?? 0,
+                employed: alumniSummary?.employed ?? 0,
+                unemployed: alumniSummary?.unemployed ?? 0,
+            };
+        }
         const list = (Array.isArray(alumni) ? alumni : []).filter(
             (a) => a.status !== STATUS.REJECTED,
         );
@@ -54,7 +68,7 @@ export default function useHomeController() {
             employed: list.filter((a) => a.employment_status_id === 1).length,
             unemployed: list.filter((a) => a.employment_status_id === 2).length,
         };
-    }, [alumni]);
+    }, [alumni, alumniSummary, isAdmin]);
 
     const myQuizResults = useMemo(() => {
         if (!Array.isArray(quizResults)) return [];
@@ -93,6 +107,9 @@ export default function useHomeController() {
     const [recentJobs, setRecentJobs] = useState([]);
     const [jobsLoading, setJobsLoading] = useState(true);
     const [jobsTotal, setJobsTotal] = useState(0);
+
+    const [announcementsTotal, setAnnouncementsTotal] = useState(0);
+    const [announcementsLoading, setAnnouncementsLoading] = useState(true);
 
     const [weather, setWeather] = useState(null);
     const [weatherLoading, setWeatherLoading] = useState(true);
@@ -193,6 +210,32 @@ export default function useHomeController() {
         })();
     }, [isAlumni]);
 
+    // Announcement count for the stat card. The backend already scopes this:
+    // alumni only receive active (published, publish date reached) announcements,
+    // admins receive everything, so admins are narrowed to published here.
+    useEffect(() => {
+        (async () => {
+            try {
+                const res = await axiosConfig.get("/announcements");
+                const raw = res?.data;
+                const list = Array.isArray(raw?.data)
+                    ? raw.data
+                    : Array.isArray(raw)
+                      ? raw
+                      : [];
+                setAnnouncementsTotal(
+                    isAdmin
+                        ? list.filter((a) => a.status === "published").length
+                        : list.length,
+                );
+            } catch {
+                setAnnouncementsTotal(0);
+            } finally {
+                setAnnouncementsLoading(false);
+            }
+        })();
+    }, [isAdmin]);
+
     useEffect(() => {
         (async () => {
             try {
@@ -269,7 +312,7 @@ export default function useHomeController() {
         isAlumni,
         isAdmin,
         firstName,
-        alumniLoading,
+        alumniLoading: isAdmin ? alumniLoading : summaryLoading,
         quizLoading,
         quizResults,
         stats,
@@ -280,6 +323,8 @@ export default function useHomeController() {
         recentJobs,
         jobsLoading,
         jobsTotal,
+        announcementsTotal,
+        announcementsLoading,
         weather,
         weatherLoading,
         revealed,

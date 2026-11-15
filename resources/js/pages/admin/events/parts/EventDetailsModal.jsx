@@ -156,7 +156,7 @@ export const EventDetailsModal = ({
                                 {/* Event Tags */}
                                 <Card title="Event Tags" className="tags-card">
                                     <div className="event-tags-detailed">
-                                        {event.tags.map((tag) => (
+                                        {(event.tags || []).map((tag) => (
                                             <Tag
                                                 key={tag}
                                                 className="event-tag-detailed"

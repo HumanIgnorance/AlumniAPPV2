@@ -829,6 +829,22 @@ class AlumniRegistrationController extends Controller
      * *approved* alumni — see AlumniDirectoryResource for exactly which
      * fields that includes.
      */
+    /**
+     * Aggregate counts for the Home stat cards. Any authenticated user may
+     * call it: it returns numbers only (no personal data), so alumni accounts
+     * can see "Total Alumni" without access to the admin-only GET /alumni.
+     */
+    public function summary()
+    {
+        $approved = Alumni::approved();
+
+        return response()->json([
+            'total'      => (clone $approved)->count(),
+            'employed'   => (clone $approved)->where('employment_status_id', 1)->count(),
+            'unemployed' => (clone $approved)->where('employment_status_id', 2)->count(),
+        ]);
+    }
+
     public function directory(Request $request)
     {
         // Same reasoning as index() above — the alumni-facing card in

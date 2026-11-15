@@ -3,6 +3,7 @@ import {
     CheckCircleOutlined,
     CalendarOutlined,
     SolutionOutlined,
+    NotificationOutlined,
     BarChartOutlined,
     SafetyCertificateOutlined,
 } from "@ant-design/icons";
@@ -19,6 +20,8 @@ export default function HomeStats() {
         eventsLoading,
         jobsTotal,
         jobsLoading,
+        announcementsTotal,
+        announcementsLoading,
         isAdmin,
         quizResults,
         quizLoading,
@@ -56,6 +59,13 @@ export default function HomeStats() {
                     label="Job Openings"
                     color={COLORS.antdPurple}
                     loading={jobsLoading}
+                />
+                <StatCard
+                    icon={<NotificationOutlined />}
+                    value={announcementsTotal.toLocaleString()}
+                    label="Announcements"
+                    color={COLORS.antdRed}
+                    loading={announcementsLoading}
                 />
                 {isAdmin && (
                     <StatCard

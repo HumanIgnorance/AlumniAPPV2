@@ -132,9 +132,15 @@ export const EventCard = ({ event, showEventDetails, onEdit, onDelete }) => {
                             trigger={isTouchDevice ? [] : ["hover"]}
                             open={isTouchDevice ? false : undefined}
                         >
-                            <EyeOutlined
+                            {/* The whole action cell is the button (not just the 14px icon). */}
+                            <button
+                                type="button"
+                                className="event-card-action"
+                                aria-label={`View details: ${event.title}`}
                                 onClick={() => showEventDetails(event)}
-                            />
+                            >
+                                <EyeOutlined />
+                            </button>
                         </Tooltip>,
                         ...(role === ROLES.ADMIN
                             ? [
@@ -276,7 +282,7 @@ export const EventCard = ({ event, showEventDetails, onEdit, onDelete }) => {
                         </div>
 
                         <div className="event-tags">
-                            {event.tags.map((tag) => (
+                            {(event.tags || []).map((tag) => (
                                 <Tag key={tag} className="event-tag">
                                     {tag}
                                 </Tag>

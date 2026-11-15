@@ -392,3 +392,28 @@
         padding: 12px;
     }
 }
+
+/* View / action cell: the entire cell is clickable, with a comfortable tap target */
+.event-card .ant-card-actions > li > span {
+    display: block;
+    width: 100%;
+}
+.event-card .event-card-action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 44px;
+    margin: -12px 0;
+    padding: 12px 0;
+    background: transparent;
+    border: 0;
+    font-size: 16px;
+    color: inherit;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+.event-card .event-card-action:hover .anticon,
+.event-card .event-card-action:focus-visible .anticon {
+    color: var(--c-antd-blue);
+}
