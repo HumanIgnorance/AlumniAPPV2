@@ -130,6 +130,9 @@ export default function useEventsState() {
     };
 
     return {
+        // Was missing: AlumniEvents reads this to open the details modal, so
+        // clicking View set it to true but the page never saw it.
+        isDetailModalVisible,
         setIsDetailModalVisible,
         setSelectedEvent,
         fetchEvents,

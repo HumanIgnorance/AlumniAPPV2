@@ -6,16 +6,32 @@ import { useEventDetailsModalContext } from "~/pages/admin/events/event-details-
 export default function EventDetailsModalAgendaSection() {
     const { event } = useEventDetailsModalContext();
 
+    // The API sends the agenda as one text block ("09:00 - Registration\n..."),
+    // but tolerate arrays / objects / empty values so a odd record can never
+    // crash the whole details modal (a crash here = "nothing happens").
+    const agendaItems = (
+        typeof event.agenda === "string"
+            ? event.agenda.split("\n")
+            : Array.isArray(event.agenda)
+              ? event.agenda
+              : []
+    )
+        .map((item) =>
+            typeof item === "string"
+                ? item.trim()
+                : [item?.time, item?.title || item?.description]
+                      .filter(Boolean)
+                      .join(" - "),
+        )
+        .filter(Boolean);
+    const speakers = Array.isArray(event.speakers) ? event.speakers : [];
+
     return (
         <>
-            {event.agenda && (
+            {agendaItems.length > 0 && (
                 <Card title="Event Agenda" className="agenda-card">
                     <List
-                        dataSource={
-                            typeof event.agenda === "string"
-                                ? event.agenda.split("\n")
-                                : event.agenda
-                        }
+                        dataSource={agendaItems}
                         renderItem={(item, index) => {
                             const hasTimeFormat = item.includes(" - ");
                             const timePart = hasTimeFormat
@@ -41,10 +57,10 @@ export default function EventDetailsModalAgendaSection() {
             )}
 
             {/* Speakers Section */}
-            {event.speakers && (
+            {speakers.length > 0 && (
                 <Card title="Featured Speakers" className="speakers-card">
                     <Row gutter={[16, 16]}>
-                        {event.speakers.map((speaker, index) => (
+                        {speakers.map((speaker, index) => (
                             <Col span={8} key={index}>
                                 <div className="speaker-card">
                                     <Avatar size={64} icon={<UserOutlined />} />

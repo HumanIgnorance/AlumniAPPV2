@@ -1,0 +1,261 @@
+/* =====================================================================
+   10 — MESSAGES UI UPGRADE  (imported LAST on purpose: wins the cascade)
+
+   A. Chat panel: no more colourful gradient / coloured frame. The panel
+      fills its whole card edge to edge with the theme surface.
+   B. Alumni chat on phones (iPhone Safari, installed PWA, Android):
+      full-screen panel pinned to the VISIBLE viewport so the keyboard can
+      never push the composer / the text being typed out of sight.
+      Driven by hooks/useMobileChatViewport.js (--chat-vh, --chat-vt).
+   ===================================================================== */
+
+/* ---------------------------------------------------------------------
+   A. PLAIN, FULL-FILL CHAT PANEL
+   --------------------------------------------------------------------- */
+
+/* The page behind the card: plain, no radial colour blobs. */
+.messages-container {
+  background: var(--m-bg);
+}
+
+/* The card itself fills edge to edge (no padding frame). */
+.messages-layout {
+  align-items: stretch;
+}
+
+.messages-layout > .chat-area,
+.chat-area {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 0 !important;
+  margin: 0;
+  overflow: hidden !important;
+  background: var(--m-surface) !important;
+  background-image: none !important;
+}
+
+/* Conversation area: solid, calm surface (was a radial-gradient wash). */
+.messages-area,
+.alumni-messages-area {
+  background: var(--m-surface-2) !important;
+  background-image: none !important;
+}
+
+/* Header + composer span the full width of the panel. */
+.chat-area > .chat-header,
+.chat-area > .message-input-form {
+  width: 100%;
+  box-sizing: border-box;
+  flex: 0 0 auto;
+}
+.chat-area > .messages-area {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+/* Empty state ("Select an alumni…") on the plain surface. */
+.no-chat-selected {
+  color: var(--m-text-muted);
+}
+.no-chat-selected h3 {
+  color: var(--m-text);
+  font-size: 1.15rem;
+  line-height: 1.35;
+}
+.no-chat-selected p {
+  color: var(--m-text-muted);
+}
+
+/* ---------------------------------------------------------------------
+   B. ALUMNI CHAT — PHONES & SMALL TABLETS
+   --------------------------------------------------------------------- */
+
+/* Back button lives in the alumni header; only phones need it. */
+.alumni-back-btn {
+  display: none;
+}
+
+@media (max-width: 992px) {
+  /* Page itself never scrolls while the chat is open. */
+  html.alumni-chat-active,
+  body.alumni-chat-active {
+    overflow: hidden !important;
+    overscroll-behavior: none;
+    -webkit-overflow-scrolling: auto;
+  }
+
+  /* The chat = exactly the visible box (above the keyboard). */
+  html.alumni-chat-active .alumni-messages-container {
+    position: fixed !important;
+    top: var(--chat-vt, 0px) !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    height: var(--chat-vh, 100dvh) !important;
+    max-height: var(--chat-vh, 100dvh) !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden !important;
+    overscroll-behavior: none;
+    background: var(--m-surface);
+    z-index: 900;
+    box-sizing: border-box;
+  }
+
+  /* Header: respects the notch / status bar, never shrinks. */
+  html.alumni-chat-active .alumni-messages-header {
+    flex: 0 0 auto;
+    gap: 8px;
+    padding: calc(10px + env(safe-area-inset-top, 0px))
+      calc(12px + env(safe-area-inset-right, 0px)) 10px
+      calc(12px + env(safe-area-inset-left, 0px));
+  }
+  html.alumni-chat-active .alumni-header-left {
+    gap: 10px;
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+  html.alumni-chat-active .alumni-header-info {
+    min-width: 0;
+  }
+  html.alumni-chat-active .alumni-header-info h2 {
+    font-size: 1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  html.alumni-chat-active .admin-header-avatar {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+  }
+
+  html.alumni-chat-active .alumni-back-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    min-width: 44px;
+    min-height: 44px;
+    margin-left: -6px;
+    padding: 0 10px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+    font-size: 1.7rem;
+    line-height: 1;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+  html.alumni-chat-active .alumni-back-btn:active {
+    transform: scale(0.96);
+  }
+
+  html.alumni-chat-active .alumni-error-notice,
+  html.alumni-chat-active .restriction-notice {
+    flex: 0 0 auto;
+  }
+
+  /* The ONLY scroller: the message list. */
+  html.alumni-chat-active .alumni-messages-area {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    padding: 12px calc(12px + env(safe-area-inset-right, 0px)) 12px
+      calc(12px + env(safe-area-inset-left, 0px)) !important;
+  }
+
+  /* Composer: ordinary flex row at the bottom of the fixed box.
+     (No `sticky` — it is not needed and misbehaves when iOS moves the
+     viewport.) The home-indicator inset only applies while the keyboard
+     is closed; with the keyboard up it would be wasted blank space. */
+  html.alumni-chat-active .alumni-message-input-form {
+    position: static !important;
+    flex: 0 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px calc(10px + env(safe-area-inset-right, 0px))
+      calc(8px + env(safe-area-inset-bottom, 0px))
+      calc(10px + env(safe-area-inset-left, 0px)) !important;
+    background: var(--m-surface);
+    border-top: 1px solid var(--m-border);
+  }
+  html.alumni-chat-active.alumni-chat-kb .alumni-message-input-form {
+    padding-bottom: 8px !important;
+  }
+
+  html.alumni-chat-active .message-input-wrapper {
+    align-items: flex-end;
+    gap: 6px;
+  }
+
+  /* 16px = iOS never zooms the page on focus. */
+  html.alumni-chat-active .alumni-message-input,
+  html.alumni-chat-active .alumni-message-input-form textarea {
+    font-size: 16px !important;
+    line-height: 1.35;
+    min-height: 44px;
+    max-height: 112px;
+    padding: 10px 6px;
+    -webkit-appearance: none;
+    appearance: none;
+    touch-action: manipulation;
+  }
+  html.alumni-chat-active .image-upload-btn,
+  html.alumni-chat-active .alumni-message-input-form .send-btn {
+    flex: 0 0 auto;
+    min-width: 44px;
+    min-height: 44px;
+    touch-action: manipulation;
+  }
+
+  html.alumni-chat-active .image-preview {
+    max-height: 120px;
+  }
+
+  /* Footer / any site chrome must never steal chat height. */
+  html.alumni-chat-active .alumni-messages-container ~ footer {
+    display: none !important;
+  }
+}
+
+/* Rotated phones are short: compact header, more room for messages. */
+@media (max-width: 992px) and (orientation: landscape) and (max-height: 500px) {
+  html.alumni-chat-active .alumni-messages-header {
+    padding-top: calc(4px + env(safe-area-inset-top, 0px));
+    padding-bottom: 4px;
+  }
+  html.alumni-chat-active .admin-header-avatar {
+    width: 32px;
+    height: 32px;
+  }
+  html.alumni-chat-active .alumni-back-btn {
+    min-height: 36px;
+    min-width: 40px;
+  }
+  html.alumni-chat-active .alumni-message-input,
+  html.alumni-chat-active .alumni-message-input-form textarea {
+    min-height: 38px;
+    max-height: 72px;
+  }
+}
+
+/* Dark theme: keep the pinned panel on the dark surface. */
+[data-theme="black"] html.alumni-chat-active .alumni-messages-container,
+html[data-theme="black"].alumni-chat-active .alumni-messages-container {
+  background: var(--m-surface);
+}

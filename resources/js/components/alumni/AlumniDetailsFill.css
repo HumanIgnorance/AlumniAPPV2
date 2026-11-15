@@ -1,0 +1,79 @@
+/* =====================================================================
+   Alumni details drawer — header banner fills the drawer edge to edge
+
+   Root cause of the dead space (left / right / above the banner):
+   css/app-modal.css applies to EVERY antd drawer
+       html .ant-drawer .ant-drawer-body { padding: 16px 18px calc(16px + safe) !important }
+   AlumniDetails.styles.js tries to cancel it with
+       html .preview-drawer-root .ant-drawer-body { padding: 0 !important }
+   Both selectors have the same specificity (0,2,1), so whichever stylesheet
+   lands later in the bundle wins — and in the built app the global one did.
+   `rootClassName` puts .preview-drawer-root on the .ant-drawer element
+   itself, so chaining it (.ant-drawer.preview-drawer-root) gives (0,3,1),
+   which beats the global rule regardless of order.
+   ===================================================================== */
+
+html .ant-drawer.preview-drawer-root .ant-drawer-content-wrapper {
+    width: 100% !important;
+    max-width: 100vw !important;
+    box-shadow: none;
+}
+
+/* Body: no padding at all, the banner and the page body own their spacing. */
+html .ant-drawer.preview-drawer-root .ant-drawer-body {
+    padding: 0 !important;
+    margin: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+/* Title bar: one clean row, safe-area aware, no extra bands. */
+html .ant-drawer.preview-drawer-root .ant-drawer-header {
+    padding: max(12px, env(safe-area-inset-top, 0px)) 16px 12px !important;
+}
+@media (min-width: 769px) {
+    html .ant-drawer.preview-drawer-root .ant-drawer-header {
+        padding: 12px 24px !important;
+    }
+}
+
+/* Footer (phones): buttons own the padding, the home-indicator inset once. */
+html .ant-drawer.preview-drawer-root .ant-drawer-footer {
+    padding: 0 !important;
+}
+
+/* Wrapper + banner span the full drawer width, flush to every edge. */
+html .ant-drawer.preview-drawer-root .drawer-content {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    height: auto;
+    overflow: visible;
+}
+
+html .ant-drawer.preview-drawer-root .preview-header.preview-header--modern {
+    width: 100%;
+    margin: 0;
+    box-sizing: border-box;
+    border-radius: 0;
+}
+
+/* Page content under the banner keeps its own comfortable padding. */
+html .ant-drawer.preview-drawer-root .preview-body {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+/* Wide screens: let the banner content breathe instead of hugging the left. */
+@media (min-width: 1200px) {
+    html .ant-drawer.preview-drawer-root .preview-header.preview-header--modern {
+        padding-left: clamp(40px, 5vw, 96px);
+        padding-right: clamp(40px, 5vw, 96px);
+    }
+    html .ant-drawer.preview-drawer-root .preview-body {
+        padding-left: clamp(30px, 5vw, 96px);
+        padding-right: clamp(30px, 5vw, 96px);
+    }
+}

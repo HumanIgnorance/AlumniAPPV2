@@ -451,3 +451,70 @@
         min-width: 100px;
     }
 }
+
+/* ==========================================================================
+   EVENT DETAILS MODAL - ONE scroller on every phone (browser, PWA, mobile app)
+   On phones the shared modal (css/app-modal.css) is a bottom sheet whose
+   .ant-modal-body already scrolls. .event-details-content had its own
+   max-height: 70dvh + overflow:auto, so there were two nested scrollers: the
+   inner one got clipped by the sheet on small screens and an empty band was
+   left under it. Let the sheet body be the only scroller; the safe-area
+   padding then sits at the very end of the content instead of floating.
+   Also covers rotated phones (short viewport, wide width).
+   ========================================================================== */
+@media (max-width: 575.98px), (max-height: 500px) {
+    .event-details-modal .event-details-content {
+        max-height: none;
+        overflow: visible;
+    }
+
+    .event-details-modal .ant-modal-body {
+        padding-left: 14px !important;
+        padding-right: 14px !important;
+    }
+
+    .event-details-modal .event-details-body {
+        padding: 0;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    /* antd Row gutter adds 16px side padding to each column; stacked
+       full-width columns don't need it and it caused sideways overflow */
+    .event-details-modal .event-details-body > .ant-col {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    .event-details-modal .event-detail-header .ant-typography {
+        overflow-wrap: anywhere;
+    }
+}
+
+/* Phones: fill the screen height with the sheet so there is no big empty
+   backdrop above a short sheet, but never taller than the visible area. */
+@media (max-width: 575.98px) {
+    html .app-modal-root .event-details-modal .ant-modal-content {
+        max-height: calc(100dvh - max(12px, env(safe-area-inset-top, 0px)));
+    }
+}
+
+/* Phones: title on the left, the admin "..." menu on the right of the SAME row
+   (it used to drop onto its own line under a long title). */
+@media (max-width: 768px) {
+    html .app-modal-root .event-detail-header {
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        flex-wrap: nowrap !important;
+        gap: 4px;
+        padding-right: 36px !important;
+    }
+    html .app-modal-root .event-detail-header > .ant-typography {
+        flex: 1 1 0;
+        min-width: 0;
+    }
+    html .app-modal-root .event-detail-header .event-header-actions {
+        flex: 0 0 auto;
+    }
+}

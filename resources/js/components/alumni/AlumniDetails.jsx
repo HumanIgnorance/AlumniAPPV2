@@ -4,6 +4,7 @@ import useAlumniDetailsController from "./details/hooks/useAlumniDetailsControll
 import AlumniDetailsDrawer from "./details/parts/AlumniDetailsDrawer";
 import DetailsZoomModal from "./details/parts/DetailsZoomModal";
 import { alumniDetailsCss } from "./AlumniDetails.styles";
+import "./AlumniDetailsFill.css";
 
 /**
  * Alumni profile / registration preview drawer.
