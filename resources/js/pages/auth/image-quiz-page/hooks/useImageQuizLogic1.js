@@ -325,8 +325,16 @@ export default function useImageQuizLogic1() {
         };
     };
 
+    // Keep the skeleton up until the quiz is actually built. Without this,
+    // there was one render where loading had finished but currentQuiz was still
+    // null (it is set in an effect), which flashed "Assessment Not Found".
+    const stillPreparingQuiz =
+        isLoadingQuizzes ||
+        (isFetchingQuizzes && questions.length === 0) ||
+        (questions.length > 0 && !currentQuiz);
+
     return {
-        isLoadingQuizzes,
+        isLoadingQuizzes: stillPreparingQuiz,
         currentQuiz,
         answers,
         isQuizCompleted,

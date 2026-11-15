@@ -75,6 +75,17 @@ class RouteServiceProvider extends ServiceProvider
         // attacker. Replaces the previous ad hoc implementation in
         // AuthController, which threw a bare \Exception on lockout —
         // that produced an uncaught 500, not a proper 429.
+        // Security hardening: stop bots from enumerating which emails / phones /
+        // student IDs are registered (the /check-* endpoints are unauthenticated).
+        RateLimiter::for('availability-check', function (Request $request) {
+            return Limit::perMinute(20)->by('avail|' . $request->ip());
+        });
+
+        // Public read endpoints (events, galleries, jobs, announcements).
+        RateLimiter::for('public-read', function (Request $request) {
+            return Limit::perMinute(90)->by('pub|' . $request->ip());
+        });
+
         RateLimiter::for('login', function (Request $request) {
             // Every attempt counts (even successful ones), so a per-hour cap of
             // 5 locked out people who simply logged in and out a few times.

@@ -75,10 +75,10 @@ export default function OfflineNotice() {
             return undefined;
         }
         if (wasOffline.current) {
+            // Back online: just hide the offline bar. The green
+            // "You're back online" banner was removed (it confused users).
             wasOffline.current = false;
-            setShowBack(true);
-            const id = setTimeout(() => setShowBack(false), 3000);
-            return () => clearTimeout(id);
+            setShowBack(false);
         }
         return undefined;
     }, [online]);

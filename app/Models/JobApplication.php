@@ -34,6 +34,22 @@ class JobApplication extends Model
         'verified_at',
     ];
 
+    /**
+     * Never serialize government-ID scan data. The frontend only reads the
+     * boolean/summary fields (ocr_success, id_type_match, ocr_confidence,
+     * verification_status); the ID images are served through the authorized
+     * download routes, and the OCR values are decrypted by the casts below
+     * whenever the model is turned into JSON, so they must be hidden here.
+     */
+    protected $hidden = [
+        'ocr_name',
+        'ocr_id_number',
+        'ocr_raw_text',
+        'ocr_extracted_data',
+        'government_id_front',
+        'government_id_back',
+    ];
+
     protected $casts = [
         'reviewed_at' => 'datetime',
         'created_at' => 'datetime',

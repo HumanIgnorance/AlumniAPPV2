@@ -14,7 +14,7 @@ class GalleryController extends Controller
     // Get all galleries (for all roles)
     public function index(Request $request)
     {
-        $query = Gallery::with('uploader:id,name,email')
+        $query = Gallery::with('uploader:id,name')
             ->where('status', 'active')
             ->orderBy('created_at', 'desc');
 
@@ -141,7 +141,7 @@ class GalleryController extends Controller
     // Get single gallery
     public function show($id)
     {
-        $gallery = Gallery::with('uploader:id,name,email')->find($id);
+        $gallery = Gallery::with('uploader:id,name')->find($id);
 
         if (!$gallery) {
             return response()->json([
@@ -232,7 +232,7 @@ class GalleryController extends Controller
         return response()->json([
             'success' => true,
             'message' => count($uploadedPaths) . ' image(s) uploaded successfully',
-            'data' => $gallery->load('uploader:id,name,email'),
+            'data' => $gallery->load('uploader:id,name'),
         ], 201);
     }
 
@@ -335,7 +335,7 @@ class GalleryController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Gallery updated successfully',
-            'data' => $gallery->load('uploader:id,name,email'),
+            'data' => $gallery->load('uploader:id,name'),
         ]);
     }
 
@@ -510,7 +510,7 @@ class GalleryController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Image deleted successfully',
-            'data' => $gallery->load('uploader:id,name,email'),
+            'data' => $gallery->load('uploader:id,name'),
         ]);
     }
 

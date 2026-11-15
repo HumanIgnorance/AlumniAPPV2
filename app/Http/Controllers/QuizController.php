@@ -207,6 +207,14 @@ class QuizController extends Controller
 
     public function quizActive(Request $request)
     {
+        // Switching the live assessment affects every alumnus: admin only.
+        if (!auth()->user() || auth()->user()->role !== 'admin') {
+            return response()->json([
+                'success' => false,
+                'message' => 'You do not have permission to perform this action.'
+            ], 403);
+        }
+
         $quiz = Quiz::find($request->id);
 
         if ($quiz) {
@@ -223,6 +231,11 @@ class QuizController extends Controller
                 'message' => 'Quiz activated successfully'
             ]);
         }
+
+        return response()->json([
+            'success' => false,
+            'message' => 'Quiz not found'
+        ], 404);
     }
 
     public function answerQuiz(Request $request)
@@ -268,13 +281,19 @@ class QuizController extends Controller
     public function saveAlumniQuiz(Request $request)
     {
         try {
-            Log::info('Alumni Quiz Submission Received', $request->all());
+            // Metadata only — full answers are private to the alumnus.
+            Log::info('Alumni Quiz Submission Received', [
+                'user_id' => optional(auth()->user())->id,
+                'quizId' => $request->input('quizId'),
+                'type' => $request->input('type'),
+                'answer_count' => is_array($request->input('answers')) ? count($request->input('answers')) : 0,
+            ]);
 
             // Validate the request
             $validator = Validator::make($request->all(), [
                 'quizId' => 'required',
                 'timeSpent' => 'required|integer|min:1',
-                'type' => 'required|string|max:30',
+                'type' => 'required|string|in:rating,abcd',
                 'answers' => 'required|array|min:1',
                 'answers.*.questionId' => 'required|exists:questions,id',
                 // 'answers.*.rating' => 'required|integer|between:1,5',
@@ -298,7 +317,28 @@ class QuizController extends Controller
                 ], 401);
             }
 
+            // The assessments are alumni-only (admins/department heads have
+            // nothing to take, and their rows would pollute the results).
+            if ($user->role !== 'alumni') {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Only alumni accounts can take this assessment.'
+                ], 403);
+            }
+
             DB::beginTransaction();
+
+            // One submission per quiz type per alumnus. The row lock makes
+            // two simultaneous submits (double click / two tabs) serialize
+            // so the second one sees the first and is rejected.
+            User::where('id', $user->id)->lockForUpdate()->first();
+            if (AlumniQuiz::where('user_id', $user->id)->where('type', $request->type)->exists()) {
+                DB::rollBack();
+                return response()->json([
+                    'success' => false,
+                    'message' => 'You have already completed this assessment.'
+                ], 409);
+            }
 
             // Create alumni quiz record
             $alumniQuiz = AlumniQuiz::create([
@@ -394,8 +434,20 @@ class QuizController extends Controller
     }
 
     public function quizzesResult(Request $request) {
-        // $user_id = auth()->user()->id;
-        $quizzes = AlumniQuiz::with(['questions','user'])->latest()->get();
-        return response()->json($quizzes);
+        $user = auth()->user();
+        if (!$user) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+
+        $query = AlumniQuiz::with(['questions','user'])->latest();
+
+        // Admins see every submission. Everyone else only ever gets their own
+        // (the alumni Home page filters this list client-side for "My Quizzes
+        // Taken", so scoping here keeps that working without exposing others).
+        if ($user->role !== 'admin') {
+            $query->where('user_id', $user->id);
+        }
+
+        return response()->json($query->get());
     }
 }

@@ -150,10 +150,14 @@ class JobPostController extends Controller
         $query = JobPost::query();
         $isAdmin = $user->role === 'admin';
 
+        // Applicant data (and the application rows' ID/resume fields) is only
+        // eager-loaded for admins. Everyone else browsing the board gets the
+        // approved posts + creator only; the post's own creator reads their
+        // applicants through /job-applications/job-post/{id}.
         if ($isAdmin) {
             $query->with(['creator', 'applications.alumni']);
         } else {
-            $query->approved()->with(['creator', 'applications.alumni']);
+            $query->approved()->with(['creator']);
         }
 
         if ($isAdmin && $request->has('status')) {
@@ -180,8 +184,25 @@ class JobPostController extends Controller
 
     public function show($id)
     {
-        $jobPost = JobPost::with(['creator', 'applications.alumni'])
-            ->findOrFail($id);
+        $user = Auth::user();
+
+        if (!$user) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+
+        $isAdmin = $user->role === 'admin';
+        $jobPost = JobPost::findOrFail($id);
+        $isOwner = (int) $jobPost->created_by_user_id === (int) $user->id;
+
+        // Pending/rejected posts are only visible to admins and their creator.
+        if (!$isAdmin && !$isOwner && $jobPost->status !== 'approved') {
+            return response()->json(['message' => 'Not found'], 404);
+        }
+
+        // Applicant data only for admins and the post's own creator.
+        $jobPost->load($isAdmin || $isOwner
+            ? ['creator', 'applications.alumni']
+            : ['creator']);
         
         // Add profile image to creator
         $jobPost = $this->addCreatorProfileImage($jobPost);

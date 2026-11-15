@@ -46,9 +46,9 @@ Route::prefix('email')->middleware('throttle:email-verification')->group(functio
 });
 
 //public route
-Route::get('/check-email', [AlumniRegistrationController::class, 'checkEmail']);
-Route::get('/check-phone', [AlumniRegistrationController::class, 'checkPhone']);
-Route::get('/check-student-id', [AlumniRegistrationController::class, 'checkStudentId']);
+Route::get('/check-email', [AlumniRegistrationController::class, 'checkEmail'])->middleware('throttle:availability-check');
+Route::get('/check-phone', [AlumniRegistrationController::class, 'checkPhone'])->middleware('throttle:availability-check');
+Route::get('/check-student-id', [AlumniRegistrationController::class, 'checkStudentId'])->middleware('throttle:availability-check');
 
 // ============================================================
 // PUBLIC (UNAUTHENTICATED) READ-ONLY ROUTES
@@ -71,7 +71,7 @@ Route::get('/check-student-id', [AlumniRegistrationController::class, 'checkStud
 // see pending/rejected postings no matter what query string they send,
 // and (unlike the authenticated index() method) it has no Auth::user()
 // check, so anonymous visitors don't get bounced with a 401.
-Route::prefix('public')->group(function () {
+Route::prefix('public')->middleware('throttle:public-read')->group(function () {
     Route::get('/events', [EventController::class, 'publicIndex']);
     Route::get('/galleries', [GalleryController::class, 'publicIndex']);
 
@@ -124,14 +124,16 @@ Route::delete('/galleries/{id}/image', [GalleryController::class, 'deleteImage']
     // Event Registration
     Route::post('/events/{event}/register', [EventController::class, 'register']);
     Route::post('/events/{event}/cancel-registration', [EventController::class, 'cancelRegistration']);
-    Route::get('/events/{event}/registrations', [EventController::class, 'registrations']);
+    // Registrant list contains names/emails/phones — admin only.
+    Route::get('/events/{event}/registrations', [EventController::class, 'registrations'])
+        ->middleware('role:admin');
 
     Route::get('/events/data', [EventController::class, 'getEventData']);
-    Route::post('/events', [EventController::class, 'store']);
+    Route::post('/events', [EventController::class, 'store'])->middleware('role:admin');
     Route::get('/events', [EventController::class, 'index']);
     Route::get('/events/{event}', [EventController::class, 'show']);
-    Route::put('/events/{event}', [EventController::class, 'update']);
-    Route::delete('/events/{event}', [EventController::class, 'destroy']);
+    Route::put('/events/{event}', [EventController::class, 'update'])->middleware('role:admin');
+    Route::delete('/events/{event}', [EventController::class, 'destroy'])->middleware('role:admin');
 
     // Announcements (admin: full manage, alumni: read-only via role check in controller)
     Route::post('/announcements', [AnnouncementController::class, 'store']);
@@ -140,22 +142,29 @@ Route::delete('/galleries/{id}/image', [GalleryController::class, 'deleteImage']
     Route::put('/announcements/{announcement}', [AnnouncementController::class, 'update']);
     Route::delete('/announcements/{announcement}', [AnnouncementController::class, 'destroy']);
     
-    Route::get('/questions', [QuestionController::class, 'index']);
-    Route::post('/questions', [QuestionController::class, 'store']);
-    Route::get('/questions/{question}', [QuestionController::class, 'show']);
-    Route::put('/questions/{question}', [QuestionController::class, 'update']);
-    Route::delete('/questions/{question}', [QuestionController::class, 'destroy']);
+    // Question bank + quiz management is an administrator surface. The
+    // alumni-facing endpoints (/answer-quizzes, /save-alumni-quiz and the
+    // self-scoped /quizzes-result) stay open to any authenticated user.
+    Route::middleware('role:admin')->group(function () {
+        Route::get('/questions', [QuestionController::class, 'index']);
+        Route::post('/questions', [QuestionController::class, 'store']);
+        Route::get('/questions/{question}', [QuestionController::class, 'show']);
+        Route::put('/questions/{question}', [QuestionController::class, 'update']);
+        Route::delete('/questions/{question}', [QuestionController::class, 'destroy']);
 
-    // Quizzes Routes
-    Route::get('/quizzes', [QuizController::class, 'index']);
-    Route::post('/quizzes', [QuizController::class, 'store']);
-    Route::get('/quizzes/{quiz}', [QuizController::class, 'show']);
-    Route::put('/quizzes/{quiz}', [QuizController::class, 'update']);
-    Route::delete('/quizzes/{quiz}', [QuizController::class, 'destroy']);
-    Route::post('/quizzes/{quiz}/duplicate', [QuizController::class, 'duplicate']);
-    Route::put('/quizzes/{quiz}/order', [QuizController::class, 'updateOrder']);
-    Route::post('quiz-active', [QuizController::class, 'quizActive']);
+        // Quizzes Routes
+        Route::get('/quizzes', [QuizController::class, 'index']);
+        Route::post('/quizzes', [QuizController::class, 'store']);
+        Route::get('/quizzes/{quiz}', [QuizController::class, 'show']);
+        Route::put('/quizzes/{quiz}', [QuizController::class, 'update']);
+        Route::delete('/quizzes/{quiz}', [QuizController::class, 'destroy']);
+        Route::post('/quizzes/{quiz}/duplicate', [QuizController::class, 'duplicate']);
+        Route::put('/quizzes/{quiz}/order', [QuizController::class, 'updateOrder']);
+        Route::post('quiz-active', [QuizController::class, 'quizActive']);
+    });
     Route::get('/answer-quizzes', [QuizController::class, 'answerQuiz']);
+    // Admins get every submission; everyone else only their own (scoped in
+    // QuizController::quizzesResult — the alumni Home page relies on this).
     Route::get('/quizzes-result', [QuizController::class, 'quizzesResult']);
 
     Route::post('save-alumni-quiz', [QuizController::class, 'saveAlumniQuiz'])

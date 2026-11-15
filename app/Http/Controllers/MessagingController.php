@@ -889,6 +889,24 @@ public function sendAdminMessage(Request $request)
 
 
     /**
+     * Admins, or the alumnus who owns the conversation the message belongs to.
+     * Same participant rule as downloadImage().
+     */
+    private function canAccessMessage($user, Message $message): bool
+    {
+        if ($user->role === 'admin') {
+            return true;
+        }
+
+        $message->loadMissing('alumni');
+
+        return (bool) ($message->alumni && (
+            ((int) $message->alumni->user_id === (int) $user->id) ||
+            (strcasecmp((string) $message->alumni->email, (string) $user->email) === 0)
+        ));
+    }
+
+    /**
      * Add or toggle reaction on a message
      */
     public function addReaction(Request $request, $messageId)
@@ -904,6 +922,10 @@ public function sendAdminMessage(Request $request)
             }
 
             $message = Message::findOrFail($messageId);
+
+            if (!$this->canAccessMessage($user, $message)) {
+                return response()->json(['success' => false, 'message' => 'Forbidden'], 403);
+            }
             
             // Determine user type based on the authenticated user
             // Check if user is an alumni
@@ -974,6 +996,17 @@ public function sendAdminMessage(Request $request)
     public function getMessageReactions($messageId)
     {
         try {
+            $user = Auth::user();
+            if (!$user) {
+                return response()->json(['success' => false, 'message' => 'Unauthorized'], 401);
+            }
+
+            $message = Message::findOrFail($messageId);
+
+            if (!$this->canAccessMessage($user, $message)) {
+                return response()->json(['success' => false, 'message' => 'Forbidden'], 403);
+            }
+
             // Return as array of emoji strings for frontend
             $reactions = DB::table('message_reactions')
                 ->where('message_id', $messageId)

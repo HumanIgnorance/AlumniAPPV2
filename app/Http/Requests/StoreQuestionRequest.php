@@ -9,7 +9,10 @@ class StoreQuestionRequest extends FormRequest
 {
     public function authorize()
     {
-        return true;
+        // Admin-only. Route middleware already enforces this; kept here as
+        // defense in depth so the request class is safe if reused elsewhere.
+        $user = $this->user();
+        return $user && $user->role === 'admin';
     }
 
     public function rules()
