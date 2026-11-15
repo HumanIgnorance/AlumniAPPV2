@@ -153,9 +153,9 @@ export default function LayoutHeader() {
                                 placement="bottomRight"
                                 trigger={["click"]}
                                 dropdownRender={() => <NotificationsDropdown />}
-                                overlayStyle={{ padding: 0 }}
-                                visible={dropdownVisible}
-                                onVisibleChange={setDropdownVisible}
+                                overlayClassName="hdr-popup hdr-popup--notifications"
+                                open={dropdownVisible}
+                                onOpenChange={setDropdownVisible}
                                 // Anchoring the popup to the header
                                 // (instead of the default document.body)
                                 // keeps its positioning tied to a
@@ -207,6 +207,7 @@ export default function LayoutHeader() {
                             placement="bottomRight"
                             trigger={["click"]}
                             dropdownRender={() => <AccountDropdown />}
+                            overlayClassName="hdr-popup hdr-popup--account"
                             open={accountDropdownVisible}
                             onOpenChange={setAccountDropdownVisible}
                             getPopupContainer={() =>

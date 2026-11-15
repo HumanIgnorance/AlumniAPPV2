@@ -1,0 +1,21 @@
+/* ==========================================================================
+   Full-screen chat vs. the app header
+   --------------------------------------------------------------------------
+   The pinned chat is position:fixed from the very top of the screen, so while
+   the keyboard was CLOSED the app header (z-index 1000) floated over the chat's
+   own header, and the moment the keyboard opened the app header was panned
+   away by iOS - that "header jumps / vibrates" in the screen recording.
+
+   Now:
+     keyboard closed -> the chat starts right UNDER the app header
+                        (--shell-header-h is measured by useShellScrollLock)
+     keyboard open   -> the app header steps aside (13-shell-scroll-lock.css)
+                        and the chat uses the whole visible box, exactly like
+                        before (--chat-vt / --chat-vh from useMobileChatViewport)
+   ========================================================================== */
+html.alumni-chat-active:not(.alumni-chat-kb) .alumni-messages-container,
+html.admin-chat-active:not(.alumni-chat-kb) .chat-area.admin-chat-pinned {
+  top: calc(var(--chat-vt, 0px) + var(--shell-header-h, 0px)) !important;
+  height: calc(var(--chat-vh, 100dvh) - var(--shell-header-h, 0px)) !important;
+  max-height: calc(var(--chat-vh, 100dvh) - var(--shell-header-h, 0px)) !important;
+}

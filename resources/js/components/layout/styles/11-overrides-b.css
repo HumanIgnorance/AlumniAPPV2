@@ -14,7 +14,6 @@
 
   .ant-dropdown .account-dropdown-container {
     width: min(280px, calc(100vw - 24px));
-    margin: 0 auto;
   }
 }
 
@@ -24,20 +23,7 @@
   }
 }
 
-.all-notifications-modal .ant-modal-body > div > div:last-child {
-  flex-wrap: wrap !important;
-  row-gap: 8px;
-}
-
-@media (max-width: 480px), (hover: none), (pointer: coarse) {
-  .all-notifications-modal .ant-modal-body > div > div:last-child {
-    justify-content: flex-start !important;
-  }
-
-  .all-notifications-modal .ant-modal-body > div > div:last-child > button {
-    flex: 0 0 auto;
-  }
-}
+/* (old .all-notifications-modal wrap rules removed: the modal is now a flex column, see 14-header-popups.css) */
 
 
 .account-dropdown-scroll,

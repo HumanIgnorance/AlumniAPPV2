@@ -60,3 +60,29 @@
   width: 0;
   height: 0;
 }
+
+/* ==========================================================================
+   KEYBOARD-SAFE SHELL  (see hooks/useShellScrollLock.js)
+   The shell used to be a fixed 100dvh box. On iOS the keyboard does NOT shrink
+   dvh, so the page got panned and the header slid off / vibrated. Now the
+   height is driven by the real visible area (inline height + translate set by
+   the hook while a text field is focused), and every inner box just fills it.
+   ========================================================================== */
+.app-shell-root {
+  min-height: 0;
+}
+html.app-shell-active .app-shell-root > .site-layout {
+  height: 100% !important;
+  min-height: 0 !important;
+  max-height: none !important;
+}
+
+/* The bottom tab bar is useless (and steals height) while typing. */
+html.shell-kb-open .atms-bottomnav {
+  display: none !important;
+}
+/* Full-screen chat: it has its own header, so the app header steps aside while
+   the keyboard is up instead of peeking out from behind it. */
+html.alumni-chat-kb #header {
+  display: none !important;
+}

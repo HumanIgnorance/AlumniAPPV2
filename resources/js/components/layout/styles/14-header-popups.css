@@ -1,0 +1,737 @@
+/* ==========================================================================
+   14 - HEADER POP-UPS  (account menu + notifications dropdown)
+   Loaded last on purpose. Everything is keyed to the classes the header gives
+   its two <Dropdown>s (overlayClassName="hdr-popup ...") and to the new
+   .acc-* / .ntf-* classes, so no other dropdown / table menu in the app is
+   touched.
+
+   What this fixes
+   - The pop-up is anchored to the RIGHT edge, directly under its button
+     (it used to be stretched across the screen and centred).
+   - antd's own .ant-dropdown wrapper is fully transparent: no extra box,
+     border, shadow or background behind the panel (that was the dark
+     rounded rectangle around the account menu).
+   - One palette (--app-*), so light and dark are the same layout with
+     different colours - no per-row black boxes.
+   ========================================================================== */
+
+/* ---------- the antd wrapper: transparent, no chrome ---------- */
+html:root .ant-dropdown.hdr-popup {
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: calc(100vw - 16px) !important;
+  padding: 0 !important;
+  margin: 6px 0 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  transform-origin: top right;
+  z-index: 1050 !important;
+}
+
+/* phones: always hug the right edge (clear of the notch in landscape) */
+@media (max-width: 768px) {
+  html:root .ant-dropdown.hdr-popup {
+    left: auto !important;
+    right: max(8px, env(safe-area-inset-right, 0px)) !important;
+  }
+}
+
+/* ---------- shared panel ---------- */
+.acc-panel,
+.ntf-panel {
+  --pp-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  overflow: hidden;
+  color: var(--app-text, #0f172a);
+  background: var(--app-surface, #fff);
+  border: 1px solid var(--app-border, #e2e6ec);
+  border-radius: var(--pp-radius);
+  box-shadow: 0 14px 36px rgba(2, 6, 23, 0.16), 0 2px 8px rgba(2, 6, 23, 0.06);
+  /* never taller than what is actually visible under the header */
+  max-height: calc(100vh - var(--shell-header-h, 64px) - 16px);
+  max-height: calc(100dvh - var(--shell-header-h, 64px) - 16px);
+}
+html[data-theme="black"] .acc-panel,
+html[data-theme="black"] .ntf-panel {
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.02);
+}
+.acc-panel *,
+.ntf-panel * {
+  box-sizing: border-box;
+}
+
+.acc-scroll,
+.ntf-scroll {
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.acc-scroll::-webkit-scrollbar,
+.ntf-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* ==========================================================================
+   ACCOUNT PANEL
+   ========================================================================== */
+.acc-panel {
+  width: 292px;
+  max-width: calc(100vw - 16px);
+}
+
+.acc-head {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 20px 16px 16px;
+  text-align: center;
+  border-bottom: 1px solid var(--app-border, #e2e6ec);
+}
+.acc-head .ant-avatar {
+  border: 3px solid #1890ff;
+  margin-bottom: 8px;
+}
+.acc-name {
+  margin: 0;
+  max-width: 100%;
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: 0.01em;
+  color: var(--app-text, #0f172a);
+  overflow-wrap: anywhere;
+}
+.acc-email {
+  max-width: 100%;
+  font-size: 12.5px;
+  line-height: 1.3;
+  color: var(--app-text-muted, #5b6677);
+  overflow-wrap: anywhere;
+}
+.acc-role {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+  font-size: 13px;
+  color: var(--app-text, #0f172a);
+}
+.acc-role::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--app-success, #16a34a);
+}
+
+.acc-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 52px;
+  margin: 0;
+  padding: 0 16px;
+  border: 0;
+  border-top: 1px solid var(--app-border, #e2e6ec);
+  background: transparent;
+  color: var(--app-text, #0f172a);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+.acc-scroll > .acc-row:first-child,
+.acc-head + .acc-row {
+  border-top: 0;
+}
+a.acc-row:hover,
+button.acc-row:hover {
+  background: var(--app-surface-2, #f1f3f6);
+  color: var(--app-text, #0f172a);
+}
+.acc-row:active {
+  background: var(--app-accent-soft, rgba(79, 70, 229, 0.12));
+}
+.acc-row:focus-visible {
+  outline: 2px solid var(--app-accent, #4f46e5);
+  outline-offset: -2px;
+}
+.acc-ico {
+  flex: 0 0 auto;
+  display: inline-flex;
+  width: 20px;
+  justify-content: center;
+  font-size: 17px;
+}
+.acc-label {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.acc-chevron {
+  flex: 0 0 auto;
+  font-size: 11px;
+  color: var(--app-text-subtle, #8a94a6);
+  transition: transform 0.2s ease;
+}
+.acc-chevron.is-open {
+  transform: rotate(180deg);
+}
+
+/* theme row: label + borderless select, same look in light and dark */
+.acc-row--theme {
+  cursor: default;
+}
+.acc-row--theme:hover,
+.acc-row--theme:active {
+  background: transparent;
+}
+.acc-select {
+  flex: 0 0 auto;
+  min-width: 92px;
+}
+.acc-select.ant-select .ant-select-selector {
+  height: 34px !important;
+  min-height: 34px !important;
+  padding: 0 4px 0 10px !important;
+  align-items: center !important;
+  border: 0 !important;
+  border-radius: 10px !important;
+  background: var(--app-surface-2, #f1f3f6) !important;
+  box-shadow: none !important;
+}
+.acc-select.ant-select .ant-select-selection-item {
+  display: inline-flex !important;
+  align-items: center !important;
+  line-height: 1 !important;
+  font-size: 14px !important;
+  font-weight: 600;
+  color: var(--app-text, #0f172a) !important;
+}
+.acc-select.ant-select .ant-select-arrow {
+  right: 8px !important;
+  color: var(--app-text-subtle, #8a94a6);
+}
+
+/* help & support sub-rows */
+.acc-sub {
+  background: var(--app-surface-2, #f1f3f6);
+  animation: accSubIn 0.18s ease-out;
+}
+.acc-sub .acc-row {
+  min-height: 46px;
+  padding-left: 48px;
+  font-size: 14px;
+  font-weight: 600;
+}
+.acc-sub .acc-row:hover {
+  background: var(--app-accent-soft, rgba(79, 70, 229, 0.12));
+}
+@keyframes accSubIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.acc-row--danger,
+.acc-row--danger .acc-ico {
+  color: var(--app-danger, #dc2626);
+}
+a.acc-row--danger:hover,
+button.acc-row--danger:hover {
+  color: var(--app-danger, #dc2626);
+  background: rgba(220, 38, 38, 0.08);
+}
+
+.acc-legal {
+  flex: 0 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 2px 4px;
+  padding: 6px 12px calc(10px + env(safe-area-inset-bottom, 0px) * 0);
+  border-top: 1px solid var(--app-border, #e2e6ec);
+}
+.acc-legal button {
+  min-height: 40px;
+  padding: 0 8px;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--app-text, #0f172a);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.acc-legal button:hover {
+  text-decoration: underline;
+  color: var(--app-accent, #4f46e5);
+}
+.acc-legal span {
+  color: var(--app-text-subtle, #8a94a6);
+}
+
+/* ==========================================================================
+   NOTIFICATIONS DROPDOWN (bell)
+   Hugs its content (no fixed height => no dead space) and only the list
+   scrolls once it reaches the visible limit.
+   ========================================================================== */
+.ntf-panel--dropdown {
+  width: 400px;
+  max-width: calc(100vw - 16px);
+}
+
+.ntf-head {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 14px;
+  color: #fff;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+.ntf-head__title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.2;
+  color: #fff;
+}
+.ntf-head__sub {
+  display: block;
+  margin-top: 2px;
+  font-size: 11.5px;
+  line-height: 1.2;
+  color: rgba(255, 255, 255, 0.82);
+}
+.ntf-head__btn {
+  flex: 0 0 auto;
+  min-height: 32px;
+  padding: 0 12px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.ntf-head__btn.is-on {
+  background: rgba(255, 255, 255, 0.32);
+}
+
+/* category chips: ONE horizontally-scrolling row (never wraps into 3 rows) */
+.ntf-chips {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  border-bottom: 1px solid var(--app-border, #e2e6ec);
+  background: var(--app-surface-2, #f1f3f6);
+}
+.ntf-chips::-webkit-scrollbar {
+  display: none;
+}
+.ntf-chip {
+  --chip: #667eea;
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 34px;
+  padding: 0 12px;
+  border: 1px solid var(--app-border, #e2e6ec);
+  border-radius: 999px;
+  background: var(--app-surface, #fff);
+  color: var(--chip);
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+.ntf-chip.is-active {
+  background: var(--chip);
+  border-color: var(--chip);
+  color: #fff;
+}
+.ntf-chip--icon {
+  padding: 0 10px;
+}
+.ntf-chip__count {
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 9px;
+  background: var(--chip);
+  color: #fff;
+  font-size: 10.5px;
+  line-height: 18px;
+  text-align: center;
+}
+.ntf-chip.is-active .ntf-chip__count {
+  background: #fff;
+  color: var(--chip);
+}
+
+.ntf-actions {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2px 14px;
+  padding: 2px 14px;
+  border-bottom: 1px solid var(--app-border, #e2e6ec);
+}
+.ntf-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 38px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--app-accent, #4f46e5);
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.ntf-link:hover {
+  text-decoration: underline;
+}
+
+.ntf-scroll {
+  flex: 1 1 auto;
+}
+
+.ntf-foot {
+  flex: 0 0 auto;
+  padding: 10px 12px;
+  border-top: 1px solid var(--app-border, #e2e6ec);
+  background: var(--app-surface-2, #f1f3f6);
+}
+.ntf-foot__btn {
+  width: 100%;
+  min-height: 42px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--app-accent, #4f46e5);
+  color: #fff;
+  font: inherit;
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+html[data-theme="black"] .ntf-foot__btn {
+  color: #0b1020;
+}
+
+/* ---------- notification row (dropdown AND All Notifications) ---------- */
+.ntf-row {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  width: 100%;
+  padding: 12px 14px 12px 16px;
+  border-bottom: 1px solid var(--app-border, #e2e6ec);
+  background: var(--app-surface, #fff);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.ntf-row:last-child {
+  border-bottom: 0;
+}
+.ntf-row:hover {
+  background: var(--app-surface-2, #f1f3f6);
+}
+.ntf-row.is-unread {
+  background: var(--app-accent-soft, rgba(79, 70, 229, 0.12));
+}
+.ntf-row.is-unread::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--app-accent, #4f46e5);
+}
+.ntf-row__media {
+  flex: 0 0 auto;
+}
+.ntf-row__media .ant-avatar,
+.ntf-row__media .ant-image-img {
+  display: block;
+}
+.ntf-row__body {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.ntf-row__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+.ntf-row__title {
+  min-width: 0;
+  font-size: 13.5px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--app-text, #0f172a);
+  overflow-wrap: anywhere;
+}
+.ntf-row__time {
+  flex: 0 0 auto;
+  font-size: 11px;
+  line-height: 1.3;
+  color: var(--app-text-subtle, #8a94a6);
+  white-space: nowrap;
+}
+.ntf-row__msg {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  margin: 3px 0 0;
+  font-size: 12.5px;
+  line-height: 1.4;
+  color: var(--app-text-muted, #5b6677);
+  overflow-wrap: anywhere;
+}
+.ntf-row__event {
+  margin-top: 3px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--app-accent, #4f46e5);
+  overflow-wrap: anywhere;
+}
+.ntf-row__meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 8px;
+  margin-top: 6px;
+}
+.ntf-row__by {
+  font-size: 11.5px;
+  color: var(--app-text-subtle, #8a94a6);
+  overflow-wrap: anywhere;
+}
+.ntf-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  max-width: 100%;
+  padding: 0 8px;
+  border-radius: 999px;
+  color: #fff;
+  font-size: 10.5px;
+  font-weight: 700;
+  line-height: 18px;
+  white-space: nowrap;
+}
+.ntf-row__actions {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: -6px -8px -6px 0;
+}
+.ntf-iconbtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--app-text-muted, #5b6677);
+  font-size: 15px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+.ntf-iconbtn:hover {
+  background: rgba(127, 127, 127, 0.16);
+}
+.ntf-iconbtn--danger {
+  color: var(--app-danger, #dc2626);
+}
+
+.ntf-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 28px 20px;
+  text-align: center;
+  color: var(--app-text-muted, #5b6677);
+}
+.ntf-empty .anticon {
+  font-size: 30px;
+  color: var(--app-text-subtle, #8a94a6);
+}
+.ntf-empty strong {
+  font-size: 14px;
+  color: var(--app-text, #0f172a);
+}
+.ntf-empty small {
+  font-size: 12px;
+}
+.ntf-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 28px 20px;
+  font-size: 13px;
+  color: var(--app-text-muted, #5b6677);
+}
+
+/* ==========================================================================
+   ALL NOTIFICATIONS  (AppModal -> centred card on tablet/desktop,
+   bottom sheet on phones). The body is a flex column:
+       controls (fixed)  /  list (fills + scrolls)  /  pager (fixed)
+   so there is never an empty band under a short list or a double scrollbar.
+   ========================================================================== */
+html .app-modal-root .all-notifications-modal.ant-modal {
+  width: min(760px, calc(100vw - 32px)) !important;
+}
+html .app-modal-root .all-notifications-modal .ant-modal-content {
+  max-height: calc(100vh - 32px);
+  max-height: calc(100dvh - 32px);
+}
+html .app-modal-root .all-notifications-modal .ant-modal-body {
+  display: flex !important;
+  flex-direction: column;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+.ntf-all {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+.ntf-all .ntf-chips {
+  padding: 10px 16px;
+}
+.ntf-all .ntf-actions {
+  padding: 4px 16px;
+  gap: 2px 16px;
+}
+.ntf-all .ntf-actions__spacer {
+  flex: 1 1 auto;
+}
+.ntf-all .ntf-scroll {
+  /* hugs a short list, scrolls a long one */
+  flex: 1 1 auto;
+  min-height: 120px;
+}
+.ntf-pager {
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: center;
+  padding: 10px 12px;
+  border-top: 1px solid var(--app-border, #e2e6ec);
+  background: var(--app-surface, #fff);
+}
+.ntf-pager .ant-pagination {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  row-gap: 6px;
+}
+
+/* phones: sheet is as tall as the content needs, never taller than the screen */
+@media (max-width: 575.98px) {
+  html .app-modal-root .all-notifications-modal.ant-modal {
+    width: 100% !important;
+  }
+  html .app-modal-root .all-notifications-modal .ant-modal-body {
+    padding-bottom: env(safe-area-inset-bottom, 0px) !important;
+  }
+  .ntf-all .ntf-chips,
+  .ntf-all .ntf-actions {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+  .ntf-pager {
+    padding-bottom: 10px;
+  }
+}
+
+/* short landscape phones */
+@media (orientation: landscape) and (max-height: 500px) {
+  .ntf-panel {
+    max-height: calc(100dvh - var(--shell-header-h, 48px) - 8px);
+  }
+  .ntf-chips {
+    padding-top: 6px;
+    padding-bottom: 6px;
+  }
+  .ntf-row {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+  .ntf-head {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+  .acc-head {
+    padding: 10px 16px;
+  }
+  .acc-row {
+    min-height: 44px;
+  }
+}
+
+/* very small / folded phones */
+@media (max-width: 340px) {
+  .acc-row {
+    padding: 0 12px;
+    font-size: 14px;
+  }
+  .ntf-row {
+    gap: 10px;
+    padding-left: 12px;
+    padding-right: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .acc-sub { animation: none; }
+  .acc-chevron { transition: none; }
+}

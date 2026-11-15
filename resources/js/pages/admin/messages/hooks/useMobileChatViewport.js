@@ -1,5 +1,4 @@
 import { useEffect, useLayoutEffect, useState } from "react";
-import { resetShellScroll } from "~/utils/scrollInContent";
 
 /**
  * Phone / small-tablet detection for the alumni chat.
@@ -47,8 +46,8 @@ export function useIsPhoneViewport() {
  *     change. The CSS pins the chat to exactly that box (position: fixed).
  *   - adds  html.alumni-chat-active  (locks page scrolling) and
  *     html.alumni-chat-kb  (keyboard is open: drop the home-indicator inset).
- *   - snaps the page back to 0,0 if iOS nudges it, and keeps the newest
- *     message visible when the keyboard opens.
+ *   - keeps the newest message visible when the keyboard opens (the pinned
+ *     box follows iOS's pan; the page is never snapped back).
  *   - blocks rubber-band scrolling of the page from the header / composer.
  *
  * Works the same in Safari, Chrome, installed PWAs and Android browsers. When
@@ -107,9 +106,11 @@ export default function useMobileChatViewport(active, variant = "alumni") {
             const keyboardOpen = fieldFocused && baseHeight - height > 120;
             html.classList.toggle("alumni-chat-kb", keyboardOpen);
 
-            // iOS scrolls the page to reveal the focused field; put it back.
-            if (window.scrollX || window.scrollY) window.scrollTo(0, 0);
-            resetShellScroll();
+            // NOTE: we deliberately do NOT scrollTo(0, 0) / resetShellScroll() here.
+            // iOS pans the visual viewport to reveal the focused field; snapping
+            // it back on every event made the header and composer "vibrate".
+            // The chat is pinned to visualViewport (--chat-vt / --chat-vh), so it
+            // follows the pan instead of fighting it.
 
             if (keyboardOpen && !keyboardWasOpen) scrollListToBottom();
             keyboardWasOpen = keyboardOpen;

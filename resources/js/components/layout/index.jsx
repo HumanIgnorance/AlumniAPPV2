@@ -38,7 +38,7 @@ const MainLayout = ({ children }) => {
 
     return (
         <LayoutProvider value={ctx}>
-            <Layout className="app-shell-root" style={{ minHeight: "100vh" }}>
+            <Layout className="app-shell-root">
                 <SidebarNav />
 
                 <Layout className="site-layout">
