@@ -10,8 +10,14 @@
 //          If iOS refuses to open the sheet (it needs a fresh tap),
 //          an in-app "Photo ready" dialog with a "Save to Photos"
 //          button appears instead, so the sheet opens from a real tap.
-//   Android (Chrome + installed PWA) and desktop
-//       -> normal file download (appears in Downloads / Gallery).
+//   Android (Chrome + installed PWA)
+//       -> ONE photo: normal download. MANY photos: a "photos ready" dialog
+//          (a real tap) with "Download ZIP" (one file, no permission prompt)
+//          and "Save to Gallery / Share" (system share sheet). Firing several
+//          <a download> clicks made Chrome ask "Allow multiple downloads?"
+//          and then save only the first photo.
+//   Desktop
+//       -> normal file download(s).
 //
 // Why downloads used to say "could not reach the server":
 //   Laravel built http:// image URLs behind the HTTPS proxy, and the
@@ -20,8 +26,9 @@
 //   page's own origin before fetching, with retries and clear errors.
 // ============================================================
 import React from "react";
-import { message } from "antd";
+import { Button, message } from "antd";
 import Modal from "~/components/shared/AppModal";
+import { createZipBlob } from "~/utils/zipStore";
 
 const MSG_KEY = "save-image";
 const SHEET_CHUNK = 25; // photos per iOS share sheet
@@ -69,6 +76,23 @@ export const isStandalonePwa = () => {
         window.navigator.standalone === true ||
         !!window.matchMedia?.("(display-mode: standalone)")?.matches
     );
+};
+
+export const isAndroid = () =>
+    typeof navigator !== "undefined" && /Android/i.test(navigator.userAgent || "");
+
+// Make every file name unique (two galleries can share a title).
+const uniqueNames = (files) => {
+    const seen = new Map();
+    return files.map((f) => {
+        const dot = f.name.lastIndexOf(".");
+        const stem = dot > 0 ? f.name.slice(0, dot) : f.name;
+        const ext = dot > 0 ? f.name.slice(dot) : "";
+        const key = f.name.toLowerCase();
+        const n = (seen.get(key) || 0) + 1;
+        seen.set(key, n);
+        return { name: n === 1 ? f.name : `${stem} (${n})${ext}`, data: f };
+    });
 };
 
 const canShareFiles = (files) => {
@@ -391,6 +415,89 @@ const openSaveSheet = (files, part, parts) =>
         });
     });
 
+// Android: many photos. Opens from the confirm tap's result, so every button
+// inside is a REAL tap (Chrome allows the download / share from it).
+const openAndroidSheet = (files, zipFile) =>
+    new Promise((resolve) => {
+        const urls = files.slice(0, 12).map((f) => URL.createObjectURL(f));
+        const done = (result) => {
+            urls.forEach((u) => URL.revokeObjectURL(u));
+            resolve(result);
+        };
+        const shareable = canShareFiles(files);
+        let result = "cancelled";
+
+        const doShare = async () => {
+            try {
+                await navigator.share({ files });
+                result = "shared";
+            } catch (err) {
+                if (err?.name !== "AbortError") {
+                    message.info("Sharing isn't available here. Use “Download ZIP” instead.");
+                }
+            }
+        };
+
+        Modal.confirm({
+            className: "save-image-sheet",
+            centered: true,
+            icon: null,
+            maskClosable: false,
+            title: `${files.length} photos ready`,
+            content: (
+                <div>
+                    <div
+                        style={{
+                            display: "grid",
+                            gridTemplateColumns: "repeat(4, 1fr)",
+                            gap: 6,
+                            maxHeight: "36vh",
+                            overflowY: "auto",
+                            margin: "8px 0 12px",
+                        }}
+                    >
+                        {urls.map((u, i) => (
+                            <img
+                                key={u}
+                                src={u}
+                                alt={files[i].name}
+                                draggable={false}
+                                style={{
+                                    width: "100%",
+                                    aspectRatio: "1 / 1",
+                                    objectFit: "cover",
+                                    borderRadius: 8,
+                                }}
+                            />
+                        ))}
+                    </div>
+                    {files.length > urls.length && (
+                        <div style={{ fontSize: 12, opacity: 0.7, marginBottom: 8 }}>
+                            +{files.length - urls.length} more
+                        </div>
+                    )}
+                    <div style={{ fontSize: 13, opacity: 0.85, marginBottom: shareable ? 10 : 0 }}>
+                        “Download ZIP” saves every photo in one file to your Downloads
+                        {shareable ? "; or send them straight to your Gallery / Files:" : "."}
+                    </div>
+                    {shareable && (
+                        <Button block onClick={doShare}>
+                            Save to Gallery / Share…
+                        </Button>
+                    )}
+                </div>
+            ),
+            okText: "Download ZIP",
+            cancelText: "Close",
+            onOk: () => {
+                downloadViaAnchor(zipFile);
+                result = "saved";
+                done(result);
+            },
+            onCancel: () => done(result),
+        });
+    });
+
 const friendlyError = (err) => {
     switch (err?.code) {
         case "auth":
@@ -507,10 +614,34 @@ export async function saveImages(items, { onProgress } = {}) {
         };
     }
 
-    // ---------------- Android / desktop ----------------
+    // ---------------- Android: many photos ----------------
+    if (isAndroid() && files.length > 1) {
+        try {
+            const zipBlob = await createZipBlob(uniqueNames(files));
+            const zipFile = new File([zipBlob], `photos-${new Date().toISOString().slice(0, 10)}.zip`, {
+                type: "application/zip",
+            });
+            message.destroy(MSG_KEY);
+            const result = await openAndroidSheet(files, zipFile);
+            if (failed) message.warning(`${failed} photo(s) could not be loaded.`);
+            if (result === "saved") {
+                message.success("ZIP saved to your Downloads.");
+            }
+            return {
+                status: result === "cancelled" ? "cancelled" : result,
+                saved: result === "cancelled" ? 0 : files.length,
+                failed,
+            };
+        } catch (err) {
+            console.error("ZIP failed, falling back to single downloads:", err);
+            // fall through to the one-by-one path below
+        }
+    }
+
+    // ---------------- Desktop (and single Android photo) ----------------
     for (let i = 0; i < files.length; i++) {
         downloadViaAnchor(files[i]);
-        if (i < files.length - 1) await sleep(400);
+        if (i < files.length - 1) await sleep(700);
     }
 
     const where = isStandalonePwa() ? "your Downloads" : "your downloads";

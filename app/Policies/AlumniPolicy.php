@@ -52,6 +52,25 @@ class AlumniPolicy
     }
 
     /**
+     * View ONLY an alumnus's profile photo (GET /alumni/{id}/profile-image).
+     *
+     * The alumni directory, messages and notification lists show other
+     * alumni's photos, so every signed-in user may see the photo of an
+     * APPROVED alumnus. This deliberately does not widen view(): the full
+     * record and the confidential documents stay owner / admin /
+     * department-head only. A pending or rejected alumnus's photo is still
+     * limited to view() (admin, the owner, a same-course department head).
+     */
+    public function viewProfileImage(User $user, Alumni $alumni): bool
+    {
+        if ($this->view($user, $alumni)) {
+            return true;
+        }
+
+        return $alumni->status === 'approved';
+    }
+
+    /**
      * Update a single alumni record.
      * Admins may edit any record. Alumni may only edit their own.
      * Department heads are read-only with respect to alumni records.

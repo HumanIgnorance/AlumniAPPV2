@@ -357,7 +357,10 @@ class AlumniRegistrationController extends Controller
     {
         $alumni = Alumni::findOrFail($id);
 
-        $this->authorize('view', $alumni);
+        // Photo only: any signed-in user may see an approved alumnus's photo
+        // (directory, messages, notifications). Full records and documents
+        // keep using the stricter 'view' ability.
+        $this->authorize('viewProfileImage', $alumni);
 
         if (!$alumni->profile_image || !Storage::disk('private')->exists($alumni->profile_image)) {
             return response()->json(['message' => 'Not found'], 404);
