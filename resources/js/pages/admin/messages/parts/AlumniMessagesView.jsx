@@ -6,6 +6,7 @@ import { ROLES } from "~/config/roles";
 import { useMessagesContext } from "~/pages/admin/messages/MessagesContext";
 import DeleteConfirmModal from "~/pages/admin/messages/parts/DeleteConfirmModal";
 import MessageActionModal from "~/pages/admin/messages/parts/MessageActionModal";
+import useBubbleGestures from "~/pages/admin/messages/hooks/useBubbleGestures";
 import useMobileChatViewport, {
     useIsPhoneViewport,
 } from "~/pages/admin/messages/hooks/useMobileChatViewport";
@@ -31,9 +32,6 @@ export default function AlumniMessagesView() {
         groupedMessages,
         formatDateSeparator,
         inlineEditMessageId,
-        handleDoubleClick,
-        handleLongPressStart,
-        handleLongPressEnd,
         renderMessageImage,
         renderInlineEditInput,
         shouldShowEditIndicator,
@@ -53,6 +51,7 @@ export default function AlumniMessagesView() {
         lightboxImage,
         closeLightbox,
     } = useMessagesContext();
+    const { getBubbleProps } = useBubbleGestures();
 
     const chat = (
         <>
@@ -172,27 +171,7 @@ export default function AlumniMessagesView() {
 
                                     <div
                                         className={`alumni-message ${isMyMessage ? "sent" : "received"} ${isEditing ? "editing" : ""} ${groupedItem.image_path || groupedItem.image_url ? "has-image" : ""}`}
-                                        onDoubleClick={() =>
-                                            !isEditing &&
-                                            handleDoubleClick(groupedItem.id)
-                                        }
-                                        onMouseDown={() =>
-                                            !isEditing &&
-                                            handleLongPressStart(
-                                                groupedItem.id,
-                                                groupedItem,
-                                            )
-                                        }
-                                        onMouseUp={handleLongPressEnd}
-                                        onMouseLeave={handleLongPressEnd}
-                                        onTouchStart={() =>
-                                            !isEditing &&
-                                            handleLongPressStart(
-                                                groupedItem.id,
-                                                groupedItem,
-                                            )
-                                        }
-                                        onTouchEnd={handleLongPressEnd}
+                                        {...getBubbleProps(groupedItem, isEditing)}
                                     >
                                         {renderMessageImage(
                                             groupedItem.image_path,

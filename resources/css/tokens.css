@@ -211,6 +211,25 @@
     --radius-md: 14px;
     --radius-lg: 18px;
     --radius-xl: 26px;
+
+    /* --app-* aliases: the semantic names used by the header pop-ups, messages
+       and quiz CSS. They point at the live tokens above, so light AND dark
+       (html[data-theme="black"]) both resolve correctly. */
+    --app-bg: var(--bg);
+    --app-surface: var(--surface);
+    --app-surface-2: var(--surface-2);
+    --app-border: var(--border);
+    --app-border-strong: var(--border-strong);
+    --app-text: var(--text);
+    --app-text-muted: var(--text-muted);
+    --app-text-subtle: var(--text-subtle);
+    --app-accent: var(--accent);
+    --app-accent-soft: var(--accent-soft);
+    --app-success: var(--success);
+    --app-warning: var(--warning);
+    --app-danger: var(--danger);
+    --app-shadow: var(--shadow-sm);
+    --app-font: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
 html[data-theme="black"] {
@@ -247,6 +266,8 @@ html[data-theme="black"] {
     --shadow-sm: 0 4px 14px rgba(0, 0, 0, 0.45);
     --shadow-md: 0 14px 34px rgba(0, 0, 0, 0.55);
     --shadow-lg: 0 28px 60px rgba(0, 0, 0, 0.65);
+
+    --app-accent: #818cf8; /* lighter indigo for contrast on dark surfaces */
 }
 
 /* First paint / lazy-loading screen: themed from the entry bundle, so it is

@@ -452,6 +452,7 @@ export default function useMessagesUi({
         handleDeleteMessage,
         formatDateSeparator,
         handleDoubleClick,
+        handleLongPress,
         handleLongPressStart,
         handleLongPressEnd,
         formatTime,
