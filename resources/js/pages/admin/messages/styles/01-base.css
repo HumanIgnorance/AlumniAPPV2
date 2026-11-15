@@ -1,6 +1,7 @@
 /* ============ Design tokens ============ */
 .messages-container,
-.alumni-messages-container {
+.alumni-messages-container,
+.mam-clone {
   --m-accent: var(--c-sky-500);
   --m-accent-2: var(--c-teal-500);
   --m-accent-3: var(--c-indigo-500);

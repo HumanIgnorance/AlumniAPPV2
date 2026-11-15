@@ -1,0 +1,198 @@
+/* ==========================================================================
+   13 - MESSAGE MENU (long-press / right-click on a bubble)
+   Messenger-style: reaction bar above the message, the message lifted in
+   place, action list below. Rendered in a portal on <body>, so it carries its
+   own tokens (the --m-* ones live on .messages-container and would not reach it).
+
+   Crispness rules (the old popup looked blurry):
+     - no backdrop-filter / filter layers: the chat is dimmed, not smeared
+     - no scale() animation: emoji are bitmap glyphs and soften when scaled;
+       we only fade and slide by whole pixels
+     - opaque surfaces, no translucent glass over blurred content
+   ========================================================================== */
+
+.mam-overlay {
+  --mam-surface: #ffffff;
+  --mam-surface-hover: #f1f5f9;
+  --mam-border: rgba(15, 23, 42, 0.10);
+  --mam-text: #0b1220;
+  --mam-danger: #dc2626;
+  --mam-danger-bg: rgba(220, 38, 38, 0.08);
+  --mam-accent: #0ea5e9;
+  --mam-shadow: 0 10px 30px rgba(2, 6, 23, 0.22), 0 2px 6px rgba(2, 6, 23, 0.12);
+
+  position: fixed;
+  inset: 0;
+  z-index: 2000; /* above the app header (1000) and the pinned full-screen chat */
+  background: rgba(2, 6, 23, 0.52);
+  /* keep everything out of notches / home bar / PWA status bar */
+  padding:
+    env(safe-area-inset-top, 0px)
+    env(safe-area-inset-right, 0px)
+    env(safe-area-inset-bottom, 0px)
+    env(safe-area-inset-left, 0px);
+  box-sizing: border-box;
+  overflow: hidden;
+  overscroll-behavior: contain;
+  touch-action: none;                 /* the page behind must not scroll */
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+  animation: mam-fade 0.14s ease-out both;
+  outline: none;
+}
+
+html[data-theme="black"] .mam-overlay {
+  --mam-surface: #1b2433;
+  --mam-surface-hover: #263146;
+  --mam-border: rgba(255, 255, 255, 0.12);
+  --mam-text: #f1f5f9;
+  --mam-danger: #fca5a5;
+  --mam-danger-bg: rgba(248, 113, 113, 0.14);
+  --mam-shadow: 0 10px 30px rgba(0, 0, 0, 0.55), 0 2px 6px rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.62);
+}
+
+/* nothing is visible until JS has measured and placed it (no flash at 0,0) */
+.mam-overlay:not(.is-ready) > * { visibility: hidden; }
+
+.mam-bar, .mam-bar *,
+.mam-menu, .mam-menu * { box-sizing: border-box; }
+
+/* ---------- the lifted message (an exact copy, not interactive) ---------- */
+.mam-clone {
+  position: fixed;
+  max-width: none !important;
+  margin: 0 !important;
+  display: flex;
+  pointer-events: none;
+}
+.mam-clone .message-bubble,
+.mam-clone .alumni-message {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  max-width: 100% !important;
+  margin: 0 !important;
+  transform: none !important;
+  animation: none !important;
+}
+
+/* ---------- reactions ---------- */
+.mam-bar {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 6px;
+  /* always fits: 6 emoji share whatever width the screen offers */
+  width: min(320px, calc(100vw - 16px - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px)));
+  background: var(--mam-surface);
+  border: 1px solid var(--mam-border);
+  border-radius: 999px;
+  box-shadow: var(--mam-shadow);
+  animation: mam-rise 0.16s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.mam-emoji {
+  flex: 1 1 0;
+  min-width: 0;
+  height: 44px;                       /* >= 44px touch target */
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(22px, 7vw, 28px);
+  line-height: 1;
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+  background: transparent;
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: background-color 0.12s ease, transform 0.12s ease;
+}
+.mam-emoji:active { background: var(--mam-surface-hover); }
+.mam-emoji:focus-visible {
+  outline: 2px solid var(--mam-accent);
+  outline-offset: -2px;
+}
+@media (hover: hover) and (pointer: fine) {
+  /* lift by whole pixels: scale() would blur the emoji bitmap */
+  .mam-emoji:hover { background: var(--mam-surface-hover); transform: translateY(-4px); }
+}
+
+/* ---------- actions ---------- */
+.mam-menu {
+  position: fixed;
+  width: min(250px, calc(100vw - 16px - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px)));
+  padding: 6px;
+  background: var(--mam-surface);
+  border: 1px solid var(--mam-border);
+  border-radius: 16px;
+  box-shadow: var(--mam-shadow);
+  animation: mam-rise 0.18s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.mam-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 46px;                   /* comfortable thumb target */
+  padding: 0 12px;
+  background: transparent;
+  border: 0;
+  border-radius: 10px;
+  color: var(--mam-text);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.mam-item svg { flex: none; }
+.mam-item:active,
+.mam-item:focus-visible { background: var(--mam-surface-hover); }
+.mam-item:focus-visible { outline: 2px solid var(--mam-accent); outline-offset: -2px; }
+@media (hover: hover) and (pointer: fine) {
+  .mam-item:hover { background: var(--mam-surface-hover); }
+}
+
+.mam-item-danger { color: var(--mam-danger); }
+.mam-item-danger:active,
+.mam-item-danger:focus-visible { background: var(--mam-danger-bg); }
+@media (hover: hover) and (pointer: fine) {
+  .mam-item-danger:hover { background: var(--mam-danger-bg); }
+}
+/* hairline before the destructive row */
+.mam-item + .mam-item-danger {
+  margin-top: 5px;
+  position: relative;
+}
+.mam-item + .mam-item-danger::before {
+  content: "";
+  position: absolute;
+  left: 8px; right: 8px; top: -3px;
+  height: 1px;
+  background: var(--mam-border);
+}
+
+/* very short landscape phones: tighter rows so the stack still fits */
+@media (max-height: 430px) {
+  .mam-item { min-height: 40px; }
+  .mam-emoji { height: 40px; }
+}
+
+@keyframes mam-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes mam-rise {
+  from { opacity: 0; translate: 0 6px; }
+  to   { opacity: 1; translate: 0 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mam-overlay, .mam-bar, .mam-menu { animation: none; }
+  .mam-emoji { transition: none; }
+}

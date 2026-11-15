@@ -35,6 +35,33 @@ function clearSelection() {
     }
 }
 
+/**
+ * Where the pressed bubble is on screen, plus a snapshot of its markup, so the
+ * menu can lift an exact copy of it and anchor the reactions / actions to it.
+ */
+function buildAnchor(el) {
+    if (!el || !el.getBoundingClientRect) return null;
+    const rect = el.getBoundingClientRect();
+    const mine =
+        el.classList.contains("admin-bubble") || el.classList.contains("sent");
+    let html = "";
+    try {
+        html = el.outerHTML;
+    } catch {
+        /* ignore */
+    }
+    return {
+        rect: {
+            top: rect.top,
+            left: rect.left,
+            width: rect.width,
+            height: rect.height,
+        },
+        side: mine ? "end" : "start",
+        html,
+    };
+}
+
 export default function useBubbleGestures() {
     const { handleLongPress, handleDoubleClick } = useMessagesContext();
 
@@ -60,7 +87,7 @@ export default function useBubbleGestures() {
     useEffect(() => cancelTimer, [cancelTimer]);
 
     const openMenu = useCallback(
-        (msg) => {
+        (msg, el) => {
             s.current.fired = true;
             s.current.lastTapAt = 0;
             clearSelection();
@@ -69,7 +96,7 @@ export default function useBubbleGestures() {
             } catch {
                 /* ignore */
             }
-            handleLongPress(msg.id, msg);
+            handleLongPress(msg.id, msg, buildAnchor(el));
         },
         [handleLongPress],
     );
@@ -84,6 +111,10 @@ export default function useBubbleGestures() {
 
             return {
                 onPointerDown: (e) => {
+                    // every new press starts clean - otherwise a right-click
+                    // (which returns below) leaves `fired` stuck and the next
+                    // right-click on any bubble does nothing
+                    s.current.fired = false;
                     if (e.target.closest && e.target.closest(INTERACTIVE)) return;
                     if (e.pointerType === "mouse" && e.button !== 0) return;
 
@@ -93,9 +124,10 @@ export default function useBubbleGestures() {
                     st.pointerId = e.pointerId;
                     st.startX = e.clientX;
                     st.startY = e.clientY;
+                    const el = e.currentTarget;
                     st.timer = setTimeout(() => {
                         st.timer = null;
-                        openMenu(msg);
+                        openMenu(msg, el);
                     }, LONG_PRESS_MS);
                 },
 
@@ -159,7 +191,7 @@ export default function useBubbleGestures() {
                     e.preventDefault();
                     if (!s.current.fired) {
                         cancelTimer();
-                        openMenu(msg);
+                        openMenu(msg, e.currentTarget);
                     }
                 },
 

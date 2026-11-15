@@ -1,6 +1,5 @@
 /* ============ Action / delete modals ============ */
 .modal-overlay,
-.message-action-modal-overlay,
 .delete-confirm-modal-overlay {
   position: fixed; inset: 0;
   background: rgba(2, 6, 23, 0.55);
@@ -12,7 +11,6 @@
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
 .modal-content,
-.message-action-modal,
 .delete-confirm-modal {
   background: var(--m-surface);
   border-radius: var(--m-radius-lg);
@@ -54,62 +52,6 @@
 .modal-btn.danger:hover { background: var(--c-red-600); }
 .modal-btn.warning { background: var(--c-amber-500); color: var(--c-white); border-color: var(--c-amber-500); }
 .modal-btn.success { background: var(--c-green-500); color: var(--c-white); border-color: var(--c-green-500); }
-
-/* Reaction picker */
-.message-action-modal {
-  max-width: 360px;
-  padding: 16px;
-}
-.message-action-emoji-row {
-  display: flex;
-  gap: 6px;
-  padding: 6px;
-  background: var(--m-surface-2);
-  border-radius: 12px;
-  margin-bottom: 10px;
-  justify-content: space-between;
-}
-.message-action-emoji-btn {
-  background: transparent;
-  border: none;
-  font-size: 1.4rem;
-  padding: 8px;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: transform .15s var(--m-ease), background .15s var(--m-ease);
-}
-.message-action-emoji-btn:hover { transform: scale(1.2); background: var(--m-surface); }
-
-.message-action-buttons {
-  display: flex; flex-direction: column; gap: 6px;
-  margin-bottom: 8px;
-}
-.message-action-btn {
-  display: flex; align-items: center; gap: 10px;
-  padding: 10px 14px;
-  border: 1px solid var(--m-border);
-  background: var(--m-surface);
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: var(--m-text);
-  transition: all .15s var(--m-ease);
-}
-.message-action-btn:hover { background: var(--m-accent-soft); }
-.message-action-btn.delete { color: var(--c-red-600); }
-.message-action-btn.delete:hover { background: #fee2e2; }
-
-.message-action-cancel {
-  width: 100%;
-  padding: 10px;
-  background: var(--m-surface-2);
-  border: none;
-  border-radius: 10px;
-  font-weight: 700;
-  cursor: pointer;
-  color: var(--m-text);
-}
 
 /* Delete confirm modal (black-styled by user request) */
 .delete-confirm-modal {
@@ -252,7 +194,8 @@
 
 /* ============ BLACK THEME (white text everywhere) ============ */
 [data-theme="black"] .messages-container,
-[data-theme="black"] .alumni-messages-container {
+[data-theme="black"] .alumni-messages-container,
+[data-theme="black"] .mam-clone {
   --m-bg: var(--c-0a0c12);
   --m-surface: var(--c-121620);
   --m-surface-2: var(--c-1a1f2b);
@@ -272,18 +215,16 @@
 [data-theme="black"] .messages-container *,
 [data-theme="black"] .alumni-messages-container,
 [data-theme="black"] .alumni-messages-container *,
+[data-theme="black"] .mam-clone,
+[data-theme="black"] .mam-clone *,
 [data-theme="black"] .modal-content,
-[data-theme="black"] .modal-content *,
-[data-theme="black"] .message-action-modal,
-[data-theme="black"] .message-action-modal * {
+[data-theme="black"] .modal-content * {
   color: var(--c-white);
 }
 
 /* Restore intentional accent colors in dark mode */
 [data-theme="black"] .dropdown-menu-item.danger,
 [data-theme="black"] .dropdown-menu-item.danger *,
-[data-theme="black"] .message-action-btn.delete,
-[data-theme="black"] .message-action-btn.delete *,
 [data-theme="black"] .modal-warning,
 [data-theme="black"] .restrict-btn { color: var(--c-red-300) !important; }
 

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import "~/utils/riveRuntime"; // self-hosted rive.wasm; must load before useRive runs
 import { useRive } from "@rive-app/react-canvas";
 
 export default function useLoginAnimations({

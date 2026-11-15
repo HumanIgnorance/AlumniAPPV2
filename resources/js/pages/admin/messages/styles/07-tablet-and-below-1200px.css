@@ -211,8 +211,6 @@
   .message-search-panel button { min-width: 40px; min-height: 40px; }
 
   /* Generic modal responsiveness */
-  .message-action-modal,
-  .message-action-modal-overlay > div,
   .modal-content,
   .alumni-details-modal,
   .restrict-modal,
@@ -228,7 +226,6 @@
     margin: 12px;
     box-sizing: border-box;
   }
-  .message-action-modal-overlay,
   .modal-overlay {
     padding: 12px;
     align-items: center;

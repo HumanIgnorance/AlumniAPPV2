@@ -16,6 +16,7 @@ export default function useMessagesUi({
     setShowMessageActionModal,
     longPressTimerRef,
     setActionMessageData,
+    setMenuAnchor,
     setDeleteTargetMessage,
     setShowDeleteConfirmModal,
     deleteTargetMessage,
@@ -166,9 +167,10 @@ export default function useMessagesUi({
         }
     };
 
-    const handleLongPress = (messageId, msgData) => {
+    const handleLongPress = (messageId, msgData, anchor = null) => {
         setLongPressedMessageId(messageId);
         setActionMessageData(msgData);
+        setMenuAnchor(anchor);
         setShowMessageActionModal(true);
         setShowEmojiPicker(true);
     };
@@ -182,6 +184,7 @@ export default function useMessagesUi({
         setShowEmojiPicker(false);
         setLongPressedMessageId(null);
         setActionMessageData(null);
+        setMenuAnchor(null);
     };
 
     // NEW: Open delete confirmation modal (black theme)

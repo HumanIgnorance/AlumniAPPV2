@@ -146,7 +146,7 @@ export default function useMobileChatViewport(active, variant = "alumni") {
                 return;
             if (
                 t.closest(
-                    ".alumni-messages-area, .messages-area, textarea, input, .image-lightbox, .message-action-modal-overlay, .delete-confirm-modal-overlay",
+                    ".alumni-messages-area, .messages-area, textarea, input, .image-lightbox, .mam-overlay, .delete-confirm-modal-overlay",
                 )
             )
                 return;

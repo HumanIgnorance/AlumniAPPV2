@@ -49,6 +49,10 @@ export default function useMessagesState() {
 
     const [actionMessageData, setActionMessageData] = useState(null);
 
+    // Where the pressed bubble sits on screen (rect + snapshot) so the menu can
+    // anchor to it, Messenger style.
+    const [menuAnchor, setMenuAnchor] = useState(null);
+
     const [deleteMessageLoading, setDeleteMessageLoading] = useState(false);
 
     // Inline edit states (NEW - Messenger style)
@@ -244,6 +248,8 @@ export default function useMessagesState() {
         setShowMessageActionModal,
         longPressTimerRef,
         setActionMessageData,
+        setMenuAnchor,
+        menuAnchor,
         setDeleteTargetMessage,
         setShowDeleteConfirmModal,
         deleteTargetMessage,
