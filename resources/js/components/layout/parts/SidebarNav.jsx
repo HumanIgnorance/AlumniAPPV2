@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import { Drawer, Layout } from "antd";
 import { Link } from "react-router-dom";
@@ -16,7 +16,17 @@ export default function SidebarNav() {
         toggleDrawer,
         drawerVisible,
         collapsed,
+        pathname,
     } = useLayoutContext();
+
+    // Whatever page the person lands on, the menu drawer must be closed.
+    useEffect(() => {
+        setDrawerVisible(false);
+    }, [pathname, setDrawerVisible]);
+    // ...and it can never stay open once the layout switches to the desktop sidebar.
+    useEffect(() => {
+        if (!isMobile) setDrawerVisible(false);
+    }, [isMobile, setDrawerVisible]);
 
     return isMobile ? (
         <Drawer

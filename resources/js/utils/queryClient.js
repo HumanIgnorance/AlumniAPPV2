@@ -1,4 +1,5 @@
 import { QueryClient } from "react-query";
+import { startImagePreloading } from "~/utils/imagePreloader";
 
 // Do not retry client errors (4xx: validation, auth, not found…) — only one
 // quick retry for network hiccups / 5xx.
@@ -30,5 +31,9 @@ export const queryClient = new QueryClient({
         },
     },
 });
+
+// Every image that comes back in an API response is fetched in the background,
+// so pictures are already there when the person scrolls or opens a card.
+startImagePreloading(queryClient);
 
 export default queryClient;

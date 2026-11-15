@@ -5,14 +5,13 @@
    home indicator (most Androids, older iPhones) get exactly 0 extra space.
    ===================================================================== */
 
-/* ---- 1. Drawer width: fits its content ------------------------------
-   The drawer is exactly as wide as its widest line (logo title, longest menu
-   label or the developer credit), clamped between a comfortable minimum and
-   86vw. No fixed 320px box with an empty strip on the right. */
+/* ---- 1. Drawer width: one fixed, comfortable width -------------------
+   86vw on small phones, never wider than 300px. A fixed width keeps the logo
+   title, the menu rows and the developer credit on the same centre line. */
 html .app-nav-drawer.ant-drawer-left .ant-drawer-content-wrapper {
-  width: max-content !important;
-  min-width: min(240px, 86vw) !important;
-  max-width: min(86vw, 320px) !important;
+  width: min(86vw, 300px) !important;
+  min-width: 0 !important;
+  max-width: min(86vw, 300px) !important;
 }
 
 /* ---- 2. Drawer is a strict column: header / scrolling menu / footer ---
@@ -72,21 +71,16 @@ html .app-nav-drawer .ant-drawer-footer {
   font-weight: 600;
   white-space: nowrap;
   text-decoration: none;
-  background: linear-gradient(90deg, #667eea, #764ba2);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-  transition: filter 0.15s ease;
+  color: var(--text, #1f2933);
 }
 
 .app-footer-credits .app-footer-credit-link:hover,
 .app-footer-credits .app-footer-credit-link:focus-visible {
-  filter: brightness(1.2) saturate(1.2);
+  text-decoration: underline;
 }
 
 [data-theme="black"] .app-footer-credits .app-footer-credit-link {
-  background-image: linear-gradient(90deg, #8ea2ff, #c39bf5);
+  color: var(--text, #e5e7eb);
 }
 
 html .app-nav-drawer .ant-layout-footer.app-footer {
@@ -101,28 +95,45 @@ html .app-nav-drawer .app-footer-inner {
   padding-right: 0 !important;
 }
 
+/* Two lines, both centred on the same axis:
+       </> Developed by
+       Antiquina, Jonee John R.
+   The label and the name share one column (same width as the drawer), so
+   nothing sits left or right of the other. */
 html .app-nav-drawer .app-footer-inner .app-footer-credits {
   display: flex !important;
   flex-direction: column;
   align-items: center;
-  gap: 3px 0;
+  justify-content: center;
+  width: 100%;
+  gap: 4px 0;
   max-width: 100%;
-  white-space: nowrap !important;
+  white-space: normal !important;
   text-align: center;
   line-height: 1.3 !important;
 }
 
 html .app-nav-drawer .app-footer-credit-label {
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  opacity: 0.85;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  opacity: 1;
 }
 
 html .app-nav-drawer .app-footer-credit-link {
+  display: block;
+  width: 100%;
   font-size: 13px;
   font-weight: 700;
+  text-align: center;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 /* ---- 4. Footer keeps the home-indicator inset in portrait ------------

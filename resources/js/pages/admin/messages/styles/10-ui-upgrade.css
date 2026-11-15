@@ -259,3 +259,144 @@
 html[data-theme="black"].alumni-chat-active .alumni-messages-container {
   background: var(--m-surface);
 }
+
+/* ---------------------------------------------------------------------
+   C. ADMIN CHAT (admin -> alumni) — PHONES & SMALL TABLETS
+   Same idea as the alumni chat above: once a conversation is open, the
+   chat is exactly the visible box (above the keyboard), the header never
+   scrolls away and the page behind never moves.
+   ChatArea renders it on <body> inside .admin-chat-portal-root.
+   --------------------------------------------------------------------- */
+
+/* The wrapper only exists to keep the ".messages-container ..." theme
+   selectors matching; it must not create a box of its own. */
+.messages-container.admin-chat-portal-root {
+  display: contents !important;
+}
+
+@media (max-width: 992px) {
+  html.admin-chat-active,
+  body.admin-chat-active {
+    overflow: hidden !important;
+    overscroll-behavior: none;
+    -webkit-overflow-scrolling: auto;
+  }
+
+  html.admin-chat-active .chat-area.admin-chat-pinned {
+    position: fixed !important;
+    top: var(--chat-vt, 0px) !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: auto !important;
+    inset-inline: 0 !important;
+    width: 100% !important;
+    height: var(--chat-vh, 100dvh) !important;
+    max-height: var(--chat-vh, 100dvh) !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    /* the old slide-in rule keyed off .messages-layout.chat-open, which is
+       no longer an ancestor once the chat is on <body> */
+    transform: none !important;
+    transition: none !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    overscroll-behavior: none;
+    background: var(--m-surface);
+    z-index: 900;
+    box-sizing: border-box;
+  }
+
+  /* Header: below the notch / status bar, never shrinks, never scrolls. */
+  html.admin-chat-active .chat-area.admin-chat-pinned > .chat-header {
+    position: static !important;
+    flex: 0 0 auto;
+    padding: calc(10px + env(safe-area-inset-top, 0px))
+      calc(12px + env(safe-area-inset-right, 0px)) 10px
+      calc(12px + env(safe-area-inset-left, 0px)) !important;
+  }
+  html.admin-chat-active .chat-area.admin-chat-pinned .chat-header-info {
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+  html.admin-chat-active .chat-area.admin-chat-pinned .chat-header-text h3,
+  html.admin-chat-active .chat-area.admin-chat-pinned .chat-header-text .alumni-email {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  html.admin-chat-active .chat-area.admin-chat-pinned > .message-search-panel,
+  html.admin-chat-active .chat-area.admin-chat-pinned > .restricted-notice {
+    flex: 0 0 auto;
+  }
+
+  /* The ONLY scroller: the message list. */
+  html.admin-chat-active .chat-area.admin-chat-pinned > .messages-area {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    overflow-x: hidden;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    padding: 12px calc(12px + env(safe-area-inset-right, 0px)) 12px
+      calc(12px + env(safe-area-inset-left, 0px)) !important;
+  }
+
+  /* Composer: plain row at the bottom of the fixed box (no sticky). The
+     home-indicator inset only applies while the keyboard is closed. */
+  html.admin-chat-active .chat-area.admin-chat-pinned > .message-input-form {
+    position: static !important;
+    flex: 0 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px calc(10px + env(safe-area-inset-right, 0px))
+      calc(8px + env(safe-area-inset-bottom, 0px))
+      calc(10px + env(safe-area-inset-left, 0px)) !important;
+    background: var(--m-surface);
+    border-top: 1px solid var(--m-border);
+  }
+  html.admin-chat-active.alumni-chat-kb .chat-area.admin-chat-pinned > .message-input-form {
+    padding-bottom: 8px !important;
+  }
+
+  /* 16px = iOS never zooms the page on focus. */
+  html.admin-chat-active .chat-area.admin-chat-pinned .composer-textarea,
+  html.admin-chat-active .chat-area.admin-chat-pinned .message-search-input {
+    font-size: 16px !important;
+    line-height: 1.35;
+    -webkit-appearance: none;
+    appearance: none;
+    touch-action: manipulation;
+  }
+  html.admin-chat-active .chat-area.admin-chat-pinned .composer-textarea {
+    min-height: 44px;
+    max-height: 112px;
+  }
+  html.admin-chat-active .chat-area.admin-chat-pinned .chat-back-btn,
+  html.admin-chat-active .chat-area.admin-chat-pinned .chat-header-actions button,
+  html.admin-chat-active .chat-area.admin-chat-pinned .composer-icon-btn,
+  html.admin-chat-active .chat-area.admin-chat-pinned .composer-send-btn {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html.admin-chat-active .chat-area.admin-chat-pinned .image-preview {
+    max-height: 120px;
+  }
+}
+
+@media (max-width: 992px) and (orientation: landscape) and (max-height: 500px) {
+  html.admin-chat-active .chat-area.admin-chat-pinned > .chat-header {
+    padding-top: calc(4px + env(safe-area-inset-top, 0px)) !important;
+    padding-bottom: 4px !important;
+  }
+  html.admin-chat-active .chat-area.admin-chat-pinned .composer-textarea {
+    min-height: 38px;
+    max-height: 72px;
+  }
+}

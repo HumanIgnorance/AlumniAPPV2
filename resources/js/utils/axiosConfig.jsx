@@ -1,3 +1,4 @@
+import { preloadImagesFrom } from "~/utils/imagePreloader";
 import { notification } from "antd";
 import axios from "axios";
 import secureLocalStorage from "react-secure-storage";
@@ -284,6 +285,18 @@ instance.interceptors.response.use(
         const loadingStore = useLoadingStore.getState();
 
         finishTracking(response.config);
+
+        // Warm the image cache with every picture this response mentions.
+        if (
+            String(response.config?.method || "get").toLowerCase() === "get" &&
+            response.data &&
+            typeof response.data === "object" &&
+            !(response.data instanceof Blob) &&
+            !(response.data instanceof ArrayBuffer)
+        ) {
+            preloadImagesFrom(response.data);
+        }
+
         if (
             isMutation(response.config) &&
             !isBackground(response.config) &&

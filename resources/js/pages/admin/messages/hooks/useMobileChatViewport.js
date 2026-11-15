@@ -54,7 +54,7 @@ export function useIsPhoneViewport() {
  * Works the same in Safari, Chrome, installed PWAs and Android browsers. When
  * `visualViewport` is missing it falls back to innerHeight.
  */
-export default function useMobileChatViewport(active) {
+export default function useMobileChatViewport(active, variant = "alumni") {
     // Layout effect so the first painted frame is already pinned (no flash).
     useLayoutEffect(() => {
         if (!active || typeof window === "undefined") return undefined;
@@ -65,12 +65,18 @@ export default function useMobileChatViewport(active) {
         let keyboardWasOpen = false;
         const timers = new Set();
 
-        html.classList.add("alumni-chat-active");
-        document.body.classList.add("alumni-chat-active");
+        // "alumni-chat-active" drives the shared pinning rules; the admin chat
+        // adds "admin-chat-active" for its own container (see 10-ui-upgrade.css).
+        const activeClasses =
+            variant === "admin"
+                ? ["alumni-chat-active", "admin-chat-active"]
+                : ["alumni-chat-active"];
+        html.classList.add(...activeClasses);
+        document.body.classList.add(...activeClasses);
 
         const scrollListToBottom = () => {
             const area = document.querySelector(
-                ".alumni-messages-container .alumni-messages-area",
+                ".alumni-messages-container .alumni-messages-area, .chat-area.admin-chat-pinned .messages-area",
             );
             if (area) area.scrollTop = area.scrollHeight;
         };
@@ -117,10 +123,15 @@ export default function useMobileChatViewport(active) {
             if (!e.cancelable) return;
             const t = e.target;
             if (!t || typeof t.closest !== "function") return;
-            if (!t.closest(".alumni-messages-container")) return;
+            if (
+                !t.closest(
+                    ".alumni-messages-container, .chat-area.admin-chat-pinned",
+                )
+            )
+                return;
             if (
                 t.closest(
-                    ".alumni-messages-area, textarea, .image-lightbox, .message-action-modal-overlay, .delete-confirm-modal-overlay",
+                    ".alumni-messages-area, .messages-area, textarea, input, .image-lightbox, .message-action-modal-overlay, .delete-confirm-modal-overlay",
                 )
             )
                 return;
@@ -152,10 +163,10 @@ export default function useMobileChatViewport(active) {
             document.removeEventListener("focusout", settle);
             document.removeEventListener("touchmove", onTouchMove);
 
-            html.classList.remove("alumni-chat-active", "alumni-chat-kb");
-            document.body.classList.remove("alumni-chat-active");
+            html.classList.remove(...activeClasses, "alumni-chat-kb");
+            document.body.classList.remove(...activeClasses);
             html.style.removeProperty("--chat-vh");
             html.style.removeProperty("--chat-vt");
         };
-    }, [active]);
+    }, [active, variant]);
 }

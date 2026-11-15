@@ -1,6 +1,10 @@
 import React from "react";
+import { createPortal } from "react-dom";
 import { ROLES } from "~/config/roles";
 import { useMessagesContext } from "~/pages/admin/messages/MessagesContext";
+import useMobileChatViewport, {
+    useIsPhoneViewport,
+} from "~/pages/admin/messages/hooks/useMobileChatViewport";
 
 export default function ChatArea() {
     const {
@@ -47,8 +51,15 @@ export default function ChatArea() {
         activeTab,
     } = useMessagesContext();
 
-    return (
-        <div className="chat-area">
+    // Phones: once a conversation is open, the chat is a full-screen panel
+    // pinned to the *visible* viewport (same approach as the alumni chat), so
+    // the header always shows and the keyboard never pushes the page around.
+    const isPhone = useIsPhoneViewport();
+    const pinned = isPhone && !!selectedConversation;
+    useMobileChatViewport(pinned, "admin");
+
+    const content = (
+        <div className={`chat-area${pinned ? " admin-chat-pinned" : ""}`}>
             {selectedConversation ? (
                 <>
                     <div className="chat-header">
@@ -444,4 +455,18 @@ export default function ChatArea() {
             )}
         </div>
     );
+
+    // Rendered on <body> (outside the app shell) so no transformed / contained
+    // ancestor can trap the fixed panel. The wrapper keeps the existing
+    // ".messages-container ..." theme selectors working and generates no box.
+    if (pinned && typeof document !== "undefined") {
+        return createPortal(
+            <div className="messages-container admin-chat-portal-root">
+                {content}
+            </div>,
+            document.body,
+        );
+    }
+
+    return content;
 }

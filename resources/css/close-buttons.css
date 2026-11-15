@@ -1,0 +1,46 @@
+/* ==========================================================================
+   X / close buttons — one reliable tap target everywhere
+   Applies to every antd Modal (AppModal), Drawer and image preview, plus the
+   few hand-made close buttons in the app (chat lightbox, search, error notice).
+
+   - at least 40x40 so a fingertip can hit it (iPhone PWA included),
+   - always above its siblings in the modal header and always clickable,
+   - taps land on the button itself (not on the little icon inside it),
+   - no 300ms delay / double-tap zoom, no grey tap flash.
+   ========================================================================== */
+.ant-modal-close,
+.ant-drawer-close,
+.ant-image-preview-close,
+.ant-image-preview-operations-operation,
+.lightbox-close,
+.message-search-close,
+.error-dismiss,
+.clear-image-btn {
+  pointer-events: auto !important;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+}
+
+.ant-modal-close,
+.ant-drawer-close {
+  min-width: 40px;
+  min-height: 40px;
+  z-index: 20 !important;
+}
+
+/* the icon inside must never swallow the tap */
+.ant-modal-close > *,
+.ant-drawer-close > *,
+.lightbox-close > *,
+.message-search-close > * {
+  pointer-events: none;
+}
+
+/* drawer: the X is a flex item of the header, keep it centred and in front */
+.ant-drawer-close {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
