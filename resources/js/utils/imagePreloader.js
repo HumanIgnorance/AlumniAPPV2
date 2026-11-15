@@ -40,6 +40,9 @@ const idle = (fn) =>
 const isPreloadable = (value) => {
     if (typeof value !== "string" || value.length < 5 || value.length > 600) return false;
     if (value.startsWith("data:") || value.startsWith("blob:")) return false;
+    // Raw DB paths like "events/images/x.jpg" or "IMG_2225.png" are not URLs.
+    // Only preload http(s):// or /root-relative URLs.
+    if (!/^(https?:)?\/\//i.test(value) && !value.startsWith("/")) return false;
     if (NEVER.test(value)) return false;
     return IMAGE_FILE.test(value) || PROFILE_IMAGE.test(value);
 };

@@ -87,7 +87,7 @@ export default function useImageQuizLogic1() {
                     description: q.description,
                     required: q.required,
                     category: "Visual Assessment",
-                    options: q.choices.map((choice, choiceIndex) => ({
+                    options: (q.choices_with_urls || q.choices).map((choice, choiceIndex) => ({
                         id: `${q.id}_${choice.letter}`,
                         image: choice.image,
                         label: choice.letter,

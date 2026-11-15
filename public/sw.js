@@ -11,7 +11,7 @@
 //
 // To force every phone to refresh its cache after a big release, bump VERSION.
 
-const VERSION = 'v1';
+const VERSION = 'v2';
 const SHELL_CACHE = `atms-shell-${VERSION}`;   // page HTML only (no user data)
 const ASSET_CACHE = `atms-assets-${VERSION}`;  // /build/assets, /images, /sounds
 const FONT_CACHE = `atms-fonts-${VERSION}`;    // Google Fonts
