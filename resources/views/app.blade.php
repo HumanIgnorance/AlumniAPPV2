@@ -13,7 +13,7 @@
     $faviconV = @filemtime(public_path('images/site-logo.png')) ?: 1;
 @endphp
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-theme="{{ $atmsTheme === 'black' ? 'black' : '' }}"@unless($atmsHasThemeCookie) data-theme-source="system"@endunless style="background:{{ $atmsBootBg }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-theme="{{ $atmsTheme === 'black' ? 'black' : '' }}"{!! $atmsHasThemeCookie ? '' : ' data-theme-source="system"' !!} style="background:{{ $atmsBootBg }}">
 
 <head>
     <meta charset="utf-8">
@@ -171,9 +171,7 @@
     <!-- Pre-JS paint: matches the saved theme so there is no white flash -->
     <style>
         html,body{margin:0;background:{{ $atmsBootBg }}}
-        @if (! $atmsHasThemeCookie)
-        @media (prefers-color-scheme:dark){html[data-theme-source="system"],html[data-theme-source="system"] body{background:#0a0c12}}
-        @endif
+        {!! $atmsHasThemeCookie ? '' : '@' . 'media (prefers-color-scheme:dark){html[data-theme-source="system"],html[data-theme-source="system"] body{background:#0a0c12}}' !!}
     </style>
 
     <!-- Fonts -->
