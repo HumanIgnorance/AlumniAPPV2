@@ -17,6 +17,7 @@ import {
     TwitterOutlined,
     InstagramOutlined,
     ReloadOutlined,
+    ClockCircleOutlined,
 } from "@ant-design/icons";
 import logo from "~/assets/images/site-logo.png";
 import PublicFooter from "~/components/shared/PublicFooter";
