@@ -49,7 +49,11 @@ class SecurityHeaders
         $font = ["'self'", 'https://fonts.gstatic.com'];
         $img = ["'self'", 'data:', 'blob:'];
         // Weather widget (open-meteo) and Cloudflare analytics beacon injected by the host.
-        $connect = ["'self'", 'https://api.open-meteo.com', 'https://cloudflareinsights.com'];
+        $connect = ["'self'", 'https://api.open-meteo.com', 'https://cloudflareinsights.com',
+            // OCC Services page reachability checks (fetch no-cors) to the other OCC systems.
+            'https://www.occ.edu.ph', 'https://www.sis.occph.com', 'https://www.admission.occph.com',
+            'https://www.csdl.occph.com', 'https://www.alumni.occph.com', 'https://sclfapp.ethiodeploy.app',
+            'https://antiquina-ota.ethiodeploy.app'];
         $script[] = 'https://static.cloudflareinsights.com';
 
         // Local dev only: the Vite dev server serves modules/assets from its own origin,

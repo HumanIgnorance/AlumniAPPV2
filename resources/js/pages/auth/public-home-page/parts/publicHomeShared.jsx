@@ -101,9 +101,16 @@ export const OCC_SYSTEMS = [
         url: "https://www.alumni.occph.com",
     },
     {
+        id: "occdl",
+        label: "OCCDL — OJT Duty Log",
+        tag: "Student Trainee",
+        icon: <ClockCircleOutlined />,
+        url: "https://antiquina-ota.ethiodeploy.app",
+    },
+    {
         id: "sclf",
         label: "SCLF — Smart Campus Lost & Found",
-        tag: "Students & Staff",
+        tag: "Students & Instructors",
         icon: <SearchOutlined />,
         url: "https://sclfapp.ethiodeploy.app",
     },

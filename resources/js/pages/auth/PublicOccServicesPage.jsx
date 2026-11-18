@@ -99,9 +99,16 @@ const OCC_SYSTEMS = [
             "The OCC Alumni Association platform — reconnect with batchmates, and browse events, job posts, and the gallery.",
     },
     {
+        id: "occdl",
+        label: "OCCDL — OJT Duty Log",
+        tag: "Student Trainee",
+        icon: <ClockCircleOutlined />,
+        url: "https://antiquina-ota.ethiodeploy.app",
+    },
+    {
         id: "sclf",
         name: "SCLF — Smart Campus Lost & Found",
-        tag: "Students & Staff",
+        tag: "Students & Instructors",
         icon: <SearchOutlined />,
         url: "https://sclfapp.ethiodeploy.app",
         domain: "sclfapp.ethiodeploy.app",
