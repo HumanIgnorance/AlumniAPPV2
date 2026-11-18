@@ -101,10 +101,13 @@ const OCC_SYSTEMS = [
     },
     {
         id: "occdl",
-        label: "OCCDL — OJT Duty Log",
+        name: "OCCDL — OCC Duty Log",
         tag: "Student Trainee",
         icon: <ClockCircleOutlined />,
         url: "https://antiquina-ota.ethiodeploy.app",
+        domain: "antiquina-ota.ethiodeploy.app",
+        description:
+            "A real-time on-the-job training duty log and hours tracker for OCC trainees — log duty days per host client, watch your progress toward the required hours, and export a signable Duty Time Record.",
     },
     {
         id: "sclf",
@@ -212,13 +215,29 @@ const PublicOccServicesPage = () => {
                 ...prev,
                 [system.id]: { ...prev[system.id], state: "checking" },
             }));
-            checkSystemReachable(system.url).then((state) => {
-                setStatuses((prev) => ({
-                    ...prev,
-                    [system.id]: { state, checkedAt: new Date() },
-                }));
-            });
         });
+        // Preferred: ask our own server (no CORS/CSP limits, accurate).
+        // Fallback: per-system browser check if the endpoint is unavailable.
+        fetch("/api/occ-services/status", { headers: { Accept: "application/json" } })
+            .then((r) => (r.ok ? r.json() : Promise.reject(new Error("status"))))
+            .then((data) => {
+                const checkedAt = new Date();
+                setStatuses(
+                    Object.fromEntries(
+                        OCC_SYSTEMS.map((s) => [s.id, { state: data[s.id] === "up" ? "up" : "down", checkedAt }]),
+                    ),
+                );
+            })
+            .catch(() => {
+                OCC_SYSTEMS.forEach((system) => {
+                    checkSystemReachable(system.url).then((state) => {
+                        setStatuses((prev) => ({
+                            ...prev,
+                            [system.id]: { state, checkedAt: new Date() },
+                        }));
+                    });
+                });
+            });
     }, []);
 
     useEffect(() => {

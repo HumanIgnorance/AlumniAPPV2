@@ -102,7 +102,7 @@ export const OCC_SYSTEMS = [
     },
     {
         id: "occdl",
-        label: "OCCDL — OJT Duty Log",
+        label: "OCCDL — OCC Duty Log",
         tag: "Student Trainee",
         icon: <ClockCircleOutlined />,
         url: "https://antiquina-ota.ethiodeploy.app",

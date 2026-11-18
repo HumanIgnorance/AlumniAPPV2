@@ -419,3 +419,29 @@ Route::post('/alumni/register', [AlumniRegistrationController::class, 'store'])
     ->middleware('throttle:registration');
 Route::get('/get-courses', [GlobalAluminiController::class, 'courses']);
 Route::get('/get-employee-status', [GlobalAluminiController::class, 'employeeStatus']);
+
+// Public OCC Services status: checks each OCC system from the server (no browser
+// CORS/CSP limits), cached briefly so the public page can't be used to hammer them.
+Route::get('/occ-services/status', function () {
+    $systems = [
+        'official' => 'https://www.occ.edu.ph',
+        'sis' => 'https://www.sis.occph.com',
+        'admission' => 'https://www.admission.occph.com',
+        'csdl' => 'https://www.csdl.occph.com',
+        'alumni' => 'https://www.alumni.occph.com',
+        'occdl' => 'https://antiquina-ota.ethiodeploy.app',
+        'sclf' => 'https://sclfapp.ethiodeploy.app',
+    ];
+    return response()->json(\Illuminate\Support\Facades\Cache::remember('occ_services_status', 60, function () use ($systems) {
+        $out = [];
+        foreach ($systems as $id => $url) {
+            try {
+                \Illuminate\Support\Facades\Http::timeout(6)->withoutVerifying()->get($url);
+                $out[$id] = 'up'; // any HTTP response means the server answered
+            } catch (\Throwable $e) {
+                $out[$id] = 'down';
+            }
+        }
+        return $out;
+    }));
+})->middleware('throttle:30,1');
