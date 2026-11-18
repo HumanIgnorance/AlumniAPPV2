@@ -125,36 +125,36 @@
 
     <script type="application/ld+json">
     {
-        "@context": "https://schema.org",
-        "@graph": [
+        "@@context": "https://schema.org",
+        "@@graph": [
             {
-                "@type": "CollegeOrUniversity",
+                "@@type": "CollegeOrUniversity",
                 "name": "{{ $siteName }}",
                 "url": "{{ url('/') }}",
                 "logo": "{{ $logo }}",
                 "image": "{{ $logo }}",
                 "description": "{{ $seoDescription }}",
                 "department": {
-                    "@type": "Organization",
+                    "@@type": "Organization",
                     "name": "Alumni Tracing Management System ({{ $appName }})"
                 }
             },
             {
-                "@type": "Organization",
+                "@@type": "Organization",
                 "name": "{{ $siteName }}",
                 "url": "{{ url('/') }}",
                 "logo": {
-                    "@type": "ImageObject",
+                    "@@type": "ImageObject",
                     "url": "{{ $logo }}"
                 }
             },
             {
-                "@type": "WebSite",
+                "@@type": "WebSite",
                 "name": "{{ $siteName }}",
                 "alternateName": "{{ $appName }}",
                 "url": "{{ url('/') }}",
                 "publisher": {
-                    "@type": "CollegeOrUniversity",
+                    "@@type": "CollegeOrUniversity",
                     "name": "{{ $siteName }}"
                 },
                 "inLanguage": "en-PH"
