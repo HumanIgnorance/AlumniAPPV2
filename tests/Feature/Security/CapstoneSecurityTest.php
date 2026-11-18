@@ -229,7 +229,7 @@ class CapstoneSecurityTest extends TestCase
         $response = $this->postJson('/api/alumni/register', [
             'first_name' => 'Jane',
             'last_name' => 'Doe',
-            'password' => 'password123',
+            'password' => 'Password123',
             'email' => 'role-tamper@example.test',
             'phone' => '09171234567',
             'address' => '123 Main St',

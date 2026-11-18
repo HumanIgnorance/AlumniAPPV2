@@ -3,27 +3,39 @@
 namespace App\Support\Storage;
 
 use Illuminate\Support\Facades\DB;
-use League\Flysystem\Adapter\AbstractAdapter;
 use League\Flysystem\Config;
-use League\Flysystem\Util\MimeType;
+use League\Flysystem\DirectoryAttributes;
+use League\Flysystem\FileAttributes;
+use League\Flysystem\FilesystemAdapter;
+use League\Flysystem\UnableToCopyFile;
+use League\Flysystem\UnableToMoveFile;
+use League\Flysystem\UnableToReadFile;
+use League\Flysystem\UnableToRetrieveMetadata;
+use League\Flysystem\Visibility;
+use League\MimeTypeDetection\FinfoMimeTypeDetector;
 
 /**
- * Flysystem 1.x adapter that keeps file contents in the `stored_files`
+ * Flysystem 3.x adapter that keeps file contents in the `stored_files`
  * MySQL table so uploads survive container redeploys.
  *
  * One table serves several Laravel disks; the `disk` column separates them
  * ("public" vs "private"), so the two never see each other's files.
+ *
+ * Table layout is unchanged from the Flysystem 1.x version, so existing
+ * rows keep working after the Laravel upgrade.
  */
-class DatabaseFlysystemAdapter extends AbstractAdapter
+class DatabaseFlysystemAdapter implements FilesystemAdapter
 {
     protected string $disk;
     protected ?string $baseUrl;
     protected string $table = 'stored_files';
+    protected FinfoMimeTypeDetector $mimes;
 
     public function __construct(string $disk, ?string $baseUrl = null)
     {
         $this->disk = $disk;
         $this->baseUrl = $baseUrl;
+        $this->mimes = new FinfoMimeTypeDetector();
     }
 
     protected function q()
@@ -36,34 +48,33 @@ class DatabaseFlysystemAdapter extends AbstractAdapter
         return trim(str_replace('\\', '/', $path), '/');
     }
 
+    protected function like(string $dir): string
+    {
+        return str_replace(['\\', '%', '_'], ['\\\\', '\\%', '\\_'], $dir) . '/%';
+    }
+
     protected function row(string $path, array $columns = ['path', 'size', 'mimetype', 'visibility', 'updated_ts'])
     {
-        $path = $this->norm($path);
-
-        return $this->q()->where('path_hash', sha1($path))->first($columns);
+        return $this->q()->where('path_hash', sha1($this->norm($path)))->first($columns);
     }
 
-    protected function toMeta(object $r): array
+    protected function toAttributes(object $r): FileAttributes
     {
-        return [
-            'type'       => 'file',
-            'path'       => $r->path,
-            'size'       => (int) $r->size,
-            'mimetype'   => $r->mimetype,
-            'timestamp'  => (int) $r->updated_ts,
-            'visibility' => $r->visibility,
-        ];
+        return new FileAttributes(
+            $r->path,
+            (int) $r->size,
+            $r->visibility,
+            (int) $r->updated_ts,
+            $r->mimetype
+        );
     }
 
-    protected function put(string $path, string $contents, Config $config): array
+    protected function put(string $path, string $contents, Config $config): void
     {
         $path = $this->norm($path);
         $now = time();
-        $mime = MimeType::detectByContent($contents);
-        if (!$mime || $mime === 'text/plain') {
-            $mime = MimeType::detectByFileExtension(pathinfo($path, PATHINFO_EXTENSION)) ?: ($mime ?: 'application/octet-stream');
-        }
-        $visibility = $config->get('visibility') ?: ($this->disk === 'public' ? 'public' : 'private');
+        $mime = $this->mimes->detectMimeType($path, $contents) ?: 'application/octet-stream';
+        $visibility = $config->get('visibility') ?: ($this->disk === 'public' ? Visibility::PUBLIC : Visibility::PRIVATE);
 
         $data = [
             'contents'   => $contents,
@@ -75,9 +86,8 @@ class DatabaseFlysystemAdapter extends AbstractAdapter
         ];
 
         $hash = sha1($path);
-        $exists = $this->q()->where('path_hash', $hash)->exists();
 
-        if ($exists) {
+        if ($this->q()->where('path_hash', $hash)->exists()) {
             $this->q()->where('path_hash', $hash)->update($data);
         } else {
             DB::table($this->table)->insert($data + [
@@ -87,188 +97,169 @@ class DatabaseFlysystemAdapter extends AbstractAdapter
                 'created_at' => date('Y-m-d H:i:s', $now),
             ]);
         }
-
-        return [
-            'type' => 'file', 'path' => $path, 'size' => $data['size'],
-            'mimetype' => $mime, 'timestamp' => $now, 'visibility' => $visibility,
-        ];
     }
 
-    public function write($path, $contents, Config $config)
+    public function fileExists(string $path): bool
     {
-        return $this->put($path, (string) $contents, $config);
+        return $this->q()->where('path_hash', sha1($this->norm($path)))->exists();
     }
 
-    public function writeStream($path, $resource, Config $config)
-    {
-        return $this->put($path, (string) stream_get_contents($resource), $config);
-    }
-
-    public function update($path, $contents, Config $config)
-    {
-        return $this->put($path, (string) $contents, $config);
-    }
-
-    public function updateStream($path, $resource, Config $config)
-    {
-        return $this->put($path, (string) stream_get_contents($resource), $config);
-    }
-
-    public function rename($path, $newpath)
-    {
-        $r = $this->q()->where('path_hash', sha1($this->norm($path)))->first();
-        if (!$r) {
-            return false;
-        }
-        $this->put($newpath, (string) $r->contents, new Config(['visibility' => $r->visibility]));
-        $this->delete($path);
-
-        return true;
-    }
-
-    public function copy($path, $newpath)
-    {
-        $r = $this->q()->where('path_hash', sha1($this->norm($path)))->first();
-        if (!$r) {
-            return false;
-        }
-        $config = new Config(['visibility' => $r->visibility]);
-        $this->put($newpath, (string) $r->contents, $config);
-
-        return true;
-    }
-
-    public function delete($path)
-    {
-        return $this->q()->where('path_hash', sha1($this->norm($path)))->delete() > 0;
-    }
-
-    public function deleteDir($dirname)
-    {
-        $dirname = $this->norm($dirname);
-        $like = str_replace(['\\', '%', '_'], ['\\\\', '\\%', '\\_'], $dirname) . '/%';
-        $this->q()->where('path', 'like', $like)->delete();
-
-        return true;
-    }
-
-    public function createDir($dirname, Config $config)
-    {
-        // Directories are implicit (derived from file paths).
-        return ['type' => 'dir', 'path' => $this->norm($dirname)];
-    }
-
-    public function setVisibility($path, $visibility)
-    {
-        $this->q()->where('path_hash', sha1($this->norm($path)))->update(['visibility' => $visibility]);
-
-        return ['path' => $this->norm($path), 'visibility' => $visibility];
-    }
-
-    public function has($path)
+    public function directoryExists(string $path): bool
     {
         $path = $this->norm($path);
         if ($path === '') {
             return true;
         }
-        if ($this->q()->where('path_hash', sha1($path))->exists()) {
-            return true;
-        }
-        // A "directory" exists if any file lives under it.
-        $like = str_replace(['\\', '%', '_'], ['\\\\', '\\%', '\\_'], $path) . '/%';
 
-        return $this->q()->where('path', 'like', $like)->exists();
+        return $this->q()->where('path', 'like', $this->like($path))->exists();
     }
 
-    public function read($path)
+    public function write(string $path, string $contents, Config $config): void
     {
-        $r = $this->row($path, ['path', 'contents', 'size', 'mimetype', 'visibility', 'updated_ts']);
+        $this->put($path, $contents, $config);
+    }
+
+    public function writeStream(string $path, $contents, Config $config): void
+    {
+        $this->put($path, (string) stream_get_contents($contents), $config);
+    }
+
+    public function read(string $path): string
+    {
+        $r = $this->row($path, ['contents']);
         if (!$r) {
-            return false;
+            throw UnableToReadFile::fromLocation($path, 'File not found.');
         }
 
-        return $this->toMeta($r) + ['contents' => (string) $r->contents];
+        return (string) $r->contents;
     }
 
-    public function readStream($path)
+    public function readStream(string $path)
     {
-        $result = $this->read($path);
-        if ($result === false) {
-            return false;
-        }
+        $contents = $this->read($path);
         $stream = fopen('php://temp', 'r+');
-        fwrite($stream, $result['contents']);
+        fwrite($stream, $contents);
         rewind($stream);
-        unset($result['contents']);
 
-        return $result + ['stream' => $stream];
+        return $stream;
     }
 
-    public function listContents($directory = '', $recursive = false)
+    public function delete(string $path): void
     {
-        $directory = $this->norm($directory);
+        $this->q()->where('path_hash', sha1($this->norm($path)))->delete();
+    }
+
+    public function deleteDirectory(string $path): void
+    {
+        $path = $this->norm($path);
+        if ($path === '') {
+            return;
+        }
+        $this->q()->where('path', 'like', $this->like($path))->delete();
+    }
+
+    public function createDirectory(string $path, Config $config): void
+    {
+        // Directories are implicit (derived from file paths).
+    }
+
+    public function setVisibility(string $path, string $visibility): void
+    {
+        $this->q()->where('path_hash', sha1($this->norm($path)))->update(['visibility' => $visibility]);
+    }
+
+    public function visibility(string $path): FileAttributes
+    {
+        $r = $this->row($path);
+        if (!$r) {
+            throw UnableToRetrieveMetadata::visibility($path, 'File not found.');
+        }
+
+        return $this->toAttributes($r);
+    }
+
+    public function mimeType(string $path): FileAttributes
+    {
+        $r = $this->row($path);
+        if (!$r) {
+            throw UnableToRetrieveMetadata::mimeType($path, 'File not found.');
+        }
+
+        return $this->toAttributes($r);
+    }
+
+    public function lastModified(string $path): FileAttributes
+    {
+        $r = $this->row($path);
+        if (!$r) {
+            throw UnableToRetrieveMetadata::lastModified($path, 'File not found.');
+        }
+
+        return $this->toAttributes($r);
+    }
+
+    public function fileSize(string $path): FileAttributes
+    {
+        $r = $this->row($path);
+        if (!$r) {
+            throw UnableToRetrieveMetadata::fileSize($path, 'File not found.');
+        }
+
+        return $this->toAttributes($r);
+    }
+
+    public function listContents(string $path, bool $deep): iterable
+    {
+        $directory = $this->norm($path);
         $query = $this->q();
         if ($directory !== '') {
-            $like = str_replace(['\\', '%', '_'], ['\\\\', '\\%', '\\_'], $directory) . '/%';
-            $query->where('path', 'like', $like);
+            $query->where('path', 'like', $this->like($directory));
         }
 
-        $out = [];
         $dirs = [];
+        $files = [];
         foreach ($query->get(['path', 'size', 'mimetype', 'visibility', 'updated_ts']) as $r) {
             $relative = $directory === '' ? $r->path : substr($r->path, strlen($directory) + 1);
             $parts = explode('/', $relative);
 
-            if (!$recursive && count($parts) > 1) {
+            if (!$deep && count($parts) > 1) {
                 $dir = ltrim($directory . '/' . $parts[0], '/');
-                $dirs[$dir] = ['type' => 'dir', 'path' => $dir];
+                $dirs[$dir] = new DirectoryAttributes($dir);
                 continue;
             }
-            if ($recursive) {
+            if ($deep) {
                 for ($i = 1; $i < count($parts); $i++) {
                     $dir = ltrim($directory . '/' . implode('/', array_slice($parts, 0, $i)), '/');
-                    $dirs[$dir] = ['type' => 'dir', 'path' => $dir];
+                    $dirs[$dir] = new DirectoryAttributes($dir);
                 }
             }
-            $out[] = $this->toMeta($r);
+            $files[] = $this->toAttributes($r);
         }
 
-        return array_merge(array_values($dirs), $out);
+        yield from array_values($dirs);
+        yield from $files;
     }
 
-    public function getMetadata($path)
+    public function move(string $source, string $destination, Config $config): void
     {
-        $r = $this->row($path);
-        if ($r) {
-            return $this->toMeta($r);
+        $r = $this->q()->where('path_hash', sha1($this->norm($source)))->first();
+        if (!$r) {
+            throw UnableToMoveFile::fromLocationTo($source, $destination);
         }
-
-        return $this->has($path) ? ['type' => 'dir', 'path' => $this->norm($path)] : false;
+        $this->put($destination, (string) $r->contents, new Config(['visibility' => $r->visibility]));
+        $this->delete($source);
     }
 
-    public function getSize($path)
+    public function copy(string $source, string $destination, Config $config): void
     {
-        return $this->getMetadata($path);
+        $r = $this->q()->where('path_hash', sha1($this->norm($source)))->first();
+        if (!$r) {
+            throw UnableToCopyFile::fromLocationTo($source, $destination);
+        }
+        $this->put($destination, (string) $r->contents, new Config(['visibility' => $r->visibility]));
     }
 
-    public function getMimetype($path)
-    {
-        return $this->getMetadata($path);
-    }
-
-    public function getTimestamp($path)
-    {
-        return $this->getMetadata($path);
-    }
-
-    public function getVisibility($path)
-    {
-        $r = $this->row($path);
-
-        return $r ? ['path' => $r->path, 'visibility' => $r->visibility] : false;
-    }
-
-    /** Used by Storage::url() (Laravel 8 only allows url() when the adapter exposes this). */
+    /** Used by Storage::url(). */
     public function getUrl(string $path): string
     {
         $base = $this->baseUrl ?: '/storage';

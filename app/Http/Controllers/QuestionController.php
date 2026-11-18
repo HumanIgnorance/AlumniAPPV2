@@ -57,7 +57,7 @@ class QuestionController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to create question: ' . $e->getMessage()
+                'message' => 'Failed to create question' . $this->debugDetail($e)
             ], 500);
         }
     }
@@ -115,7 +115,7 @@ class QuestionController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to update question: ' . $e->getMessage()
+                'message' => 'Failed to update question' . $this->debugDetail($e)
             ], 500);
         }
     }
@@ -148,7 +148,7 @@ class QuestionController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to delete question: ' . $e->getMessage()
+                'message' => 'Failed to delete question' . $this->debugDetail($e)
             ], 500);
         }
     }
@@ -173,7 +173,7 @@ class QuestionController extends Controller
             $imagePath = $existingImages->get($index);
 
             if (isset($choice['image']) && $choice['image'] instanceof \Illuminate\Http\UploadedFile) {
-                $filename = 'choice_' . time() . '_' . uniqid() . '.' . $choice['image']->getClientOriginalExtension();
+                $filename = 'choice_' . time() . '_' . uniqid() . '.' . $choice['image']->extension();
                 $imagePath = $choice['image']->storeAs('questions/choices', $filename, 'public');
                 logger()->info("Uploaded new image: " . $imagePath);
             }
@@ -200,7 +200,7 @@ class QuestionController extends Controller
             $imagePath = null;
             // Handle image upload
             if (isset($choice['image']) && $choice['image'] instanceof \Illuminate\Http\UploadedFile) {
-                $filename = 'choice_' . time() . '_' . uniqid() . '.' . $choice['image']->getClientOriginalExtension();
+                $filename = 'choice_' . time() . '_' . uniqid() . '.' . $choice['image']->extension();
                 $imagePath = $choice['image']->storeAs('questions/choices', $filename, 'public');
             } elseif (isset($choice['image']) && is_string($choice['image'])) {
                 // Keep existing image if no new image uploaded

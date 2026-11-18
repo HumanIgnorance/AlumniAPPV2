@@ -35,7 +35,13 @@ class PasswordResetController extends Controller
     }
 
     /**
-     * Find account by email
+     * Step 1 of the forgot-password flow.
+     *
+     * SECURITY: this used to confirm whether an email was registered and
+     * return the owner's full name to anyone (no login required). It now
+     * answers identically for every address and discloses nothing; the
+     * reset email is only sent if an account really exists (see
+     * sendResetLink).
      */
     public function findAccount(Request $request)
     {
@@ -43,40 +49,13 @@ class PasswordResetController extends Controller
             'email' => 'required|email',
         ]);
 
-        $email = $request->email;
-
-        // First check in alumni table
-        $alumni = Alumni::where('email', $email)->first();
-
-        if ($alumni) {
-            return response()->json([
-                'success' => true,
-                'message' => 'Account found',
-                'data' => [
-                    'full_name' => $this->getAlumniFullName($alumni),
-                    'email' => $alumni->email,
-                ]
-            ]);
-        }
-
-        // If not found in alumni, check users table
-        $user = User::where('email', $email)->first();
-
-        if ($user) {
-            return response()->json([
-                'success' => true,
-                'message' => 'Account found',
-                'data' => [
-                    'full_name' => $user->name,
-                    'email' => $user->email,
-                ]
-            ]);
-        }
-
         return response()->json([
-            'success' => false,
-            'message' => 'No account found with this email address.'
-        ], 404);
+            'success' => true,
+            'message' => 'Continue to request a reset link.',
+            'data' => [
+                'email' => $request->email,
+            ]
+        ]);
     }
 
     /**
@@ -95,11 +74,13 @@ class PasswordResetController extends Controller
         $alumni = Alumni::where('email', $email)->first();
         $user = User::where('email', $email)->first();
 
+        // SECURITY: identical response whether or not the account exists, so
+        // this endpoint cannot be used to discover registered emails.
         if (!$alumni && !$user) {
             return response()->json([
-                'success' => false,
-                'message' => 'No account found with this email address.'
-            ], 404);
+                'success' => true,
+                'message' => 'If an account exists for that email, a password reset link has been sent.'
+            ]);
         }
 
         $fullName = $alumni ? $this->getAlumniFullName($alumni) : $user->name;
@@ -138,7 +119,7 @@ class PasswordResetController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => 'Password reset link has been sent to your email.'
+                'message' => 'If an account exists for that email, a password reset link has been sent.'
             ]);
         } catch (\Exception $e) {
             Log::error('Failed to send password reset email: ' . $e->getMessage());
@@ -189,7 +170,7 @@ class PasswordResetController extends Controller
 
         // Check if token is expired (60 minutes)
         $tokenCreatedAt = Carbon::parse($passwordReset->created_at);
-        if (Carbon::now()->diffInMinutes($tokenCreatedAt) > 60) {
+        if ($tokenCreatedAt->diffInMinutes(Carbon::now()) > 60) {
             // Delete expired token
             DB::table('password_resets')->where('email', $email)->delete();
 
@@ -261,7 +242,7 @@ class PasswordResetController extends Controller
         }
 
         $tokenCreatedAt = Carbon::parse($passwordReset->created_at);
-        if (Carbon::now()->diffInMinutes($tokenCreatedAt) > 60) {
+        if ($tokenCreatedAt->diffInMinutes(Carbon::now()) > 60) {
             DB::table('password_resets')->where('email', $email)->delete();
 
             return response()->json([

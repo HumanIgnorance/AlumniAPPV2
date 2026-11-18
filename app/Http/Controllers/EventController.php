@@ -142,7 +142,7 @@ class EventController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to create event: ' . $e->getMessage()
+                'message' => 'Failed to create event' . $this->debugDetail($e)
             ], 500);
         }
     }
@@ -305,7 +305,7 @@ class EventController extends Controller
     }
 
 
-    public function update(Request $request, Event $event)
+    public function update(\App\Http\Requests\UpdateEventRequest $request, Event $event)
     {
         try {
             // If the frontend sent back which existing images to keep, use that list.
@@ -318,6 +318,12 @@ class EventController extends Controller
                     // Strip the full URL prefix so we only store the relative path, e.g. events/images/xxx.jpg
                     return str_replace($storagePrefix, '', $url);
                 }, is_array($keptUrls) ? $keptUrls : [])));
+                // Only keep paths that really are stored event images (no traversal).
+                $imagePaths = array_values(array_filter($imagePaths, function ($path) {
+                    return is_string($path)
+                        && str_starts_with($path, 'events/images/')
+                        && !str_contains($path, '..');
+                }));
             } else {
                 $imagePaths = $event->images ?? [];
             }
@@ -373,7 +379,7 @@ class EventController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to update event: ' . $e->getMessage()
+                'message' => 'Failed to update event' . $this->debugDetail($e)
             ], 500);
         }
     }
@@ -592,8 +598,8 @@ public function register(Request $request, Event $event)
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to fetch registrations: ' . $e->getMessage()
+                'message' => 'Failed to fetch registrations' . $this->debugDetail($e)
             ], 500);
         }
     }
-}
+}

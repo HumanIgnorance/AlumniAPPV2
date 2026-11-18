@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Centralized role-gate middleware.
@@ -36,6 +37,19 @@ class CheckRole
         }
 
         if (empty($roles) || !in_array($user->role, $roles, true)) {
+            try {
+                Log::channel(config('logging.security_channel', config('logging.default')))
+                    ->warning('role_denied', [
+                        'user_id' => $user->id,
+                        'role' => $user->role,
+                        'required' => $roles,
+                        'method' => $request->method(),
+                        'path' => $request->path(),
+                        'ip' => $request->ip(),
+                    ]);
+            } catch (\Throwable $ignored) {
+            }
+
             return response()->json([
                 'success' => false,
                 'message' => 'You do not have permission to perform this action.',

@@ -47,7 +47,35 @@ return [
     |
     */
 
+    // Channel used for security events (failed logins, denied access,
+    // rate-limit hits). Falls back to the default channel if not set up.
+    'security_channel' => env('LOG_SECURITY_CHANNEL', 'security'),
+
     'channels' => [
+        // Security events: own daily file, kept 30 days. Set LOG_SLACK_WEBHOOK_URL
+        // in .env to also push errors to Slack.
+        'security' => [
+            'driver' => 'stack',
+            'channels' => array_values(array_filter([
+                'security_file',
+                env('LOG_SLACK_WEBHOOK_URL') ? 'security_alert' : null,
+            ])),
+            'ignore_exceptions' => true,
+        ],
+        'security_file' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/security.log'),
+            'level' => 'warning',
+            'days' => 30,
+        ],
+        'security_alert' => [
+            'driver' => 'slack',
+            'url' => env('LOG_SLACK_WEBHOOK_URL'),
+            'username' => 'Alumni Security',
+            'emoji' => ':rotating_light:',
+            'level' => 'error',
+        ],
+
         'stack' => [
             'driver' => 'stack',
             'channels' => ['single'],

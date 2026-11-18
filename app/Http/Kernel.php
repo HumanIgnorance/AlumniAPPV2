@@ -18,7 +18,7 @@ class Kernel extends HttpKernel
         // X-Forwarded-For for the real visitor IP (CF-Connecting-IP).
         \App\Http\Middleware\UseCloudflareClientIp::class,
         \App\Http\Middleware\TrustProxies::class,
-        \Fruitcake\Cors\HandleCors::class,
+        \Illuminate\Http\Middleware\HandleCors::class,
         // Phase 7 — runs on every request, web and API alike.
         // ForceHttps is a conditional no-op unless FORCE_HTTPS=true is
         // set (see that class for why); SecurityHeaders always adds its
@@ -89,7 +89,7 @@ class Kernel extends HttpKernel
      *
      * @var array<string, class-string|string>
      */
-    protected $routeMiddleware = [
+    protected $middlewareAliases = [
         'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,

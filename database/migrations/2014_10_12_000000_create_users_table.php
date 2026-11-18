@@ -29,16 +29,9 @@ class CreateUsersTable extends Migration
             $table->timestamps();
         });
 
-       
-        DB::table('users')->insert(
-            array(
-                'name' => "Guidance Counselor",
-                'email' => 'jonzkieab19@gmail.com',
-                'role' => 'admin',
-                'password' => bcrypt('zxyadmin03'),
-                'status' => 'active',
-            ),
-        );
+        // SECURITY: no default admin is seeded here any more (it used to ship
+        // with a hardcoded password). Create the first admin with:
+        //   php artisan admin:create you@example.com
     }
 
     /**

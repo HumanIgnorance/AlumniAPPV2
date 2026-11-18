@@ -188,6 +188,7 @@
 
     <!-- React (Vite) -->
 
+    @viteReactRefresh
     @vite('resources/js/app.js')
 
 </body>

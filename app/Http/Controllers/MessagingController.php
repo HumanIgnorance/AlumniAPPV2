@@ -268,7 +268,7 @@ class MessagingController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to fetch alumni',
-                'error' => $e->getMessage(),
+                'error' => $this->safeError($e),
             ], 500);
         }
     }
@@ -342,7 +342,7 @@ class MessagingController extends Controller
         return response()->json([
             'success' => false,
             'message' => 'Failed to fetch conversations',
-            'error' => $e->getMessage(),
+            'error' => $this->safeError($e),
         ], 500);
     }
 }
@@ -396,7 +396,7 @@ class MessagingController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to fetch messages',
-                'error' => $e->getMessage(),
+                'error' => $this->safeError($e),
             ], 500);
         }
     }
@@ -612,7 +612,7 @@ public function sendAdminMessage(Request $request)
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to fetch messages',
-                'error' => $e->getMessage(),
+                'error' => $this->safeError($e),
             ], 500);
         }
     }
@@ -707,7 +707,7 @@ public function sendAdminMessage(Request $request)
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to send message',
-                'error' => $e->getMessage(),
+                'error' => $this->safeError($e),
             ], 500);
         }
     }
@@ -753,7 +753,7 @@ public function sendAdminMessage(Request $request)
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to mark messages as read',
-                'error' => $e->getMessage(),
+                'error' => $this->safeError($e),
             ], 500);
         }
     }
@@ -798,7 +798,7 @@ public function sendAdminMessage(Request $request)
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to get unread count',
-                'error' => $e->getMessage(),
+                'error' => $this->safeError($e),
             ], 500);
         }
     }
@@ -831,7 +831,7 @@ public function sendAdminMessage(Request $request)
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to mark messages as read',
-                'error' => $e->getMessage(),
+                'error' => $this->safeError($e),
             ], 500);
         }
     }
@@ -857,7 +857,7 @@ public function sendAdminMessage(Request $request)
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to update restriction',
-                'error' => $e->getMessage(),
+                'error' => $this->safeError($e),
             ], 500);
         }
     }
@@ -882,7 +882,7 @@ public function sendAdminMessage(Request $request)
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to delete conversation',
-                'error' => $e->getMessage(),
+                'error' => $this->safeError($e),
             ], 500);
         }
     }
@@ -984,7 +984,7 @@ public function sendAdminMessage(Request $request)
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to add reaction',
-                'error' => $e->getMessage(),
+                'error' => $this->safeError($e),
             ], 500);
         }
     }
@@ -1083,7 +1083,7 @@ public function deleteMessage($messageId)
         return response()->json([
             'success' => false,
             'message' => 'Failed to delete message',
-            'error' => $e->getMessage(),
+            'error' => $this->safeError($e),
         ], 500);
     }
 }
@@ -1147,9 +1147,9 @@ public function editMessage(Request $request, $messageId)
         return response()->json([
             'success' => false,
             'message' => 'Failed to edit message',
-            'error' => $e->getMessage(),
+            'error' => $this->safeError($e),
         ], 500);
     }
 }
 
-}
+}

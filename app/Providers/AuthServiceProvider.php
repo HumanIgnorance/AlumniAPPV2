@@ -44,8 +44,16 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        if (! $this->app->routesAreCached()) {
-            Passport::routes();
-        }
+        // SECURITY: Passport::routes() is intentionally NOT called. The app only
+        // issues tokens through AuthController::login() (createToken) and never
+        // uses the /oauth/* endpoints (authorize, token, clients, personal
+        // access tokens), so exposing them only adds attack surface. Tokens are
+        // still verified with the key files; no routes are needed for that.
+
+        // Token lifetimes. Match the 14-day auth_token cookie set in
+        // AuthController::login(); without these Passport defaults to months.
+        Passport::tokensExpireIn(now()->addDays(14));
+        Passport::personalAccessTokensExpireIn(now()->addDays(14));
+        Passport::refreshTokensExpireIn(now()->addDays(30));
     }
 }

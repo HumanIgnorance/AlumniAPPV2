@@ -26,7 +26,7 @@ class StoreAlumniRequest extends FormRequest
         return [
             // Personal Information
             'first_name' => 'required|string|max:255',
-            'password' => 'required|string|min:8|max:255',
+            'password' => ['required', 'string', 'min:8', 'max:255', 'regex:/[a-z]/', 'regex:/[A-Z]/', 'regex:/[0-9]/'],
             'last_name' => 'required|string|max:255',
             'middle_name' => 'nullable|string|max:255',
             'suffix' => 'nullable|string|max:10',
@@ -107,6 +107,7 @@ class StoreAlumniRequest extends FormRequest
     public function messages(): array
     {
         return [
+            'password.regex' => 'Password must contain an uppercase letter, a lowercase letter and a number.',
             'documents.*.file.mimes' => 'Each document must be a JPG, PNG, or PDF file.',
             'profile_image.mimes' => 'Profile image must be a JPG, PNG, or WebP file.',
         ];

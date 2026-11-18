@@ -74,7 +74,7 @@ export default function useForgotPassword({
 
             if (response.ok && data?.success) {
                 setFoundUser({
-                    fullName: data.data.full_name,
+                    fullName: data.data.full_name || null,
                     email: data.data.email,
                 });
                 setCurrentView("find-user");

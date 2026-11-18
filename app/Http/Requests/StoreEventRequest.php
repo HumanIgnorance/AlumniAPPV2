@@ -35,7 +35,7 @@ class StoreEventRequest extends FormRequest
             'agenda' => 'nullable|string',
             //'featured' => 'boolean|nullable',
             'images' => 'nullable|array',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
+            'images.*' => 'image|mimes:jpeg,png,jpg,webp|max:5120'
         ];
 
         return $rules;

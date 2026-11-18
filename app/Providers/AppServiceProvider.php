@@ -12,10 +12,8 @@ use App\Observers\CourseObserver;
 use App\Observers\EmploymentStatusObserver;
 use App\Observers\EventObserver;
 use App\Observers\GalleryObserver;
-use App\Support\Vite;
 use App\Support\Storage\DatabaseFlysystemAdapter;
 use Illuminate\Filesystem\FilesystemAdapter;
-use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Storage;
 use League\Flysystem\Filesystem;
 use Illuminate\Support\Facades\URL;
@@ -45,7 +43,7 @@ class AppServiceProvider extends ServiceProvider
         Storage::extend('database', function ($app, array $config) {
             $adapter = new DatabaseFlysystemAdapter($config['name'] ?? 'default', $config['url'] ?? null);
 
-            return new FilesystemAdapter(new Filesystem($adapter, $config));
+            return new FilesystemAdapter(new Filesystem($adapter, $config), $adapter, $config);
         });
 
         // Generated asset()/route() URLs must match the https page that is
@@ -57,11 +55,6 @@ class AppServiceProvider extends ServiceProvider
         ) {
             URL::forceScheme('https');
         }
-
-        // @vite('resources/js/app.js') for Laravel 8 (native directive needs 9.19+)
-        Blade::directive('vite', function ($expression) {
-            return "<?php echo app(\\App\\Support\\Vite::class)({$expression}); ?>";
-        });
 
         // Phase 2 caching (audit §3): keeps the public read-endpoint
         // caches (AnnouncementController/EventController/GalleryController/

@@ -31,17 +31,32 @@ class AuthController extends Controller
         // not a proper 429. The middleware handles this correctly
         // (429 + Retry-After header) before the request even reaches
         // this method.
+        // Validate input types: array/oversized values used to reach Hash::check and 500.
+        $request->validate([
+            'email' => 'required|string|max:255',
+            'password' => 'required|string|max:255',
+        ]);
+
         $email = $request->email;
         $password = $request->password;
 
         $user = User::where('email', $email)->first();
 
+        // SECURITY: one generic message for "no such account" and "wrong
+        // password" (previously two different messages let anyone discover
+        // which emails are registered). A dummy hash check on the missing-user
+        // path keeps response time similar.
+        $invalid = fn () => response(['message' => 'Invalid email or password.'], 403);
+
         if (!$user) {
-            return response(['message' => 'This account has not been registered'], 403);
+            Hash::check($password, '$2y$10$O.69Nmoqa4Sxfd297X7uieMBDehFxfoj72DdJooMpzyvnWWetOToW');
+            $this->logFailedLogin($request, $email, 'unknown_account');
+            return $invalid();
         }
 
         if (!Hash::check($password, $user->password)) {
-            return response(['message' => 'Wrong password'], 403);
+            $this->logFailedLogin($request, $email, 'bad_password');
+            return $invalid();
         }
 
         // ---- Gate checks BEFORE any token or cookie is issued ----------------
@@ -280,6 +295,20 @@ class AuthController extends Controller
             'user_agent' => $request->userAgent(),
             'occurred_at' => now(),
         ]);
+    }
+
+    /**
+     * Record a failed login without storing the password or the raw email.
+     */
+    private function logFailedLogin(Request $request, ?string $email, string $reason): void
+    {
+        Log::channel(config('logging.security_channel', config('logging.default')))
+            ->warning('login_failed', [
+                'reason' => $reason,
+                'email_hash' => sha1(strtolower((string) $email)),
+                'ip' => $request->ip(),
+                'user_agent' => substr((string) $request->userAgent(), 0, 200),
+            ]);
     }
 
     private function notifyAdminsAboutPendingAlumniLogin($alumni)

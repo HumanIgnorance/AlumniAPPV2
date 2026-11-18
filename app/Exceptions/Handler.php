@@ -9,6 +9,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
@@ -95,6 +96,8 @@ class Handler extends ExceptionHandler
         }
 
         if ($e instanceof AuthorizationException) {
+            $this->logSecurityEvent($request, 'access_denied');
+
             return response()->json([
                 'success' => false,
                 'message' => 'You do not have permission to perform this action.',
@@ -125,6 +128,8 @@ class Handler extends ExceptionHandler
         }
 
         if ($e instanceof TooManyRequestsHttpException) {
+            $this->logSecurityEvent($request, 'rate_limited');
+
             return response()->json([
                 'success' => false,
                 'message' => 'Too many requests. Please slow down and try again shortly.',
@@ -164,6 +169,26 @@ class Handler extends ExceptionHandler
      * Turn a model class name like "AlumniProfile" into "alumni profile" for
      * use in a sentence.
      */
+    /**
+     * Write a suspicious-activity line to the security log channel.
+     * No request bodies, passwords or tokens are ever logged.
+     */
+    protected function logSecurityEvent(Request $request, string $event): void
+    {
+        try {
+            Log::channel(config('logging.security_channel', config('logging.default')))
+                ->warning($event, [
+                    'user_id' => optional($request->user())->id,
+                    'role' => optional($request->user())->role,
+                    'method' => $request->method(),
+                    'path' => $request->path(),
+                    'ip' => $request->ip(),
+                ]);
+        } catch (Throwable $ignored) {
+            // Logging must never break the response.
+        }
+    }
+
     protected function humanizeModelName(string $model): string
     {
         return strtolower(trim(preg_replace('/(?<!^)[A-Z]/', ' $0', $model)));
@@ -183,4 +208,4 @@ class Handler extends ExceptionHandler
             default => 'An unexpected error occurred.',
         };
     }
-}
+}

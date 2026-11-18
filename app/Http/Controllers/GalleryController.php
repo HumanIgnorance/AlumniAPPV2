@@ -200,7 +200,7 @@ class GalleryController extends Controller
 
         foreach ($request->file('images') as $index => $file) {
             $originalName = $file->getClientOriginalName();
-            $fileType = strtolower($file->getClientOriginalExtension());
+            $fileType = strtolower($file->extension());
             $fileSize = $file->getSize();
             $fileName = time() . '_' . uniqid() . '_' . $index . '.' . $fileType;
             $filePath = $file->storeAs('galleries', $fileName, 'public');
@@ -298,7 +298,7 @@ class GalleryController extends Controller
             // Upload new images
             $newPaths = [];
             foreach ($request->file('images') as $index => $file) {
-                $fileName = time() . '_' . uniqid() . '_' . $index . '.' . strtolower($file->getClientOriginalExtension());
+                $fileName = time() . '_' . uniqid() . '_' . $index . '.' . strtolower($file->extension());
                 $filePath = $file->storeAs('galleries', $fileName, 'public');
                 $newPaths[] = $filePath;
                 $totalSize += $file->getSize();
@@ -314,7 +314,7 @@ class GalleryController extends Controller
             if (count($newPaths) > 0) {
                 $firstNewFile = $request->file('images')[0];
                 $gallery->original_name = $firstNewFile->getClientOriginalName();
-                $gallery->file_type = strtolower($firstNewFile->getClientOriginalExtension());
+                $gallery->file_type = strtolower($firstNewFile->extension());
             }
         }
 
@@ -443,7 +443,7 @@ class GalleryController extends Controller
         } catch (\Throwable $e) {
             \Log::error('Gallery download failed', [
                 'gallery_id' => $id,
-                'error' => $e->getMessage(),
+                'error' => $this->safeError($e),
                 'file' => $e->getFile() . ':' . $e->getLine(),
             ]);
             return response()->json([

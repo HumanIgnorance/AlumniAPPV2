@@ -77,10 +77,12 @@ export default function FindUserForm() {
                 <div className="head">
                     <CheckCircleFilled />
                     <div>
-                        <strong>Account Found!</strong>
-                        <div className="row">
-                            {maskName(foundUser?.fullName)}
-                        </div>
+                        <strong>Reset your password</strong>
+                        {foundUser?.fullName && (
+                            <div className="row">
+                                {maskName(foundUser.fullName)}
+                            </div>
+                        )}
                         <div className="row">
                             <MailOutlined /> {maskEmail(foundUser?.email)}
                         </div>

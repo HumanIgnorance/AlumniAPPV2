@@ -35,7 +35,7 @@ class UploadValidationTest extends TestCase
         return [
             'first_name' => 'Jane',
             'last_name' => 'Doe',
-            'password' => 'password123',
+            'password' => 'Password123',
             'email' => 'jane.doe@example.test',
             'phone' => '09171234567',
             'address' => '123 Main St',

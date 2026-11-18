@@ -118,10 +118,10 @@ class JobPost extends Model
             return 'Expired';
         }
 
-        $diffInDays = $now->diffInDays($expiresAt);
+        $diffInDays = (int) floor($now->diffInDays($expiresAt));
         $diffInWeeks = floor($diffInDays / 7);
-        $diffInMonths = $now->diffInMonths($expiresAt);
-        $diffInYears = $now->diffInYears($expiresAt);
+        $diffInMonths = (int) floor($now->diffInMonths($expiresAt));
+        $diffInYears = (int) floor($now->diffInYears($expiresAt));
 
         if ($diffInYears >= 1) {
             return $diffInYears == 1 ? '1 year' : $diffInYears . ' years';

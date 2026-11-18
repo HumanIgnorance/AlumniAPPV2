@@ -91,6 +91,9 @@ return [
     |
     */
 
+    // Inbox that receives the public contact-form messages.
+    'contact_to' => env('CONTACT_TO_EMAIL'),
+
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
         'name' => env('MAIL_FROM_NAME', 'Example'),

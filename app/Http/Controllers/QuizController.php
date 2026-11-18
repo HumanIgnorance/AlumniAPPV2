@@ -111,7 +111,7 @@ class QuizController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to update quiz: ' . $e->getMessage()
+                'message' => 'Failed to update quiz' . $this->debugDetail($e)
             ], 500);
         }
     }
@@ -136,7 +136,7 @@ class QuizController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to delete quiz: ' . $e->getMessage()
+                'message' => 'Failed to delete quiz' . $this->debugDetail($e)
             ], 500);
         }
     }
@@ -162,7 +162,7 @@ class QuizController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to update quiz order: ' . $e->getMessage()
+                'message' => 'Failed to update quiz order' . $this->debugDetail($e)
             ], 500);
         }
     }
@@ -200,7 +200,7 @@ class QuizController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to duplicate quiz: ' . $e->getMessage()
+                'message' => 'Failed to duplicate quiz' . $this->debugDetail($e)
             ], 500);
         }
     }
@@ -428,7 +428,7 @@ class QuizController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to save quiz submission',
-                'error' => $e->getMessage()
+                'error' => $this->safeError($e)
             ], 500);
         }
     }

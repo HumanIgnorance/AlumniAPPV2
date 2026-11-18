@@ -167,7 +167,7 @@ class AnnouncementController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to create announcement: ' . $e->getMessage(),
+                'message' => 'Failed to create announcement' . $this->debugDetail($e),
             ], 500);
         }
     }
@@ -274,7 +274,7 @@ class AnnouncementController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to update announcement: ' . $e->getMessage(),
+                'message' => 'Failed to update announcement' . $this->debugDetail($e),
             ], 500);
         }
     }
@@ -342,4 +342,4 @@ class AnnouncementController extends Controller
             ]);
         }
     }
-}
+}

@@ -93,6 +93,11 @@ class RouteServiceProvider extends ServiceProvider
             return [
                 Limit::perMinute(5)->by('login-min|' . $key),
                 Limit::perHour(30)->by('login-hr|' . $key),
+                // Per-IP caps regardless of which email is tried, so one machine
+                // cannot spray many different accounts (credential stuffing).
+                // Generous enough for a campus network behind one NAT.
+                Limit::perMinute(30)->by('login-ip-min|' . $request->ip()),
+                Limit::perHour(200)->by('login-ip-hr|' . $request->ip()),
             ];
         });
 

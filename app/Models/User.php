@@ -165,6 +165,6 @@ class User extends Authenticatable implements MustVerifyEmail
             return false;
         }
 
-        return $this->is_online && Carbon::parse($this->last_active_at)->diffInMinutes(Carbon::now()) < 1;
+        return $this->is_online && abs(Carbon::parse($this->last_active_at)->diffInMinutes(Carbon::now())) < 1;
     }
 }

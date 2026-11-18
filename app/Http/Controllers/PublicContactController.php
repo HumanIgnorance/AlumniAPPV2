@@ -24,7 +24,6 @@ class PublicContactController extends Controller
      * Where every Contact Us submission is delivered. Keep this in
      * sync with CONTACT_EMAIL in PublicContactPage.js.
      */
-    protected const RECIPIENT_EMAIL = 'occ.antiquina.joneejohn@gmail.com';
 
     public function send(Request $request)
     {
@@ -40,7 +39,7 @@ class PublicContactController extends Controller
                 'website' => 'nullable|string|max:0',
             ]);
 
-            Mail::to(self::RECIPIENT_EMAIL)
+            Mail::to(config('mail.contact_to') ?: config('mail.from.address'))
                 ->send(new PublicContactMessage(
                     trim($validated['email']),
                     trim($validated['subject']),
@@ -66,4 +65,4 @@ class PublicContactController extends Controller
             ], 500);
         }
     }
-}
+}
