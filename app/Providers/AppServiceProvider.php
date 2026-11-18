@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Storage;
 use League\Flysystem\Filesystem;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Passport\Passport;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -28,7 +29,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        // Don't expose Passport's /oauth/* endpoints; tokens are issued
+        // only through AuthController::login().
+        Passport::ignoreRoutes();
     }
 
     /**
