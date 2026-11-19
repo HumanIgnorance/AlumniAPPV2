@@ -54,6 +54,10 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
+    // Public URL of the SPA used in email links (password reset, etc.).
+    // Falls back to APP_URL when FRONTEND_URL is not set.
+    'frontend_url' => env('FRONTEND_URL', env('APP_URL', 'http://localhost')),
+
     'asset_url' => env('ASSET_URL', null),
 
     /*

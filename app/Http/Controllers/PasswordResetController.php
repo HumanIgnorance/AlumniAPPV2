@@ -108,7 +108,7 @@ class PasswordResetController extends Controller
         }
 
         // Generate reset URL
-        $frontendUrl = config('app.frontend_url', config('app.url'));
+        $frontendUrl = rtrim(config('app.url'), '/'); // APP_URL, same base as every other email
         $resetUrl = $frontendUrl . '/login?token=' . $token . '&email=' . urlencode($email);
 
         // Send email

@@ -41,6 +41,21 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // Guard against a mis-set APP_URL / FRONTEND_URL on the host, e.g. the
+        // literal text "${APP_URL}" (host dashboards do not expand variables).
+        // Without this, every email link would be built from that broken text.
+        // In an HTTP request we fall back to the real domain being visited.
+        foreach (['app.url', 'app.frontend_url'] as $key) {
+            $value = trim((string) config($key));
+            $valid = $value !== '' && ! str_contains($value, '${') && preg_match('#^https?://[^\s]+$#i', $value);
+
+            if (! $valid && ! $this->app->runningInConsole()) {
+                config([$key => request()->getSchemeAndHttpHost()]);
+            } elseif ($valid) {
+                config([$key => rtrim($value, '/')]);
+            }
+        }
+
         // 'database' filesystem driver: stores uploads in the stored_files
         // table so they survive redeploys (see config/filesystems.php).
         Storage::extend('database', function ($app, array $config) {
