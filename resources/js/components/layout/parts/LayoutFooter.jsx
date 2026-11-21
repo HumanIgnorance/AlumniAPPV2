@@ -8,6 +8,7 @@ import {
 import { Layout, Typography } from "antd";
 import { useLayoutContext } from "~/components/layout/LayoutContext";
 import { COLORS } from "~/config/theme";
+import DeveloperCredit from "~/components/shared/DeveloperCredit";
 
 const { Footer } = Layout;
 const { Text } = Typography;
@@ -42,14 +43,7 @@ export default function LayoutFooter() {
                         <CodeOutlined className="app-footer-credit-icon" />
                         Developed by
                     </span>
-                    <a
-                        className="app-footer-credit-link"
-                        href="https://www.facebook.com/EphemeralKun/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        Antiquina, Jonee John R.
-                    </a>
+                    <DeveloperCredit className="app-footer-credit-link" dark={currentTheme === "black"} />
                 </Text>
 
                 <span
