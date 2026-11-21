@@ -16,7 +16,7 @@
         <div style="margin-bottom: 30px;">
             <h2 style="color: #1a1a2e; font-size: 20px; margin-bottom: 15px;">Dear {{ $alumni['first_name'] }} {{ $alumni['last_name'] }},</h2>
 
-            <p>Great news! Your job post has been <strong style="color: #1a1a2e;">approved</strong> by the administrator and is now live on the Alumni Portal.</p>
+            <p>Great news! Your job post has been <strong style="color: #1a1a2e;">approved</strong> by the administrator and is now live on the Alumni Tracing Management System.</p>
 
             <div style="background-color: #e8f4fd; border-left: 4px solid #1a1a2e; padding: 20px; margin: 25px 0; border-radius: 0 8px 8px 0;">
                 <h3 style="margin: 0 0 10px; color: #1a1a2e; font-size: 18px;">{{ $jobPost->title }}</h3>
@@ -41,7 +41,7 @@
                 <li style="margin-bottom: 8px;">Accept or reject applicants based on their qualifications</li>
             </ul>
 
-            <p>Log in to the Alumni Portal to monitor applications and manage your job post.</p>
+            <p>Log in to the Alumni Tracing Management System to monitor applications and manage your job post.</p>
 
             <div style="text-align: center; margin: 35px 0;">
                 <a href="{{ config('app.url') }}/login?redirect=/job-posts" style="display: inline-block; background-color: #1a1a2e; color: #ffffff; padding: 15px 40px; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 16px;">View My Job Post</a>

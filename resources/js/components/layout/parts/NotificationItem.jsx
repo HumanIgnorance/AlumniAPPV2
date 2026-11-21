@@ -241,7 +241,7 @@ export default function NotificationItem({ notification }) {
     const rawNotificationTitle =
         notification.title ||
         notificationData?.title ||
-        "Guidance Counselor (Admin)";
+        "Guidance Counselor (Administrator)";
     const notificationTitle = isAnnouncementNotification
         ? `Announcement: ${announcementTitle || rawNotificationTitle}`
         : rawNotificationTitle;
@@ -579,7 +579,7 @@ export default function NotificationItem({ notification }) {
                                 }}
                             >
                                 {role === ROLES.ALUMNI
-                                    ? "Guidance Counselor (Admin)"
+                                    ? "Guidance Counselor (Administrator)"
                                     : notification.sender?.name ||
                                       notificationData?.created_by ||
                                       notificationData?.alumni_name ||

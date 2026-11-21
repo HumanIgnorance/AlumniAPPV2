@@ -43,7 +43,7 @@
             <h3 style="color: #1a1a2e; font-size: 16px; margin-top: 25px;">Don't Be Discouraged!</h3>
             <p style="color: #666;">This decision does not reflect your overall qualifications. We encourage you to:</p>
             <ul style="color: #666; padding-left: 20px;">
-                <li style="margin-bottom: 8px;">Continue exploring other job opportunities on the Alumni Portal</li>
+                <li style="margin-bottom: 8px;">Continue exploring other job opportunities on the Alumni Tracing Management System</li>
                 <li style="margin-bottom: 8px;">Update your profile to highlight your latest skills and experiences</li>
                 <li style="margin-bottom: 8px;">Consider the feedback provided to strengthen future applications</li>
                 <li style="margin-bottom: 8px;">Network with fellow alumni for more opportunities</li>

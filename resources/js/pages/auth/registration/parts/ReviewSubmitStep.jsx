@@ -163,8 +163,7 @@ export default function ReviewSubmitStep() {
                 <Col xs={24}>
                     <Form.Item name="contactPermission" valuePropName="checked">
                         <Checkbox>
-                            I give permission to be contacted by the university
-                            and other alumni for networking opportunities
+                            I give permission to be contacted by the Alumni Association and other alumni for networking opportunities
                         </Checkbox>
                     </Form.Item>
                 </Col>

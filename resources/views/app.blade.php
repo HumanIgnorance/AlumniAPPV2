@@ -128,7 +128,7 @@
         "@@context": "https://schema.org",
         "@@graph": [
             {
-                "@@type": "CollegeOrUniversity",
+                "@@type": "Organization",
                 "name": "{{ $siteName }}",
                 "url": "{{ url('/') }}",
                 "logo": "{{ $logo }}",
@@ -154,7 +154,7 @@
                 "alternateName": "{{ $appName }}",
                 "url": "{{ url('/') }}",
                 "publisher": {
-                    "@@type": "CollegeOrUniversity",
+                    "@@type": "Organization",
                     "name": "{{ $siteName }}"
                 },
                 "inLanguage": "en-PH"

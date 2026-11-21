@@ -71,10 +71,7 @@ export default function PrivacyPolicyModal() {
                     </Title>
                     <Paragraph>
                         This Privacy Policy is issued by the{" "}
-                        <strong>Opol Community College Alumni Office</strong>,
-                        in coordination with the{" "}
-                        <strong>Guidance and Counseling Office</strong>, both
-                        based at ZONE C. Salva St, Opol, 9016 Misamis Oriental.
+                        <strong>Opol Community College Alumni Association</strong>, administered by the{" "} <strong>Guidance Counselor</strong>, based at ZONE C. Salva St, Opol, 9016 Misamis Oriental.
                         Together they act as the Personal Information Controller
                         (PIC) for the alumni registration and tracing system
                         found at alumni.occph.com, and are responsible for the
@@ -106,25 +103,21 @@ export default function PrivacyPolicyModal() {
 
                 <div>
                     <Title level={5}>
-                        <TrophyOutlined /> 3. Role of the Guidance and
-                        Counseling Office
+                        <TrophyOutlined /> 3. Role of the Guidance Counselor (Administrator)
                     </Title>
                     <Paragraph>
-                        The <strong>Guidance Counselor</strong>, through the
-                        Guidance and Counseling Office, collects and processes
-                        alumni data as part of the College's institutional
-                        tracer study and career-tracking program. This includes
+                        The <strong>Guidance Counselor</strong>, as the system administrator, collects and processes
+                        alumni data as part of the Alumni Association's tracer study and career-tracking program. This includes
                         your employment status, employer information, and
                         feedback from the rating and image-based quizzes. This
-                        data helps the Guidance Office assess graduate outcomes,
+                        data helps the Guidance Counselor assess graduate outcomes,
                         recommend career and further-education pathways, refer
                         qualified alumni to job opportunities, and report
                         aggregated, de-identified statistics to school
                         administration and, where required, to the Commission on
                         Higher Education (CHED). The Guidance Counselor accesses
                         only the information reasonably necessary for these
-                        functions and is bound by the same confidentiality
-                        obligations as Alumni Office staff.
+                        functions and is bound by the same confidentiality obligations under the Data Privacy Act.
                     </Paragraph>
                 </div>
 
@@ -142,8 +135,7 @@ export default function PrivacyPolicyModal() {
                         career/employment tracking through the Guidance
                         Counselor; facilitate alumni networking, events, and job
                         postings; send official updates and notifications; and
-                        improve Alumni Office and Guidance Office programs and
-                        services. We do not use your data for any purpose
+                        improve Alumni Association programs and services. We do not use your data for any purpose
                         incompatible with these declared purposes, and we never
                         sell your personal data.
                     </Paragraph>
@@ -155,10 +147,7 @@ export default function PrivacyPolicyModal() {
                         Information
                     </Title>
                     <Paragraph>
-                        Access to your personal data is limited to authorized
-                        Alumni Office and Guidance and Counseling Office
-                        personnel who need it to perform their official
-                        functions. Your profile is visible to other verified
+                        Access to your personal data is limited to the authorized Guidance Counselor (Administrator), who needs it to perform official functions. Your profile is visible to other verified
                         alumni only for directory and networking purposes;
                         sensitive documents (IDs, diploma, transcript) are never
                         shown to other alumni. We may share limited employment
@@ -196,7 +185,7 @@ export default function PrivacyPolicyModal() {
                     <Paragraph>
                         Your personal data is retained for as long as you remain
                         an active alumni member and for a reasonable period
-                        thereafter for institutional record-keeping, tracer
+                        thereafter for alumni record-keeping, tracer
                         studies, and accreditation reporting, or as required by
                         applicable law and school policy. Data that is no longer
                         necessary for these purposes will be securely disposed
@@ -217,9 +206,7 @@ export default function PrivacyPolicyModal() {
                         outdated, or unlawfully obtained; data portability; and
                         to be indemnified for damages arising from unlawful
                         processing. To exercise any of these rights, please
-                        contact the Alumni Office or Guidance and Counseling
-                        Office through the Messages page of this system, or
-                        visit our office at ZONE C. Salva St, Opol, 9016 Misamis
+                        contact the Guidance Counselor (Administrator) through the Messages page of this system, or visit the Guidance Counselor at ZONE C. Salva St, Opol, 9016 Misamis
                         Oriental. We will act on verified requests within a
                         reasonable period, consistent with NPC guidelines.
                     </Paragraph>
@@ -231,8 +218,7 @@ export default function PrivacyPolicyModal() {
                     </Title>
                     <Paragraph>
                         If you believe your personal data has been processed
-                        unlawfully, you may raise your concern with the Alumni
-                        Office first. You also have the right to file a
+                        unlawfully, you may raise your concern with the Guidance Counselor first. You also have the right to file a
                         complaint with the{" "}
                         <strong>National Privacy Commission</strong> (
                         <a

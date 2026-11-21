@@ -67,7 +67,7 @@ export default function EventDetailsModalModalBlock2() {
                     </div>
                     <Alert
                         message="Instant Messaging"
-                        description="Get quick responses to your inquiries through Messages during office hours."
+                        description="Get quick responses to your inquiries through Messages during available hours."
                         type="info"
                         showIcon
                         icon={<MessageOutlined />}

@@ -430,7 +430,7 @@ export default function AnnouncementPage() {
                         <Paragraph className="ae-hero__lead">
                             {isAdmin
                                 ? "Create and manage announcements for all alumni, keep the community informed, and highlight what matters most."
-                                : "Stay up to date with the latest news, updates, and important notices from the alumni office."}
+                                : "Stay up to date with the latest news, updates, and important notices from the Guidance Counselor."}
                         </Paragraph>
 
                         <div className="ae-hero__stats">

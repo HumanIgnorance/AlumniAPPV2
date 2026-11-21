@@ -24,7 +24,7 @@ export const FAQS = [
   { cat: "registration", q: "How do I register as an alumnus?", a: "Open the Alumni Registration page and complete each step: Personal Info, Academic Info, Career Info, Documents, and Review & Submit. The form validates your inputs as you go, and a progress indicator shows how close you are to finishing.", tags: ["Sign Up", "Onboarding"] },
   { cat: "registration", q: "What information do I need to prepare before registering?", a: "Have your full name, contact details, course (e.g. BSIT, BSED, BEED, BSBA), graduation year, current employment status, valid ID documents, and a clear profile photo ready. Optional links such as LinkedIn or GitHub can also be added.", tags: ["Profile", "Requirements"] },
   { cat: "registration", q: "What happens after I submit my registration?", a: "Your submitted details and documents are placed under review for verification. Once approved, you'll be able to log in and access your full alumni account.", tags: ["Verification", "Status"] },
-  { cat: "registration", q: "Can I edit my profile after registering?", a: "After logging in, you can edit your Contact Information and Career Information anytime. For security reasons, changes to your Profile Photo and Documents are handled by the Alumni Office — send a request through the Messages page.", tags: ["Profile", "Update"] },
+  { cat: "registration", q: "Can I edit my profile after registering?", a: "After logging in, you can edit your Contact Information and Career Information anytime. For security reasons, changes to your Profile Photo and Documents are handled by the Guidance Counselor — send a request through the Messages page.", tags: ["Profile", "Update"] },
 
   // ---------- PROFILE & PASSWORD ----------
   { cat: "profile", q: "How do I view my alumni profile?", a: "After logging in, open the Profile page from the user menu. It displays your Basic Information (name, email, and membership date), along with your Personal, Contact, Academic, and Professional Information in organized sections. Click 'View Full Details' to see your Profile Photo and uploaded Documents.", tags: ["Profile", "View"] },
@@ -38,28 +38,28 @@ export const FAQS = [
 
   // ---------- ALUMNI DIRECTORY ----------
   { cat: "alumni", q: "How can I browse other alumni?", a: "Open the Alumni page to browse fellow graduates, organized by course. You can search by name and filter by employment status to find and reconnect with batchmates.", tags: ["Directory", "Search"] },
-  { cat: "alumni", q: "Why does the system ask for my employment status?", a: "Keeping your employment and career information up to date helps the Alumni Office understand where graduates are today and share opportunities and updates that are relevant to you.", tags: ["Profile", "Employment"] },
+  { cat: "alumni", q: "Why does the system ask for my employment status?", a: "Keeping your employment and career information up to date helps the Guidance Counselor understand where graduates are today and share opportunities and updates that are relevant to you.", tags: ["Profile", "Employment"] },
 
   // ---------- EVENTS ----------
   { cat: "events", q: "How do I view upcoming alumni events?", a: "The Events page lists all upcoming activities such as job fairs, reunions, and seminars. Each event card shows the date, time, location, and number of registered attendees.", tags: ["Events", "Calendar"] },
   { cat: "events", q: "How can I join an event?", a: "Open an event from the list and click 'Register Now'. You’ll see a confirmation once you're registered, and the event will show as 'Registered' in the list.", tags: ["RSVP", "Participation"] },
-  { cat: "events", q: "Can I cancel my event registration?", a: "If you registered by mistake or can no longer attend, reach out to the Alumni Office through the Messages page and they can assist you.", tags: ["Cancel", "Support"] },
+  { cat: "events", q: "Can I cancel my event registration?", a: "If you registered by mistake or can no longer attend, reach out to the Guidance Counselor through the Messages page and they can assist you.", tags: ["Cancel", "Support"] },
 
   // ---------- JOB POSTS ----------
-  { cat: "jobs", q: "Where can I find job opportunities?", a: "The Job Posts page shows verified openings shared by the institution and partner companies. You can search, filter by industry, and view full details such as salary range, location, and required qualifications.", tags: ["Career", "Jobs"] },
-  { cat: "jobs", q: "Are the job postings verified?", a: "Yes. All job listings are reviewed and published by the Alumni Office before they appear on the Job Posts page, so you can browse them with confidence.", tags: ["Verified", "Trust"] },
+  { cat: "jobs", q: "Where can I find job opportunities?", a: "The Job Posts page shows verified openings shared by the Alumni Association and partner companies. You can search, filter by industry, and view full details such as salary range, location, and required qualifications.", tags: ["Career", "Jobs"] },
+  { cat: "jobs", q: "Are the job postings verified?", a: "Yes. All job listings are reviewed and published by the Guidance Counselor before they appear on the Job Posts page, so you can browse them with confidence.", tags: ["Verified", "Trust"] },
 
   // ---------- QUIZZES & FEEDBACK ----------
-  { cat: "quizzes", q: "What are the quizzes for?", a: "After logging in, you may be asked to complete two short activities — a rating-style quiz and an image-based quiz. These help the Alumni Office learn about your experience and improve programs and services for graduates.", tags: ["Survey", "Feedback"] },
+  { cat: "quizzes", q: "What are the quizzes for?", a: "After logging in, you may be asked to complete two short activities — a rating-style quiz and an image-based quiz. These help the Guidance Counselor learn about your experience and improve programs and services for graduates.", tags: ["Survey", "Feedback"] },
   { cat: "quizzes", q: "Do I need to complete the quizzes?", a: "Yes, they only take a few minutes. A reminder will appear after login until both quizzes are completed.", tags: ["Reminder", "Quiz"] },
   { cat: "quizzes", q: "Are my quiz answers kept private?", a: "Your responses are linked to your account for record-keeping, but they are handled confidentially and used only to improve alumni programs and services.", tags: ["Privacy", "Quiz"] },
 
   // ---------- GALLERY ----------
   { cat: "gallery", q: "What is the Gallery section for?", a: "The Gallery showcases highlights from alumni events, reunions, seminars, and milestones. You can browse images and view them in full screen.", tags: ["Media", "Photos"] },
-  { cat: "gallery", q: "Can I submit photos to the Gallery?", a: "The Gallery is curated by the Alumni Office. If you'd like to share photos from an event, send them through the Messages page and the team will consider adding them.", tags: ["Upload", "Support"] },
+  { cat: "gallery", q: "Can I submit photos to the Gallery?", a: "The Gallery is curated by the Guidance Counselor. If you'd like to share photos from an event, send them through the Messages page and the Guidance Counselor will consider adding them.", tags: ["Upload", "Support"] },
 
   // ---------- SUPPORT ----------
-  { cat: "support", q: "How can I report a bug or request a feature?", a: "Use the Messages page to reach out to the Alumni Office. Please include a short description and, if possible, a screenshot — it helps resolve issues faster.", tags: ["Bug", "Feedback"] },
+  { cat: "support", q: "How can I report a bug or request a feature?", a: "Use the Messages page to reach out to the Guidance Counselor. Please include a short description and, if possible, a screenshot — it helps resolve issues faster.", tags: ["Bug", "Feedback"] },
   { cat: "support", q: "Is my data safe in this system?", a: "Yes. The system uses secure authentication and encrypted storage to protect your account and personal information. Only authorized staff can access your records.", tags: ["Security", "Privacy"] },
   { cat: "support", q: "Does the system work on mobile devices?", a: "Absolutely. The interface is fully responsive — registration, events, jobs, gallery, and quizzes all adapt to phones and tablets, with the same dark/light theme support.", tags: ["Mobile", "Responsive"] },
 ];

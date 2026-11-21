@@ -67,7 +67,7 @@ export default function NotificationRow({ notification, onClose, showActions = f
         data?.type === "alumni_message";
 
     const announcementTitle = data?.announcement_title || notification.message || data?.message || "";
-    const rawTitle = notification.title || data?.title || "Guidance Counselor (Admin)";
+    const rawTitle = notification.title || data?.title || "Guidance Counselor (Administrator)";
     const title = isAnnouncement ? `Announcement: ${announcementTitle || rawTitle}` : rawTitle;
     const message = isAnnouncement
         ? data?.announcement_excerpt || notification.message || data?.message || ""

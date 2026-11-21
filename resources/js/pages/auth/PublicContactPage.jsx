@@ -262,7 +262,7 @@ const PublicContactPage = () => {
                     Get in <span className="grad">Touch</span>
                 </Title>
                 <Paragraph className="pcon-hero-lead">
-                    Questions about the Alumni Portal, an event, or your account?
+                    Questions about the Alumni Tracing Management System, an event, or your account?
                     Reach the <strong>ATMS</strong> team directly below, or send a
                     message and we'll get back to you.
                 </Paragraph>
@@ -309,7 +309,7 @@ const PublicContactPage = () => {
                             <div className="pcon-info-item">
                                 <span className="pcon-info-icon"><ClockCircleOutlined /></span>
                                 <div>
-                                    <strong>Office Hours</strong>
+                                    <strong>Availability</strong>
                                     <p>Monday – Friday, 8:00 AM – 5:00 PM</p>
                                 </div>
                             </div>
@@ -453,7 +453,7 @@ const PublicContactPage = () => {
                         </div>
                         <Paragraph className="ph-footer-desc">
                             Connecting Opol Community College alumni worldwide, fostering
-                            lifelong relationships with the institution, and supporting
+                            lifelong relationships with Opol Community College, and supporting
                             the next generation of OCCians.
                         </Paragraph>
                         <div className="ph-footer-social-row">

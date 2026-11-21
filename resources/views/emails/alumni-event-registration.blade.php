@@ -130,13 +130,13 @@
         {{-- Cancellation Note --}}
         <div style="background-color: #f1f1f1; border-radius: 8px; padding: 15px 20px; margin: 20px 0; font-size: 13px; color: #555;">
             <strong style="color: #1a1a2e;">Can no longer attend?</strong>
-            Kindly cancel your registration through the Alumni Portal at least
+            Kindly cancel your registration through the Alumni Tracing Management System at least
             <strong>48 hours before the event</strong> so your slot can be released to another alumnus.
         </div>
 
         {{-- Login CTA --}}
         <p style="margin: 20px 0 10px;">
-            You may log in to the Alumni Portal anytime to review your registration, view event updates,
+            You may log in to the Alumni Tracing Management System anytime to review your registration, view event updates,
             or cancel your slot if needed.
         </p>
         <div style="text-align: center; margin: 30px 0;">

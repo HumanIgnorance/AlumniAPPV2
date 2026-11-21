@@ -72,7 +72,7 @@ export default function RejectedAccountModal() {
 
             <p style={{ marginTop: 14, marginBottom: 0, lineHeight: 1.6 }}>
                 For further clarification or questions regarding this decision,
-                please contact the <strong>Administrator Office</strong>
+                please contact the <strong>Guidance Counselor (Administrator)</strong>
             </p>
         </Modal>
     );

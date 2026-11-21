@@ -29,8 +29,7 @@ export default function PublicHomeJobPosts() {
                             Career Opportunities
                         </Title>
                         <Paragraph className="ph-section-sub">
-                            Explore job openings shared by the institution and
-                            its partner companies for OCC graduates.
+                            Explore job openings shared by the Alumni Association and its partner companies for OCC graduates.
                         </Paragraph>
                     </div>
                     <button

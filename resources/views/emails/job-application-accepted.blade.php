@@ -124,7 +124,7 @@
             <div style="background-color: #f1f1f1; border-radius: 8px; padding: 15px; margin: 20px 0; text-align: center; font-size: 14px; color: #333;">
                 <strong>Need Help?</strong><br>
                 <a href="mailto:occ.verula.annabelle@gmail.com" style="color: #1a1a2e; text-decoration: none;">occ.verula.annabelle@gmail.com</a><br>
-                <em>Guidance Counselor - Administrator</em>
+                <em>Guidance Counselor / System Administrator</em>
             </div>
         </div>
 

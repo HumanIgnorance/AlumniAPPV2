@@ -104,7 +104,7 @@
 
         {{-- Login CTA --}}
         <p style="margin: 20px 0 10px;">
-            You may log in to the Alumni Portal anytime to view your hosted event, monitor the
+            You may log in to the Alumni Tracing Management System anytime to view your hosted event, monitor the
             updated registration list, and manage event details.
         </p>
         <div style="text-align: center; margin: 30px 0;">

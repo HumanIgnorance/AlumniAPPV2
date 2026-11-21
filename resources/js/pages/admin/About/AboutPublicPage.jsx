@@ -151,7 +151,7 @@ const AboutPublicPage = () => {
               <img src={logo} alt="OCC Logo" className="about-hero__logo" />
               <div className="about-hero__brand-meta">
                 <Tag className="about-chip" icon={<CheckCircleOutlined />}>
-                  Official Institutional Platform
+                  Official Alumni Association Platform
                 </Tag>
                 <Text className="about-hero__eyebrow">About the System</Text>
               </div>
@@ -234,21 +234,19 @@ const AboutPublicPage = () => {
               <Card className="about-card about-card--overview" bordered={false}>
                 <Tag className="section-chip">Overview</Tag>
                 <Title level={2} className="section-title">
-                  Connecting graduates with their institution.
+                  Connecting graduates with their alumni community.
                 </Title>
                 <Paragraph className="section-paragraph">
                   The Alumni Tracing Management System is your online home
-                  base for staying connected with the school after
-                  graduation. It gives you one place to manage your profile,
-                  discover what's happening on campus, and keep in touch with
-                  the Alumni Office.
+                  base for staying connected with the Alumni Association after graduation. It gives you one place to manage your profile,
+                  discover what's happening in the alumni community, and keep in touch with
+                  the Guidance Counselor.
                 </Paragraph>
                 <Paragraph className="section-paragraph">
                   After a simple registration process, you can maintain your
                   personal, academic, and professional information, browse
                   the alumni directory to find batchmates, register for
-                  upcoming events, and explore job opportunities shared by
-                  the institution and its partners.
+                  upcoming events, and explore job opportunities shared by the Alumni Association and its partners.
                 </Paragraph>
                 <Paragraph className="section-paragraph">
                   The platform also keeps you engaged through messaging,

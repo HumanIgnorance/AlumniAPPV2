@@ -45,7 +45,7 @@ export default function useMessageFormatters({
 
     // Admin info for alumni view
     const adminInfo = {
-        name: "Ms. Annabelle Verula (Guidance Counselor)",
+        name: "Ms. Annabelle Verula (Guidance Counselor / Administrator)",
         email: "occ.verula.annabelle@gmail.com",
         avatar: avatarGuidance,
     };

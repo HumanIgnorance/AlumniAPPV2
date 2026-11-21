@@ -27,7 +27,7 @@ const PublicFooter = ({ goTo }) => {
                 </div>
                 <Paragraph className="ph-footer-desc">
                     Connecting Opol Community College alumni worldwide, fostering
-                    lifelong relationships with the institution, and supporting
+                    lifelong relationships with Opol Community College, and supporting
                     the next generation of OCCians.
                 </Paragraph>
                 <div className="ph-footer-social-row">

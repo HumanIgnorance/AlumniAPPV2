@@ -203,7 +203,7 @@ const InstallPwaPage = () => {
                                 A Progressive Web App (PWA) is a lightweight version of{" "}
                                 <strong>ATMS</strong> you can install directly on your device
                                 like a normal app. It loads faster, runs smoother, and lets you
-                                reach the Alumni Portal — events, job posts, announcements, and
+                                reach the Alumni Tracing Management System — events, job posts, announcements, and
                                 the gallery — with a single tap.
                             </Paragraph>
                             <Paragraph className="pwa-p">
@@ -337,7 +337,7 @@ const InstallPwaPage = () => {
                         </div>
                         <Paragraph className="ph-footer-desc">
                             Connecting Opol Community College alumni worldwide, fostering
-                            lifelong relationships with the institution, and supporting
+                            lifelong relationships with Opol Community College, and supporting
                             the next generation of OCCians.
                         </Paragraph>
                         <div className="ph-footer-social-row">

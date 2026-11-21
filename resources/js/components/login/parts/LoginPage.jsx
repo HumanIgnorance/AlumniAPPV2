@@ -55,8 +55,7 @@ export default function LoginPage() {
 
                     <div className="login-brand__top">
                         <span className="login-brand__chip">
-                            <ThunderboltOutlined /> Official Institutional
-                            Platform
+                            <ThunderboltOutlined /> Official Alumni Association Platform
                         </span>
 
                         <h1 className="login-brand__title">
@@ -70,8 +69,7 @@ export default function LoginPage() {
                             The ATMS is a comprehensive solution for managing
                             alumni information while promoting continuous
                             collaboration, professional growth, and
-                            institutional excellence — empowering graduates and
-                            institutions to grow together.
+                            professional excellence — empowering graduates and the Alumni Association to grow together.
                         </p>
 
                         <div className="login-brand__features has-rive-center">
@@ -96,8 +94,7 @@ export default function LoginPage() {
                                 <div className="meta">
                                     <strong>Alumni Network</strong>
                                     <span>
-                                        Stay in touch with classmates and
-                                        faculty.
+                                        Stay in touch with classmates and fellow alumni.
                                     </span>
                                 </div>
                             </div>

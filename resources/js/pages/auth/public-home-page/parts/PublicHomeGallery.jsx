@@ -25,7 +25,7 @@ export default function PublicHomeGallery() {
                         </Title>
                         <Paragraph className="ph-section-sub">
                             Relive the spirit of OCC through snapshots from
-                            alumni events, campus life, and reunions.
+                            alumni events, school memories, and reunions.
                         </Paragraph>
                     </div>
                     <button

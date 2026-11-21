@@ -61,10 +61,9 @@ export default function TermsOfServiceModal() {
                     </Title>
                     <Paragraph>
                         These Terms of Service govern your use of the Opol
-                        Community College Alumni Information System
+                        Community College Alumni Tracing Management System
                         (alumni.occph.com), operated by the{" "}
-                        <strong>Alumni Office</strong> in coordination with the{" "}
-                        <strong>Guidance and Counseling Office</strong>. By
+                        <strong>Alumni Association</strong>, administered by the{" "} <strong>Guidance Counselor</strong> (Administrator). By
                         registering as an alumni member, you agree to comply
                         with these Terms and all applicable Philippine laws,
                         including the Data Privacy Act of 2012 (RA 10173). If
@@ -94,16 +93,14 @@ export default function TermsOfServiceModal() {
 
                 <div>
                     <Title level={5}>
-                        <TrophyOutlined /> 3. Guidance Office Tracer Study and
-                        Career Tracking
+                        <TrophyOutlined /> 3. Tracer Study and Career Tracking
                     </Title>
                     <Paragraph>
                         By registering, you acknowledge that the Guidance
                         Counselor may contact you regarding tracer studies,
                         employment surveys, and career or further-education
                         opportunities, and may use your employment and feedback
-                        data (including quiz responses) to support institutional
-                        planning, accreditation, and reporting to the College
+                        data (including quiz responses) to support alumni program planning, accreditation, and reporting to the College
                         and, where required, CHED. Participation in optional
                         surveys and quizzes helps the College improve programs
                         for current and future students but does not affect your
@@ -122,8 +119,7 @@ export default function TermsOfServiceModal() {
                         You agree not to use these services for any unlawful
                         purpose, to harass or spam other members, to
                         misrepresent your identity, or to engage in any activity
-                        that could harm the College's reputation, the Alumni or
-                        Guidance Office, or other members' experience.
+                        that could harm the College's reputation, the Alumni Association, the Guidance Counselor, or other members' experience.
                     </Paragraph>
                 </div>
 
@@ -148,8 +144,7 @@ export default function TermsOfServiceModal() {
                     </Title>
                     <Paragraph>
                         Your use of this system is also governed by our Privacy
-                        Policy, which explains how the Alumni Office and
-                        Guidance and Counseling Office collect, use, and protect
+                        Policy, which explains how the Alumni Association and the Guidance Counselor collect, use, and protect
                         your personal data in compliance with RA 10173. By
                         agreeing to these Terms, you confirm that you have read
                         and understood the Privacy Policy.
@@ -185,8 +180,7 @@ export default function TermsOfServiceModal() {
                         arising from your use of the system, except as required
                         by law. These Terms are governed by the laws of the
                         Republic of the Philippines. For questions, concerns, or
-                        to exercise your rights under these Terms, please
-                        contact the Alumni Office through the Messages page or
+                        to exercise your rights under these Terms, please contact the Guidance Counselor (Administrator) through the Messages page or
                         visit us at ZONE C. Salva St, Opol, 9016 Misamis
                         Oriental.
                     </Paragraph>

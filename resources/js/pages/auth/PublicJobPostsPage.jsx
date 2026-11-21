@@ -107,7 +107,7 @@ const SORT_OPTIONS = [
 const SECTION_COPY = {
     "full-time": {
         title: "Full-time Job Posts",
-        subtitle: "Long-term, full-time openings shared by the institution and its partner companies.",
+        subtitle: "Long-term, full-time openings shared by the Alumni Association and its partner companies.",
         empty: "No full-time openings posted yet. Check back soon!",
     },
     "part-time": {
@@ -459,8 +459,7 @@ const PublicJobPostsPage = () => {
                         Career <span className="grad">Opportunities</span>
                     </Title>
                     <Paragraph className="pjp-hero-lead">
-                        Full-time, part-time, and contract openings shared by the
-                        institution and its partner companies for OCC graduates.
+                        Full-time, part-time, and contract openings shared by the Alumni Association and its partner companies for OCC graduates.
                     </Paragraph>
                 </Reveal>
             </section>

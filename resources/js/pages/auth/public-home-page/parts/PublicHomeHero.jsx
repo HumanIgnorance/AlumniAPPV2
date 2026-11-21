@@ -35,7 +35,7 @@ export default function PublicHomeHero() {
             <div className="ph-hero-inner">
                 <div className="ph-hero-copy">
                     <div className="ph-hero-eyebrow">
-                        <EnvironmentOutlined /> Main Campus &middot; Opol,
+                        <EnvironmentOutlined /> Opol Community College &middot; Opol,
                         Misamis Oriental
                     </div>
                     <div className="ph-hero-rotator">
@@ -47,7 +47,7 @@ export default function PublicHomeHero() {
                     </Title>
                     <Paragraph className="ph-hero-lead">
                         browse upcoming events, explore job opportunities shared
-                        by the Alumni Association, and relive campus memories
+                        by the Alumni Association, and relive cherished memories
                         through the gallery — all in one place.
                     </Paragraph>
                     <div className="ph-hero-cta">

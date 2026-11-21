@@ -104,8 +104,7 @@ export default function RegistrationCard() {
                 <Title level={3}>Alumni Registration Portal</Title>
                 <Text type="secondary">
                     Join the {companyInfo.name} alumni network and stay
-                    connected with classmates, mentors, and your university
-                    community.
+                    connected with classmates, mentors, and your alumni community.
                 </Text>
             </div>
 

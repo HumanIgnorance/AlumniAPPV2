@@ -164,7 +164,7 @@ export default function AlumniMessagesView() {
                                                 className="alumni-avatar"
                                             />
                                             <span className="alumni-sender-name">
-                                                Guidance Counselor (Admin)
+                                                Guidance Counselor (Administrator)
                                             </span>
                                         </div>
                                     )}

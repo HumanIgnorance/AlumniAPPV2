@@ -237,7 +237,7 @@ const PublicCreditsPage = () => {
                 <Paragraph className="cred-hero-lead">
                     <span className="grad">ATMS</span> wouldn't exist without the people
                     behind every feature — meet the team who researched, built, and
-                    documented the Alumni Portal as their capstone project.
+                    documented the Alumni Tracing Management System as their capstone project.
                 </Paragraph>
             </section>
 
@@ -282,7 +282,7 @@ const PublicCreditsPage = () => {
                             <BankOutlined /> OCC Administration
                         </div>
                         <Paragraph className="cred-thanks-p">
-                            For supporting the development of the Alumni Portal and giving
+                            For supporting the development of the Alumni Tracing Management System and giving
                             the team the access needed to build it around real OCC data.
                         </Paragraph>
                     </div>
@@ -326,7 +326,7 @@ const PublicCreditsPage = () => {
                         </div>
                         <Paragraph className="ph-footer-desc">
                             Connecting Opol Community College alumni worldwide, fostering
-                            lifelong relationships with the institution, and supporting
+                            lifelong relationships with Opol Community College, and supporting
                             the next generation of OCCians.
                         </Paragraph>
                         <div className="ph-footer-social-row">
